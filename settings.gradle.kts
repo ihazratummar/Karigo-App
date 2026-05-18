@@ -33,3 +33,6 @@ include(":sharedLogic")
 
 include(":android:ui")
 
+include(":shared:model")
+
+include(":feature:homeScreen")

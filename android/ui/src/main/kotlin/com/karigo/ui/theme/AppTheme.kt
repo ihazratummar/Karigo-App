@@ -1,13 +1,12 @@
 package com.karigo.ui.theme
 
-import android.app.Activity
-import androidx.activity.compose.LocalActivity
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
@@ -15,7 +14,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
+import androidx.window.core.layout.WindowSizeClass
 
 
 /**
@@ -92,20 +91,18 @@ fun KarigoTheme(
 ) {
     // ── Resolve adaptive tokens from window size ───────────────────────────
     val dimens = remember(windowSizeClass) {
-        when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact  -> CompactDimens
-            WindowWidthSizeClass.Medium   -> MediumDimens
-            WindowWidthSizeClass.Expanded -> ExpandedDimens
-            else                          -> CompactDimens
+        when {
+            windowSizeClass.isWidthAtLeastBreakpoint(840) -> ExpandedDimens
+            windowSizeClass.isWidthAtLeastBreakpoint(600) -> MediumDimens
+            else -> CompactDimens
         }
     }
 
     val typography = remember(windowSizeClass) {
-        when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact  -> CompactTypography
-            WindowWidthSizeClass.Medium   -> MediumTypography
-            WindowWidthSizeClass.Expanded -> ExpandedTypography
-            else                          -> CompactTypography
+        when {
+            windowSizeClass.isWidthAtLeastBreakpoint(840) -> ExpandedTypography
+            windowSizeClass.isWidthAtLeastBreakpoint(600) -> MediumTypography
+            else -> CompactTypography
         }
     }
 
@@ -114,18 +111,19 @@ fun KarigoTheme(
     // ── Edge-to-edge system bars ──────────────────────────────────────────
     val view = LocalView.current
     if (!view.isInEditMode) {
+        val context = view.context
         SideEffect {
-            val window = (view.context as Activity).window
-            // Draw content behind both status and nav bars
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-            // Transparent bars — our background shows through
-            window.statusBarColor     = Background.toArgb()
-            window.navigationBarColor = NavBackground.toArgb()
-            // Dark theme = light icons not needed
-            WindowCompat.getInsetsController(window, view).apply {
-                isAppearanceLightStatusBars     = !darkTheme
-                isAppearanceLightNavigationBars = !darkTheme
-            }
+            val activity = context as? ComponentActivity
+            activity?.enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.auto(
+                    android.graphics.Color.TRANSPARENT,
+                    android.graphics.Color.TRANSPARENT,
+                ) { darkTheme },
+                navigationBarStyle = SystemBarStyle.auto(
+                    android.graphics.Color.TRANSPARENT,
+                    android.graphics.Color.TRANSPARENT,
+                ) { darkTheme }
+            )
         }
     }
 
@@ -138,10 +136,14 @@ fun KarigoTheme(
             colorScheme = colorScheme,
             typography  = typography.toMaterial3Typography(),
             shapes      = KarigoShapes,
-            content     = content
+            content = content
         )
     }
 }
 
 val LocalDimens = compositionLocalOf { CompactDimens }
 val LocalAppTypography = compositionLocalOf { CompactTypography }
+
+val dimens
+    @Composable
+    get() = LocalDimens.current

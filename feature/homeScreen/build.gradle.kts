@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlin.serialization)
+
 }
 
 kotlin {
@@ -13,11 +13,7 @@ kotlin {
     }
 }
 dependencies {
-    implementation(projects.feature.homeScreen)
-
-    implementation(libs.androidx.compose.adaptive)
     implementation(projects.android.ui)
-    implementation(projects.sharedLogic)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.ui)
@@ -25,28 +21,22 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.compose.uiToolingPreview)
+    implementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.compose.uiTooling)
 
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.kotlinx.serialization.json)
+
+
 }
 
 android {
-    namespace = "com.karigo.app"
+    namespace = "com.karigo.app.feature.homeScreen"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.karigo.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false

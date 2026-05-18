@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+
 }
 
 kotlin {
@@ -22,7 +23,8 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.compose.uiTooling)
 
-    implementation(libs.androidx.window)
+
+    implementation(libs.androidx.compose.adaptive)
 
 }
 

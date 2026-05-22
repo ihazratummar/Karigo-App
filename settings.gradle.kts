@@ -29,10 +29,15 @@ dependencyResolutionManagement {
 }
 
 include(":androidApp")
-include(":sharedLogic")
-
 include(":android:ui")
 
+include(":shared:di")
+include(":shared:data")
 include(":shared:model")
+include(":shared:domain")
+include(":shared:datastore")
+include(":shared:database")
+include(":shared:presentation")
 
 include(":feature:homeScreen")
+include(":feature:onboarding")

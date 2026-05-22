@@ -9,21 +9,21 @@ plugins {
 
 kotlin {
     compilerOptions {
-        jvmTarget = JvmTarget.JVM_11
+        jvmTarget = JvmTarget.JVM_17
     }
 }
 dependencies {
+    api(projects.shared.di)
+
+    api(projects.feature.onboarding)
     implementation(projects.feature.homeScreen)
 
     implementation(libs.androidx.compose.adaptive)
     implementation(projects.android.ui)
-    implementation(projects.sharedLogic)
-
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.ui)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.material3)
-
     implementation(libs.compose.uiToolingPreview)
     debugImplementation(libs.compose.uiTooling)
 
@@ -53,7 +53,7 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }

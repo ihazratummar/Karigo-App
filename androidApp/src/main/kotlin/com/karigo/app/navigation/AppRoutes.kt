@@ -12,7 +12,13 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data object RootNav
+sealed class RootNav {
+
+    @Serializable
+    data object ContentRoute
+    @Serializable
+    data object Onboarding
+}
 
 @Serializable
 sealed class MainRoute {

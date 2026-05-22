@@ -3,8 +3,10 @@ package com.karigo.ui.theme
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -140,6 +142,21 @@ fun KarigoTheme(
         )
     }
 }
+
+
+@Composable
+fun KarigoThemePreview(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
+    KarigoTheme(
+        windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
+        darkTheme = darkTheme,
+        content = content
+    )
+}
+
+
 
 val LocalDimens = compositionLocalOf { CompactDimens }
 val LocalAppTypography = compositionLocalOf { CompactTypography }

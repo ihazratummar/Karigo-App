@@ -185,6 +185,10 @@ data class KarigoDimens(
 
     // ── Top app bar ───────────────────────────────────────────────────────
     val topBarHeight: Dp,
+
+    // ── Onboarding ───────────────────────────────────────────────────────
+    val onboardingLogoBox: Dp = 80.dp,
+    val onboardingLogo: Dp = 32.dp
 )
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -573,7 +577,7 @@ val KarigoShapes = Shapes(
     // medium     → all cards: job, client, stat, earnings
     medium      = RoundedCornerShape(12.dp),
     // large      → search bar, settings section blocks, chart container
-    large       = RoundedCornerShape(12.dp),
+    large       = RoundedCornerShape(16.dp),
     // extraLarge → FAB (rounded square), profile icon bg, bottom sheet
-    extraLarge  = RoundedCornerShape(16.dp),
+    extraLarge  = RoundedCornerShape(20.dp),
 )

@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -31,7 +32,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.karigo.app.feature.homeScreen.HomeScreen
+import com.karigo.app.feature.onboarding.OnboardingScreen
+import com.karigo.presentation.onboarding.OnboardingViewModel
 import com.karigo.ui.theme.dimens
+import org.koin.compose.viewmodel.koinViewModel
 import kotlin.random.Random
 
 
@@ -52,14 +56,33 @@ fun AppNavigation(
             BottomBar(navHostController = navController)
         }
     ) { paddingValues ->
+
+        val onBoardingViewModel = koinViewModel<OnboardingViewModel>()
+        val isCompleted by onBoardingViewModel.isCompleted.collectAsStateWithLifecycle()
+
+        val startDestination = if (isCompleted) RootNav.ContentRoute else RootNav.Onboarding
+
         NavHost(
             navController = navController,
-            startDestination = MainRoute.HomeRoute,
+            startDestination =startDestination,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable<MainRoute.HomeRoute> {
-                HomeScreen()
+            composable<RootNav.Onboarding> {
+                val onboardingState by onBoardingViewModel.state.collectAsStateWithLifecycle()
+                val event = onBoardingViewModel::onIntent
+                val effect = onBoardingViewModel.effect
+
+                OnboardingScreen(
+                    state = onboardingState,
+                    event = event,
+                    effect = effect,
+                    navigateToDashboard = {
+                        navController.navigate(MainRoute.HomeRoute)
+                    }
+                )
             }
+
+            contentNavigation()
         }
     }
 

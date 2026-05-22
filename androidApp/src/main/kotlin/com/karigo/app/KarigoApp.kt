@@ -1,6 +1,9 @@
 package com.karigo.app
 
 import android.app.Application
+import android.content.Context
+import com.karigo.di.initKoin
+import org.koin.dsl.module
 
 
 /**
@@ -12,6 +15,15 @@ class KarigoApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        initKoin {
+            modules(
+                module {
+                    single <Context>{ this@KarigoApp.applicationContext }
+                    single <String>{ applicationContext.filesDir.absolutePath }
+                }
+            )
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 package com.karigo.share.model
 
-internal object TradeSeeds {
+object TradeSeeds {
 
     val plumber: List<StarterMaterial> = listOf(
         StarterMaterial(name = "PVC Pipe 1/2\"", unit = "metre", price =  45.0, tradeType =  TradeType.PLUMBER),
@@ -236,7 +236,7 @@ internal object TradeSeeds {
         StarterMaterial("Wall Jack", "piece", 85.0, TradeType.NETWORK_SUPPORT)
     )
 
-    val all: Map<TradeType, List<StarterMaterial>> = mapOf(
+    val seeds: Map<TradeType, List<StarterMaterial>> = mapOf(
         TradeType.PLUMBER to plumber,
         TradeType.ELECTRICIAN to electrician,
         TradeType.CARPENTER to carpenter,

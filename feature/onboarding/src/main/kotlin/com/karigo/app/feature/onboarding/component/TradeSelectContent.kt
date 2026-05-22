@@ -9,20 +9,21 @@ import androidx.compose.foundation.MarqueeAnimationMode
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -48,7 +49,6 @@ import com.karigo.share.model.TradeType
 import com.karigo.ui.color
 import com.karigo.ui.icon
 import com.karigo.ui.theme.KarigoShapes
-import com.karigo.ui.theme.KarigoThemePreview
 import com.karigo.ui.theme.dimens
 
 
@@ -71,10 +71,20 @@ fun TradeSelectContent(
             Button(
                 onClick = {event(OnboardingIntent.ConfirmTrades)},
                 enabled = onboardingState.canContinue,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(horizontal = dimens.spacingMd),
+                shape = KarigoShapes.large,
+                colors = ButtonDefaults.buttonColors(
+                    disabledContentColor = MaterialTheme.colorScheme.surfaceVariant,
+                    contentColor = MaterialTheme.colorScheme.onBackground
+                )
             ) {
                 Text(
-                    text = onboardingState.continueLabel
+                    text = onboardingState.continueLabel,
+                    modifier = Modifier.padding(dimens.spacingSm),
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = if (onboardingState.canContinue) MaterialTheme.colorScheme.onBackground else
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 )
             }
         }
@@ -121,6 +131,9 @@ fun TradeSelectContent(
                         }
                     }
                 }
+            }
+            item {
+                Spacer(Modifier.height(dimens.spacingXl))
             }
         }
     }

@@ -2,6 +2,7 @@ package com.karigo.domain.usecase
 
 import com.karigo.domain.repository.MaterialRepository
 import com.karigo.share.model.StarterMaterial
+import com.karigo.share.model.TradeSeeds
 import com.karigo.share.model.TradeType
 
 
@@ -17,7 +18,7 @@ class SeedStarterMaterialsUseCase (
 
     suspend operator fun invoke(trade: Set<TradeType>) : Int {
         val materials = trade
-            .flatMap { it.starterMaterial }
+            .flatMap { TradeSeeds.seeds[it].orEmpty() }
             .map { material ->
                 StarterMaterial(
                     name = material.name,

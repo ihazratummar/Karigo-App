@@ -89,7 +89,7 @@ class OnboardingViewModel(
             try {
                 // 1. seed material into SQLDelight Meterial table
                 val count = seedStarterMaterialsUseCase.invoke(trade = _state.value.selectedTrades)
-
+                _state.update { it.copy(totalMaterialCount = count) }
 
                 // 2. Write is_complete = true + selected trades to Datastore
                 completeOnboardingUseCase(trades = _state.value.selectedTrades)

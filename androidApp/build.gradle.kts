@@ -14,6 +14,7 @@ kotlin {
 }
 dependencies {
     api(projects.shared.di)
+    implementation(libs.koin.android)
 
     api(projects.feature.onboarding)
     implementation(projects.feature.homeScreen)

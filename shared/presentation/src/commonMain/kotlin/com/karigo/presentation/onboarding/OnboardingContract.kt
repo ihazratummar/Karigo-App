@@ -15,7 +15,8 @@ data class OnboardingState(
     val selectedTrades : Set<TradeType> = emptySet(),
     val isLoading: Boolean = false,
     val seededMaterialCount : Int = 0,
-    val error: String ? = null
+    val error: String ? = null,
+    val totalMaterialCount: Int = 0
 ){
     val canContinue: Boolean get() = selectedTrades.isNotEmpty()
     val continueLabel: String get() = when {

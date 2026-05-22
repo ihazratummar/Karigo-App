@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
+import com.karigo.app.feature.onboarding.component.ReadyContent
 import com.karigo.app.feature.onboarding.component.TradeSelectContent
 import com.karigo.app.feature.onboarding.component.WelcomeContent
 import com.karigo.presentation.onboarding.OnboardingEffect
@@ -80,12 +81,11 @@ fun OnboardingScreen(
                     )
                 }
                 OnboardingStep.READY -> {
-//                    ReadyContent(
-//                        modifier = Modifier.padding(paddingValues),
-//                        onFinishClick = {
-//                            event(OnboardingIntent.FinishOnboarding)
-//                        }
-//                    )
+                    ReadyContent(
+                        modifier = Modifier.padding(paddingValues),
+                        onboardingState = state,
+                        event = event
+                    )
                 }
             }
 

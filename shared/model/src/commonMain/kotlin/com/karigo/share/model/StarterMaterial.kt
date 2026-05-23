@@ -5,5 +5,5 @@ data class StarterMaterial(
     val unit: String,
     val price: Double,
     val tradeType: TradeType,
-    val id: Long = 0
+    val id: String = ""
 )

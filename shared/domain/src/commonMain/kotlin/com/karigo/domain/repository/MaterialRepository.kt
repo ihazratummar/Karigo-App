@@ -14,9 +14,9 @@ interface MaterialRepository {
 
     suspend fun getAllMaterials(): List<StarterMaterial>
 
-    suspend fun getMaterialById(id: Long): StarterMaterial?
+    suspend fun getMaterialById(id: String): StarterMaterial?
 
-    suspend fun deleteMaterial(id: Long)
+    suspend fun deleteMaterial(id: String)
 
     suspend fun updateMaterial(material: StarterMaterial)
 

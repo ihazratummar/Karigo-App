@@ -1,0 +1,28 @@
+CREATE TABLE job_material (
+
+    id TEXT PRIMARY KEY NOT NULL,
+    job_id TEXT NOT NULL REFERENCES job(id) ON DELETE CASCADE,
+    material_id TEXT,
+    name TEXT NOT NULL,
+    unit TEXT NOT NULL,
+    unit_price REAL NOT NULL,
+    quantity REAL NOT NULL,
+    total REAL NOT NULL,
+    created_at INTEGER NOT NULL
+);
+
+getJobMaterialsByJob:
+SELECT * FROM job_material WHERE job_id = ? ;
+
+insertJobMaterial:
+INSERT INTO job_material(id, job_id, material_id, name, unit, unit_price, quantity, total, created_at)
+VALUES (?,?,?,?,?,?,?,?,?);
+
+updateJobMaterialQuantity:
+UPDATE job_material SET quantity = ?, total = quantity * unit_price WHERE id = ?;
+
+deleteJobMaterial:
+DELETE FROM job_material WHERE id = ?;
+
+sumMaterialsByJob:
+SELECT COALESCE(SUM(total), 0.0) FROM job_material WHERE job_id =?;

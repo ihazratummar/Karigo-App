@@ -3,9 +3,9 @@ package com.karigo.data.repository
 import com.karigo.data.dto.toDomain
 import com.karigo.domain.repository.MaterialRepository
 import com.karigo.share.model.StarterMaterial
-import com.karigo.share.model.TradeType
+import com.karigo.shared.database.EpochUtils
 import com.karigo.shared.database.KarigoDatabase
-import kotlin.time.Clock
+import com.karigo.shared.database.UuidGenerator
 
 
 /**
@@ -19,41 +19,44 @@ class MaterialRepositoryImpl(
 
     override suspend fun insertMaterial(material: List<StarterMaterial>) {
         material.forEach { material ->
-            database.karigoDatabaseQueries.insertMaterial(
+            database.materialQueries.insertMaterial(
+                id = UuidGenerator.generate(),
                 name = material.name,
                 unit = material.unit,
-                price = material.price,
+                rate = material.price,
                 trade_type = material.tradeType.name,
-                created_at = Clock.System.now()
+                created_at = EpochUtils.now(),
+                updated_at = EpochUtils.now()
             )
         }
     }
 
     override suspend fun getAllMaterials(): List<StarterMaterial> {
-        return database.karigoDatabaseQueries.selectAllMaterials()
+        return database.materialQueries.getAllMaterials()
             .executeAsList()
             .map { it.toDomain() }
     }
 
-    override suspend fun getMaterialById(id: Long): StarterMaterial {
-        return database.karigoDatabaseQueries.selectMaterialById(id = id)
+    override suspend fun getMaterialById(id: String): StarterMaterial {
+        return database.materialQueries.selectMaterialById(id = id)
             .executeAsOne()
             .toDomain()
     }
 
 
-    override suspend fun deleteMaterial(id: Long) {
+    override suspend fun deleteMaterial(id: String) {
 
-        database.karigoDatabaseQueries.deleteMaterialById(id = id)
+        database.materialQueries.deleteMaterialById(id = id)
     }
 
     override suspend fun updateMaterial(material: StarterMaterial) {
-        database.karigoDatabaseQueries.updateMaterial(
+        database.materialQueries.updateMaterial(
+            id = material.id,
             name = material.name,
             unit = material.unit,
-            price = material.price,
+            rate = material.price,
             trade_type = material.tradeType.name,
-            id = material.id
+            updated_at = EpochUtils.now(),
         )
     }
 }

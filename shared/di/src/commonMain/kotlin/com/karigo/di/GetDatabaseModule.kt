@@ -19,19 +19,6 @@ fun getDatabaseModule(): Module = module {
     // 2. driver from factory
     single<SqlDriver> { get<SqlDeriverFactory>().getSqlDriver() }
 
-    // 3. adapter
-    single {
-        Materials.Adapter(
-            created_atAdapter = object : ColumnAdapter<Instant, Long> {
-                override fun decode(databaseValue: Long): Instant =
-                    Instant.fromEpochMilliseconds(databaseValue)
-
-                override fun encode(value: Instant): Long =
-                    value.toEpochMilliseconds()
-            }
-        )
-    }
-
-    // 4. database last — needs driver + adapter
-    single { KarigoDatabase(driver = get(), materialsAdapter = get()) }
+    // 3. database last — needs driver + adapter
+    single { KarigoDatabase(driver = get()) }
 }

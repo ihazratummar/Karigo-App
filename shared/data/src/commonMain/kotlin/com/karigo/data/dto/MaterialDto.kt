@@ -9,7 +9,7 @@ fun Materials.toDomain() : StarterMaterial {
     return StarterMaterial(
         name = this.name,
         unit = this.unit,
-        price = this.price,
+        price = this.rate,
         tradeType = TradeType.valueOf(this.trade_type)
     )
 }

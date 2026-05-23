@@ -1,0 +1,54 @@
+CREATE TABLE job (
+
+    id TEXT PRIMARY KEY NOT NULL,
+    client_id TEXT NOT NULL REFERENCES client(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    decription TEXT NOT NULL DEFAULT '',
+    status TEXT NOT NULL DEFAULT 'draft',
+    labour_mode TEXT NOT NULL DEFAULT 'per_item', -- 'hourly', or 'per_item'
+    labour_hours REAL NOT NULL DEFAULT 0.0,
+    labour_rate REAL NOT NULL DEFAULT 0.0,
+    material_total REAL NOT NULL DEFAULT 0.0,
+    discount REAL NOT NULL DEFAULT 0.0,
+    total REAL NOT NULL DEFAULT 0.0, -- pre-calculated
+    notes TEXT NOT NULL DEFAULT '',
+    job_date INTEGER NOT NULL,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+---------- READ -----------
+
+getAllJobs:
+SELECT job.*, client.name AS client_name FROM job INNER JOIN client ON job.client_id = client.id ORDER BY job.created_at DESC ;
+
+getJobById:
+SELECT job.*, client.name AS client_name FROM job INNER JOIN client ON job.client_id = client.id WHERE job.id = ?;
+
+getJobByStatus:
+SELECT job.* , client.name AS client_name FROM job INNER JOIN client ON job.client_id = client.id WHERE job.status = ?;
+
+getJobByClient:
+SELECT * FROM job WHERE client_id=? ORDER BY created_at DESC ;
+
+getActiveJobs:
+SELECT job.* , client.name AS client_name FROM job INNER JOIN client ON job.client_id = client.id WHERE job.status IN ('draft', 'in_progress');
+
+countJobsInRange:
+SELECT COUNT(*) FROM job WHERE created_at >= ? AND created_at < ?;
+
+---------- WRITE -----------
+
+insertJob:
+INSERT INTO job(id, client_id, title, decription, status, labour_mode, labour_hours, labour_rate, material_total, discount,
+total, notes, job_date, created_at, updated_at)
+VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+
+updateJobStatus:
+UPDATE job SET status = ? WHERE id = ?;
+
+updateJobTotal:
+UPDATE job SET total = ?, material_total = ? WHERE  id = ?;
+
+deleteJob:
+DELETE FROM job WHERE id =?;

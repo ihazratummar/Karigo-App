@@ -32,6 +32,13 @@ enum class OnboardingStep {
     WELCOME, TRADE_SELECT, READY
 }
 
+
+sealed interface OnboardingCompleteState {
+    data object Loading : OnboardingCompleteState
+    data object Completed : OnboardingCompleteState
+    data object NotCompleted : OnboardingCompleteState
+}
+
 // ── INTENT ────────────────────────────────────────────────────────────────────
 
 sealed class OnboardingIntent {

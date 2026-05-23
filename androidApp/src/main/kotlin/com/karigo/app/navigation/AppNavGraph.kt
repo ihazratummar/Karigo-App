@@ -1,14 +1,7 @@
 package com.karigo.app.navigation
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -19,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -31,12 +23,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.karigo.app.feature.homeScreen.HomeScreen
 import com.karigo.app.feature.onboarding.OnboardingScreen
+import com.karigo.presentation.onboarding.OnboardingCompleteState
 import com.karigo.presentation.onboarding.OnboardingViewModel
 import com.karigo.ui.theme.dimens
-import org.koin.compose.viewmodel.koinViewModel
-import kotlin.random.Random
 
 
 /**
@@ -47,7 +37,8 @@ import kotlin.random.Random
 
 @Composable
 fun AppNavigation(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onboardingViewModel: OnboardingViewModel
 ) {
     val navController = rememberNavController()
     Scaffold(
@@ -57,10 +48,13 @@ fun AppNavigation(
         }
     ) { paddingValues ->
 
-        val onBoardingViewModel = koinViewModel<OnboardingViewModel>()
-        val isCompleted by onBoardingViewModel.isCompleted.collectAsStateWithLifecycle()
+        val competeState by onboardingViewModel.completedState.collectAsStateWithLifecycle()
 
-        val startDestination = if (isCompleted) RootNav.ContentRoute else RootNav.Onboarding
+        val startDestination = when(competeState){
+            OnboardingCompleteState.Completed -> RootNav.ContentRoute
+            OnboardingCompleteState.Loading -> {}
+            OnboardingCompleteState.NotCompleted -> RootNav.Onboarding
+        }
 
         NavHost(
             navController = navController,
@@ -68,9 +62,9 @@ fun AppNavigation(
             modifier = Modifier.padding(paddingValues)
         ) {
             composable<RootNav.Onboarding> {
-                val onboardingState by onBoardingViewModel.state.collectAsStateWithLifecycle()
-                val event = onBoardingViewModel::onIntent
-                val effect = onBoardingViewModel.effect
+                val onboardingState by onboardingViewModel.state.collectAsStateWithLifecycle()
+                val event = onboardingViewModel::onIntent
+                val effect = onboardingViewModel.effect
 
                 OnboardingScreen(
                     state = onboardingState,

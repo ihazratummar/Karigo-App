@@ -20,6 +20,7 @@ runner = "1.7.0"
 core = "1.7.0"
 kotlinxSerializationJson = "1.11.0"
 nav_version = "2.9.8"
+splashscreen ="1.0.0-beta02"
 
 datastore = "1.2.1"
 koin="4.2.1"
@@ -47,6 +48,7 @@ androidx-compose-adaptive = { group = "androidx.compose.material3.adaptive", nam
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
+androidx-core-splashscreen = { group ="androidx.core", name= "core-splashscreen",  version.ref="splashscreen" }
 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav_version"}
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }

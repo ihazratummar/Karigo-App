@@ -26,6 +26,7 @@ dependencies {
     debugImplementation(libs.compose.uiTooling)
 
 
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.compose.adaptive)
 
 }

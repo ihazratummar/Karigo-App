@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -37,9 +38,16 @@ class OnboardingViewModel(
     private val _effects = MutableSharedFlow<OnboardingEffect>(replay = 0)
     val effect = _effects.asSharedFlow()
 
-    val isCompleted = getOnboardingStatusUseCase.invoke().stateIn(
-        viewModelScope, started = SharingStarted.WhileSubscribed(5000), false
-    )
+    val completedState: StateFlow<OnboardingCompleteState> = getOnboardingStatusUseCase()
+        .map { completed ->
+            if (completed) OnboardingCompleteState.Completed
+            else OnboardingCompleteState.NotCompleted
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = OnboardingCompleteState.Loading
+        )
 
     // ── INTENT HANDLER ────────────────────────────────────────────────────────
     fun onIntent(intent: OnboardingIntent) {

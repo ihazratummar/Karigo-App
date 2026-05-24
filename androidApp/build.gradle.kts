@@ -18,6 +18,7 @@ dependencies {
 
     api(projects.feature.onboarding)
     implementation(projects.feature.homeScreen)
+    implementation(projects.feature.job)
 
     implementation(libs.androidx.compose.adaptive)
     implementation(projects.android.ui)

@@ -26,6 +26,7 @@ val SurfaceHigh          = Color(0xFF222222)   // settings rows, chart container
 val SurfaceOverlay       = Color(0xFF2A2A2A)   // ripple / hover state
 val SurfaceTealTint      = Color(0xFF1E3A35)   // profile icon background (Settings)
 val NavBackground        = Color(0xFF0F0F0F)   // bottom nav bar surface
+val ModalBackGround      = Color(0xFF141414)
 val Scrim                = Color(0xCC000000)   // modal scrim
 
 // ── Borders / Dividers ────────────────────────────────────────────────────
@@ -82,7 +83,7 @@ val RankBronze           = Color(0xFFFF7043)
 
 // ── Navigation ────────────────────────────────────────────────────────────
 val NavActive            = Color(0xFF00D4AA)
-val NavInactive          = Color(0xFF616161)
+val NavInactive          = Color(0xFFa1a1aa)
 
 // ── System UI ─────────────────────────────────────────────────────────────
 val NotifBadge           = Color(0xFFE53935)
@@ -98,3 +99,16 @@ val LightOutlineVariant      = Color(0xFFE0E0E0)
 val LightPrimaryContainer    = Color(0xFFB2F0E6)
 val LightOnPrimaryContainer  = Color(0xFF003328)
 val LightErrorContainer      = Color(0xFFFFDAD6)
+
+// ── Karigo Brand Palette ──────────────────────────────────────────────────
+
+
+val KarigoBg = Color(0xFF0A0A0A)
+val KarigoCard = Color(0xFF1e1e1e)
+val KarigoRaised = Color(0xFF181818)
+val KarigoAccent = Color(0xFF00D4A0)
+val KarigoWarning = Color(0xFFF5A623)
+val KarigoError = Color(0xFFE05555)
+val KarigoText = Color(0xFFE8E6E0)
+val KarigoText2 = Color(0xFF8A8880)
+val KarigoBorder = Color(0xFF242424)

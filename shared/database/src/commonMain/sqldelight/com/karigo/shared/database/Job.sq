@@ -5,11 +5,7 @@ CREATE TABLE job (
     title TEXT NOT NULL,
     decription TEXT NOT NULL DEFAULT '',
     status TEXT NOT NULL DEFAULT 'draft',
-    labour_mode TEXT NOT NULL DEFAULT 'per_item', -- 'hourly', or 'per_item'
-    labour_hours REAL NOT NULL DEFAULT 0.0,
-    labour_rate REAL NOT NULL DEFAULT 0.0,
     material_total REAL NOT NULL DEFAULT 0.0,
-    discount REAL NOT NULL DEFAULT 0.0,
     total REAL NOT NULL DEFAULT 0.0, -- pre-calculated
     notes TEXT NOT NULL DEFAULT '',
     job_date INTEGER NOT NULL,
@@ -40,9 +36,9 @@ SELECT COUNT(*) FROM job WHERE created_at >= ? AND created_at < ?;
 ---------- WRITE -----------
 
 insertJob:
-INSERT INTO job(id, client_id, title, decription, status, labour_mode, labour_hours, labour_rate, material_total, discount,
+INSERT INTO job(id, client_id, title, decription, status,  material_total,
 total, notes, job_date, created_at, updated_at)
-VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+VALUES (?,?,?,?,?,?,?,?,?,?,?);
 
 updateJobStatus:
 UPDATE job SET status = ? WHERE id = ?;

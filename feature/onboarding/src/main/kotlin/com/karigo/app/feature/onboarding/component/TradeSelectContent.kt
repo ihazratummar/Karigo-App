@@ -71,7 +71,7 @@ fun TradeSelectContent(
             Button(
                 onClick = {event(OnboardingIntent.ConfirmTrades)},
                 enabled = onboardingState.canContinue,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = dimens.spacingMd),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = dimens.Space.base),
                 shape = KarigoShapes.large,
                 colors = ButtonDefaults.buttonColors(
                     disabledContentColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -80,7 +80,7 @@ fun TradeSelectContent(
             ) {
                 Text(
                     text = onboardingState.continueLabel,
-                    modifier = Modifier.padding(dimens.spacingSm),
+                    modifier = Modifier.padding(dimens.Space.md),
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = if (onboardingState.canContinue) MaterialTheme.colorScheme.onBackground else
                             MaterialTheme.colorScheme.onSurfaceVariant
@@ -92,8 +92,8 @@ fun TradeSelectContent(
         LazyColumn(
             modifier = modifier.padding(it)
                 .fillMaxSize(),
-            contentPadding = PaddingValues(dimens.spacingLg),
-            verticalArrangement = Arrangement.spacedBy(dimens.spacingLg)
+            contentPadding = PaddingValues(dimens.Space.lg),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.lg)
         ) {
             item {
                 Text(
@@ -117,8 +117,8 @@ fun TradeSelectContent(
             item {
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(dimens.spacingSm),
-                    verticalArrangement = Arrangement.spacedBy(dimens.spacingSm),
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.md),
+                    verticalArrangement = Arrangement.spacedBy(dimens.Space.md),
                     maxItemsInEachRow = 2
                 ) {
                     TradeType.entries.forEach { tradeType ->
@@ -133,7 +133,7 @@ fun TradeSelectContent(
                 }
             }
             item {
-                Spacer(Modifier.height(dimens.spacingXl))
+                Spacer(Modifier.height(dimens.Space.xl))
             }
         }
     }
@@ -185,27 +185,27 @@ private fun FlowRowScope.TradeItem(
             }
         ),
         border = if (isSelected || isPressed) BorderStroke(
-            width = dimens.spacingXxs,
+            width = dimens.Space._2xs,
             color = if (isPressed) MaterialTheme.colorScheme.primary
             else MaterialTheme.colorScheme.onBackground
         ) else null
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(dimens.spacingSm),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.md),
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier.padding(dimens.spacingLg)
+            modifier = Modifier.padding(dimens.Space.lg)
         ) {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .size(dimens.tradeIconSize)
+                    .size(dimens.Icon._2xl)
                     .clip(KarigoShapes.large)
                     .background(color = tradeType.color().copy(0.1f))
             ) {
                 Icon(
                     painter = painterResource(tradeType.icon()),
                     contentDescription = null,
-                    modifier = Modifier.size(dimens.tradeIconSize / 1.5f),
+                    modifier = Modifier.size(dimens.Icon._2xl / 1.5f),
                     tint = tradeType.color()
                 )
             }

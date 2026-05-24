@@ -58,6 +58,7 @@ kotlin {
             dependencies {
                 implementation(projects.shared.datastore)
                 implementation(projects.shared.database)
+                implementation(projects.shared.device)
                 implementation(projects.shared.domain)
                 implementation(projects.shared.data)
                 implementation(projects.shared.presentation)

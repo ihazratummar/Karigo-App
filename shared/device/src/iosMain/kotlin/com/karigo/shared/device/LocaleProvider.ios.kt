@@ -7,12 +7,12 @@ import platform.Foundation.currencySymbol
 import platform.Foundation.currentLocale
 
 actual class LocaleProvide actual constructor() {
-    actual fun getLocationInfo(): LocaleInto {
+    actual fun getLocationInfo(): LocaleInfo {
         val locale = NSLocale.currentLocale
         val countryCode = locale.objectForKey(NSLocaleCountryCode) as? String ?: ""
         val countryName = locale.displayNameForKey(NSLocaleCountryCode, countryCode) ?: ""
 
-        return LocaleInto(
+        return LocaleInfo(
             countryCode = countryCode,
             countryName = countryName,
             currencyCode = locale.currencyCode ?: "",

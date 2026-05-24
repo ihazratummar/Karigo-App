@@ -3,581 +3,344 @@ package com.karigo.ui.theme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 /**
  * @author hazratummar
  * Created on 17/05/26
+ * Updated on 26/05/23 (Responsive Refactor)
  */
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Karigo Adaptive Dimensions
-//
-// Three breakpoints matching Material 3 / Jetpack WindowSizeClass:
-//
-//   COMPACT  < 600dp  — standard phones (portrait)
-//                        e.g. Pixel 7, Samsung A-series, Redmi
-//   MEDIUM   600–840dp — large phones landscape, foldables unfolded inner
-//                        e.g. Galaxy Z Fold4 inner, Pixel Fold inner, tablets 7"
-//   EXPANDED > 840dp  — tablets, foldables in full expanded mode
-//                        e.g. Pixel Tablet, Samsung Tab S9, Galaxy Z Fold4 full
-//
-// Usage in screens:
-//   val d = LocalDimens.current
-//   Modifier.padding(horizontal = d.screenPaddingH)
-//   Modifier.height(d.cardPaddingV)
-// ─────────────────────────────────────────────────────────────────────────────
-
-data class KarigoDimens(
-
-    // ── Screen edge padding ──────────────────────────────────────────────
-    // Horizontal padding from screen edge to content.
-    // Compact: 16dp (standard M3 phone margin)
-    // Medium:  24dp (more breathing room on larger surfaces)
-    // Expanded: 32dp (M3 large screen canonical margin)
-    val screenPaddingH: Dp,
-
-    // Top padding below status bar (before first content element)
-    val screenPaddingTop: Dp,
-
-    // Bottom padding above nav bar (last content element clearance)
-    val screenPaddingBottom: Dp,
-
-    // ── Spacing scale ─────────────────────────────────────────────────────
-    // Based on 4dp base grid throughout.
-    val spacingXxs: Dp,    // 2dp  — icon internal padding, tight labels
-    val spacingXs: Dp,     // 4dp  — between icon and badge
-    val spacingSm: Dp,     // 8dp  — between title and subtitle within card
-    val spacingMd: Dp,     // 12dp — between card internal rows
-    val spacingLg: Dp,     // 16dp — standard content gap
-    val spacingXl: Dp,     // 20dp — section gap within screen
-    val spacingXxl: Dp,    // 24dp — between major sections
-    val spacing32: Dp,     // 32dp — large structural gaps
-
-    // ── Card dimensions ───────────────────────────────────────────────────
-    // Job cards, client cards, earnings cards — all share these.
-    val cardPaddingH: Dp,
-    val cardPaddingV: Dp,
-    val cardRadius: Dp,
-    val cardBorderWidth: Dp,
-    val cardElevation: Dp,   // always 0 — border-only design
-
-    // Inter-card gap (LazyColumn item spacing)
-    val cardSpacing: Dp,
-
-    // ── Stat cards (Home screen 3-up row) ─────────────────────────────────
-    val statCardPaddingH: Dp,
-    val statCardPaddingV: Dp,
-    val statCardRadius: Dp,
-    val statCardSpacing: Dp,   // gap between the three cards
-
-    // ── Search bar ────────────────────────────────────────────────────────
-    val searchBarHeight: Dp,
-    val searchBarRadius: Dp,
-    val searchBarPaddingH: Dp,
-    val searchBarPaddingV: Dp,
-    val searchIconSize: Dp,
-    val searchBarBottomSpacing: Dp,   // between search bar and content below
-
-    // ── Filter chips (Jobs / Clients sort row) ────────────────────────────
-    val chipPaddingH: Dp,
-    val chipPaddingV: Dp,
-    val chipRadius: Dp,       // 999dp pill shape — stays constant
-    val chipHeight: Dp,
-    val chipSpacing: Dp,      // horizontal gap between chips
-
-    // ── Status badges ─────────────────────────────────────────────────────
-    val badgePaddingH: Dp,
-    val badgePaddingV: Dp,
-    val badgeRadius: Dp,      // 999dp pill shape — stays constant
-
-    // ── Job list item internal layout ─────────────────────────────────────
-    val tradeIconSize: Dp,
-    val tradeIconRadius: Dp,
-    val tradeIconPadding: Dp,
-    val jobItemIconTextGap: Dp,
-
-    // ── Client list ───────────────────────────────────────────────────────
-    val clientAvatarSize: Dp,
-    val clientAvatarRadius: Dp,   // 50% of size = circle
-    val clientItemIconTextGap: Dp,
-
-    // Outstanding banner (Clients screen top)
-    val outstandingBannerPaddingH: Dp,
-    val outstandingBannerPaddingV: Dp,
-    val outstandingBannerRadius: Dp,
-
-    // Outstanding amount badge (red pill on client row right)
-    val outstandingBadgePaddingH: Dp,
-    val outstandingBadgePaddingV: Dp,
-
-    // ── Earnings screen ───────────────────────────────────────────────────
-    val earningsCardPaddingH: Dp,
-    val earningsCardPaddingV: Dp,
-    val earningsCardRadius: Dp,
-    val earningsCardSpacing: Dp,
-
-    val chartContainerPaddingH: Dp,
-    val chartContainerPaddingV: Dp,
-    val chartContainerRadius: Dp,
-    val chartBarWidth: Dp,
-    val chartBarRadius: Dp,
-    val chartBarSpacing: Dp,
-    val chartBarMaxHeight: Dp,
-
-    val rankBadgeSize: Dp,
-
-    // ── Settings screen ───────────────────────────────────────────────────
-    val profileCardPaddingH: Dp,
-    val profileCardPaddingV: Dp,
-    val profileCardRadius: Dp,
-
-    val profileIconSize: Dp,
-    val profileIconRadius: Dp,
-    val profileIconPadding: Dp,
-
-    val settingsSectionPaddingH: Dp,
-    val settingsSectionPaddingV: Dp,
-    val settingsSectionRadius: Dp,
-    val settingsSectionGap: Dp,
-    val settingsRowPaddingV: Dp,
-    val settingsRowIconSize: Dp,
-    val settingsRowIconTextGap: Dp,
-    val settingsRowDividerIndent: Dp,
-
-    val tradePillPaddingH: Dp,
-    val tradePillPaddingV: Dp,
-    val tradePillSpacing: Dp,
-    val tradePillIconSize: Dp,
-
-    val proCardPaddingH: Dp,
-    val proCardPaddingV: Dp,
-    val proCardRadius: Dp,
-    val proCardBorderWidth: Dp,
-    val proCardIconSize: Dp,
-
-    // ── Bottom Navigation Bar ─────────────────────────────────────────────
-    val bottomNavHeight: Dp,
-    val bottomNavIconSize: Dp,
-    val bottomNavLabelGap: Dp,
-
-    // ── FAB ───────────────────────────────────────────────────────────────
-    val fabSize: Dp,
-    val fabRadius: Dp,       // rounded square — NOT circle
-    val fabIconSize: Dp,
-    val fabMarginEnd: Dp,
-    val fabMarginBottom: Dp, // above bottom nav
-
-    // ── Notification button (Home top right) ──────────────────────────────
-    val notifButtonSize: Dp,
-    val notifButtonRadius: Dp,
-    val notifBadgeSize: Dp,
-    val notifBadgeOffset: Dp,
-
-    // ── Icons ─────────────────────────────────────────────────────────────
-    val iconSm: Dp,
-    val iconMd: Dp,
-    val iconLg: Dp,
-
-    // ── Dividers ──────────────────────────────────────────────────────────
-    val dividerThickness: Dp,
-
-    // ── Top app bar ───────────────────────────────────────────────────────
-    val topBarHeight: Dp,
-
-    // ── Onboarding ───────────────────────────────────────────────────────
-    val onboardingLogoBox: Dp = 80.dp,
-    val onboardingLogo: Dp = 32.dp
+data class AppDimens(
+    val Space: SpaceDimens,
+    val Radius: RadiusDimens,
+    val Icon: IconDimens,
+    val Height: HeightDimens,
+    val Size: SizeDimens,
+    val Padding: PaddingDimens,
+    val Elevation: ElevationDimens,
+    val Border: BorderDimens,
+    val Divider: DividerDimens,
+    val Text: TextDimens,
+    val Avatar: AvatarDimens
 )
 
-// ─────────────────────────────────────────────────────────────────────────────
-// COMPACT — phones < 600dp (your primary target: Pixel, Redmi, Samsung A-series)
-// All values measured from the 5 UI screenshots (501px wide reference)
-// ─────────────────────────────────────────────────────────────────────────────
-val CompactDimens = KarigoDimens(
-
-    screenPaddingH          = 16.dp,
-    screenPaddingTop        = 16.dp,
-    screenPaddingBottom     = 16.dp,
-
-    spacingXxs              = 2.dp,
-    spacingXs               = 4.dp,
-    spacingSm               = 8.dp,
-    spacingMd               = 12.dp,
-    spacingLg               = 16.dp,
-    spacingXl               = 20.dp,
-    spacingXxl              = 24.dp,
-    spacing32               = 32.dp,
-
-    cardPaddingH            = 16.dp,
-    cardPaddingV            = 14.dp,
-    cardRadius              = 12.dp,
-    cardBorderWidth         = 0.5.dp,
-    cardElevation           = 0.dp,
-    cardSpacing             = 8.dp,
-
-    statCardPaddingH        = 14.dp,
-    statCardPaddingV        = 14.dp,
-    statCardRadius          = 12.dp,
-    statCardSpacing         = 10.dp,
-
-    searchBarHeight         = 48.dp,
-    searchBarRadius         = 12.dp,
-    searchBarPaddingH       = 16.dp,
-    searchBarPaddingV       = 0.dp,
-    searchIconSize          = 18.dp,
-    searchBarBottomSpacing  = 12.dp,
-
-    chipPaddingH            = 16.dp,
-    chipPaddingV            = 8.dp,
-    chipRadius              = 999.dp,
-    chipHeight              = 36.dp,
-    chipSpacing             = 8.dp,
-
-    badgePaddingH           = 10.dp,
-    badgePaddingV           = 4.dp,
-    badgeRadius             = 999.dp,
-
-    tradeIconSize           = 40.dp,
-    tradeIconRadius         = 10.dp,
-    tradeIconPadding        = 10.dp,
-    jobItemIconTextGap      = 12.dp,
-
-    clientAvatarSize        = 40.dp,
-    clientAvatarRadius      = 20.dp,
-    clientItemIconTextGap   = 12.dp,
-    outstandingBannerPaddingH = 16.dp,
-    outstandingBannerPaddingV = 14.dp,
-    outstandingBannerRadius = 12.dp,
-    outstandingBadgePaddingH = 10.dp,
-    outstandingBadgePaddingV = 4.dp,
-
-    earningsCardPaddingH    = 14.dp,
-    earningsCardPaddingV    = 16.dp,
-    earningsCardRadius      = 12.dp,
-    earningsCardSpacing     = 10.dp,
-    chartContainerPaddingH  = 16.dp,
-    chartContainerPaddingV  = 16.dp,
-    chartContainerRadius    = 12.dp,
-    chartBarWidth           = 28.dp,
-    chartBarRadius          = 4.dp,
-    chartBarSpacing         = 20.dp,
-    chartBarMaxHeight       = 80.dp,
-    rankBadgeSize           = 28.dp,
-
-    profileCardPaddingH     = 16.dp,
-    profileCardPaddingV     = 16.dp,
-    profileCardRadius       = 12.dp,
-    profileIconSize         = 48.dp,
-    profileIconRadius       = 10.dp,
-    profileIconPadding      = 12.dp,
-    settingsSectionPaddingH = 16.dp,
-    settingsSectionPaddingV = 14.dp,
-    settingsSectionRadius   = 12.dp,
-    settingsSectionGap      = 12.dp,
-    settingsRowPaddingV     = 14.dp,
-    settingsRowIconSize     = 20.dp,
-    settingsRowIconTextGap  = 12.dp,
-    settingsRowDividerIndent = 48.dp,
-    tradePillPaddingH       = 12.dp,
-    tradePillPaddingV       = 6.dp,
-    tradePillSpacing        = 8.dp,
-    tradePillIconSize       = 14.dp,
-    proCardPaddingH         = 16.dp,
-    proCardPaddingV         = 16.dp,
-    proCardRadius           = 12.dp,
-    proCardBorderWidth      = 1.5.dp,
-    proCardIconSize         = 24.dp,
-
-    bottomNavHeight         = 60.dp,
-    bottomNavIconSize       = 22.dp,
-    bottomNavLabelGap       = 4.dp,
-
-    fabSize                 = 56.dp,
-    fabRadius               = 16.dp,
-    fabIconSize             = 24.dp,
-    fabMarginEnd            = 16.dp,
-    fabMarginBottom         = 16.dp,
-
-    notifButtonSize         = 44.dp,
-    notifButtonRadius       = 12.dp,
-    notifBadgeSize          = 18.dp,
-    notifBadgeOffset        = 6.dp,
-
-    iconSm                  = 16.dp,
-    iconMd                  = 20.dp,
-    iconLg                  = 24.dp,
-
-    dividerThickness        = 0.5.dp,
-
-    topBarHeight            = 56.dp,
+data class SpaceDimens(
+    val none: Dp,
+    val _2xs: Dp,
+    val xs: Dp,
+    val sm: Dp,
+    val md: Dp,
+    val _2md: Dp,
+    val base: Dp,
+    val _2base: Dp,
+    val lg: Dp,
+    val xl: Dp,
+    val _2xl: Dp,
+    val _3xl: Dp,
+    val _4xl: Dp,
+    val _5xl: Dp,
+    val _6xl: Dp,
+    val _7xl: Dp,
+    val _8xl: Dp
 )
 
-// ─────────────────────────────────────────────────────────────────────────────
-// MEDIUM — 600–840dp
-// Large phones landscape, foldables inner screen, 7" tablets
-// Slightly larger padding, wider cards, richer chart
-// ─────────────────────────────────────────────────────────────────────────────
-val MediumDimens = KarigoDimens(
-
-    screenPaddingH          = 24.dp,
-    screenPaddingTop        = 20.dp,
-    screenPaddingBottom     = 20.dp,
-
-    spacingXxs              = 2.dp,
-    spacingXs               = 4.dp,
-    spacingSm               = 8.dp,
-    spacingMd               = 14.dp,
-    spacingLg               = 20.dp,
-    spacingXl               = 24.dp,
-    spacingXxl              = 32.dp,
-    spacing32               = 40.dp,
-
-    cardPaddingH            = 20.dp,
-    cardPaddingV            = 16.dp,
-    cardRadius              = 14.dp,
-    cardBorderWidth         = 0.5.dp,
-    cardElevation           = 0.dp,
-    cardSpacing             = 10.dp,
-
-    statCardPaddingH        = 18.dp,
-    statCardPaddingV        = 16.dp,
-    statCardRadius          = 14.dp,
-    statCardSpacing         = 12.dp,
-
-    searchBarHeight         = 52.dp,
-    searchBarRadius         = 14.dp,
-    searchBarPaddingH       = 20.dp,
-    searchBarPaddingV       = 0.dp,
-    searchIconSize          = 20.dp,
-    searchBarBottomSpacing  = 16.dp,
-
-    chipPaddingH            = 18.dp,
-    chipPaddingV            = 9.dp,
-    chipRadius              = 999.dp,
-    chipHeight              = 40.dp,
-    chipSpacing             = 10.dp,
-
-    badgePaddingH           = 12.dp,
-    badgePaddingV           = 5.dp,
-    badgeRadius             = 999.dp,
-
-    tradeIconSize           = 44.dp,
-    tradeIconRadius         = 11.dp,
-    tradeIconPadding        = 11.dp,
-    jobItemIconTextGap      = 14.dp,
-
-    clientAvatarSize        = 44.dp,
-    clientAvatarRadius      = 22.dp,
-    clientItemIconTextGap   = 14.dp,
-    outstandingBannerPaddingH = 20.dp,
-    outstandingBannerPaddingV = 16.dp,
-    outstandingBannerRadius = 14.dp,
-    outstandingBadgePaddingH = 12.dp,
-    outstandingBadgePaddingV = 5.dp,
-
-    earningsCardPaddingH    = 18.dp,
-    earningsCardPaddingV    = 18.dp,
-    earningsCardRadius      = 14.dp,
-    earningsCardSpacing     = 12.dp,
-    chartContainerPaddingH  = 20.dp,
-    chartContainerPaddingV  = 18.dp,
-    chartContainerRadius    = 14.dp,
-    chartBarWidth           = 36.dp,
-    chartBarRadius          = 5.dp,
-    chartBarSpacing         = 24.dp,
-    chartBarMaxHeight       = 100.dp,
-    rankBadgeSize           = 32.dp,
-
-    profileCardPaddingH     = 20.dp,
-    profileCardPaddingV     = 18.dp,
-    profileCardRadius       = 14.dp,
-    profileIconSize         = 52.dp,
-    profileIconRadius       = 12.dp,
-    profileIconPadding      = 13.dp,
-    settingsSectionPaddingH = 20.dp,
-    settingsSectionPaddingV = 16.dp,
-    settingsSectionRadius   = 14.dp,
-    settingsSectionGap      = 14.dp,
-    settingsRowPaddingV     = 16.dp,
-    settingsRowIconSize     = 22.dp,
-    settingsRowIconTextGap  = 14.dp,
-    settingsRowDividerIndent = 52.dp,
-    tradePillPaddingH       = 14.dp,
-    tradePillPaddingV       = 7.dp,
-    tradePillSpacing        = 10.dp,
-    tradePillIconSize       = 16.dp,
-    proCardPaddingH         = 20.dp,
-    proCardPaddingV         = 18.dp,
-    proCardRadius           = 14.dp,
-    proCardBorderWidth      = 1.5.dp,
-    proCardIconSize         = 26.dp,
-
-    bottomNavHeight         = 64.dp,
-    bottomNavIconSize       = 24.dp,
-    bottomNavLabelGap       = 4.dp,
-
-    fabSize                 = 60.dp,
-    fabRadius               = 18.dp,
-    fabIconSize             = 26.dp,
-    fabMarginEnd            = 20.dp,
-    fabMarginBottom         = 20.dp,
-
-    notifButtonSize         = 48.dp,
-    notifButtonRadius       = 13.dp,
-    notifBadgeSize          = 20.dp,
-    notifBadgeOffset        = 7.dp,
-
-    iconSm                  = 18.dp,
-    iconMd                  = 22.dp,
-    iconLg                  = 26.dp,
-
-    dividerThickness        = 0.5.dp,
-
-    topBarHeight            = 60.dp,
+data class RadiusDimens(
+    val none: Dp,
+    val xs: Dp,
+    val sm: Dp,
+    val md: Dp,
+    val lg: Dp,
+    val xl: Dp,
+    val full: Dp
 )
 
-// ─────────────────────────────────────────────────────────────────────────────
-// EXPANDED — > 840dp
-// Tablets, Galaxy Z Fold4 fully open, Pixel Tablet, Samsung Tab S9
-// Two-column layouts possible. Generous margins per M3 large screen guidelines.
-// ─────────────────────────────────────────────────────────────────────────────
-val ExpandedDimens = KarigoDimens(
-
-    screenPaddingH          = 32.dp,   // M3 canonical large screen margin
-    screenPaddingTop        = 24.dp,
-    screenPaddingBottom     = 24.dp,
-
-    spacingXxs              = 2.dp,
-    spacingXs               = 4.dp,
-    spacingSm               = 8.dp,
-    spacingMd               = 16.dp,
-    spacingLg               = 24.dp,
-    spacingXl               = 32.dp,
-    spacingXxl              = 40.dp,
-    spacing32               = 48.dp,
-
-    cardPaddingH            = 24.dp,
-    cardPaddingV            = 20.dp,
-    cardRadius              = 16.dp,
-    cardBorderWidth         = 0.5.dp,
-    cardElevation           = 0.dp,
-    cardSpacing             = 12.dp,
-
-    statCardPaddingH        = 24.dp,
-    statCardPaddingV        = 20.dp,
-    statCardRadius          = 16.dp,
-    statCardSpacing         = 16.dp,
-
-    searchBarHeight         = 56.dp,
-    searchBarRadius         = 16.dp,
-    searchBarPaddingH       = 24.dp,
-    searchBarPaddingV       = 0.dp,
-    searchIconSize          = 22.dp,
-    searchBarBottomSpacing  = 20.dp,
-
-    chipPaddingH            = 20.dp,
-    chipPaddingV            = 10.dp,
-    chipRadius              = 999.dp,
-    chipHeight              = 44.dp,
-    chipSpacing             = 12.dp,
-
-    badgePaddingH           = 12.dp,
-    badgePaddingV           = 6.dp,
-    badgeRadius             = 999.dp,
-
-    tradeIconSize           = 48.dp,
-    tradeIconRadius         = 12.dp,
-    tradeIconPadding        = 12.dp,
-    jobItemIconTextGap      = 16.dp,
-
-    clientAvatarSize        = 48.dp,
-    clientAvatarRadius      = 24.dp,
-    clientItemIconTextGap   = 16.dp,
-    outstandingBannerPaddingH = 24.dp,
-    outstandingBannerPaddingV = 18.dp,
-    outstandingBannerRadius = 16.dp,
-    outstandingBadgePaddingH = 12.dp,
-    outstandingBadgePaddingV = 6.dp,
-
-    earningsCardPaddingH    = 24.dp,
-    earningsCardPaddingV    = 22.dp,
-    earningsCardRadius      = 16.dp,
-    earningsCardSpacing     = 16.dp,
-    chartContainerPaddingH  = 24.dp,
-    chartContainerPaddingV  = 22.dp,
-    chartContainerRadius    = 16.dp,
-    chartBarWidth           = 44.dp,
-    chartBarRadius          = 6.dp,
-    chartBarSpacing         = 28.dp,
-    chartBarMaxHeight       = 120.dp,
-    rankBadgeSize           = 36.dp,
-
-    profileCardPaddingH     = 24.dp,
-    profileCardPaddingV     = 22.dp,
-    profileCardRadius       = 16.dp,
-    profileIconSize         = 60.dp,
-    profileIconRadius       = 14.dp,
-    profileIconPadding      = 15.dp,
-    settingsSectionPaddingH = 24.dp,
-    settingsSectionPaddingV = 18.dp,
-    settingsSectionRadius   = 16.dp,
-    settingsSectionGap      = 16.dp,
-    settingsRowPaddingV     = 18.dp,
-    settingsRowIconSize     = 24.dp,
-    settingsRowIconTextGap  = 16.dp,
-    settingsRowDividerIndent = 56.dp,
-    tradePillPaddingH       = 16.dp,
-    tradePillPaddingV       = 8.dp,
-    tradePillSpacing        = 12.dp,
-    tradePillIconSize       = 18.dp,
-    proCardPaddingH         = 24.dp,
-    proCardPaddingV         = 22.dp,
-    proCardRadius           = 16.dp,
-    proCardBorderWidth      = 1.5.dp,
-    proCardIconSize         = 28.dp,
-
-    // On tablets the nav is a NavigationRail on the side, not a bottom bar.
-    // These values are kept for phones and used as fallback rail icon sizing.
-    bottomNavHeight         = 72.dp,
-    bottomNavIconSize       = 26.dp,
-    bottomNavLabelGap       = 4.dp,
-
-    fabSize                 = 64.dp,
-    fabRadius               = 20.dp,
-    fabIconSize             = 28.dp,
-    fabMarginEnd            = 32.dp,
-    fabMarginBottom         = 32.dp,
-
-    notifButtonSize         = 52.dp,
-    notifButtonRadius       = 14.dp,
-    notifBadgeSize          = 22.dp,
-    notifBadgeOffset        = 8.dp,
-
-    iconSm                  = 20.dp,
-    iconMd                  = 24.dp,
-    iconLg                  = 28.dp,
-
-    dividerThickness        = 0.5.dp,
-
-    topBarHeight            = 64.dp,
+data class IconDimens(
+    val _2xs: Dp,
+    val xs: Dp,
+    val sm: Dp,
+    val base: Dp,
+    val md: Dp,
+    val lg: Dp,
+    val xl: Dp,
+    val _2xl: Dp,
+    val _3xl: Dp,
+    val _4xl: Dp,
+    val _5xl: Dp,
+    val _6xl: Dp,
+    val _7xl: Dp
 )
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Material 3 Shapes
-// Wired to Compact values — shape radii do NOT scale with window size.
-// Shape tokens are semantic (extraSmall = badge, medium = card, etc).
-// ─────────────────────────────────────────────────────────────────────────────
+data class HeightDimens(
+    val minTouch: Dp,
+    val chip: Dp,
+    val chipLg: Dp,
+    val chipXl: Dp,
+    val buttonSm: Dp,
+    val buttonMd: Dp,
+    val buttonBase: Dp,
+    val buttonLg: Dp,
+    val buttonXl: Dp,
+    val button2Xl: Dp,
+    val inputSm: Dp,
+    val inputBase: Dp,
+    val inputLg: Dp,
+    val topBar: Dp,
+    val bottomNav: Dp,
+    val sheetHandle: Dp,
+    val progressTrack: Dp,
+    val progressThick: Dp
+)
+
+data class SizeDimens(
+    val toggleTrackW: Dp,
+    val toggleTrackH: Dp,
+    val toggleThumb: Dp,
+    val fab: Dp,
+    val dot: Dp,
+    val badgeMin: Dp,
+    val dialogMax: Dp,
+    val dialogIcon: Dp,
+    val chartBarMaxW: Dp,
+    val chartHeight: Dp,
+    val chartBarMaxH: Dp,
+    val stepperBtn: Dp,
+    val stepperBtnSm: Dp
+)
+
+data class PaddingDimens(
+    val _2xs: Dp,
+    val xs: Dp,
+    val sm: Dp,
+    val md: Dp,
+    val base: Dp,
+    val lg: Dp,
+    val xl: Dp,
+    val screenH: Dp,
+    val screenV: Dp
+)
+
+data class ElevationDimens(
+    val none: Dp,
+    val xs: Dp,
+    val sm: Dp,
+    val md: Dp,
+    val lg: Dp,
+    val xl: Dp
+)
+
+data class BorderDimens(
+    val none: Dp,
+    val thin: Dp,
+    val thick: Dp
+)
+
+data class DividerDimens(
+    val thickness: Dp,
+    val paddingV: Dp
+)
+
+data class TextDimens(
+    val _2xs: TextUnit,
+    val xs: TextUnit,
+    val sm: TextUnit,
+    val base: TextUnit,
+    val md: TextUnit,
+    val lg: TextUnit,
+    val xl: TextUnit,
+    val _2xl: TextUnit,
+    val _3xl: TextUnit,
+    val _4xl: TextUnit,
+    val _5xl: TextUnit,
+    val _6xl: TextUnit
+)
+
+data class AvatarDimens(
+    val xs: Dp,
+    val sm: Dp,
+    val base: Dp,
+    val md: Dp,
+    val lg: Dp,
+    val xl: Dp,
+    val _2xl: Dp
+)
+
+val CompactAppDimens = AppDimens(
+    Space = SpaceDimens(
+        none = 0.dp,
+        _2xs = 2.dp,
+        xs = 4.dp,
+        sm = 6.dp,
+        md = 8.dp,
+        _2md = 10.dp,
+        base = 12.dp,
+        _2base = 14.dp,
+        lg = 16.dp,
+        xl = 20.dp,
+        _2xl = 24.dp,
+        _3xl = 32.dp,
+        _4xl = 48.dp,
+        _5xl = 64.dp,
+        _6xl = 80.dp,
+        _7xl = 96.dp,
+        _8xl = 112.dp
+    ),
+    Radius = RadiusDimens(
+        none = 0.dp,
+        xs = 4.dp,
+        sm = 8.dp,
+        md = 12.dp,
+        lg = 16.dp,
+        xl = 24.dp,
+        full = 9999.dp
+    ),
+    Icon = IconDimens(
+        _2xs = 12.dp,
+        xs = 16.dp,
+        sm = 20.dp,
+        base = 24.dp,
+        md = 28.dp,
+        lg = 32.dp,
+        xl = 36.dp,
+        _2xl = 40.dp,
+        _3xl = 48.dp,
+        _4xl = 56.dp,
+        _5xl = 64.dp,
+        _6xl = 80.dp,
+        _7xl = 96.dp
+    ),
+    Height = HeightDimens(
+        minTouch = 48.dp,
+        chip = 24.dp,
+        chipLg = 32.dp,
+        chipXl = 36.dp,
+        buttonSm = 32.dp,
+        buttonMd = 36.dp,
+        buttonBase = 40.dp,
+        buttonLg = 44.dp,
+        buttonXl = 48.dp,
+        button2Xl = 56.dp,
+        inputSm = 40.dp,
+        inputBase = 48.dp,
+        inputLg = 56.dp,
+        topBar = 56.dp,
+        bottomNav = 64.dp,
+        sheetHandle = 4.dp,
+        progressTrack = 4.dp,
+        progressThick = 6.dp
+    ),
+    Size = SizeDimens(
+        toggleTrackW = 44.dp,
+        toggleTrackH = 24.dp,
+        toggleThumb = 20.dp,
+        fab = 56.dp,
+        dot = 8.dp,
+        badgeMin = 18.dp,
+        dialogMax = 384.dp,
+        dialogIcon = 48.dp,
+        chartBarMaxW = 28.dp,
+        chartHeight = 160.dp,
+        chartBarMaxH = 128.dp,
+        stepperBtn = 32.dp,
+        stepperBtnSm = 24.dp
+    ),
+    Padding = PaddingDimens(
+        _2xs = 2.dp,
+        xs = 4.dp,
+        sm = 8.dp,
+        md = 12.dp,
+        base = 16.dp,
+        lg = 20.dp,
+        xl = 24.dp,
+        screenH = 16.dp,
+        screenV = 12.dp
+    ),
+    Elevation = ElevationDimens(
+        none = 0.dp,
+        xs = 2.dp,
+        sm = 4.dp,
+        md = 8.dp,
+        lg = 12.dp,
+        xl = 16.dp
+    ),
+    Border = BorderDimens(
+        none = 0.dp,
+        thin = 1.dp,
+        thick = 2.dp
+    ),
+    Divider = DividerDimens(
+        thickness = 1.dp,
+        paddingV = 12.dp
+    ),
+    Text = TextDimens(
+        _2xs = 9.sp,
+        xs = 10.sp,
+        sm = 11.sp,
+        base = 12.sp,
+        md = 14.sp,
+        lg = 16.sp,
+        xl = 18.sp,
+        _2xl = 20.sp,
+        _3xl = 22.sp,
+        _4xl = 24.sp,
+        _5xl = 30.sp,
+        _6xl = 36.sp
+    ),
+    Avatar = AvatarDimens(
+        xs = 28.dp,
+        sm = 32.dp,
+        base = 36.dp,
+        md = 40.dp,
+        lg = 48.dp,
+        xl = 56.dp,
+        _2xl = 64.dp
+    )
+)
+
+// Medium scaling
+val MediumAppDimens = CompactAppDimens.copy(
+    Padding = CompactAppDimens.Padding.copy(
+        screenH = 24.dp,
+        screenV = 16.dp
+    ),
+    Space = CompactAppDimens.Space.copy(
+        base = 14.dp,
+        lg = 20.dp,
+        xl = 24.dp,
+        _2xl = 32.dp,
+        _3xl = 40.dp
+    ),
+    Height = CompactAppDimens.Height.copy(
+        topBar = 60.dp,
+        bottomNav = 68.dp
+    )
+)
+
+// Expanded scaling
+val ExpandedAppDimens = CompactAppDimens.copy(
+    Padding = CompactAppDimens.Padding.copy(
+        screenH = 32.dp,
+        screenV = 20.dp
+    ),
+    Space = CompactAppDimens.Space.copy(
+        base = 16.dp,
+        lg = 24.dp,
+        xl = 32.dp,
+        _2xl = 40.dp,
+        _3xl = 48.dp
+    ),
+    Height = CompactAppDimens.Height.copy(
+        topBar = 64.dp,
+        bottomNav = 72.dp
+    )
+)
+
 val KarigoShapes = Shapes(
-    // extraSmall → status badges, filter chips, trade pills (full pill)
-    extraSmall  = RoundedCornerShape(999.dp),
-    // small      → tight inner containers, avatar badges
-    small       = RoundedCornerShape(8.dp),
-    // medium     → all cards: job, client, stat, earnings
-    medium      = RoundedCornerShape(12.dp),
-    // large      → search bar, settings section blocks, chart container
-    large       = RoundedCornerShape(16.dp),
-    // extraLarge → FAB (rounded square), profile icon bg, bottom sheet
-    extraLarge  = RoundedCornerShape(20.dp),
+    extraSmall = RoundedCornerShape(CompactAppDimens.Radius.full),
+    small = RoundedCornerShape(CompactAppDimens.Radius.sm),
+    medium = RoundedCornerShape(CompactAppDimens.Radius.md),
+    large = RoundedCornerShape(CompactAppDimens.Radius.lg),
+    extraLarge = RoundedCornerShape(CompactAppDimens.Radius.xl),
 )

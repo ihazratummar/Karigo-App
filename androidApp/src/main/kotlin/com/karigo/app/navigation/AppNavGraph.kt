@@ -2,6 +2,7 @@ package com.karigo.app.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -44,21 +45,23 @@ fun AppNavigation(
     Scaffold(
         modifier = modifier,
         bottomBar = {
+            HorizontalDivider()
             BottomBar(navHostController = navController)
         }
     ) { paddingValues ->
 
         val competeState by onboardingViewModel.completedState.collectAsStateWithLifecycle()
 
-        val startDestination = when(competeState){
+        if (competeState == OnboardingCompleteState.Loading) return@Scaffold
+
+        val startDestination = when (competeState) {
             OnboardingCompleteState.Completed -> RootNav.ContentRoute
-            OnboardingCompleteState.Loading -> {}
-            OnboardingCompleteState.NotCompleted -> RootNav.Onboarding
+            else -> RootNav.Onboarding
         }
 
         NavHost(
             navController = navController,
-            startDestination =startDestination,
+            startDestination = startDestination,
             modifier = Modifier.padding(paddingValues)
         ) {
             composable<RootNav.Onboarding> {
@@ -76,7 +79,7 @@ fun AppNavigation(
                 )
             }
 
-            contentNavigation()
+            contentNavigation(navHostController = navController)
         }
     }
 
@@ -124,7 +127,7 @@ fun BottomBar(
                                 screen.unSelectedIcon
                             ),
                             contentDescription = screen.name,
-                            modifier = Modifier.size(dimens.iconMd)
+                            modifier = Modifier.size(dimens.Icon.sm)
                         )
                     },
                     label = {

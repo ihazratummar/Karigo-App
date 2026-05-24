@@ -7,7 +7,7 @@ package com.karigo.shared.device
  */
 
 
-data class LocaleInto(
+data class LocaleInfo(
     val countryCode: String,
     val countryName: String,
     val currencyCode: String,
@@ -16,5 +16,5 @@ data class LocaleInto(
 
 
 expect class LocaleProvide() {
-    fun getLocationInfo() : LocaleInto
+    fun getLocationInfo() : LocaleInfo
 }

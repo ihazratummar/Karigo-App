@@ -1,5 +1,6 @@
 package com.karigo.app.feature.onboarding
 
+import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -8,9 +9,14 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarData
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.karigo.app.feature.onboarding.component.ReadyContent
 import com.karigo.app.feature.onboarding.component.TradeSelectContent
@@ -37,6 +43,8 @@ fun OnboardingScreen(
     navigateToDashboard: () -> Unit
 ){
 
+    val snackbarState = remember { SnackbarHostState() }
+
     LaunchedEffect(Unit) {
         effect?.collect { effect ->
             when(effect){
@@ -44,13 +52,21 @@ fun OnboardingScreen(
                     navigateToDashboard()
                 }
                 is OnboardingEffect.ShowError -> {
-                    // Error handling logic (e.g., showing a snackbar) would go here
+                    snackbarState.showSnackbar(
+                        message = effect.message,
+                        withDismissAction = true
+                    )
+                    Log.e("OnboardingScreen", "Error -> ${effect.message}")
                 }
             }
         }
     }
 
-    Scaffold {paddingValues ->
+    Scaffold (
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarState)
+        }
+    ){paddingValues ->
 
         AnimatedContent(
             targetState = state.currentStep,
@@ -90,7 +106,6 @@ fun OnboardingScreen(
             }
 
         }
-
 
     }
 

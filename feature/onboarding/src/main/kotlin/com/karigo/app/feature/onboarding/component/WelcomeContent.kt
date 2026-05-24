@@ -48,7 +48,7 @@ fun WelcomeContent(
 ) {
     Column(
         modifier = modifier
-            .padding(horizontal = dimens.spacingXl)
+            .padding(horizontal = dimens.Space.xl)
             .fillMaxSize()
             .background(
                 color = MaterialTheme.colorScheme.background
@@ -59,7 +59,7 @@ fun WelcomeContent(
 
         Box(
             modifier = Modifier
-                .size(dimens.onboardingLogoBox)
+                .size(dimens.Icon._6xl)
                 .clip(KarigoShapes.extraLarge)
                 .background(
                     color = MaterialTheme.colorScheme.primaryContainer
@@ -70,11 +70,11 @@ fun WelcomeContent(
                 painter = painterResource(R.drawable.mechanic),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(dimens.onboardingLogo)
+                modifier = Modifier.size(dimens.Icon.lg)
             )
         }
 
-        Spacer(Modifier.height(dimens.spacingLg))
+        Spacer(Modifier.height(dimens.Space.lg))
 
         Text(
             text = "Karigo",
@@ -82,7 +82,7 @@ fun WelcomeContent(
                 color = MaterialTheme.colorScheme.onBackground,
             )
         )
-        Spacer(Modifier.height(dimens.spacingMd))
+        Spacer(Modifier.height(dimens.Space.base))
         Text(
             text = """
                     The simplest way to manage jobs, clients, and 
@@ -96,7 +96,7 @@ fun WelcomeContent(
             )
         )
 
-        Spacer(Modifier.height(dimens.spacingXl))
+        Spacer(Modifier.height(dimens.Space.xl))
 
         val welcomeInfoData = listOf<WelcomeScreenCardData>(
             WelcomeScreenCardData(
@@ -123,26 +123,26 @@ fun WelcomeContent(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = dimens.spacingXs),
+                    .padding(vertical = dimens.Space.xs),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surfaceVariant
                 ),
                 shape = KarigoShapes.large,
                 border = BorderStroke(
-                    width = dimens.spacingXxs / 1.1f,
+                    width = dimens.Space._2xs / 1.1f,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.1f)
                 )
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(dimens.spacingLg),
+                        .padding(dimens.Space.lg),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(dimens.spacingSm)
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(dimens.tradeIconSize * 1.3f)
+                            .size(dimens.Icon._2xl * 1.3f)
                             .clip(KarigoShapes.large)
                             .background(color = it.iconColor.copy(0.1f)),
                         contentAlignment = Alignment.Center
@@ -150,12 +150,12 @@ fun WelcomeContent(
                         Icon(
                             painter = painterResource(it.icon),
                             contentDescription = null,
-                            modifier = Modifier.size(dimens.iconMd),
+                            modifier = Modifier.size(dimens.Icon.sm),
                             tint = it.iconColor
                         )
                     }
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(dimens.spacingXs)
+                        verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
                     ) {
                         Text(
                             text = it.title,
@@ -174,7 +174,7 @@ fun WelcomeContent(
             }
         }
 
-        Spacer(Modifier.height(dimens.spacingXl))
+        Spacer(Modifier.height(dimens.Space.xl))
 
         Button(
             onClick = onGetStartedClick,
@@ -186,7 +186,7 @@ fun WelcomeContent(
                 style = MaterialTheme.typography.titleMedium.copy(
                     color = MaterialTheme.colorScheme.onPrimary
                 ),
-                modifier = Modifier.padding(vertical = dimens.spacingSm)
+                modifier = Modifier.padding(vertical = dimens.Space.md)
             )
         }
 

@@ -6,7 +6,7 @@ CREATE TABLE job_material (
     name TEXT NOT NULL,
     unit TEXT NOT NULL,
     unit_price REAL NOT NULL,
-    quantity REAL NOT NULL,
+    quantity INTEGER NOT NULL,
     total REAL NOT NULL,
     created_at INTEGER NOT NULL
 );

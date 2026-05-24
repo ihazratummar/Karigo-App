@@ -15,6 +15,7 @@ kotlin {
 dependencies {
 
     implementation(projects.shared.model)
+    implementation(projects.shared.device)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.ui)

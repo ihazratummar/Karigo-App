@@ -30,55 +30,55 @@ import androidx.window.core.layout.WindowSizeClass
 // ─────────────────────────────────────────────────────────────────────────────
 
 private val DarkColorScheme = darkColorScheme(
-    primary              = Primary,
-    onPrimary            = OnPrimary,
-    primaryContainer     = PrimaryContainer,
-    onPrimaryContainer   = OnPrimaryContainer,
-    secondary            = StatusInvoiced,
-    onSecondary          = OnStatusInvoiced,
-    secondaryContainer   = StatusInvoicedSurface,
+    primary = Primary,
+    onPrimary = OnPrimary,
+    primaryContainer = PrimaryContainer,
+    onPrimaryContainer = OnPrimaryContainer,
+    secondary = StatusInvoiced,
+    onSecondary = OnStatusInvoiced,
+    secondaryContainer = StatusInvoicedSurface,
     onSecondaryContainer = OnStatusInvoiced,
-    tertiary             = StatusPending,
-    onTertiary           = OnStatusPending,
-    tertiaryContainer    = StatusPendingSurface,
-    onTertiaryContainer  = OnStatusPending,
-    error                = Error,
-    onError              = OnError,
-    errorContainer       = ErrorContainer,
-    onErrorContainer     = OnErrorContainer,
-    background           = Background,
-    onBackground         = TextPrimary,
-    surface              = Surface,
-    onSurface            = TextPrimary,
-    surfaceVariant       = SurfaceVariant,
-    onSurfaceVariant     = TextSecondary,
-    outline              = Outline,
-    outlineVariant       = OutlineVariant,
-    inverseSurface       = TextPrimary,
-    inverseOnSurface     = Surface,
-    inversePrimary       = PrimaryDim,
-    surfaceTint          = Primary,
-    scrim                = Scrim,
+    tertiary = StatusPending,
+    onTertiary = OnStatusPending,
+    tertiaryContainer = StatusPendingSurface,
+    onTertiaryContainer = OnStatusPending,
+    error = Error,
+    onError = OnError,
+    errorContainer = ErrorContainer,
+    onErrorContainer = OnErrorContainer,
+    background = Background,
+    onBackground = TextPrimary,
+    surface = Surface,
+    onSurface = TextPrimary,
+    surfaceVariant = SurfaceVariant,
+    onSurfaceVariant = TextSecondary,
+    outline = Outline,
+    outlineVariant = OutlineVariant,
+    inverseSurface = TextPrimary,
+    inverseOnSurface = Surface,
+    inversePrimary = PrimaryDim,
+    surfaceTint = Primary,
+    scrim = Scrim,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary              = PrimaryDim,
-    onPrimary            = OnPrimary,
-    primaryContainer     = LightPrimaryContainer,
-    onPrimaryContainer   = LightOnPrimaryContainer,
-    error                = Error,
-    onError              = OnError,
-    errorContainer       = LightErrorContainer,
-    onErrorContainer     = Error,
-    background           = LightBackground,
-    onBackground         = OnBackground,
-    surface              = LightSurface,
-    onSurface            = OnBackground,
-    surfaceVariant       = LightSurfaceVariant,
-    onSurfaceVariant     = LightOnSurfaceVariant,
-    outline              = LightOutline,
-    outlineVariant       = LightOutlineVariant,
-    scrim                = Scrim,
+    primary = PrimaryDim,
+    onPrimary = OnPrimary,
+    primaryContainer = LightPrimaryContainer,
+    onPrimaryContainer = LightOnPrimaryContainer,
+    error = Error,
+    onError = OnError,
+    errorContainer = LightErrorContainer,
+    onErrorContainer = Error,
+    background = LightBackground,
+    onBackground = OnBackground,
+    surface = LightSurface,
+    onSurface = OnBackground,
+    surfaceVariant = LightSurfaceVariant,
+    onSurfaceVariant = LightOnSurfaceVariant,
+    outline = LightOutline,
+    outlineVariant = LightOutlineVariant,
+    scrim = Scrim,
 )
 
 
@@ -94,9 +94,9 @@ fun KarigoTheme(
     // ── Resolve adaptive tokens from window size ───────────────────────────
     val dimens = remember(windowSizeClass) {
         when {
-            windowSizeClass.isWidthAtLeastBreakpoint(840) -> ExpandedDimens
-            windowSizeClass.isWidthAtLeastBreakpoint(600) -> MediumDimens
-            else -> CompactDimens
+            windowSizeClass.isWidthAtLeastBreakpoint(840) -> ExpandedAppDimens
+            windowSizeClass.isWidthAtLeastBreakpoint(600) -> MediumAppDimens
+            else -> CompactAppDimens
         }
     }
 
@@ -131,13 +131,14 @@ fun KarigoTheme(
 
     // ── Provide tokens + apply MaterialTheme ──────────────────────────────
     CompositionLocalProvider(
-        LocalDimens  provides dimens,
+        LocalDimens provides dimens,
         LocalAppTypography provides typography,
+        LocalDeviceInfo provides getDeviceInfo()
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography  = typography.toMaterial3Typography(),
-            shapes      = KarigoShapes,
+            typography = typography,
+            shapes = KarigoShapes,
             content = content
         )
     }
@@ -157,10 +158,14 @@ fun KarigoThemePreview(
 }
 
 
-
-val LocalDimens = compositionLocalOf { CompactDimens }
+val LocalDimens = compositionLocalOf { CompactAppDimens }
 val LocalAppTypography = compositionLocalOf { CompactTypography }
+val LocalDeviceInfo = compositionLocalOf { getDeviceInfo() }
 
 val dimens
     @Composable
     get() = LocalDimens.current
+
+val deviceInfo
+    @Composable
+    get() = LocalDeviceInfo.current

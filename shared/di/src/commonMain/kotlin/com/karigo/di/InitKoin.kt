@@ -18,6 +18,7 @@ fun initKoin(koinApplication : (KoinApplication.() -> Unit)? = null) {
             getDatabaseModule(),
             getRepositoryModule(),
             getDomainModule(),
+            getDeviceModule(),
             getPresentationModule()
         )
     }

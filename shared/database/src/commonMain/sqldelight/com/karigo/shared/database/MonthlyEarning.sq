@@ -2,9 +2,9 @@ CREATE VIEW monthly_earning AS
 SELECT
 strftime('%Y-%m' , datetime(job.created_at / 1000, 'unixepoch')) AS month,
 COUNT (*) AS job_count,
-COALESCE(SUM(CASE WHEN job.status=='paid' THEN job.total ELSE 0.0. END), 0.0) AS revenue,
+COALESCE(SUM(CASE WHEN job.status=='paid' THEN job.total ELSE 0.0 END), 0.0) AS revenue,
 COALESCE(SUM(job.total), 0.0) AS total_billed,
-COALESCE(SUM(CASE WHEN job.status !='paid' THEN job.total ELSE 0.0. END), 0.0) AS outstanding
+COALESCE(SUM(CASE WHEN job.status !='paid' THEN job.total ELSE 0.0 END), 0.0) AS outstanding
 FROM job
 GROUP BY strftime('%Y-%m', datetime(job.created_at / 1000, 'unixepoch'))
 ORDER BY month DESC;

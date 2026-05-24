@@ -29,6 +29,9 @@ sealed class MainRoute {
     data object JobsRoute
 
     @Serializable
+    data object AddJobRoute
+
+    @Serializable
     data object ClientRoute
 
     @Serializable
@@ -36,6 +39,9 @@ sealed class MainRoute {
 
     @Serializable
     data object SettingRoute
+
+    @Serializable
+    data object NotificationRoute
 }
 
 @Serializable

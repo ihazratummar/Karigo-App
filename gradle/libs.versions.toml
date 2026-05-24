@@ -28,6 +28,7 @@ kotlinx-coroutines = "1.8.1"
 lifecycle = "2.10.0"
 sqldelight = "2.3.2"
 kotlinx-datetime = "0.8.0"
+moko-permission = "0.20.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -66,8 +67,13 @@ lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", versi
 sqldelight-coroutines        = { module = "app.cash.sqldelight:coroutines-extensions",            version.ref = "sqldelight" }
 sqldelight-android-driver    = { module = "app.cash.sqldelight:android-driver",                   version.ref = "sqldelight" }
 sqldelight-native-driver     = { module = "app.cash.sqldelight:native-driver",                    version.ref = "sqldelight" }
-sqldelight-common            = {module = "app.cash.sqldelight:runtime",                           version.ref = "sqldelight"}
+sqldelight-common            = { module = "app.cash.sqldelight:runtime",                          version.ref = "sqldelight"}
 kotlinx-datetime             = { module = "org.jetbrains.kotlinx:kotlinx-datetime",               version.ref = "kotlinx-datetime" }
+
+moko-permission-core         = { module = "dev.icerock.moko:permissions",                         version.ref = "moko-permission"}
+moko-permission-contacts     = { module = "dev.icerock.moko:permissions-contacts",                version.ref = "moko-permission"}
+moko-permission-notification = { module = "dev.icerock.moko:permissions-notification",            version.ref = "moko-permission"}
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

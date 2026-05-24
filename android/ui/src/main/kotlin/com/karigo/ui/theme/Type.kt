@@ -188,407 +188,108 @@ fun KarigoTypography.toMaterial3Typography() = Typography(
 )
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Shared line height / letter spacing constants
-// These do NOT scale — only fontSize scales between breakpoints
-// ─────────────────────────────────────────────────────────────────────────────
-private val LH_TIGHT    = 1.15f   // headings, large amounts
-private val LH_NORMAL   = 1.50f   // body text, subtitles
-private val LH_RELAXED  = 1.60f   // long descriptions, settings subtitles
-
-private val LS_NORMAL   = 0.sp
-private val LS_WIDE     = 0.5.sp
-private val LS_CAPS     = 1.2.sp  // ALL CAPS tracked labels: BILLED, MY TRADES
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Builder — creates a KarigoTypography for a given base scale factor
 // compactFactor = 1.0, mediumFactor = 1.1, expandedFactor = 1.2
 // This ensures every sp value scales proportionally, not hardcoded per size.
 // ─────────────────────────────────────────────────────────────────────────────
-private fun buildTypography(scale: Float): KarigoTypography {
+private fun buildTypography(scale: Float): Typography {
 
-    fun sp(base: Float): TextUnit = (base * scale).sp
+    fun s(size: Float) = (size * scale).sp
 
-    return KarigoTypography(
+    return Typography(
 
-        // ── Screen title — "All Jobs", "Clients", "Earnings", "Settings"
-        // Measured: 20sp, Bold, tight line height
-        screenTitle = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Bold,
-            fontSize      = sp(20f),
-            lineHeight    = sp(20f * LH_TIGHT),
-            letterSpacing = LS_NORMAL,
+        displayLarge = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = s(32f),
+            lineHeight = s(40f),
+            letterSpacing = (-0.5).sp
         ),
 
-        // ── Greeting name — "Hazrat Ummar" (Home screen large name)
-        // Measured: 24sp, Bold
-        greetingName = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Bold,
-            fontSize      = sp(24f),
-            lineHeight    = sp(24f * LH_TIGHT),
-            letterSpacing = (-0.5).sp,
+        displayMedium = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = s(28f),
+            lineHeight = s(36f)
         ),
 
-        // ── Greeting subtitle — "Good afternoon, Hazrat Ummar"
-        // Measured: 12sp, Regular, TextSecondary colour
-        greetingSubtitle = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(12f),
-            lineHeight    = sp(12f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
+        headlineLarge = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = s(24f),
+            lineHeight = s(30f)
         ),
 
-        // ── Section header — "Recent Jobs", "Monthly Revenue", "Top Clients"
-        // Measured: 16sp, SemiBold
-        sectionHeader = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(16f),
-            lineHeight    = sp(16f * LH_TIGHT),
-            letterSpacing = LS_NORMAL,
+        headlineMedium = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = s(20f),
+            lineHeight = s(28f)
         ),
 
-        // ── Section count — "6 total", "5 months"
-        // Measured: 13sp, Regular, TextTertiary
-        sectionCount = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(13f),
-            lineHeight    = sp(13f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-            color         = TextTertiary,
+        titleLarge = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = s(18f),
+            lineHeight = s(24f)
         ),
 
-        // ── Stat card label — "BILLED", "UNPAID", "DONE"
-        // Measured: 10sp, SemiBold, ALL CAPS, wide tracking, TextTertiary
-        statLabel = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(10f),
-            lineHeight    = sp(14f),
-            letterSpacing = LS_CAPS,
-            color         = TextTertiary,
+        titleMedium = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Medium,
+            fontSize = s(16f),
+            lineHeight = s(24f)
         ),
 
-        // ── Stat amount normal — "₹9,010" (Billed, white)
-        // Measured: 24sp, Bold
-        statAmountNormal = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Bold,
-            fontSize      = sp(24f),
-            lineHeight    = sp(24f * LH_TIGHT),
-            letterSpacing = LS_NORMAL,
+        titleSmall = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Medium,
+            fontSize = s(14f),
+            lineHeight = s(20f)
         ),
 
-        // ── Stat amount highlighted — "₹4,045" (Unpaid, red, slightly larger)
-        // Measured: 26sp, Bold — visually larger than the billed card
-        statAmountHighlighted = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Bold,
-            fontSize      = sp(26f),
-            lineHeight    = sp(26f * LH_TIGHT),
-            letterSpacing = LS_NORMAL,
-            color         = AmountUnpaid,
+        bodyLarge = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = s(16f),
+            lineHeight = s(24f)
         ),
 
-        // ── Job title — "Bathroom leak repair"
-        // Measured: 15sp, SemiBold
-        jobTitle = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(15f),
-            lineHeight    = sp(15f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
+        bodyMedium = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = s(14f),
+            lineHeight = s(20f)
         ),
 
-        // ── Job client name — "Rajesh Kumar" (small, below job title)
-        // Measured: 13sp, Regular, TextSecondary
-        jobClientName = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(13f),
-            lineHeight    = sp(13f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
+        bodySmall = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = s(12f),
+            lineHeight = s(16f)
         ),
 
-        // ── Job date — "14 May · 2:00 pm"
-        // Measured: 12sp, Regular, TextSecondary
-        jobDate = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(12f),
-            lineHeight    = sp(12f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
+        labelLarge = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = s(14f),
+            lineHeight = s(20f)
         ),
 
-        // ── Job amount — "₹1,505", "₹4,215"
-        // Measured: 14sp, SemiBold, white
-        jobAmount = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(14f),
-            lineHeight    = sp(14f * LH_TIGHT),
-            letterSpacing = LS_NORMAL,
+        labelMedium = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Medium,
+            fontSize = s(12f),
+            lineHeight = s(16f)
         ),
 
-        // ── Status badge — "In Progress", "Pending", "Done"
-        // Measured: 11sp, Medium — fits inside the pill badges
-        statusBadge = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Medium,
-            fontSize      = sp(11f),
-            lineHeight    = sp(14f),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Search input — placeholder and typed text
-        // Measured: 14sp, Regular
-        searchInput = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(14f),
-            lineHeight    = sp(14f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Filter chip — "All", "Active", "Pending"
-        // Measured: 13sp, Medium
-        filterChip = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Medium,
-            fontSize      = sp(13f),
-            lineHeight    = sp(13f * LH_TIGHT),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Client name — "Amit Patel" (larger context, own screen)
-        // Measured: 15sp, SemiBold
-        clientName = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(15f),
-            lineHeight    = sp(15f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Client phone — "+91 76543 21098"
-        // Measured: 13sp, Regular, TextSecondary
-        clientPhone = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(13f),
-            lineHeight    = sp(13f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
-        ),
-
-        // ── Client meta row — "1 jobs · ₹720 billed"
-        // Measured: 12sp, Regular, TextSecondary
-        clientMeta = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(12f),
-            lineHeight    = sp(12f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
-        ),
-
-        // ── Outstanding badge — "₹4,215" pill on client row
-        // Measured: 12sp, SemiBold
-        clientOutstandingBadge = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(12f),
-            lineHeight    = sp(14f),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Outstanding label — "Total Outstanding"
-        // Measured: 11sp, Regular, TextSecondary
-        outstandingLabel = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(11f),
-            lineHeight    = sp(14f),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
-        ),
-
-        // ── Outstanding amount — "₹7,540"
-        // Measured: 22sp, Bold, AmountUnpaid (red)
-        outstandingAmount = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Bold,
-            fontSize      = sp(22f),
-            lineHeight    = sp(22f * LH_TIGHT),
-            letterSpacing = LS_NORMAL,
-            color         = AmountUnpaid,
-        ),
-
-        // ── Earnings card label — "REVENUE", "AVG PER JOB"
-        // Measured: 10sp, SemiBold, ALL CAPS, TextTertiary
-        earningsCardLabel = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(10f),
-            lineHeight    = sp(14f),
-            letterSpacing = LS_CAPS,
-            color         = TextTertiary,
-        ),
-
-        // ── Earnings card amount — "₹2,13,000", "₹3,043"
-        // Measured: 26sp, Bold
-        earningsCardAmount = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Bold,
-            fontSize      = sp(26f),
-            lineHeight    = sp(26f * LH_TIGHT),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Earnings sublabel — "70 jobs", "this year"
-        // Measured: 13sp, Regular, TextSecondary
-        earningsCardSublabel = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(13f),
-            lineHeight    = sp(13f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
-        ),
-
-        // ── Chart month label — "Jan", "Feb", "May"
-        // Measured: 11sp, Regular, TextSecondary
-        chartMonthLabel = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(11f),
-            lineHeight    = sp(14f),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
-        ),
-
-        // ── Chart bar amount — "₹24,500" below active bar
-        // Measured: 12sp, SemiBold, Primary (teal)
-        chartBarAmount = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(12f),
-            lineHeight    = sp(14f),
-            letterSpacing = LS_NORMAL,
-            color         = Primary,
-        ),
-
-        // ── Rank badge number — "1", "2", "3"
-        // Measured: 13sp, Bold
-        rankBadgeNumber = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Bold,
-            fontSize      = sp(13f),
-            lineHeight    = sp(16f),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Profile name — "Hazrat Ummar" (Settings)
-        // Measured: 16sp, SemiBold
-        profileName = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(16f),
-            lineHeight    = sp(16f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Profile address — "42 Andheri West, Mumbai 400058"
-        // Measured: 13sp, Regular, TextSecondary
-        profileAddress = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(13f),
-            lineHeight    = sp(13f * LH_RELAXED),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
-        ),
-
-        // ── Settings section label — "MY TRADES", "APPEARANCE", "JOB DEFAULTS"
-        // Measured: 10sp, SemiBold, ALL CAPS, wide tracking, TextTertiary
-        settingsSectionLabel = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(10f),
-            lineHeight    = sp(14f),
-            letterSpacing = LS_CAPS,
-            color         = TextTertiary,
-        ),
-
-        // ── Settings item title — "Dark Mode", "Default Labour Rate"
-        // Measured: 15sp, Medium
-        settingsItemTitle = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Medium,
-            fontSize      = sp(15f),
-            lineHeight    = sp(15f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Settings item subtitle — "Easier on eyes outdoors", "₹450/hour"
-        // Measured: 12sp, Regular, TextSecondary
-        settingsItemSubtitle = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(12f),
-            lineHeight    = sp(12f * LH_RELAXED),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
-        ),
-
-        // ── Pro card title — "Go Pro"
-        // Measured: 15sp, SemiBold, Primary (teal)
-        proCardTitle = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.SemiBold,
-            fontSize      = sp(15f),
-            lineHeight    = sp(15f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-            color         = Primary,
-        ),
-
-        // ── Pro card subtitle
-        // Measured: 12sp, Regular, TextSecondary
-        proCardSubtitle = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(12f),
-            lineHeight    = sp(12f * LH_RELAXED),
-            letterSpacing = LS_NORMAL,
-            color         = TextSecondary,
-        ),
-
-        // ── Nav label — "Home", "Jobs", "Clients"
-        // Measured: 10sp, Regular
-        navLabel = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Normal,
-            fontSize      = sp(10f),
-            lineHeight    = sp(12f),
-            letterSpacing = LS_NORMAL,
-        ),
-
-        // ── Action link — "See all", "Change"
-        // Measured: 14sp, Medium, Primary (teal)
-        actionLink = TextStyle(
-            fontFamily    = InterFontFamily,
-            fontWeight    = FontWeight.Medium,
-            fontSize      = sp(14f),
-            lineHeight    = sp(14f * LH_NORMAL),
-            letterSpacing = LS_NORMAL,
-            color         = Primary,
-        ),
+        labelSmall = TextStyle(
+            fontFamily = InterFontFamily,
+            fontWeight = FontWeight.Medium,
+            fontSize = s(10f),
+            lineHeight = s(14f),
+            letterSpacing = 1.sp
+        )
     )
 }
 

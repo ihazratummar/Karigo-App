@@ -82,18 +82,6 @@ fun GetJobById.toIdModel() : JobModel {
 }
 
 
-fun Job_labour_item.toModel() : JobLabourItemModel {
-    return JobLabourItemModel(
-        id = this.id,
-        jobId = this.job_id,
-        itemName = this.description,
-        quantity = this.quantity,
-        rate = this.rate,
-        total = this.total,
-        unit = this.unit
-    )
-}
-
 fun Job_material.toModel() : JobMaterialItemModel {
     return JobMaterialItemModel(
         id = id,

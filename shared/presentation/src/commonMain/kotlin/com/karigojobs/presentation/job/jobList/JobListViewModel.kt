@@ -2,12 +2,13 @@ package com.karigojobs.presentation.job.jobList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.GetAllJobUseCase
+import com.karigojobs.presentation.erroMap.asString
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -32,7 +33,7 @@ class JobListViewModel (
 
 
     init {
-        loadJobs()
+        loadAllJob()
     }
 
 
@@ -51,13 +52,20 @@ class JobListViewModel (
         }
     }
 
-    private fun loadJobs() {
+    private fun loadAllJob() {
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            getAllJobUseCase.invoke().collectLatest {jobModels ->
-                _state.update {
-                    it.copy(
-                        jobs = jobModels
-                    )
+            getAllJobUseCase().collectLatest { result ->
+                when (result) {
+                    is Result.Success -> {
+                        _state.update { it.copy(jobs = result.data, isLoading = false) }
+                        println("Jobs Data -> $result.data")
+                    }
+
+                    is Result.Error -> {
+                        _state.update { it.copy(isLoading = false) }
+                        _effect.emit(JobListEffect.Error(message = result.error.asString()))
+                    }
                 }
             }
         }

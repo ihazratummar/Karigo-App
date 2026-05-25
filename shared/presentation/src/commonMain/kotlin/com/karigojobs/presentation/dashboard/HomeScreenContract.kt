@@ -20,3 +20,6 @@ data class HomeState(
 
 
 // ── Effect ─────────────────────────────────────────────────────────────────────
+sealed interface HomeEffect {
+    data class ShowError(val message: String) : HomeEffect
+}

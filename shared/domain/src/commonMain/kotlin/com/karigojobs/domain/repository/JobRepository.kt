@@ -1,5 +1,7 @@
 package com.karigojobs.domain.repository
 
+import com.karigojobs.domain.result.JobError
+import com.karigojobs.domain.result.Result
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
@@ -15,20 +17,24 @@ import kotlinx.coroutines.flow.Flow
 interface JobRepository {
 
     // Core Job
-    fun getAllJobs() : Flow<List<JobModel>>
+    fun getAllJobs(): Flow<Result<List<JobModel>, JobError>>
     fun getActiveJobs(): Flow<List<JobModel>>
     suspend fun getJobById(id: String): JobModel?
-    suspend fun insertJob(job: JobModel)
-    suspend fun updatedJobStatus(id: String, status: JobStatus)
-    suspend fun deleteJob(id: String)
+    suspend fun saveJobTransaction(
+        job: JobModel, jobLabourItemModel: List<JobLabourItemModel>,
+        jobMaterialItemModel: List<JobMaterialItemModel>
+    ) : Result<Unit, JobError>
+
+    suspend fun updatedJobStatus(id: String, status: JobStatus) : Result<Unit, JobError>
+    suspend fun deleteJob(id: String): Result<Unit, JobError>
 
     // Line Items
-    fun getLabourItems(jobId: String): Flow<List<JobLabourItemModel>>
-    suspend fun addLabourItem(item: JobLabourItemModel)
-    suspend fun updateLabourQuantity(itemId: String, quantity: Int)
-    suspend fun removeLabourItem(itemId: String)
+    fun getLabourItems(jobId: String): Flow<Result<List<JobLabourItemModel>, JobError>>
+    suspend fun addLabourItem(item: JobLabourItemModel) : Result<Unit, JobError>
+    suspend fun updateLabourQuantity(itemId: String, quantity: Int) : Result<Unit, JobError>
+    suspend fun removeLabourItem(itemId: String) : Result<Unit, JobError>
 
-    fun getMaterials(jobId: String) : Flow<List<JobMaterialItemModel>>
-    suspend fun addMaterial(item: JobMaterialItemModel)
-    suspend fun removeMaterial(itemId: String)
+    fun getMaterials(jobId: String): Flow<Result<List<JobMaterialItemModel>, JobError>>
+    suspend fun addMaterial(item: JobMaterialItemModel) : Result<Unit, JobError>
+    suspend fun removeMaterial(itemId: String) : Result<Unit, JobError>
 }

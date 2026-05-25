@@ -3,10 +3,12 @@ package com.karigojobs.presentation.job.create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.repository.DeviceContactProvider
+import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
 import com.karigojobs.domain.usecase.InsertClientUseCase
 import com.karigojobs.domain.usecase.IsClientExistUseCase
 import com.karigojobs.domain.usecase.SaveFullJobTransactionUseCase
+import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobModel
@@ -63,13 +65,28 @@ class AddJobViewModel(
     }
 
     private fun loadSelectedTradeType() {
+        _state.update { it.copy(isLoading = false) }
         viewModelScope.launch {
-            getSelectedTradeTypeUseCase.invoke().collectLatest {tradeTypes ->
-                _state.update {
-                    it.copy(
-                        tradeTypes = tradeTypes.toList(),
-                        selectedTradeType = it.selectedTradeType ?: tradeTypes.firstOrNull()
-                    )
+            getSelectedTradeTypeUseCase.invoke().collectLatest { result ->
+                when(result){
+                    is Result.Success -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                tradeTypes = result.data.toList(),
+                                selectedTradeType = it.selectedTradeType ?: result.data.firstOrNull()
+                            )
+                        }
+
+                    }
+                    is Result.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                            )
+                        }
+                        _effect.emit(AddJobEffect.ShowError(message = result.error.toString()))
+                    }
                 }
             }
         }
@@ -148,8 +165,10 @@ class AddJobViewModel(
             is AddJobIntent.IncreaseLabourItemQuantity -> {
                 val updateList = _state.value.labourItems.map { item ->
                     if (item.id == event.itemId) {
+                        val newQty = item.quantity + 1
                         item.copy(
-                            quantity = item.quantity + 1
+                            quantity = newQty,
+                            total = newQty * item.rate
                         )
                     } else item
                 }
@@ -157,14 +176,15 @@ class AddJobViewModel(
                     it.copy(labourItems = updateList)
                 }
             }
+
             is AddJobIntent.MinusLabourItemQuantity -> {
                 val updateList = _state.value.labourItems.map { item ->
                     if (item.id == event.itemId) {
-                        if (item.quantity > 1){
+                        if (item.quantity > 1) {
                             item.copy(
                                 quantity = item.quantity - 1
                             )
-                        }else{
+                        } else {
                             item.copy(
                                 quantity = 1
                             )
@@ -201,8 +221,9 @@ class AddJobViewModel(
             is AddJobIntent.RemoveMaterial -> TODO()
 
             AddJobIntent.SaveJob -> {
+                _state.update { it.copy(isLoading = true) }
                 viewModelScope.launch {
-                    saveFullJobTransactionUseCase.invoke(
+                    val result = saveFullJobTransactionUseCase.invoke(
                         job = JobModel(
                             id = draftJobId,
                             clientId = _state.value.selectedClient?.id ?: "",
@@ -210,7 +231,7 @@ class AddJobViewModel(
                             title = _state.value.title,
                             description = _state.value.title,
                             status = JobStatus.PENDING,
-                            tradeType = _state.value.selectedTradeType?: TradeType.PLUMBER,
+                            tradeType = _state.value.selectedTradeType ?: TradeType.PLUMBER,
                             materialTotal = _state.value.materialTotal,
                             total = _state.value.grandTotal,
                             notes = ""
@@ -228,7 +249,17 @@ class AddJobViewModel(
                         },
                         jobMaterialItemModel = _state.value.selectedMaterials
                     )
-                    _effect.emit(AddJobEffect.NavigateBack)
+
+                    when(result){
+                        is Result.Success -> {
+                            _effect.emit(AddJobEffect.NavigateBack)
+                            _state.update { it.copy(isLoading = false) }
+                        }
+                        is Result.Error -> {
+                            _state.update { it.copy(isLoading = false) }
+                            _effect.emit(AddJobEffect.ShowError(message = result.error.asString()))
+                        }
+                    }
                 }
             }
         }

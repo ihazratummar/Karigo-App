@@ -2,11 +2,14 @@ package com.karigojobs.presentation.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.GetAllJobUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
@@ -24,8 +27,11 @@ class HomeViewModel(
 ) : ViewModel() {
 
 
-    private val _state  = MutableStateFlow(HomeState())
-    val state : StateFlow<HomeState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(HomeState())
+    val state: StateFlow<HomeState> = _state.asStateFlow()
+
+    private val _effect = MutableSharedFlow<HomeEffect>(replay = 0)
+    val effect: SharedFlow<HomeEffect> = _effect.asSharedFlow()
 
 
     init {
@@ -35,21 +41,46 @@ class HomeViewModel(
 
 
     private fun loadAllJob() {
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            getAllJobUseCase().collectLatest { jobModels ->
-                _state.update { it.copy(jobs = jobModels) }
-                println("Jobs Data -> $jobModels")
+            getAllJobUseCase().collectLatest { result ->
+                when (result) {
+                    is Result.Success -> {
+                        _state.update { it.copy(jobs = result.data, isLoading = false) }
+                        println("Jobs Data -> $result.data")
+                    }
+
+                    is Result.Error -> {
+                        _state.update { it.copy(isLoading = false) }
+                        _effect.emit(HomeEffect.ShowError(message = result.error.toString()))
+                    }
+                }
             }
         }
     }
 
-    private fun loadSelectedTrade(){
+    private fun loadSelectedTrade() {
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            getSelectedTradeTypeUseCase.invoke().collectLatest { trades ->
-                _state.update {
-                    it.copy(
-                        selectedTrades = trades
-                    )
+            getSelectedTradeTypeUseCase.invoke().collectLatest { result ->
+                when (result) {
+                    is Result.Success -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                selectedTrades = result.data
+                            )
+                        }
+                    }
+
+                    is Result.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false
+                            )
+                        }
+                        _effect.emit(HomeEffect.ShowError(message = result.error.toString()))
+                    }
                 }
             }
         }

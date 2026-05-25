@@ -22,7 +22,7 @@ fun getDomainModule() : Module = module {
     single { CompleteOnboardingUseCase(onboardingStore = get()) }
     single { GetOnboardingStatusUseCase(onboardingStore = get()) }
     single { SeedStarterMaterialsUseCase(materialRepository = get()) }
-    single { GetSelectedTradeTypeUseCase(onboardingStore = get()) }
+    single { GetSelectedTradeTypeUseCase(onboardingStore = get(), ioDispatcher = get()) }
     single { SaveFullJobTransactionUseCase(jobRepository = get()) }
     single { GetAllJobUseCase(jobRepository = get()) }
     single { InsertClientUseCase(clientRepository = get()) }

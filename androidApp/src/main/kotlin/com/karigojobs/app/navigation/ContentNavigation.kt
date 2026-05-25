@@ -50,7 +50,8 @@ fun NavGraphBuilder.contentNavigation(
                         restoreState = true
                     }
                 },
-                homeState = state
+                homeState = state,
+                homeEffect = viewModel.effect
             )
         }
 

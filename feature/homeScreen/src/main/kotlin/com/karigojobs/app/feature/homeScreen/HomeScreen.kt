@@ -12,17 +12,23 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.karigojobs.app.feature.homeScreen.component.HomeFloatingActionButton
 import com.karigojobs.app.feature.homeScreen.component.HomeTopAppBar
 import com.karigojobs.app.feature.homeScreen.component.ScrollableTradeView
+import com.karigojobs.presentation.dashboard.HomeEffect
 import com.karigojobs.presentation.dashboard.HomeState
 import com.karigojobs.ui.common.JobCard
 import com.karigojobs.ui.theme.dimens
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collectLatest
 
 
 /**
@@ -38,8 +44,24 @@ fun HomeScreen(
     onNotificationClick: () -> Unit,
     onFabClick: () -> Unit,
     onSeeAllJobClick: () -> Unit,
-    homeState: HomeState
+    homeState: HomeState,
+    homeEffect: SharedFlow<HomeEffect>?
 ) {
+
+    val snackbarState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        homeEffect?.collectLatest { effect ->
+            when (effect) {
+                is HomeEffect.ShowError -> {
+                    snackbarState.showSnackbar(
+                        message = effect.message,
+                        withDismissAction = true
+                    )
+                }
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier,

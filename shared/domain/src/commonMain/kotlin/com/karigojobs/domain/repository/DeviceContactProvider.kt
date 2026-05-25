@@ -10,15 +10,7 @@ data class DeviceContact(
     val id: String = "",
     val name: String,
     val phoneNumber: List<String>
-){
-    fun search(query: String) : Boolean {
-        val matchingCombinations = listOf(
-            name,
-            *phoneNumber.toTypedArray()
-        )
-        return matchingCombinations.any { it.contains(query, ignoreCase = true) }
-    }
-}
+)
 
 interface DeviceContactProvider {
 

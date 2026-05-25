@@ -8,8 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.karigojobs.app.feature.homeScreen.HomeScreen
 import com.karigojobs.app.feature.job.create.JobCreateScreen
+import com.karigojobs.app.feature.job.joblist.JobListScreen
 import com.karigojobs.presentation.dashboard.HomeViewModel
 import com.karigojobs.presentation.job.create.AddJobViewModel
+import com.karigojobs.presentation.job.jobList.JobListViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -66,7 +68,11 @@ fun NavGraphBuilder.contentNavigation(
         }
 
         composable<MainRoute.JobsRoute> {
-            // TODO: Implement Jobs Screen
+            val viewModel = koinViewModel<JobListViewModel>()
+            val jobListState by viewModel.state.collectAsStateWithLifecycle()
+            JobListScreen(
+                jobListState = jobListState
+            )
         }
 
         composable<MainRoute.ClientRoute> {

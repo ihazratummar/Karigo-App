@@ -8,7 +8,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,8 +46,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.karigojob.share.utils.DateUtils.toReadableDate
 import com.karigojobs.app.android.ui.R
+import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
+import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsBorder
 import com.karigojobs.ui.theme.KarigojobsCard
@@ -66,6 +73,8 @@ import com.karigojobs.ui.theme.StatusPaid
 import com.karigojobs.ui.theme.StatusPaidSurface
 import com.karigojobs.ui.theme.StatusPending
 import com.karigojobs.ui.theme.StatusPendingSurface
+import com.karigojobs.ui.theme.SurfaceOverlay
+import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 
 
@@ -385,3 +394,99 @@ data class ColorPalate(
     val surface: Color,
     val onSurface : Color
 )
+
+
+
+@Composable
+fun JobCard(
+    modifier: Modifier = Modifier,
+    job: JobModel
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = KarigojobsShapes.large,
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(dimens.Padding.md)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                KarigoIconWIthBg(
+                    icon = job.tradeType.icon(),
+                    iconColor = KarigojobsAccent,
+                    iconBackGroundColor = SurfaceOverlay,
+                    size = dimens.Height.minTouch / 1.1f
+                )
+                Column(
+                    modifier = Modifier.weight(1f).padding(horizontal = dimens.Padding.md),
+                    verticalArrangement = Arrangement.spacedBy(dimens.Space.sm),
+                ) {
+                    Text(
+                        text = job.title,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                        )
+                    )
+                    Text(
+                        text = job.clientName,
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .clip(KarigojobsShapes.small)
+                        .background(
+                            color = job.status.color().surface
+                        )
+                        .border(
+                            width = dimens.Border.thin,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            shape = KarigojobsShapes.small
+                        )
+                    ,
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = job.status.toString(),
+                        modifier = Modifier.padding(
+                            horizontal = dimens.Padding.sm,
+                            vertical = dimens.Padding._2xs
+                        ),
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = job.status.color().accent
+                        )
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = job.createdAt.toReadableDate(),
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                )
+                Text(
+                    text = "${deviceInfo.currency}${job.total}",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                )
+            }
+        }
+    }
+}

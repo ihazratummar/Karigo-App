@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,7 +26,6 @@ import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
 import com.karigojobs.ui.common.KarigoIconWIthBg
-import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.color
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsAccent
@@ -92,96 +90,3 @@ fun ScrollableTradeView(trades: Set<TradeType> = emptySet()) {
 }
 
 
-@Composable
-fun RecentJobs(
-    modifier: Modifier = Modifier,
-    job: JobModel
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = KarigojobsShapes.large,
-        colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(dimens.Padding.md)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                KarigoIconWIthBg(
-                    icon = job.tradeType.icon(),
-                    iconColor = KarigojobsAccent,
-                    iconBackGroundColor = SurfaceOverlay,
-                    size = dimens.Height.minTouch / 1.1f
-                )
-                Column(
-                    modifier = Modifier.weight(1f).padding(horizontal = dimens.Padding.md),
-                    verticalArrangement = Arrangement.spacedBy(dimens.Space.sm),
-                ) {
-                    Text(
-                        text = job.title,
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            color = MaterialTheme.colorScheme.onBackground,
-                        )
-                    )
-                    Text(
-                        text = job.clientName,
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .clip(KarigojobsShapes.small)
-                        .background(
-                            color = job.status.color().surface
-                        )
-                        .border(
-                            width = dimens.Border.thin,
-                            color = MaterialTheme.colorScheme.onBackground,
-                            shape = KarigojobsShapes.small
-                        )
-                    ,
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = job.status.toString(),
-                        modifier = Modifier.padding(
-                            horizontal = dimens.Padding.sm,
-                            vertical = dimens.Padding._2xs
-                        ),
-                        style = MaterialTheme.typography.labelSmall.copy(
-                            color = job.status.color().accent
-                        )
-                    )
-                }
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = job.createdAt.toReadableDate(),
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                )
-                Text(
-                    text = "${deviceInfo.currency}${job.total}",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                )
-            }
-        }
-    }
-}

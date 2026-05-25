@@ -467,7 +467,7 @@ fun CreateLabourItemModal(
                         value = unitInput,
                         onValueChange = { unitInput = it },
                         placeholder = "unit, point, sq foot",
-                        keyboardType = KeyboardType.Number
+                        keyboardType = KeyboardType.Text
                     )
                 }
 

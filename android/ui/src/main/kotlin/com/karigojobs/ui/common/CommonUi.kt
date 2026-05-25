@@ -444,14 +444,14 @@ fun JobCard(
                 }
                 Box(
                     modifier = Modifier
-                        .clip(KarigojobsShapes.small)
+                        .clip(KarigojobsShapes.medium)
                         .background(
                             color = job.status.color().surface
                         )
                         .border(
                             width = dimens.Border.thin,
                             color = MaterialTheme.colorScheme.onBackground,
-                            shape = KarigojobsShapes.small
+                            shape = KarigojobsShapes.medium
                         )
                     ,
                     contentAlignment = Alignment.Center
@@ -460,7 +460,7 @@ fun JobCard(
                         text = job.status.toString(),
                         modifier = Modifier.padding(
                             horizontal = dimens.Padding.sm,
-                            vertical = dimens.Padding._2xs
+                            vertical = dimens.Padding.xs
                         ),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = job.status.color().accent

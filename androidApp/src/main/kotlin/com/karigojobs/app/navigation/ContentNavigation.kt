@@ -38,7 +38,15 @@ fun NavGraphBuilder.contentNavigation(
                     navHostController.navigate(MainRoute.AddJobRoute)
                 },
                 onSeeAllJobClick = {
-                    navHostController.navigate(MainRoute.JobsRoute)
+                    navHostController.navigate(MainRoute.JobsRoute) {
+                        navHostController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 },
                 homeState = state
             )

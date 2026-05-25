@@ -1,23 +1,24 @@
 package com.karigojobs.data.repository
 
-import com.karigojobs.data.dto.toModelList
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.karigojobs.data.dto.toActiveModelList
 import com.karigojobs.data.dto.toIdModel
+import com.karigojobs.data.dto.toModelList
 import com.karigojobs.data.dto.toModelListJobMaterial
 import com.karigojobs.domain.repository.JobRepository
-import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
+import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
 import com.karigojobs.shared.database.EpochUtils
 import com.karigojobs.shared.database.KarigojobsDatabase
 import com.karigojobs.shared.database.UuidGenerator
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 
 /**
@@ -30,21 +31,18 @@ class JobRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : JobRepository {
 
-    override fun getAllJobs(): Flow<List<JobModel>> = flow {
-        emit(
-            karigojobsDatabase.jobQueries
-                .getAllJobs()
-                .executeAsList()
-                .toModelList()
-        )
-    }.flowOn(Dispatchers.IO)
+    override fun getAllJobs(): Flow<List<JobModel>> =
+        karigojobsDatabase.jobQueries
+            .getAllJobs()
+            .asFlow()
+            .mapToList(ioDispatcher)
+            .map { it.toModelList() }
 
-    override fun getActiveJobs(): Flow<List<JobModel>> = flow {
-        val job = karigojobsDatabase.jobQueries.getActiveJobs()
-            .executeAsList()
-            .toActiveModelList()
-        emit(job)
-    }.flowOn(Dispatchers.IO)
+    override fun getActiveJobs(): Flow<List<JobModel>> =
+        karigojobsDatabase.jobQueries.getActiveJobs()
+            .asFlow()
+            .mapToList(ioDispatcher)
+            .map { it.toActiveModelList() }
 
     override suspend fun getJobById(id: String): JobModel {
         val job = karigojobsDatabase.jobQueries.getJobById(id = id)
@@ -53,22 +51,22 @@ class JobRepositoryImpl(
     }
 
     override suspend fun insertJob(job: JobModel) {
-        karigojobsDatabase.transaction {  }
-
-
-        karigojobsDatabase.jobQueries.insertJob(
-            id = job.id,
-            client_id = job.clientId,
-            title = job.title,
-            decription = job.description,
-            status = job.status.name,
-            material_total = job.materialTotal,
-            total = job.total,
-            notes = job.notes,
-            job_date = job.jobDate,
-            created_at = EpochUtils.now(),
-            updated_at = EpochUtils.now(),
-        )
+        karigojobsDatabase.transaction {
+            karigojobsDatabase.jobQueries.insertJob(
+                id = job.id,
+                client_id = job.clientId,
+                title = job.title,
+                decription = job.description,
+                status = job.status.name,
+                trade_type = job.tradeType.name,
+                material_total = job.materialTotal,
+                total = job.total,
+                notes = job.notes,
+                job_date = job.jobDate,
+                created_at = EpochUtils.now(),
+                updated_at = EpochUtils.now(),
+            )
+        }
     }
 
     override suspend fun updatedJobStatus(
@@ -99,7 +97,7 @@ class JobRepositoryImpl(
                 )
             }
         emit(jobLabours)
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(ioDispatcher)
 
     override suspend fun addLabourItem(item: JobLabourItemModel) {
         karigojobsDatabase.jobLabourItemQueries.insertLabourItemsByJob(
@@ -126,7 +124,7 @@ class JobRepositoryImpl(
             .executeAsList()
             .toModelListJobMaterial()
         emit(materials)
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(ioDispatcher)
 
     override suspend fun addMaterial(item: JobMaterialItemModel) {
         karigojobsDatabase.jobMaterialQueries.insertJobMaterial(

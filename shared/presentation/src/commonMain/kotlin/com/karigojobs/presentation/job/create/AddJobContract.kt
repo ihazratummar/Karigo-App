@@ -5,6 +5,7 @@ import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.StarterMaterial
+import com.karigojobs.share.model.TradeType
 
 
 /**
@@ -20,6 +21,8 @@ data class AddJobState(
     val clients: List<ClientModel> = emptyList(),
     val contacts: List<DeviceContact> = emptyList(),
     val selectedClient: ClientModel? = null,
+    val tradeTypes: List<TradeType> = emptyList(),
+    val selectedTradeType: TradeType? = null,
     val title: String = "",
     val isClientPickerModalOpen : Boolean = false,
 
@@ -45,6 +48,7 @@ data class AddJobState(
 sealed interface AddJobIntent {
     data object LoadInitialData : AddJobIntent
     data class SelectClient(val contact: DeviceContact) : AddJobIntent
+    data class SelectTradeType(val tradeType: TradeType) : AddJobIntent
     data class UpdateTitle(val title: String) : AddJobIntent
     data class ToggleClientPicker(val isOpen: Boolean) : AddJobIntent
 

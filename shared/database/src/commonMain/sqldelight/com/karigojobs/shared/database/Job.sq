@@ -4,7 +4,8 @@ CREATE TABLE job (
     client_id TEXT NOT NULL REFERENCES client(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
     decription TEXT NOT NULL DEFAULT '',
-    status TEXT NOT NULL DEFAULT 'draft',
+    status TEXT NOT NULL DEFAULT 'Pending',
+    trade_type TEXT NOT NULL DEFAULT 'PLUMBER',
     material_total REAL NOT NULL DEFAULT 0.0,
     total REAL NOT NULL DEFAULT 0.0, -- pre-calculated
     notes TEXT NOT NULL DEFAULT '',
@@ -36,9 +37,9 @@ SELECT COUNT(*) FROM job WHERE created_at >= ? AND created_at < ?;
 ---------- WRITE -----------
 
 insertJob:
-INSERT INTO job(id, client_id, title, decription, status,  material_total,
+INSERT INTO job(id, client_id, title, decription, status, trade_type,  material_total,
 total, notes, job_date, created_at, updated_at)
-VALUES (?,?,?,?,?,?,?,?,?,?,?);
+VALUES (?,?,?,?,?, ?, ?,?,?,?,?,?);
 
 updateJobStatus:
 UPDATE job SET status = ? WHERE id = ?;

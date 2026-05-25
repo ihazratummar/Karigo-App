@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.domain.repository.DeviceContact
+import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.KarigojobsSearchField
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.dimens
@@ -134,7 +135,7 @@ fun ClientInfo(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        AppBarIcon(
+        KarigoIconWIthBg(
             icon = R.drawable.user_line,
             iconColor = MaterialTheme.colorScheme.primary,
             iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer

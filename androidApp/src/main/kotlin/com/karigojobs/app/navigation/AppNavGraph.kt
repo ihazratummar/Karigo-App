@@ -102,7 +102,7 @@ fun BottomBar(
     val backStackState by navHostController.currentBackStackEntryAsState()
     val currentDestination = backStackState?.destination
     val isBottomBarVisible =
-        bottomNavItems.any { it.route::class.qualifiedName == currentDestination?.route }
+        bottomNavItems.any { currentDestination?.hasRoute(it.route::class) == true }
 
     if (isBottomBarVisible) {
         NavigationBar(containerColor = Color.Transparent ) {
@@ -113,13 +113,20 @@ fun BottomBar(
                     selected = isSelected,
                     onClick = {
                         navHostController.navigate(screen.route) {
-                            popUpTo(navHostController.graph.startDestinationId) {
-                                saveState = true
+                            // Pop up to the start destination of the graph to
+                            // avoid building up a large stack of destinations
+                            // on the back stack as users select items
+                            navHostController.graph.startDestinationRoute?.let { route ->
+                                popUpTo(route) {
+                                    saveState = true
+                                }
                             }
+                            // Avoid multiple copies of the same destination when
+                            // reselecting the same item
                             launchSingleTop = true
+                            // Restore state when reselecting a previously selected item
                             restoreState = true
                         }
-
                     },
                     icon = {
                         Icon(

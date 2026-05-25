@@ -47,6 +47,7 @@ import com.karigojobs.presentation.onboarding.OnboardingIntent
 import com.karigojobs.presentation.onboarding.OnboardingState
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
+import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.dimens
@@ -146,48 +147,19 @@ private fun FlowRowScope.TradeItem(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    var isPressed by remember { mutableStateOf(false) }
-
-    val scale by animateFloatAsState(
-        targetValue = if (isPressed) 0.95f else 1f,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessMedium
-        ),
-        label = "scale"
-    )
-
     Card(
         modifier = Modifier
             .weight(1f)
-            .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-            }
-            .pointerInput(tradeType) {
-                detectTapGestures(
-                    onPress = {
-                        isPressed = true
-                        try {
-                            awaitRelease()
-                        } finally {
-                            isPressed = false
-                        }
-                    },
-                    onTap = { onClick() }
-                )
-            },
+            .bounceClickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = when {
-                isPressed -> MaterialTheme.colorScheme.primary.copy(0.2f)
                 isSelected -> MaterialTheme.colorScheme.primary.copy(0.1f)
                 else -> MaterialTheme.colorScheme.surfaceVariant
             }
         ),
-        border = if (isSelected || isPressed) BorderStroke(
+        border = if (isSelected ) BorderStroke(
             width = dimens.Space._2xs,
-            color = if (isPressed) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground
         ) else null
     ) {
         Column(

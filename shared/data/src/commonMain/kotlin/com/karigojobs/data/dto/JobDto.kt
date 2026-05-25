@@ -4,9 +4,11 @@ import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
+import com.karigojobs.share.model.TradeType
 import com.karigojobs.shared.database.GetActiveJobs
 import com.karigojobs.shared.database.GetAllJobs
 import com.karigojobs.shared.database.GetJobById
+import com.karigojobs.shared.database.Job
 import com.karigojobs.shared.database.Job_labour_item
 import com.karigojobs.shared.database.Job_material
 
@@ -17,7 +19,6 @@ import com.karigojobs.shared.database.Job_material
  */
 
 
-
 fun GetAllJobs.toModel(): JobModel {
     return JobModel(
         id = this.id,
@@ -26,6 +27,7 @@ fun GetAllJobs.toModel(): JobModel {
         title = this.title,
         description = this.decription,
         status = JobStatus.valueOf(this.status),
+        tradeType = TradeType.valueOf( this.trade_type),
         materialTotal = this.material_total,
         total = this.total,
         notes = this.notes,
@@ -46,6 +48,7 @@ fun GetActiveJobs.toActiveModel() : JobModel {
         title = this.title,
         description = this.decription,
         status = JobStatus.valueOf(this.status),
+        tradeType = TradeType.valueOf(this.trade_type),
         materialTotal = this.material_total,
         total = this.total,
         notes = this.notes,
@@ -53,6 +56,8 @@ fun GetActiveJobs.toActiveModel() : JobModel {
         createdAt = this.created_at
     )
 }
+
+
 
 fun List<GetActiveJobs>.toActiveModelList() : List<JobModel> {
     return this.map { it.toActiveModel()}
@@ -67,6 +72,7 @@ fun GetJobById.toIdModel() : JobModel {
         title = this.title,
         description = this.decription,
         status = JobStatus.valueOf(this.status),
+        tradeType = TradeType.valueOf(this.trade_type),
         materialTotal = this.material_total,
         total = this.total,
         notes = this.notes,

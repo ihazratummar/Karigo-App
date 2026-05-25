@@ -7,15 +7,40 @@ data class JobModel(
     val title: String,
     val description: String,
     val status: JobStatus,
+    val tradeType: TradeType,
     val materialTotal: Double,
-    val total : Double,
+    val total: Double,
     val notes: String,
-    val jobDate: Long= 0L,
+    val jobDate: Long = 0L,
     val createdAt: Long = 0L
 )
 
 enum class JobStatus {
-    DRAFT, IN_PROGRESS , COMPLETED, INVOICED, PAID
+    PENDING{
+        override fun toString(): String {
+            return "Pending"
+        }
+    },
+    IN_PROGRESS{
+        override fun toString(): String {
+            return "In Progress"
+        }
+    },
+    COMPLETED{
+        override fun toString(): String {
+            return "Complete"
+        }
+    },
+    INVOICED {
+        override fun toString(): String {
+            return "Invoiced"
+        }
+    },
+    PAID {
+        override fun toString(): String {
+            return "Paid"
+        }
+    }
 }
 
 data class JobLabourItemModel(
@@ -26,18 +51,23 @@ data class JobLabourItemModel(
     val rate: Double,
     val total: Double,
     val unit: String
-){
+) {
 
-    val mainTotal : Double get() = rate * quantity
+    val mainTotal: Double get() = rate * quantity
 
 }
+
 data class JobMaterialItemModel(
-    val id : String,
+    val id: String,
     val jobId: String,
     val materialId: String?,
     val name: String,
     val unit: String,
     val unitPrice: Double,
     val quantity: Int,
-    val total : Double
-)
+    val total: Double
+) {
+
+    val mainTotal: Double get() = unitPrice * quantity
+
+}

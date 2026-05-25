@@ -31,6 +31,7 @@ import com.karigojobs.app.feature.job.component.ContactPicker
 import com.karigojobs.app.feature.job.component.CreateLabourItemModal
 import com.karigojobs.app.feature.job.component.JobTitleSection
 import com.karigojobs.app.feature.job.component.JobTopAppBar
+import com.karigojobs.app.feature.job.component.SelectTradeSection
 import com.karigojobs.app.feature.job.component.TotalScreenCard
 import com.karigojobs.domain.repository.DeviceContact
 import com.karigojobs.presentation.job.create.AddJobEffect
@@ -207,6 +208,16 @@ fun JobCreateScreen(
             }
 
             item {
+                SelectTradeSection(
+                    savedTrades = addJobState.tradeTypes,
+                    selectedTradeType = addJobState.selectedTradeType,
+                    onTradeTypeSelect = {
+                        onIntent(AddJobIntent.SelectTradeType(it))
+                    }
+                )
+            }
+
+            item {
                 AddJobLabourItemSection(
                     onClick = {
                         onIntent(AddJobIntent.LabourItemModalOpen(true))
@@ -220,10 +231,6 @@ fun JobCreateScreen(
                     },
                     onQuantityMinusClick = {  onIntent(AddJobIntent.MinusLabourItemQuantity(itemId = it)) },
                 )
-            }
-
-            item {
-
             }
 
             item {

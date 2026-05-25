@@ -2,6 +2,7 @@ package com.karigojobs.presentation.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.karigojobs.domain.usecase.GetAllJobUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,8 @@ import kotlinx.coroutines.launch
  */
 
 class HomeViewModel(
-    private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase
+    private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase,
+    private val getAllJobUseCase: GetAllJobUseCase
 ) : ViewModel() {
 
 
@@ -28,8 +30,18 @@ class HomeViewModel(
 
     init {
         loadSelectedTrade()
+        loadAllJob()
     }
 
+
+    private fun loadAllJob() {
+        viewModelScope.launch {
+            getAllJobUseCase().collectLatest { jobModels ->
+                _state.update { it.copy(jobs = jobModels) }
+                println("Jobs Data -> $jobModels")
+            }
+        }
+    }
 
     private fun loadSelectedTrade(){
         viewModelScope.launch {

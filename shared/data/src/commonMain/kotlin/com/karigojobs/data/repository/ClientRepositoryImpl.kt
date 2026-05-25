@@ -24,7 +24,7 @@ class ClientRepositoryImpl (
 ): ClientRepository  {
 
 
-    override fun getAllClients(): Flow<List<ClientModel>> = flow<List<ClientModel>> {
+    override fun getAllClients(): Flow<List<ClientModel>> = flow {
         val clients = database.clientQueries.getgAallClients()
             .executeAsList()
             .toModelList()
@@ -45,7 +45,7 @@ class ClientRepositoryImpl (
 
     override suspend fun insertClient(clientModel: ClientModel) {
         database.clientQueries.insertClient(
-            id = UuidGenerator.generate(),
+            id = clientModel.id,
             name = clientModel.name,
             phone = clientModel.phone,
             email = clientModel.email,

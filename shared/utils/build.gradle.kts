@@ -1,4 +1,3 @@
-import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
@@ -7,7 +6,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.karigojobs.share.data"
+        namespace = "com.karigojobs.share.utils"
         compileSdk {
             version = release(36) {
                 minorApiLevel = 1
@@ -50,23 +49,9 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.shared.model)
-                implementation(projects.shared.domain)
-                implementation(projects.shared.database)
-                implementation(projects.shared.datastore)
-                implementation(libs.sqldelight.coroutines)
-            }
-        }
+                implementation(libs.kotlin.stdlib)
 
-        androidMain {
-            dependencies {
-
-            }
-        }
-
-        iosMain {
-            dependencies {
-
+                implementation(libs.kotlinx.datetime)
             }
         }
     }

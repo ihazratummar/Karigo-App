@@ -3,6 +3,7 @@ package com.karigojobs.presentation.job.create
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.repository.DeviceContactProvider
+import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
 import com.karigojobs.domain.usecase.InsertClientUseCase
 import com.karigojobs.domain.usecase.IsClientExistUseCase
 import com.karigojobs.domain.usecase.SaveFullJobTransactionUseCase
@@ -10,12 +11,14 @@ import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
+import com.karigojobs.share.model.TradeType
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.uuid.ExperimentalUuidApi
@@ -31,7 +34,8 @@ class AddJobViewModel(
     private val deviceContactProvider: DeviceContactProvider,
     private val saveFullJobTransactionUseCase: SaveFullJobTransactionUseCase,
     private val isClientExistUseCase: IsClientExistUseCase,
-    private val insertClientUseCase: InsertClientUseCase
+    private val insertClientUseCase: InsertClientUseCase,
+    private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase
 ) : ViewModel() {
 
     @OptIn(ExperimentalUuidApi::class)
@@ -45,7 +49,7 @@ class AddJobViewModel(
 
 
     init {
-        // Removed loadContacts() from init to avoid crash before permission is granted
+        loadSelectedTradeType()
     }
 
     private fun loadContacts() {
@@ -55,6 +59,19 @@ class AddJobViewModel(
             _state.update { it.copy(isLoading = true) }
             val contacts = deviceContactProvider.getDeviceContacts()
             _state.update { it.copy(contacts = contacts, isLoading = false) }
+        }
+    }
+
+    private fun loadSelectedTradeType() {
+        viewModelScope.launch {
+            getSelectedTradeTypeUseCase.invoke().collectLatest {tradeTypes ->
+                _state.update {
+                    it.copy(
+                        tradeTypes = tradeTypes.toList(),
+                        selectedTradeType = it.selectedTradeType ?: tradeTypes.firstOrNull()
+                    )
+                }
+            }
         }
     }
 
@@ -170,6 +187,13 @@ class AddJobViewModel(
                 }
             }
 
+            is AddJobIntent.SelectTradeType -> {
+                _state.update {
+                    it.copy(
+                        selectedTradeType = event.tradeType
+                    )
+                }
+            }
 
             is AddJobIntent.UpdateLabourDraft -> TODO()
 
@@ -185,7 +209,8 @@ class AddJobViewModel(
                             clientName = _state.value.selectedClient?.name ?: "",
                             title = _state.value.title,
                             description = _state.value.title,
-                            status = JobStatus.DRAFT,
+                            status = JobStatus.PENDING,
+                            tradeType = _state.value.selectedTradeType?: TradeType.PLUMBER,
                             materialTotal = _state.value.materialTotal,
                             total = _state.value.grandTotal,
                             notes = ""

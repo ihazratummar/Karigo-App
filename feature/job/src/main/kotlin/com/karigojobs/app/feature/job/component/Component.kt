@@ -1,7 +1,10 @@
 package com.karigojobs.app.feature.job.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,9 +37,13 @@ import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.job.create.AddJobState
 import com.karigojobs.presentation.job.create.LabourItem
 import com.karigojobs.share.model.JobLabourItemModel
+import com.karigojobs.share.model.TradeType
+import com.karigojobs.ui.color
 import com.karigojobs.ui.common.CounterControl
 import com.karigojobs.ui.common.KarigojobsTextField
+import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.common.dashedBorder
+import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.ModalBackGround
@@ -164,11 +171,78 @@ fun JobTitleSection(
 
 
 @Composable
+fun SelectTradeSection(
+    modifier: Modifier = Modifier,
+    savedTrades: List<TradeType> = emptyList(),
+    selectedTradeType: TradeType? = null,
+    onTradeTypeSelect: (TradeType) -> Unit = {}
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.Start
+    ) {
+        Text(
+            text = "SELECT TRADE",
+            style = MaterialTheme.typography.labelMedium.copy(
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        )
+        Spacer(Modifier.height(dimens.Space.sm))
+
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+        ) {
+            savedTrades.forEach { tradeType ->
+                val isSelected = tradeType == selectedTradeType
+                Card(
+                    modifier = Modifier.padding(vertical = dimens.Padding._2xs),
+                    onClick = { onTradeTypeSelect(tradeType) },
+                    shape = KarigojobsShapes.medium,
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                        else Color.Transparent
+                    ),
+                    border = BorderStroke(
+                        width = dimens.Border.thin / 2.5f,
+                        color = if (isSelected) MaterialTheme.colorScheme.onBackground else
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.padding(
+                            horizontal = dimens.Padding.sm,
+                            vertical = dimens.Padding.xs
+                        ),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+
+                        Icon(
+                            painter = painterResource(tradeType.icon()),
+                            contentDescription = "Trade Icon",
+                            modifier = Modifier.size(dimens.Icon.xs),
+                            tint = tradeType.color()
+                        )
+                        Text(
+                            text = tradeType.displayName,
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                color = if (isSelected) MaterialTheme.colorScheme.onBackground
+                                else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
 fun AddJobLabourItemSection(
     modifier: Modifier = Modifier,
-    title: String = "LABOUR",
     onClick: () -> Unit = {},
-    buttonLabel: String = "Add Labour Item",
     labourItems: List<JobLabourItemModel>,
     onRemoveLabourItemClick: (String) -> Unit,
     onQuantityAddClick: (String) -> Unit,
@@ -179,7 +253,7 @@ fun AddJobLabourItemSection(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = title,
+            text = "LABOUR",
             style = MaterialTheme.typography.labelMedium.copy(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -190,8 +264,8 @@ fun AddJobLabourItemSection(
             LabourItemCard(
                 labourItem = item,
                 onRemoveClick = { onRemoveLabourItemClick(item.id) },
-                onAddClick = {onQuantityAddClick(item.id)},
-                onMinusClick = {onQuantityMinusClick(item.id)},
+                onAddClick = { onQuantityAddClick(item.id) },
+                onMinusClick = { onQuantityMinusClick(item.id) },
             )
             Spacer(modifier = Modifier.height(dimens.Space.xs))
         }
@@ -223,7 +297,7 @@ fun AddJobLabourItemSection(
                 )
                 Spacer(Modifier.width(dimens.Space.md))
                 Text(
-                    text = buttonLabel,
+                    text = "Add Labour Item",
                     style = MaterialTheme.typography.labelMedium.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

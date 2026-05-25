@@ -1,6 +1,5 @@
 package com.karigojobs.app.feature.homeScreen.component
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -23,18 +22,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.karigojob.share.utils.DateUtils.toReadableDate
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
 import com.karigojobs.ui.common.KarigoIconWIthBg
+import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.color
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
-import com.karigojobs.ui.theme.KarigojobsThemePreview
 import com.karigojobs.ui.theme.SurfaceOverlay
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
@@ -108,22 +106,23 @@ fun RecentJobs(
     ) {
         Column(
             modifier = Modifier
-                .padding(dimens.Padding.base)
+                .padding(dimens.Padding.md)
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 KarigoIconWIthBg(
                     icon = job.tradeType.icon(),
                     iconColor = KarigojobsAccent,
-                    iconBackGroundColor = SurfaceOverlay
+                    iconBackGroundColor = SurfaceOverlay,
+                    size = dimens.Height.minTouch / 1.1f
                 )
-
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+                    modifier = Modifier.weight(1f).padding(horizontal = dimens.Padding.md),
+                    verticalArrangement = Arrangement.spacedBy(dimens.Space.sm),
                 ) {
                     Text(
                         text = job.title,
@@ -133,12 +132,11 @@ fun RecentJobs(
                     )
                     Text(
                         text = job.clientName,
-                        style = MaterialTheme.typography.bodyMedium.copy(
+                        style = MaterialTheme.typography.labelMedium.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     )
                 }
-                Spacer(Modifier.weight(1f))
                 Box(
                     modifier = Modifier
                         .clip(KarigojobsShapes.small)
@@ -159,7 +157,7 @@ fun RecentJobs(
                             horizontal = dimens.Padding.sm,
                             vertical = dimens.Padding._2xs
                         ),
-                        style = MaterialTheme.typography.labelMedium.copy(
+                        style = MaterialTheme.typography.labelSmall.copy(
                             color = job.status.color().accent
                         )
                     )
@@ -173,13 +171,13 @@ fun RecentJobs(
             ) {
                 Text(
                     text = job.createdAt.toReadableDate(),
-                    style = MaterialTheme.typography.labelMedium.copy(
+                    style = MaterialTheme.typography.labelSmall.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
                 Text(
                     text = "${deviceInfo.currency}${job.total}",
-                    style = MaterialTheme.typography.titleMedium.copy(
+                    style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground
                     )
                 )

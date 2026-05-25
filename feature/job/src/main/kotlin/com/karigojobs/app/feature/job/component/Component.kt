@@ -1,6 +1,8 @@
 package com.karigojobs.app.feature.job.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.MarqueeAnimationMode
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.job.create.AddJobState
 import com.karigojobs.presentation.job.create.LabourItem
@@ -334,12 +337,20 @@ fun LabourItemCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
         ) {
-            Column {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(
                     text = labourItem.itemName,
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground
-                    )
+                    ),
+                    modifier = Modifier.basicMarquee(
+                        iterations = 200,
+                        animationMode = MarqueeAnimationMode.Immediately,
+                        repeatDelayMillis = 3000
+                    ),
+                    overflow = TextOverflow.Visible
                 )
                 Text(
                     text = "${deviceInfo.currency}${labourItem.rate} / ${labourItem.unit}",
@@ -348,7 +359,6 @@ fun LabourItemCard(
                     )
                 )
             }
-            Spacer(Modifier.weight(1f))
 
             CounterControl(
                 icon = R.drawable.substract,
@@ -468,7 +478,7 @@ fun CreateLabourItemModal(
                     onAddClick(
                         LabourItem(
                             itemName = itemName,
-                            itemRate = rateInput.toDouble(),
+                            itemRate = rateInput.toDoubleOrNull() ?: 0.0,
                             quantity = 1,
                             unit = unitInput
                         )

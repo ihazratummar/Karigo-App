@@ -281,17 +281,20 @@ fun CounterControl(
 
 
 @Composable
-fun KarigoIconWIthBg(
+fun KarigoIconWIthBgCick(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int = R.drawable.arrow_left,
     iconColor: Color = NavInactive,
+    size: Dp = dimens.Height.minTouch,
     iconBackGroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     onClick: () -> Unit = {}
 ) {
+    val iconSize = size * 0.4f
+
     Box(
         modifier = modifier
-            .size(dimens.Space._4xl)
-            .padding(dimens.Padding.xs)
+            .size(size)
+            .padding(size * 0.15f)
             .clip(KarigojobsShapes.medium)
             .background(color = iconBackGroundColor)
             .clickable(onClick = onClick)
@@ -301,11 +304,40 @@ fun KarigoIconWIthBg(
         Icon(
             painter = painterResource(icon),
             contentDescription = "Back",
-            modifier = Modifier.size(dimens.Icon.xs),
+            modifier = Modifier.size(iconSize),
             tint = iconColor
         )
     }
 }
+
+@Composable
+fun KarigoIconWIthBg(
+    modifier: Modifier = Modifier,
+    @DrawableRes icon: Int = R.drawable.arrow_left,
+    iconColor: Color = NavInactive,
+    size: Dp = dimens.Height.minTouch,
+    iconBackGroundColor: Color = MaterialTheme.colorScheme.surfaceVariant
+) {
+    val iconSize = size * 0.4f
+
+    Box(
+        modifier = modifier
+            .size(size)
+            .clip(KarigojobsShapes.medium)
+            .background(color = iconBackGroundColor)
+        ,
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = painterResource(icon),
+            contentDescription = "Back",
+            modifier = Modifier.size(iconSize),
+            tint = iconColor
+        )
+    }
+}
+
+
 
 
 fun JobStatus.color(): ColorPalate {

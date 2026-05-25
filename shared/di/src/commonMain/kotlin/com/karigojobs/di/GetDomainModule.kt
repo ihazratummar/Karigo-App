@@ -1,6 +1,7 @@
 package com.karigojobs.di
 
 import com.karigojobs.domain.usecase.CompleteOnboardingUseCase
+import com.karigojobs.domain.usecase.GetAllJobUseCase
 import com.karigojobs.domain.usecase.GetOnboardingStatusUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
 import com.karigojobs.domain.usecase.InsertClientUseCase
@@ -23,6 +24,7 @@ fun getDomainModule() : Module = module {
     single { SeedStarterMaterialsUseCase(materialRepository = get()) }
     single { GetSelectedTradeTypeUseCase(onboardingStore = get()) }
     single { SaveFullJobTransactionUseCase(jobRepository = get()) }
+    single { GetAllJobUseCase(jobRepository = get()) }
     single { InsertClientUseCase(clientRepository = get()) }
     single { IsClientExistUseCase(clientRepository = get()) }
 }

@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import com.karigojobs.ui.common.KarigoIconWIthBg
+import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.NavInactive
 import com.karigojobs.ui.theme.dimens
@@ -57,7 +57,7 @@ fun JobTopAppBar(
                 TopBarTitle()
             },
             navigationIcon = {
-                KarigoIconWIthBg(onClick = onNavigationClick)
+                KarigoIconWIthBgCick(onClick = onNavigationClick)
             },
             actions = {
                 Box(

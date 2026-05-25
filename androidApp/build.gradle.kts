@@ -35,11 +35,11 @@ dependencies {
 }
 
 android {
-    namespace = "com.karigo.app"
+    namespace = "com.karigojobs.app"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.karigo.app"
+        applicationId = "com.karigojobs.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1

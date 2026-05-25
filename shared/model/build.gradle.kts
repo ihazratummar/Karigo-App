@@ -6,7 +6,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.karigo.share.model"
+        namespace = "com.karigojobs.share.model"
         compileSdk {
             version = release(36) {
                 minorApiLevel = 1

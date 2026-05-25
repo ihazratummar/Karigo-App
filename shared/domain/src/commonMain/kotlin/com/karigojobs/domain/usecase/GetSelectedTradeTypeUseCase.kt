@@ -1,0 +1,21 @@
+package com.karigojobs.domain.usecase
+
+import com.karigojobs.datastore.store.OnboardingStore
+import com.karigojobs.share.model.TradeType
+import kotlinx.coroutines.flow.Flow
+
+
+/**
+ * @author hazratummar
+ * Created on 23/05/26
+ */
+
+class GetSelectedTradeTypeUseCase(
+    private val onboardingStore: OnboardingStore
+) {
+
+    operator fun invoke() : Flow<Set<TradeType>> {
+        return onboardingStore.selectedTrades
+    }
+
+}

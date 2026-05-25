@@ -32,7 +32,7 @@ dependencies {
 }
 
 android {
-    namespace = "com.karigo.app.feature.onboarding"
+    namespace = "com.karigojobs.app.feature.onboarding"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

@@ -1,4 +1,4 @@
-rootProject.name = "Karigo"
+rootProject.name = "Karigojobs"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

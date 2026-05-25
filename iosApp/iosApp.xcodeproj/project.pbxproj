@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		F367C8BBA5E25343F72B824D /* Karigo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Karigo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F367C8BBA5E25343F72B824D /* Karigojobs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Karigojobs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -50,7 +50,7 @@
 		1EA5089EA6361927C73A485C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F367C8BBA5E25343F72B824D /* Karigo.app */,
+				F367C8BBA5E25343F72B824D /* Karigojobs.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -87,7 +87,7 @@
 			packageProductDependencies = (
 			);
 			productName = iosApp;
-			productReference = F367C8BBA5E25343F72B824D /* Karigo.app */;
+			productReference = F367C8BBA5E25343F72B824D /* Karigojobs.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

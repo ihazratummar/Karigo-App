@@ -8,7 +8,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.karigo.share.database"
+        namespace = "com.karigojobs.share.database"
         compileSdk {
             version = release(36) {
                 minorApiLevel = 1
@@ -77,8 +77,8 @@ kotlin {
 
 sqldelight {
     databases {
-        create("KarigoDatabase") {
-            packageName = "com.karigo.shared.database"
+        create("KarigojobsDatabase") {
+            packageName = "com.karigojobs.shared.database"
             srcDirs("src/commonMain/sqldelight")
         }
         linkSqlite.set(true)

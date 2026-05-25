@@ -32,7 +32,7 @@ dependencies {
 }
 
 android {
-    namespace = "com.karigo.app.feature.job"
+    namespace = "com.karigojobs.app.feature.job"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

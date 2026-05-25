@@ -31,7 +31,7 @@ dependencies {
 }
 
 android {
-    namespace = "com.karigo.app.feature.homeScreen"
+    namespace = "com.karigojobs.app.feature.homeScreen"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

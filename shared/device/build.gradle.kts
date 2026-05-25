@@ -8,7 +8,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.karigo.share.device"
+        namespace = "com.karigojobs.share.device"
         compileSdk {
             version = release(36) {
                 minorApiLevel = 1

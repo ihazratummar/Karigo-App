@@ -33,7 +33,7 @@ dependencies {
 }
 
 android {
-    namespace = "com.karigo.app.android.ui"
+    namespace = "com.karigojobs.app.android.ui"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

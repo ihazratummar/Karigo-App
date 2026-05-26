@@ -1,6 +1,8 @@
 package com.karigojobs.domain.usecase
 
 import com.karigojobs.domain.repository.MaterialRepository
+import com.karigojobs.domain.result.MaterialError
+import com.karigojobs.domain.result.Result
 import com.karigojobs.share.model.StarterMaterial
 import com.karigojobs.share.model.TradeSeeds
 import com.karigojobs.share.model.TradeType
@@ -16,7 +18,7 @@ class SeedStarterMaterialsUseCase (
 ) {
 
 
-    suspend operator fun invoke(trade: Set<TradeType>) : Int {
+    suspend operator fun invoke(trade: Set<TradeType>) : Result<Int, MaterialError> {
         val materials = trade
             .flatMap { TradeSeeds.seeds[it].orEmpty() }
             .map { material ->
@@ -27,8 +29,15 @@ class SeedStarterMaterialsUseCase (
                     tradeType = material.tradeType,
                 )
             }
-        materialRepository.insertMaterial(materials)
-        return materials.size
+        val result = materialRepository.insertMaterial(materials)
+        return when(result){
+            is Result.Success -> {
+                Result.Success(materials.size)
+            }
+            is Result.Error -> {
+                Result.Error(MaterialError.DatabaseError)
+            }
+        }
     }
 
 }

@@ -23,7 +23,7 @@ fun getRepositoryModule(): Module = module {
 
     single <CoroutineDispatcher>{ Dispatchers.IO }
 
-    single<MaterialRepository> { MaterialRepositoryImpl(database = get()) }
+    single<MaterialRepository> { MaterialRepositoryImpl(database = get(), ioDispatcher = get()) }
     single<JobRepository> { JobRepositoryImpl(karigojobsDatabase = get(), ioDispatcher = get()) }
-    single<ClientRepository> { ClientRepositoryImpl(database = get()) }
+    single<ClientRepository> { ClientRepositoryImpl(database = get(), ioDispatcher = get()) }
 }

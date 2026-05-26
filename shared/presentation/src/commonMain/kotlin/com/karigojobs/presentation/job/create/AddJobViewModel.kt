@@ -96,31 +96,40 @@ class AddJobViewModel(
     @OptIn(ExperimentalUuidApi::class)
     fun event(event: AddJobIntent) {
         when (event) {
-            AddJobIntent.LoadInitialData -> TODO()
+            AddJobIntent.LoadInitialData -> {
+                loadSelectedTradeType()
+            }
             is AddJobIntent.SelectClient -> {
                 viewModelScope.launch {
                     val safePhone = event.contact.phoneNumber.firstOrNull() ?: ""
-
-                    val clientData = isClientExistUseCase.invoke(safePhone)
-                    if (clientData == null) {
-                        val client = ClientModel(
-                            id = Uuid.random().toString(),
-                            name = event.contact.name,
-                            phone = safePhone,
-                            email = "",
-                            address = "",
-                        )
-                        insertClientUseCase.invoke(clientModel = client)
-                        _state.update {
-                            it.copy(
-                                selectedClient = client
-                            )
+                    val result = isClientExistUseCase.invoke(safePhone)
+                    when(result){
+                        is Result.Success -> {
+                            if (result.data == null) {
+                                val client = ClientModel(
+                                    id = Uuid.random().toString(),
+                                    name = event.contact.name,
+                                    phone = safePhone,
+                                    email = "",
+                                    address = "",
+                                )
+                                insertClientUseCase.invoke(clientModel = client)
+                                _state.update {
+                                    it.copy(
+                                        selectedClient = client
+                                    )
+                                }
+                            } else {
+                                _state.update {
+                                    it.copy(
+                                        selectedClient = result.data
+                                    )
+                                }
+                            }
+                            _state.update { it.copy(isClientPickerModalOpen = false) }
                         }
-                    } else {
-                        _state.update {
-                            it.copy(
-                                selectedClient = clientData
-                            )
+                        is Result.Error -> {
+                            _effect.emit(AddJobEffect.ShowError(result.error.asString()))
                         }
                     }
                 }

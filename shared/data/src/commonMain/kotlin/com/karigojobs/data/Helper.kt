@@ -17,7 +17,7 @@ suspend inline fun <T, E: RootError> safeCall(
 ) : Result<T, E> {
     return try {
         Result.Success(block())
-    }catch (e: Exception){
+    }catch (_: Exception){
         Result.Error(error)
     }
 }

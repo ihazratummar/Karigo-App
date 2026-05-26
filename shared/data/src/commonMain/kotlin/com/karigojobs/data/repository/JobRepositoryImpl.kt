@@ -4,7 +4,6 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.karigojobs.data.dto.toActiveModelList
 import com.karigojobs.data.dto.toIdModel
-import com.karigojobs.data.dto.toModel
 import com.karigojobs.data.dto.toModelList
 import com.karigojobs.data.dto.toModelListJobMaterial
 import com.karigojobs.data.safeCall
@@ -16,19 +15,12 @@ import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
 import com.karigojobs.shared.database.EpochUtils
-import com.karigojobs.shared.database.GetAllJobs
-import com.karigojobs.shared.database.Job
 import com.karigojobs.shared.database.KarigojobsDatabase
 import com.karigojobs.shared.database.UuidGenerator
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
-import kotlin.collections.List
 
 
 /**

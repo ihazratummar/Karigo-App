@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.MarqueeAnimationMode
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -44,7 +43,6 @@ import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
 import com.karigojobs.ui.common.CounterControl
 import com.karigojobs.ui.common.KarigojobsTextField
-import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.common.dashedBorder
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsCard

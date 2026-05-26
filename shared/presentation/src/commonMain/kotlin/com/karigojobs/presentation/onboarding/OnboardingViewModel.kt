@@ -2,9 +2,11 @@ package com.karigojobs.presentation.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.CompleteOnboardingUseCase
 import com.karigojobs.domain.usecase.GetOnboardingStatusUseCase
 import com.karigojobs.domain.usecase.SeedStarterMaterialsUseCase
+import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.share.model.TradeType
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -94,36 +96,28 @@ class OnboardingViewModel(
     private fun handleLetsGo() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
-            try {
-                // 1. seed material into SQLDelight Meterial table
-                val count = seedStarterMaterialsUseCase.invoke(trade = _state.value.selectedTrades)
-                _state.update { it.copy(totalMaterialCount = count) }
+            val result = seedStarterMaterialsUseCase.invoke(trade = _state.value.selectedTrades)
 
-                // 2. Write is_complete = true + selected trades to Datastore
-                completeOnboardingUseCase(trades = _state.value.selectedTrades)
+            when(result){
+                is Result.Success -> {
+                    _state.update { it.copy(totalMaterialCount = result.data) }
 
-                // 3. update state
-                _state.update { it.copy(isLoading = false, seededMaterialCount = 1) }
+                    // 2. Write is_complete = true + selected trades to Datastore
+                    completeOnboardingUseCase(trades = _state.value.selectedTrades)
 
-                // 4. fire navigation effect - clear back stack on Android,
-                // switches AppFeature.State on IOS
+                    // 3. update state
+                    _state.update { it.copy(isLoading = false, seededMaterialCount = 1) }
 
-                _effects.emit(OnboardingEffect.NavigationToDashboard)
+                    // 4. fire navigation effect - clear back stack on Android,
+                    // switches AppFeature.State on IOS
 
-            }catch (e: Exception){
-                _state.update {
-                    it.copy(
-                        isLoading = false,
-                        error = e.message ?: "Something went wrong"
-                    )
+                    _effects.emit(OnboardingEffect.NavigationToDashboard)
                 }
-
-                _effects.emit(
-                    OnboardingEffect.ShowError(
-                        message = e.message ?: "Something went wrong"
-                    )
-                )
+                is Result.Error -> {
+                    _state.update { it.copy(isLoading = false, error = result.error.asString()) }
+                }
             }
+
 
         }
     }

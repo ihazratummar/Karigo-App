@@ -14,3 +14,6 @@ fun Materials.toDomain() : StarterMaterial {
     )
 }
 
+fun List<Materials>.toDomainList() : List<StarterMaterial> {
+    return this.map { it.toDomain() }
+}

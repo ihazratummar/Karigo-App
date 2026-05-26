@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.GetAllJobUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.presentation.erroMap.asString
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -52,7 +53,7 @@ class HomeViewModel(
 
                     is Result.Error -> {
                         _state.update { it.copy(isLoading = false) }
-                        _effect.emit(HomeEffect.ShowError(message = result.error.toString()))
+                        _effect.emit(HomeEffect.ShowError(message = result.error.asString()))
                     }
                 }
             }

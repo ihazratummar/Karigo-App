@@ -1,6 +1,5 @@
 package com.karigojobs.data.dto
 
-import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
@@ -8,8 +7,6 @@ import com.karigojobs.share.model.TradeType
 import com.karigojobs.shared.database.GetActiveJobs
 import com.karigojobs.shared.database.GetAllJobs
 import com.karigojobs.shared.database.GetJobById
-import com.karigojobs.shared.database.Job
-import com.karigojobs.shared.database.Job_labour_item
 import com.karigojobs.shared.database.Job_material
 
 

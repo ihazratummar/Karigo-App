@@ -10,15 +10,15 @@ CREATE TABLE client (
     updated_at INTEGER NOT NULL
 );
 
-getgAallClients:
+getAllClients:
 SELECT * FROM client ORDER BY name ASC ;
 
 getClientById:
 SELECT * FROM client WHERE id = ?;
 
 searchClient:
-SELECT * FROM client WHERE name LIKE '%' || ? || '%'
-OR phone LIKE '%' || ? || '%' ORDER BY name ASC;
+SELECT * FROM client WHERE name LIKE '%' || :query || '%' COLLATE NOCASE
+OR phone LIKE '%' || :query || '%' COLLATE NOCASE ORDER BY name ASC;
 
 getClientByPhone:
 SELECT * FROM client WHERE  phone = ?;

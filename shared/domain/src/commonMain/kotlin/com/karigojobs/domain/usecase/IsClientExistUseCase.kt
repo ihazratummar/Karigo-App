@@ -1,6 +1,8 @@
 package com.karigojobs.domain.usecase
 
 import com.karigojobs.domain.repository.ClientRepository
+import com.karigojobs.domain.result.ClientError
+import com.karigojobs.domain.result.Result
 import com.karigojobs.share.model.ClientModel
 
 
@@ -14,7 +16,7 @@ class IsClientExistUseCase(
 ) {
 
 
-    suspend operator  fun invoke(phone: String): ClientModel?{
+    suspend operator  fun invoke(phone: String): Result<ClientModel?, ClientError> {
         return clientRepository.getClientByMobile(mobile = phone)
     }
 

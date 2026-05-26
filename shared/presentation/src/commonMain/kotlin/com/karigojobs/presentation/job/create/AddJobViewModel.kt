@@ -4,13 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.repository.DeviceContactProvider
 import com.karigojobs.domain.result.Result
+import com.karigojobs.domain.usecase.GetAllMaterialsUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
 import com.karigojobs.domain.usecase.InsertClientUseCase
 import com.karigojobs.domain.usecase.IsClientExistUseCase
 import com.karigojobs.domain.usecase.SaveFullJobTransactionUseCase
 import com.karigojobs.presentation.erroMap.asString
+import com.karigojobs.presentation.job.create.AddJobEffect.ShowError
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
+import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
 import com.karigojobs.share.model.TradeType
@@ -37,7 +40,8 @@ class AddJobViewModel(
     private val saveFullJobTransactionUseCase: SaveFullJobTransactionUseCase,
     private val isClientExistUseCase: IsClientExistUseCase,
     private val insertClientUseCase: InsertClientUseCase,
-    private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase
+    private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase,
+    private val getAllMaterialUseCase: GetAllMaterialsUseCase
 ) : ViewModel() {
 
     @OptIn(ExperimentalUuidApi::class)
@@ -52,6 +56,7 @@ class AddJobViewModel(
 
     init {
         loadSelectedTradeType()
+        loadMaterials()
     }
 
     private fun loadContacts() {
@@ -64,28 +69,46 @@ class AddJobViewModel(
         }
     }
 
+    private fun loadMaterials() {
+        viewModelScope.launch {
+            getAllMaterialUseCase().collectLatest { result ->
+                when (result) {
+                    is Result.Success -> {
+                        _state.update { it.copy(availableMaterials = result.data) }
+                    }
+
+                    is Result.Error -> {
+                        _effect.emit(ShowError(result.error.asString()))
+                    }
+                }
+            }
+        }
+    }
+
     private fun loadSelectedTradeType() {
         _state.update { it.copy(isLoading = false) }
         viewModelScope.launch {
             getSelectedTradeTypeUseCase.invoke().collectLatest { result ->
-                when(result){
+                when (result) {
                     is Result.Success -> {
                         _state.update {
                             it.copy(
                                 isLoading = false,
                                 tradeTypes = result.data.toList(),
-                                selectedTradeType = it.selectedTradeType ?: result.data.firstOrNull()
+                                selectedTradeType = it.selectedTradeType
+                                    ?: result.data.firstOrNull()
                             )
                         }
 
                     }
+
                     is Result.Error -> {
                         _state.update {
                             it.copy(
                                 isLoading = false,
                             )
                         }
-                        _effect.emit(AddJobEffect.ShowError(message = result.error.toString()))
+                        _effect.emit(ShowError(message = result.error.toString()))
                     }
                 }
             }
@@ -99,11 +122,12 @@ class AddJobViewModel(
             AddJobIntent.LoadInitialData -> {
                 loadSelectedTradeType()
             }
+
             is AddJobIntent.SelectClient -> {
                 viewModelScope.launch {
                     val safePhone = event.contact.phoneNumber.firstOrNull() ?: ""
                     val result = isClientExistUseCase.invoke(safePhone)
-                    when(result){
+                    when (result) {
                         is Result.Success -> {
                             if (result.data == null) {
                                 val client = ClientModel(
@@ -128,8 +152,9 @@ class AddJobViewModel(
                             }
                             _state.update { it.copy(isClientPickerModalOpen = false) }
                         }
+
                         is Result.Error -> {
-                            _effect.emit(AddJobEffect.ShowError(result.error.asString()))
+                            _effect.emit(ShowError(result.error.asString()))
                         }
                     }
                 }
@@ -190,8 +215,10 @@ class AddJobViewModel(
                 val updateList = _state.value.labourItems.map { item ->
                     if (item.id == event.itemId) {
                         if (item.quantity > 1) {
+                            val newQty = item.quantity - 1
                             item.copy(
-                                quantity = item.quantity - 1
+                                quantity = newQty,
+                                total = newQty * item.rate
                             )
                         } else {
                             item.copy(
@@ -224,10 +251,56 @@ class AddJobViewModel(
                 }
             }
 
-            is AddJobIntent.UpdateLabourDraft -> TODO()
+            is AddJobIntent.ToggleMaterialLibrary -> {
+                _state.update { it.copy(isMaterialLibraryModalOpen = event.isOpen) }
+            }
+            is AddJobIntent.IncreaseMaterialQuantity -> {
+                val existingItem = _state.value.selectedMaterials.find { it.materialId == event.id }
+                if (existingItem != null){
+                    val updatedList  = _state.value.selectedMaterials.map { item ->
+                        if (item.materialId == event.id){
+                            val newQty = item.quantity + 1
+                            item.copy(quantity = newQty, total = newQty * item.unitPrice)
+                        }else item
+                    }
+                    _state.update { it.copy(selectedMaterials = updatedList) }
+                }else{
+                    val starterMat = _state.value.availableMaterials.find { it.id == event.id }
+                    if (starterMat != null){
+                        val newItem = JobMaterialItemModel(
+                            id = Uuid.random().toString(),
+                            jobId = draftJobId,
+                            materialId = starterMat.id,
+                            name =  starterMat.name,
+                            unit = starterMat.unit,
+                            unitPrice = starterMat.price,
+                            quantity = 1,
+                            total = starterMat.price
+                        )
+                        _state.update { it.copy(selectedMaterials = it.selectedMaterials + newItem) }
+                    }
+                }
+            }
+            is AddJobIntent.MinusMaterialQuantity -> {
+                val updateList = _state.value.selectedMaterials.mapNotNull { item ->
+                    if (item.materialId == event.id) {
+                        if (item.quantity > 1) {
+                            val newQty = item.quantity - 1
+                            item.copy(quantity = newQty, total = newQty * item.unitPrice)
+                        } else {
+                            null // If quantity drops below 1, remove the item entirely
+                        }
+                    } else item
+                }
+                _state.update { it.copy(selectedMaterials = updateList) }
+            }
 
-            is AddJobIntent.AddMaterial -> TODO()
-            is AddJobIntent.RemoveMaterial -> TODO()
+            is AddJobIntent.RemoveMaterial -> {
+                val filterList = _state.value.selectedMaterials.filter {
+                    it.materialId != event.id
+                }
+                _state.update { it.copy(selectedMaterials = filterList) }
+            }
 
             AddJobIntent.SaveJob -> {
                 _state.update { it.copy(isLoading = true) }
@@ -259,18 +332,20 @@ class AddJobViewModel(
                         jobMaterialItemModel = _state.value.selectedMaterials
                     )
 
-                    when(result){
+                    when (result) {
                         is Result.Success -> {
                             _effect.emit(AddJobEffect.NavigateBack)
                             _state.update { it.copy(isLoading = false) }
                         }
+
                         is Result.Error -> {
                             _state.update { it.copy(isLoading = false) }
-                            _effect.emit(AddJobEffect.ShowError(message = result.error.asString()))
+                            _effect.emit(ShowError(message = result.error.asString()))
                         }
                     }
                 }
             }
+
         }
     }
 

@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.karigojob.share.utils.DateUtils.toReadableDate
@@ -223,7 +224,6 @@ fun Modifier.dashedBorder(
 }
 
 
-
 fun Modifier.bounceClickable(
     onClick: () -> Unit
 ): Modifier = composed {
@@ -282,11 +282,45 @@ fun CounterControl(
             painter = painterResource(icon),
             contentDescription = "Add",
             modifier = Modifier.size(dimens.Icon.xs),
-            tint =iconColor
+            tint = iconColor
         )
     }
 }
 
+@Composable
+fun MinusButton(
+    onClick: () -> Unit
+) {
+    CounterControl(
+        icon = R.drawable.substract,
+        iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        iconBackGroundColor = SurfaceOverlay,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun PlusButton(
+    onClick: () -> Unit
+){
+    CounterControl(
+        icon = R.drawable.add,
+        iconColor = MaterialTheme.colorScheme.primary,
+        iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer,
+        onClick = onClick
+    )
+}
+
+
+@Composable
+fun CrossButton(onClick: () -> Unit){
+    CounterControl(
+        icon = R.drawable.close,
+        iconColor = MaterialTheme.colorScheme.error,
+        iconBackGroundColor = Color.Transparent,
+        onClick = onClick
+    )
+}
 
 
 @Composable
@@ -306,8 +340,7 @@ fun KarigoIconWIthBgCick(
             .padding(size * 0.15f)
             .clip(KarigojobsShapes.medium)
             .background(color = iconBackGroundColor)
-            .clickable(onClick = onClick)
-        ,
+            .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -333,8 +366,7 @@ fun KarigoIconWIthBg(
         modifier = modifier
             .size(size)
             .clip(KarigojobsShapes.medium)
-            .background(color = iconBackGroundColor)
-        ,
+            .background(color = iconBackGroundColor),
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -347,8 +379,6 @@ fun KarigoIconWIthBg(
 }
 
 
-
-
 fun JobStatus.color(): ColorPalate {
     return when (this) {
         JobStatus.PENDING -> {
@@ -358,6 +388,7 @@ fun JobStatus.color(): ColorPalate {
                 onSurface = OnStatusPending
             )
         }
+
         JobStatus.IN_PROGRESS -> {
             ColorPalate(
                 accent = StatusInProgress,
@@ -365,6 +396,7 @@ fun JobStatus.color(): ColorPalate {
                 onSurface = OnStatusInProgress
             )
         }
+
         JobStatus.COMPLETED -> {
             ColorPalate(
                 accent = StatusDone,
@@ -372,6 +404,7 @@ fun JobStatus.color(): ColorPalate {
                 onSurface = OnStatusDone
             )
         }
+
         JobStatus.INVOICED -> {
             ColorPalate(
                 accent = StatusInvoiced,
@@ -379,6 +412,7 @@ fun JobStatus.color(): ColorPalate {
                 onSurface = OnStatusInvoiced
             )
         }
+
         JobStatus.PAID -> {
             ColorPalate(
                 accent = StatusPaid,
@@ -392,9 +426,8 @@ fun JobStatus.color(): ColorPalate {
 data class ColorPalate(
     val accent: Color,
     val surface: Color,
-    val onSurface : Color
+    val onSurface: Color
 )
-
 
 
 @Composable
@@ -426,14 +459,18 @@ fun JobCard(
                     size = dimens.Height.minTouch / 1.1f
                 )
                 Column(
-                    modifier = Modifier.weight(1f).padding(horizontal = dimens.Padding.md),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = dimens.Padding.md),
                     verticalArrangement = Arrangement.spacedBy(dimens.Space.sm),
                 ) {
                     Text(
                         text = job.title,
                         style = MaterialTheme.typography.titleMedium.copy(
                             color = MaterialTheme.colorScheme.onBackground,
-                        )
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                     Text(
                         text = job.clientName,
@@ -452,8 +489,7 @@ fun JobCard(
                             width = dimens.Border.thin,
                             color = MaterialTheme.colorScheme.onBackground,
                             shape = KarigojobsShapes.medium
-                        )
-                    ,
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(

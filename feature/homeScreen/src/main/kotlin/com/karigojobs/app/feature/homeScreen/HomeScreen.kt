@@ -2,6 +2,7 @@ package com.karigojobs.app.feature.homeScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,9 +24,11 @@ import androidx.compose.ui.text.font.FontWeight
 import com.karigojobs.app.feature.homeScreen.component.HomeFloatingActionButton
 import com.karigojobs.app.feature.homeScreen.component.HomeTopAppBar
 import com.karigojobs.app.feature.homeScreen.component.ScrollableTradeView
+import com.karigojobs.app.feature.homeScreen.component.SiteEstimatesCard
 import com.karigojobs.presentation.dashboard.HomeEffect
 import com.karigojobs.presentation.dashboard.HomeState
 import com.karigojobs.ui.common.JobCard
+import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -88,6 +91,10 @@ fun HomeScreen(
             }
 
             item {
+                SiteEstimatesCard()
+            }
+
+            item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -95,18 +102,23 @@ fun HomeScreen(
                 ) {
                     Text(
                         text = "Recent Jobs",
-                        style = MaterialTheme.typography.titleMedium.copy(
+                        style = MaterialTheme.typography.bodyMedium.copy(
                             color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.Bold
                         )
                     )
-                    Text(
-                        text = "See all",
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            color = MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier.clickable { onSeeAllJobClick() }
-                    )
+                    Box(
+                        modifier = Modifier
+                            .bounceClickable(onSeeAllJobClick),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "See all",
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        )
+                    }
                 }
             }
 

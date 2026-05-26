@@ -26,11 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.app.feature.job.component.AddJobLabourItemSection
+import com.karigojobs.app.feature.job.component.AddMaterialItemSection
 import com.karigojobs.app.feature.job.component.ClientInfo
 import com.karigojobs.app.feature.job.component.ContactPicker
 import com.karigojobs.app.feature.job.component.CreateLabourItemModal
 import com.karigojobs.app.feature.job.component.JobTitleSection
 import com.karigojobs.app.feature.job.component.JobTopAppBar
+import com.karigojobs.app.feature.job.component.MaterialLibraryModal
 import com.karigojobs.app.feature.job.component.SelectTradeSection
 import com.karigojobs.app.feature.job.component.TotalScreenCard
 import com.karigojobs.domain.repository.DeviceContact
@@ -121,6 +123,16 @@ fun JobCreateScreen(
                         AddJobIntent.AddLabourItem(it)
                     )
                 }
+            )
+        }
+
+        if (addJobState.isMaterialLibraryModalOpen) {
+            MaterialLibraryModal(
+                onDismiss = {
+                    onIntent(AddJobIntent.ToggleMaterialLibrary(false))
+                },
+                addJobState = addJobState,
+                onIntent = onIntent
             )
         }
 
@@ -230,6 +242,16 @@ fun JobCreateScreen(
                         onIntent(AddJobIntent.IncreaseLabourItemQuantity(itemId = it))
                     },
                     onQuantityMinusClick = {  onIntent(AddJobIntent.MinusLabourItemQuantity(itemId = it)) },
+                )
+            }
+
+            item {
+                AddMaterialItemSection(
+                    onClick = {
+                        onIntent(AddJobIntent.ToggleMaterialLibrary(true))
+                    },
+                    materialsItems = addJobState.selectedMaterials,
+                    onRemoveMaterialItemClick = { onIntent(AddJobIntent.RemoveMaterial(it)) }
                 )
             }
 

@@ -2,8 +2,12 @@ package com.karigojobs.app.feature.job.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.MarqueeAnimationMode
+import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -13,6 +17,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -30,21 +37,30 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import com.karigojobs.app.android.ui.R
+import com.karigojobs.presentation.job.create.AddJobIntent
 import com.karigojobs.presentation.job.create.AddJobState
 import com.karigojobs.presentation.job.create.LabourItem
 import com.karigojobs.share.model.JobLabourItemModel
+import com.karigojobs.share.model.JobMaterialItemModel
+import com.karigojobs.share.model.StarterMaterial
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
 import com.karigojobs.ui.common.CounterControl
+import com.karigojobs.ui.common.CrossButton
 import com.karigojobs.ui.common.KarigojobsTextField
+import com.karigojobs.ui.common.MinusButton
+import com.karigojobs.ui.common.PlusButton
+import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.common.dashedBorder
 import com.karigojobs.ui.icon
+import com.karigojobs.ui.theme.KarigoSelectedCardColor
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.ModalBackGround
@@ -271,40 +287,7 @@ fun AddJobLabourItemSection(
             Spacer(modifier = Modifier.height(dimens.Space.xs))
         }
 
-        Card(
-            onClick = onClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .dashedBorder(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.5f),
-                    strokeWidth = DividerDefaults.Thickness
-                ),
-            colors = CardDefaults.cardColors(
-                containerColor = KarigojobsCard
-            )
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(dimens.Padding.base)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.add),
-                    contentDescription = "Add",
-                    modifier = Modifier.size(dimens.Icon.xs),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(Modifier.width(dimens.Space.md))
-                Text(
-                    text = "Add Labour Item",
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                )
-            }
-        }
+        AddItemCard(onClick = onClick)
     }
 }
 
@@ -358,12 +341,7 @@ fun LabourItemCard(
                 )
             }
 
-            CounterControl(
-                icon = R.drawable.substract,
-                iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                iconBackGroundColor = SurfaceOverlay,
-                onClick = onMinusClick
-            )
+            MinusButton(onClick = onMinusClick)
             Text(
                 text = labourItem.quantity.toString(),
                 style = MaterialTheme.typography.titleMedium.copy(
@@ -371,18 +349,170 @@ fun LabourItemCard(
                     fontWeight = FontWeight.Bold
                 )
             )
-            CounterControl(
-                icon = R.drawable.add,
-                iconColor = MaterialTheme.colorScheme.primary,
-                iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer,
-                onClick = onAddClick
+            PlusButton(onClick = onAddClick)
+
+            CrossButton(
+                onClick = onRemoveClick
+            )
+        }
+    }
+
+}
+
+
+@Composable
+fun AddMaterialItemSection(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+    materialsItems: List<JobMaterialItemModel>,
+    onRemoveMaterialItemClick: (String) -> Unit,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.Start
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "MATERIALS",
+                style = MaterialTheme.typography.labelMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            )
+            Row(
+                modifier = Modifier.clickable { onClick() },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Manage Library >",
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                )
+            }
+        }
+        Spacer(Modifier.height(dimens.Space.base))
+
+        if (materialsItems.isNotEmpty()) {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+            ) {
+                materialsItems.forEach { item ->
+                    MaterialSelectedChip(
+                        item = item,
+                        onRemoveClick = { item.materialId?.let { onRemoveMaterialItemClick(it) } }
+                    )
+                }
+            }
+            Spacer(Modifier.height(dimens.Space.base))
+        }
+
+        AddItemCard(
+            text = "Add Materials",
+            onClick = onClick
+        )
+
+    }
+}
+
+@Composable
+fun MaterialSelectedChip(
+    item: JobMaterialItemModel,
+    onRemoveClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .clip(KarigojobsShapes.large)
+            .border(
+                BorderStroke(
+                    width = dimens.Border.thin,
+                    color = MaterialTheme.colorScheme.onBackground,
+                ),
+                shape = KarigojobsShapes.large
+            )
+            .background(
+                shape = KarigojobsShapes.large,
+                color = MaterialTheme.colorScheme.primaryContainer,
             )
 
-            CounterControl(
-                icon = R.drawable.close,
-                iconColor = MaterialTheme.colorScheme.error,
-                iconBackGroundColor = Color.Transparent,
-                onClick = onRemoveClick
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = dimens.Padding.sm, vertical = dimens.Padding.sm),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = item.name,
+                style = MaterialTheme.typography.labelMedium.copy(color = MaterialTheme.colorScheme.primary)
+            )
+            Spacer(Modifier.width(dimens.Space.xs))
+            Text(
+                text = "x${item.quantity}",
+                style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+            )
+            Spacer(Modifier.width(dimens.Space.sm))
+            Box(
+                modifier = Modifier
+                    .bounceClickable(onRemoveClick)
+                    .background(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                            alpha = 0.1f
+                        ),
+                        shape = CircleShape
+                    )
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.close),
+                    contentDescription = "Remove",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .size(dimens.Icon._2xs)
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+fun AddItemCard(
+    text: String = "Add Labour Item",
+    onClick: () -> Unit
+) {
+    Card(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .dashedBorder(
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.5f),
+                strokeWidth = DividerDefaults.Thickness
+            ),
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(dimens.Padding.base)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.add),
+                contentDescription = "Add",
+                modifier = Modifier.size(dimens.Icon.xs),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Spacer(Modifier.width(dimens.Space.md))
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             )
         }
     }
@@ -492,6 +622,147 @@ fun CreateLabourItemModal(
             }
         }
     }
+}
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MaterialLibraryModal(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit,
+    addJobState: AddJobState,
+    onIntent: (AddJobIntent) -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        containerColor = ModalBackGround
+    ) {
+        Box(
+            modifier = Modifier.padding(horizontal = dimens.Padding.base)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
+            ) {
+                Text(
+                    text = "Materials Library",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Text(
+                    text = "Tap items to add, adjust quantities",
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                )
+                HorizontalDivider()
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f, fill = false),
+                    verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+                ) {
+                    items(addJobState.availableMaterials) { material ->
+                        val selectedItem =
+                            addJobState.selectedMaterials.find { it.materialId == material.id }
+                        val isSelected = selectedItem != null
+
+                        MaterialItemCard(
+                            materialItemModel = material,
+                            isSelected = isSelected,
+                            selectedQuantity = selectedItem?.quantity ?: 0,
+                            onAddClick = { onIntent(AddJobIntent.IncreaseMaterialQuantity(material.id)) },
+                            onMinusClick = { onIntent(AddJobIntent.MinusMaterialQuantity(material.id)) }
+                        )
+                    }
+                }
+
+                // Sticky Confirm Button
+                if (addJobState.selectedMaterials.isNotEmpty()){
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = dimens.Padding.base),
+                        onClick = onDismiss,
+                        shape = KarigojobsShapes.medium
+                    ) {
+                        Text(text = "Confirm — ${deviceInfo.currency}${addJobState.materialTotal}")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun MaterialItemCard(
+    modifier: Modifier = Modifier,
+    materialItemModel: StarterMaterial,
+    isSelected: Boolean = false,
+    selectedQuantity: Int = 0,
+    onAddClick: () -> Unit,
+    onMinusClick: () -> Unit
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isSelected) KarigoSelectedCardColor else Color.Transparent
+        ),
+        border = if (isSelected) BorderStroke(
+            width = dimens.Border.thin,
+            color = MaterialTheme.colorScheme.onBackground
+        ) else null
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = dimens.Padding.base, vertical = dimens.Padding.sm),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+            ) {
+                Text(
+                    text = materialItemModel.name,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                )
+                Text(
+                    text = "${deviceInfo.currency}${materialItemModel.price} / ${materialItemModel.unit}",
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                )
+            }
+            Spacer(Modifier.width(dimens.Space.md))
+
+            if (isSelected) {
+                MinusButton(
+                    onClick = onMinusClick
+                )
+                Spacer(Modifier.width(dimens.Space.sm))
+                Text(
+                    text = selectedQuantity.toString(),
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Spacer(Modifier.width(dimens.Space.sm))
+                PlusButton(
+                    onClick = onAddClick
+                )
+            } else {
+                PlusButton(
+                    onClick = onAddClick
+                )
+            }
+        }
+    }
 }
 

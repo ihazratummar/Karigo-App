@@ -7,6 +7,7 @@ import com.karigojobs.shared.database.Materials
 
 fun Materials.toDomain() : StarterMaterial {
     return StarterMaterial(
+        id = this.id,
         name = this.name,
         unit = this.unit,
         price = this.rate,

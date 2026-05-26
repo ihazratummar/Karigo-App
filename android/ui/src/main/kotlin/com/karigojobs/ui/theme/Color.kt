@@ -112,3 +112,5 @@ val KarigojobsError = Color(0xFFE05555)
 val KarigojobsText = Color(0xFFE8E6E0)
 val KarigojobsText2 = Color(0xFF8A8880)
 val KarigojobsBorder = Color(0xFF242424)
+
+val KarigoSelectedCardColor = Color(0xFF142e2b)

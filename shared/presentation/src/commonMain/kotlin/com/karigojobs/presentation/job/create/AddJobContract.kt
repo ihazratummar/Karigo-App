@@ -34,6 +34,7 @@ data class AddJobState(
     // Materials
     val availableMaterials: List<StarterMaterial> = emptyList(),
     val selectedMaterials: List<JobMaterialItemModel> = emptyList(),
+    val isMaterialLibraryModalOpen : Boolean = false
 
     ){
 
@@ -56,11 +57,12 @@ sealed interface AddJobIntent {
     data class AddLabourItem(val labourItem: LabourItem) : AddJobIntent
     data class IncreaseLabourItemQuantity(val itemId: String) : AddJobIntent
     data class MinusLabourItemQuantity(val itemId: String) : AddJobIntent
-    data class UpdateLabourDraft(val draft: JobLabourItemModel) : AddJobIntent
     data class RemoveLabourItem(val id: String) : AddJobIntent
     data class LabourItemModalOpen(val isOpen: Boolean) : AddJobIntent
 
-    data class AddMaterial(val id: String, val quantity: Int) : AddJobIntent
+    data class ToggleMaterialLibrary(val isOpen: Boolean) : AddJobIntent
+    data class IncreaseMaterialQuantity(val id: String) : AddJobIntent
+    data class MinusMaterialQuantity(val id: String) : AddJobIntent
     data class RemoveMaterial(val id: String) : AddJobIntent
 
     data object SaveJob: AddJobIntent

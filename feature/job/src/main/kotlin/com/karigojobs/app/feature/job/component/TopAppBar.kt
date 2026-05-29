@@ -32,10 +32,11 @@ import com.karigojobs.ui.theme.dimens
 
 @Composable
 fun TopBarTitle(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    title: String
 ) {
     Text(
-        text = "New Job",
+        text =title,
         style = MaterialTheme.typography.titleMedium,
         modifier = modifier
     )
@@ -47,44 +48,53 @@ fun TopBarTitle(
 @Composable
 fun JobTopAppBar(
     onNavigationClick: () -> Unit = {},
-    onAction: () -> Unit = {},
-    canSave: Boolean = false
+    title: String = "New Job",
+    action : @Composable () -> Unit
 ) {
     Column {
         CenterAlignedTopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
             title = {
-                TopBarTitle()
+                TopBarTitle(title = title)
             },
             navigationIcon = {
                 KarigoIconWIthBgCick(onClick = onNavigationClick)
             },
             actions = {
-                Box(
-                    modifier = Modifier
-                        .size(dimens.Space._4xl)
-                        .padding(vertical = dimens.Space._2md)
-                        .clip(KarigojobsShapes.medium)
-                        .background(
-                            color = if (canSave) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant
-                        )
-                        .clickable(enabled = canSave, onClick = onAction),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Save",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = if (canSave) MaterialTheme.colorScheme.primary else NavInactive
-                        ),
-                        modifier = Modifier.padding(
-                            horizontal = dimens.Padding.sm,
-                            vertical = dimens.Padding.xs
-                        )
-                    )
-                }
+                action()
             },
             windowInsets = WindowInsets(),
         )
         HorizontalDivider()
+    }
+}
+
+
+@Composable
+fun CanSaveButton(
+    onAction: () -> Unit,
+    canSave: Boolean
+){
+    Box(
+        modifier = Modifier
+            .size(dimens.Space._4xl)
+            .padding(vertical = dimens.Space._2md)
+            .clip(KarigojobsShapes.medium)
+            .background(
+                color = if (canSave) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant
+            )
+            .clickable(enabled = canSave, onClick = onAction),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "Save",
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = if (canSave) MaterialTheme.colorScheme.primary else NavInactive
+            ),
+            modifier = Modifier.padding(
+                horizontal = dimens.Padding.sm,
+                vertical = dimens.Padding.xs
+            )
+        )
     }
 }

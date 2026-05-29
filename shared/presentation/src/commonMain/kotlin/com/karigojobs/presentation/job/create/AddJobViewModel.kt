@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.repository.DeviceContactProvider
 import com.karigojobs.domain.result.Result
-import com.karigojobs.domain.usecase.GetAllMaterialsUseCase
+import com.karigojobs.domain.usecase.material.GetAllMaterialsUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
-import com.karigojobs.domain.usecase.InsertClientUseCase
-import com.karigojobs.domain.usecase.IsClientExistUseCase
-import com.karigojobs.domain.usecase.SaveFullJobTransactionUseCase
+import com.karigojobs.domain.usecase.client.InsertClientUseCase
+import com.karigojobs.domain.usecase.client.IsClientExistUseCase
+import com.karigojobs.domain.usecase.job.SaveFullJobTransactionUseCase
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.job.create.AddJobEffect.ShowError
 import com.karigojobs.share.model.ClientModel

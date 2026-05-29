@@ -1,4 +1,4 @@
-package com.karigojobs.domain.usecase
+package com.karigojobs.domain.usecase.onboarding
 
 import com.karigojobs.datastore.store.OnboardingStore
 import kotlinx.coroutines.flow.Flow

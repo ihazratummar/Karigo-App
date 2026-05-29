@@ -1,5 +1,6 @@
 package com.karigojobs.ui.common
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -14,11 +15,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -44,9 +48,13 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.Popup
 import com.karigojob.share.utils.DateUtils.toReadableDate
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.share.model.JobModel
@@ -58,6 +66,8 @@ import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText
 import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.KarigojobsThemePreview
+import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.NavInactive
 import com.karigojobs.ui.theme.OnStatusDone
 import com.karigojobs.ui.theme.OnStatusInProgress
@@ -302,7 +312,7 @@ fun MinusButton(
 @Composable
 fun PlusButton(
     onClick: () -> Unit
-){
+) {
     CounterControl(
         icon = R.drawable.add,
         iconColor = MaterialTheme.colorScheme.primary,
@@ -313,7 +323,7 @@ fun PlusButton(
 
 
 @Composable
-fun CrossButton(onClick: () -> Unit){
+fun CrossButton(onClick: () -> Unit) {
     CounterControl(
         icon = R.drawable.close,
         iconColor = MaterialTheme.colorScheme.error,
@@ -330,7 +340,8 @@ fun KarigoIconWIthBgCick(
     iconColor: Color = NavInactive,
     size: Dp = dimens.Height.minTouch,
     iconBackGroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    isBorder: Boolean = false
 ) {
     val iconSize = size * 0.4f
 
@@ -339,6 +350,13 @@ fun KarigoIconWIthBgCick(
             .size(size)
             .padding(size * 0.15f)
             .clip(KarigojobsShapes.medium)
+            .let {
+                if (isBorder) it.border(
+                    width = dimens.Border.thin,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    shape = KarigojobsShapes.medium
+                ) else it
+            }
             .background(color = iconBackGroundColor)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
@@ -433,9 +451,11 @@ data class ColorPalate(
 @Composable
 fun JobCard(
     modifier: Modifier = Modifier,
-    job: JobModel
+    job: JobModel,
+    onClick: () -> Unit
 ) {
     Card(
+        onClick = onClick,
         modifier = modifier.fillMaxWidth(),
         shape = KarigojobsShapes.large,
         colors = CardDefaults.cardColors(
@@ -524,5 +544,123 @@ fun JobCard(
                 )
             }
         }
+    }
+}
+
+
+
+@Composable
+fun DeleteDialog(
+    onCancelClick: () -> Unit,
+    onConfirmClick: () -> Unit,
+    dialogTitle: String =  "Delete Job",
+    dialogDescription : String = "This will permanently remove this job and its invoice history."
+){
+    PopUpDialog(
+        onCancelClick = onCancelClick,
+        onConfirmClick = onConfirmClick,
+        icon = R.drawable.delete,
+        confirmButtonText = "Delete",
+        confirmButtonColor = MaterialTheme.colorScheme.error,
+        title = dialogTitle,
+        description = dialogDescription
+    )
+}
+
+
+@Preview(showBackground = true, showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun PopUpDialog(
+    onCancelClick : () -> Unit = {},
+    onConfirmClick : () -> Unit = {},
+    confirmButtonText: String = "Delete",
+    icon: Int = R.drawable.delete,
+    confirmButtonColor: Color  = MaterialTheme.colorScheme.error,
+    title: String = "",
+    description: String = ""
+
+) {
+    KarigojobsThemePreview(darkTheme = true) {
+        Dialog(
+            onDismissRequest = onCancelClick,
+        ) {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = KarigojobsShapes.medium,
+                colors = CardDefaults.cardColors(
+                    containerColor = ModalBackGround
+                )
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(dimens.Padding.base)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(dimens.Space.base),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        painter = painterResource(icon),
+                        contentDescription = null,
+                        modifier = Modifier.size(dimens.Icon.md),
+                        tint = confirmButtonColor
+                    )
+
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    )
+                    Text(
+                        text = description,
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center
+                        )
+                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
+                    ) {
+                        DialogButton(
+                            modifier = Modifier.weight(1f),
+                            onClick = onCancelClick
+                        )
+                        DialogButton(
+                            modifier = Modifier.weight(1f),
+                            onClick = onConfirmClick,
+                            buttonText = confirmButtonText,
+                            buttonColor = confirmButtonColor
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DialogButton(
+    modifier: Modifier = Modifier,
+    buttonColor : Color = KarigojobsCard,
+    buttonText: String = "Cancel",
+    onClick: () -> Unit = {}
+){
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = KarigojobsShapes.medium,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = buttonColor
+        )
+    ) {
+        Text(
+            text = buttonText,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        )
     }
 }

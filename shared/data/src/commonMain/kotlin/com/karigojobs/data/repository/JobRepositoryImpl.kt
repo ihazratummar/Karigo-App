@@ -2,6 +2,7 @@ package com.karigojobs.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.karigojobs.data.dto.toActiveModelList
 import com.karigojobs.data.dto.toIdModel
 import com.karigojobs.data.dto.toModelList
@@ -52,10 +53,15 @@ class JobRepositoryImpl(
             .mapToList(ioDispatcher)
             .map { it.toActiveModelList() }
 
-    override suspend fun getJobById(id: String): JobModel {
-        val job = karigojobsDatabase.jobQueries.getJobById(id = id)
-            .executeAsOne().toIdModel()
-        return job
+    override fun getJobById(id: String): Flow<Result<JobModel?, JobError>> {
+        return karigojobsDatabase.jobQueries
+            .getJobById(id = id)
+            .asFlow()
+            .mapToOneOrNull(ioDispatcher)
+            .map {job ->
+                Result.Success(job?.toIdModel())
+            }
+
     }
 
     override suspend fun saveJobTransaction(
@@ -128,7 +134,7 @@ class JobRepositoryImpl(
             .asFlow()
             .mapToList(ioDispatcher)
             .map { items ->
-                Result.Success(items.toModelList())  as Result<List<JobLabourItemModel>, JobError>
+                Result.Success(items.toModelList()) as Result<List<JobLabourItemModel>, JobError>
             }.catch {
                 emit(Result.Error(JobError.Database))
             }
@@ -167,7 +173,7 @@ class JobRepositoryImpl(
         }
     }
 
-    override fun getMaterials(jobId: String):Flow<Result<List<JobMaterialItemModel>, JobError>> {
+    override fun getMaterials(jobId: String): Flow<Result<List<JobMaterialItemModel>, JobError>> {
         return karigojobsDatabase.jobMaterialQueries
             .getJobMaterialsByJob(job_id = jobId)
             .asFlow()
@@ -180,8 +186,8 @@ class JobRepositoryImpl(
 
     }
 
-    override suspend fun addMaterial(item: JobMaterialItemModel) : Result<Unit, JobError> {
-        return safeCall(JobError.Database){
+    override suspend fun addMaterial(item: JobMaterialItemModel): Result<Unit, JobError> {
+        return safeCall(JobError.Database) {
             karigojobsDatabase.jobMaterialQueries.insertJobMaterial(
                 id = item.id,
                 job_id = item.jobId,
@@ -196,8 +202,8 @@ class JobRepositoryImpl(
         }
     }
 
-    override suspend fun removeMaterial(itemId: String) : Result<Unit, JobError> {
-        return safeCall(JobError.Database){
+    override suspend fun removeMaterial(itemId: String): Result<Unit, JobError> {
+        return safeCall(JobError.Database) {
             karigojobsDatabase.jobMaterialQueries.deleteJobMaterial(id = itemId)
         }
     }

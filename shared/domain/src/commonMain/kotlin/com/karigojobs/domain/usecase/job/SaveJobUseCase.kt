@@ -1,4 +1,4 @@
-package com.karigojobs.domain.usecase
+package com.karigojobs.domain.usecase.job
 
 import com.karigojobs.domain.repository.JobRepository
 import com.karigojobs.domain.result.JobError

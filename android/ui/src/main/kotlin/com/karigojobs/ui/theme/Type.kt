@@ -165,29 +165,6 @@ data class KarigojobsTypography(
 )
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Helper: builds Material 3 Typography from KarigojobsTypography
-// Called by Theme.kt → MaterialTheme(typography = ...)
-// ─────────────────────────────────────────────────────────────────────────────
-fun KarigojobsTypography.toMaterial3Typography() = Typography(
-    // M3 roles mapped to our semantic styles
-    displayLarge   = greetingName.copy(fontSize = (greetingName.fontSize.value * 1.4f).sp),
-    displayMedium  = greetingName,
-    displaySmall   = screenTitle,
-    headlineLarge  = statAmountHighlighted,
-    headlineMedium = statAmountNormal,
-    headlineSmall  = screenTitle,
-    titleLarge     = greetingName,
-    titleMedium    = sectionHeader,
-    titleSmall     = jobTitle,
-    bodyLarge      = searchInput,
-    bodyMedium     = jobClientName,
-    bodySmall      = jobDate,
-    labelLarge     = actionLink,
-    labelMedium    = filterChip,
-    labelSmall     = statLabel,
-)
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Builder — creates a KarigojobsTypography for a given base scale factor
 // compactFactor = 1.0, mediumFactor = 1.1, expandedFactor = 1.2
 // This ensures every sp value scales proportionally, not hardcoded per size.

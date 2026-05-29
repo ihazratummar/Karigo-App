@@ -2,6 +2,7 @@ package com.karigojobs.di
 
 import com.karigojobs.presentation.dashboard.HomeViewModel
 import com.karigojobs.presentation.job.create.AddJobViewModel
+import com.karigojobs.presentation.job.details.JobDetailsViewModel
 import com.karigojobs.presentation.job.jobList.JobListViewModel
 import com.karigojobs.presentation.onboarding.OnboardingViewModel
 import org.koin.core.module.Module
@@ -20,4 +21,17 @@ fun getPresentationModule(): Module = module {
     viewModelOf(::HomeViewModel)
     viewModelOf(::AddJobViewModel)
     viewModelOf(::JobListViewModel)
+
+
+    viewModel { (jobId: String) ->
+        JobDetailsViewModel(
+            jobId = jobId,
+            getJobDetailsUseCase = get(),
+            changeJobStatusUseCase = get(),
+            deleteJobUseCase = get(),
+            getClientUseCase = get(),
+            getJobLabourItemUseCase = get(),
+            getJobMaterialItemsUseCase = get()
+        )
+    }
 }

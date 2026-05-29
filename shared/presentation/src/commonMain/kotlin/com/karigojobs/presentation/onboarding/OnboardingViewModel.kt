@@ -3,9 +3,9 @@ package com.karigojobs.presentation.onboarding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.result.Result
-import com.karigojobs.domain.usecase.CompleteOnboardingUseCase
-import com.karigojobs.domain.usecase.GetOnboardingStatusUseCase
-import com.karigojobs.domain.usecase.SeedStarterMaterialsUseCase
+import com.karigojobs.domain.usecase.onboarding.CompleteOnboardingUseCase
+import com.karigojobs.domain.usecase.onboarding.GetOnboardingStatusUseCase
+import com.karigojobs.domain.usecase.material.SeedStarterMaterialsUseCase
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.share.model.TradeType
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,9 +25,9 @@ import com.karigojobs.ui.theme.dimens
 @Composable
 fun JobListScreen(
     modifier: Modifier = Modifier,
-    jobListState: JobListState
+    jobListState: JobListState,
+    onJobClick : (String) -> Unit
 ) {
-
     Scaffold(
         modifier = modifier
     ) { paddingValues ->
@@ -43,7 +44,10 @@ fun JobListScreen(
                     contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = dimens.Padding.base)
                 ) {
                     items(jobListState.jobs, key = { it.id }) { job ->
-                        JobCard(job = job)
+                        JobCard(
+                            job = job ,
+                            onClick = {onJobClick(job.id)}
+                        )
                     }
                 }
             }

@@ -14,6 +14,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.app.feature.job.component.AddJobLabourItemSection
 import com.karigojobs.app.feature.job.component.AddMaterialItemSection
+import com.karigojobs.app.feature.job.component.CanSaveButton
 import com.karigojobs.app.feature.job.component.ClientInfo
 import com.karigojobs.app.feature.job.component.ContactPicker
 import com.karigojobs.app.feature.job.component.CreateLabourItemModal
@@ -62,13 +65,20 @@ fun JobCreateScreen(
     addJobEffect: SharedFlow<AddJobEffect>?
 ) {
 
+    val snackbarState = remember { SnackbarHostState() }
+
     LaunchedEffect(Unit) {
         addJobEffect?.collect { effect ->
             when (effect){
                 AddJobEffect.NavigateBack -> {
                     onBackClick()
                 }
-                is AddJobEffect.ShowError -> TODO()
+                is AddJobEffect.ShowError -> {
+                    snackbarState.showSnackbar(
+                        message = effect.message,
+                        withDismissAction = true
+                    )
+                }
             }
         }
     }
@@ -90,13 +100,20 @@ fun JobCreateScreen(
     }
 
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarState)
+        },
         topBar = {
             JobTopAppBar(
-                onAction = {
-                    onIntent(AddJobIntent.SaveJob)
-                },
                 onNavigationClick = onBackClick,
-                canSave = addJobState.canContinue
+                action = {
+                    CanSaveButton(
+                        onAction = {
+                            onIntent(AddJobIntent.SaveJob)
+                        },
+                        canSave = addJobState.canContinue
+                    )
+                }
             )
         }
     ) { paddingValues ->

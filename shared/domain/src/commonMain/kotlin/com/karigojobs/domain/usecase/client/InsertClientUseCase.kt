@@ -1,4 +1,4 @@
-package com.karigojobs.domain.usecase
+package com.karigojobs.domain.usecase.client
 
 import com.karigojobs.domain.repository.ClientRepository
 import com.karigojobs.share.model.ClientModel

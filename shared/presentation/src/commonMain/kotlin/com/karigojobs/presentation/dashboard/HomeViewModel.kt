@@ -3,7 +3,7 @@ package com.karigojobs.presentation.dashboard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.result.Result
-import com.karigojobs.domain.usecase.GetAllJobUseCase
+import com.karigojobs.domain.usecase.job.GetAllJobUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
 import com.karigojobs.presentation.erroMap.asString
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -6,27 +6,30 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
 import com.karigojobs.app.feature.homeScreen.HomeScreen
 import com.karigojobs.app.feature.job.create.JobCreateScreen
+import com.karigojobs.app.feature.job.details.JobDetailsScreen
 import com.karigojobs.app.feature.job.joblist.JobListScreen
 import com.karigojobs.presentation.dashboard.HomeViewModel
 import com.karigojobs.presentation.job.create.AddJobViewModel
+import com.karigojobs.presentation.job.details.JobDetailsViewModel
 import com.karigojobs.presentation.job.jobList.JobListViewModel
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 
 /**
  * @author hazratummar
  * Created on 21/05/26
  */
- 
 
 
 fun NavGraphBuilder.contentNavigation(
     navHostController: NavHostController
-){
+) {
 
-    navigation<RootNav.ContentRoute>(startDestination = MainRoute.HomeRoute){
+    navigation<RootNav.ContentRoute>(startDestination = MainRoute.HomeRoute) {
         composable<MainRoute.HomeRoute> {
 
             val viewModel = koinViewModel<HomeViewModel>()
@@ -51,7 +54,10 @@ fun NavGraphBuilder.contentNavigation(
                     }
                 },
                 homeState = state,
-                homeEffect = viewModel.effect
+                homeEffect = viewModel.effect,
+                onJobClick = { jobId ->
+                    navHostController.navigate(MainRoute.JobDetailsRoute(jobId = jobId))
+                }
             )
         }
 
@@ -68,11 +74,33 @@ fun NavGraphBuilder.contentNavigation(
             )
         }
 
+        composable<MainRoute.JobDetailsRoute> { backStackEntry ->
+            val route = backStackEntry.toRoute<MainRoute.JobDetailsRoute>()
+
+            val viewModel = koinViewModel<JobDetailsViewModel>(
+                parameters = { parametersOf(route.jobId) }
+            )
+            val state by viewModel.state.collectAsStateWithLifecycle()
+
+            JobDetailsScreen(
+                jobDetailsState = state,
+                jobDetailsEffect = viewModel.effect,
+                onBackClick = {
+                    navHostController.popBackStack()
+                },
+                event = viewModel::onEven
+            )
+
+        }
+
         composable<MainRoute.JobsRoute> {
             val viewModel = koinViewModel<JobListViewModel>()
             val jobListState by viewModel.state.collectAsStateWithLifecycle()
             JobListScreen(
-                jobListState = jobListState
+                jobListState = jobListState,
+                onJobClick = { jobId ->
+                    navHostController.navigate(MainRoute.JobDetailsRoute(jobId = jobId))
+                }
             )
         }
 

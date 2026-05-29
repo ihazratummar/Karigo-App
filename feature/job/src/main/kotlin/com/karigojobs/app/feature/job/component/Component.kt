@@ -29,6 +29,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,26 +44,34 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
+import com.karigojob.share.utils.DateUtils.toReadableDate
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.job.create.AddJobIntent
 import com.karigojobs.presentation.job.create.AddJobState
 import com.karigojobs.presentation.job.create.LabourItem
+import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
+import com.karigojobs.share.model.JobModel
+import com.karigojobs.share.model.JobStatus
 import com.karigojobs.share.model.StarterMaterial
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
-import com.karigojobs.ui.common.CounterControl
 import com.karigojobs.ui.common.CrossButton
+import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.KarigojobsTextField
 import com.karigojobs.ui.common.MinusButton
 import com.karigojobs.ui.common.PlusButton
 import com.karigojobs.ui.common.bounceClickable
+import com.karigojobs.ui.common.color
 import com.karigojobs.ui.common.dashedBorder
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigoSelectedCardColor
+import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
+import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.SurfaceOverlay
 import com.karigojobs.ui.theme.deviceInfo
@@ -441,7 +450,10 @@ fun MaterialSelectedChip(
 
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = dimens.Padding.sm, vertical = dimens.Padding.sm),
+            modifier = Modifier.padding(
+                horizontal = dimens.Padding.sm,
+                vertical = dimens.Padding.sm
+            ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -681,7 +693,7 @@ fun MaterialLibraryModal(
                 }
 
                 // Sticky Confirm Button
-                if (addJobState.selectedMaterials.isNotEmpty()){
+                if (addJobState.selectedMaterials.isNotEmpty()) {
                     Button(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -766,3 +778,526 @@ fun MaterialItemCard(
     }
 }
 
+
+@Composable
+fun JobDetailsCard(
+    modifier: Modifier = Modifier,
+    job: JobModel
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = KarigojobsShapes.large,
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        )
+    ) {
+
+        Row(
+            modifier = Modifier
+                .padding(dimens.Padding.md)
+                .fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    KarigoIconWIthBg(
+                        icon = job.tradeType.icon(),
+                        iconColor = KarigojobsAccent,
+                        iconBackGroundColor = SurfaceOverlay,
+                        size = dimens.Height.minTouch
+                    )
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = dimens.Padding.md),
+                        verticalArrangement = Arrangement.spacedBy(dimens.Space.sm),
+                    ) {
+                        Text(
+                            text = job.title,
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                color = MaterialTheme.colorScheme.onBackground,
+                            ),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Text(
+                            text = job.createdAt.toReadableDate(),
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        )
+                    }
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .clip(KarigojobsShapes.medium)
+                    .background(
+                        color = job.status.color().surface
+                    )
+                    .border(
+                        width = dimens.Border.thin,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        shape = KarigojobsShapes.medium
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = job.status.toString(),
+                    modifier = Modifier.padding(
+                        horizontal = dimens.Padding.sm,
+                        vertical = dimens.Padding.xs
+                    ),
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        color = job.status.color().accent
+                    )
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+fun JobDetailsStatusCard(
+    modifier: Modifier = Modifier,
+    job: JobModel,
+    onChangeClick: () -> Unit
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = KarigojobsShapes.large,
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(dimens.Padding.md)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Status",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                )
+
+                Box(
+                    modifier = Modifier
+                        .clip(KarigojobsShapes.medium)
+                        .background(color = MaterialTheme.colorScheme.primaryContainer)
+                        .border(
+                            width = dimens.Border.thin,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            shape = KarigojobsShapes.medium
+                        )
+                        .bounceClickable(
+                            onClick = onChangeClick
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Change",
+                        modifier = Modifier.padding(
+                            horizontal = dimens.Padding.sm,
+                            vertical = dimens.Padding.xs
+                        ),
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = KarigojobsAccent
+                        )
+                    )
+                }
+            }
+
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                JobStatus.entries.forEach { status ->
+                    val selectedStatus = job.status == status
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(dimens.Space.md),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth(0.8f)
+                                .height(dimens.Space.sm)
+                                .background(
+                                    color = if (selectedStatus) MaterialTheme.colorScheme.primary
+                                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    shape = KarigojobsShapes.extraLarge
+                                )
+                        )
+                        Text(
+                            text = status.toString(),
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = KarigojobsText2
+                            ),
+                            modifier = Modifier
+                                .basicMarquee(
+                                    initialDelayMillis = 2000,
+                                    animationMode = MarqueeAnimationMode.Immediately,
+                                    repeatDelayMillis = 5000
+                                ),
+                            overflow = TextOverflow.Visible,
+                            maxLines = 1
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun JobStatusChangeModal(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit,
+    onStatusClick: (JobStatus) -> Unit,
+    jobStatus: JobStatus
+) {
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        containerColor = ModalBackGround,
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(dimens.Padding.base)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
+        ) {
+            Text(
+                text = "Update Status",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            JobStatus.entries.forEach { status ->
+                val isSelected = jobStatus == status
+                Card(
+                    onClick = { onStatusClick(status) },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (isSelected) KarigoSelectedCardColor else KarigojobsCard
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = isSelected,
+                            onClick = {},
+                        )
+
+                        Text(
+                            text = status.toString(),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun JobDetailsClientInfo(
+    modifier: Modifier = Modifier,
+    clientModel: ClientModel
+) {
+
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(dimens.Padding.base)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+        ) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(dimens.Space.base)
+            ) {
+                KarigoIconWIthBg(
+                    icon = R.drawable.user_line,
+                    iconColor = KarigojobsAccent,
+                    iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer
+                )
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+                ) {
+                    Text(
+                        text = clientModel.name,
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    )
+                    Text(
+                        text = clientModel.phone,
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    )
+                }
+            }
+            if (clientModel.address.isNotBlank()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.base)
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.map_point),
+                        contentDescription = null,
+                        modifier = Modifier.size(dimens.Icon._2xs),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+                    ) {
+                        Text(
+                            text = clientModel.address,
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun LabourItemList(
+    modifier: Modifier = Modifier,
+    labourItems: List<JobLabourItemModel>,
+    total: Double
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(dimens.Padding.base)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+        ) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
+            ) {
+                KarigoIconWIthBg(
+                    icon = R.drawable.labour,
+                    size = dimens.Icon.lg,
+                    iconColor = KarigojobsAccent,
+                    iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer.copy(0.4f)
+                )
+
+                Text(
+                    text = "Labour",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                )
+
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .background(
+                            color = MaterialTheme.colorScheme.primaryContainer.copy(0.4f),
+                            shape = KarigojobsShapes.large
+                        )
+                ) {
+                    Text(
+                        text = "Per Item",
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = KarigojobsAccent
+                        ),
+                        modifier = Modifier.padding(
+                            horizontal = dimens.Padding.sm,
+                            vertical = dimens.Padding._2xs
+                        )
+                    )
+                }
+            }
+            labourItems.forEach { item ->
+                ItemList(
+                    itemName = item.itemName,
+                    quantity = item.quantity.toInt(),
+                    itemRate = item.rate,
+                    unit = item.unit,
+                    total = item.total
+                )
+            }
+            HorizontalDivider()
+            TotalItemCost(
+                total = total,
+                title = "LABOUR TOTAL"
+            )
+        }
+    }
+}
+
+@Composable
+fun MaterialItemList(
+    modifier: Modifier = Modifier,
+    materialItems: List<JobMaterialItemModel>,
+    total: Double
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(dimens.Padding.base)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+        ) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
+            ) {
+                KarigoIconWIthBg(
+                    icon = R.drawable.stack,
+                    size = dimens.Icon.lg,
+                    iconColor = KarigojobsAccent,
+                    iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer.copy(0.4f)
+                )
+
+                Text(
+                    text = "Materials",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                )
+            }
+            materialItems.forEach { item ->
+                ItemList(
+                    itemName = item.name,
+                    quantity = item.quantity,
+                    itemRate = item.unitPrice,
+                    unit = item.unit,
+                    total = item.total
+                )
+            }
+            HorizontalDivider()
+            TotalItemCost(
+                total = total,
+                title = "MATERIAL TOTAL"
+            )
+        }
+    }
+}
+
+
+@Composable
+fun TotalItemCost(
+    modifier: Modifier = Modifier,
+    total: Double,
+    title: String
+) {
+
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodySmall.copy(
+                color = KarigojobsText2
+            )
+        )
+        Text(
+            text = "$total",
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        )
+    }
+}
+
+
+@Composable
+fun ItemList(
+    modifier: Modifier = Modifier,
+    itemName: String,
+    itemRate: Double,
+    quantity: Int,
+    unit: String,
+    total: Double
+) {
+
+    Row(
+        modifier = modifier.padding(vertical = dimens.Padding.sm).fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+        ) {
+            Text(
+                text = itemName,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = KarigojobsText3
+                )
+            )
+            Text(
+                text = "$quantity x ${deviceInfo.currency}$itemRate / $unit",
+                style = MaterialTheme.typography.labelSmall.copy(
+                    color = KarigojobsText2
+                )
+            )
+        }
+
+        Text(
+            text = "${deviceInfo.currency}${total}",
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        )
+    }
+}

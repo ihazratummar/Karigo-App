@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,7 +49,8 @@ fun HomeScreen(
     onFabClick: () -> Unit,
     onSeeAllJobClick: () -> Unit,
     homeState: HomeState,
-    homeEffect: SharedFlow<HomeEffect>?
+    homeEffect: SharedFlow<HomeEffect>?,
+    onJobClick : (String) -> Unit
 ) {
 
     val snackbarState = remember { SnackbarHostState() }
@@ -67,6 +69,9 @@ fun HomeScreen(
     }
 
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarState)
+        },
         modifier = modifier,
         topBar = {
             HomeTopAppBar()
@@ -124,7 +129,10 @@ fun HomeScreen(
 
             homeState.jobs?.let { jobs ->
                 items(jobs) { job ->
-                    JobCard(job = job)
+                    JobCard(
+                        job = job,
+                        onClick = {onJobClick(job.id)}
+                    )
                 }
             }
         }

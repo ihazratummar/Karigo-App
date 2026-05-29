@@ -1,4 +1,4 @@
-package com.karigojobs.domain.usecase
+package com.karigojobs.domain.usecase.material
 
 import com.karigojobs.domain.repository.MaterialRepository
 import com.karigojobs.domain.result.MaterialError

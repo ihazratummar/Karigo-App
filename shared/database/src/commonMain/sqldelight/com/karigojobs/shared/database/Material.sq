@@ -20,7 +20,10 @@ selectMaterialByTrade:
 SELECT * FROM materials WHERE trade_type = ?;
 
 searchMaterials:
-SELECT * FROM materials WHERE name LIKE '%'||?||'%';
+SELECT * FROM materials
+WHERE (name LIKE '%'||:query||'%')
+AND (trade_type IN :tradeTypes OR :tradeTypesCount = 0)
+ORDER BY name;
 
 insertMaterial:
 INSERT OR REPLACE INTO materials(id, name, unit, rate, trade_type,created_at, updated_at)

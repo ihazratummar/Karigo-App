@@ -18,6 +18,7 @@ interface JobRepository {
 
     // Core Job
     fun getAllJobs(): Flow<Result<List<JobModel>, JobError>>
+    fun searchJobs(query: String): Flow<Result<List<JobModel>, JobError>>
     fun getActiveJobs(): Flow<List<JobModel>>
     fun getJobById(id: String):  Flow<Result<JobModel?, JobError>>
     suspend fun saveJobTransaction(

@@ -54,7 +54,7 @@ import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
-import com.karigojobs.share.model.StarterMaterial
+import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
 import com.karigojobs.ui.common.CrossButton
@@ -712,7 +712,7 @@ fun MaterialLibraryModal(
 @Composable
 fun MaterialItemCard(
     modifier: Modifier = Modifier,
-    materialItemModel: StarterMaterial,
+    materialItemModel: MaterialsModel,
     isSelected: Boolean = false,
     selectedQuantity: Int = 0,
     onAddClick: () -> Unit,

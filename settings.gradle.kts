@@ -43,4 +43,5 @@ include(":shared:presentation")
 
 include(":feature:homeScreen")
 include(":feature:onboarding")
+include(":feature:materials")
 include(":feature:job")

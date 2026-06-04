@@ -38,6 +38,9 @@ sealed class MainRoute {
     data object ClientRoute
 
     @Serializable
+    data object Materials
+
+    @Serializable
     data object EarningRoute
 
     @Serializable
@@ -78,6 +81,15 @@ sealed class BottomNavRoute<T>(
             unSelectedIcon = R.drawable.user_line,
             fillIcon = R.drawable.user_fill,
             route = MainRoute.ClientRoute
+        )
+
+    @Serializable
+    data object Materials :
+        BottomNavRoute<MainRoute.Materials>(
+            name = "Client",
+            unSelectedIcon = R.drawable.stack,
+            fillIcon = R.drawable.stack_fill,
+            route = MainRoute.Materials
         )
 
     @Serializable

@@ -3,7 +3,7 @@ package com.karigojobs.domain.usecase.material
 import com.karigojobs.domain.repository.MaterialRepository
 import com.karigojobs.domain.result.MaterialError
 import com.karigojobs.domain.result.Result
-import com.karigojobs.share.model.StarterMaterial
+import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeSeeds
 import com.karigojobs.share.model.TradeType
 
@@ -22,7 +22,7 @@ class SeedStarterMaterialsUseCase (
         val materials = trade
             .flatMap { TradeSeeds.seeds[it].orEmpty() }
             .map { material ->
-                StarterMaterial(
+                MaterialsModel(
                     name = material.name,
                     unit = material.unit,
                     price = material.price,

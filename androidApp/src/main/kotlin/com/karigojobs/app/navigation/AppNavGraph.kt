@@ -95,6 +95,7 @@ fun BottomBar(
             BottomNavRoute.Home,
             BottomNavRoute.Jobs,
             BottomNavRoute.Client,
+            BottomNavRoute.Materials,
             BottomNavRoute.Settings
         )
     }

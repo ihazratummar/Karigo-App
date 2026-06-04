@@ -2,7 +2,8 @@ package com.karigojobs.domain.repository
 
 import com.karigojobs.domain.result.MaterialError
 import com.karigojobs.domain.result.Result
-import com.karigojobs.share.model.StarterMaterial
+import com.karigojobs.share.model.MaterialsModel
+import com.karigojobs.share.model.TradeType
 import kotlinx.coroutines.flow.Flow
 
 
@@ -13,14 +14,15 @@ import kotlinx.coroutines.flow.Flow
 
 interface MaterialRepository {
 
-    suspend fun insertMaterial(material: List<StarterMaterial>) : Result<Unit, MaterialError>
+    suspend fun insertMaterial(material: List<MaterialsModel>) : Result<Unit, MaterialError>
 
-    suspend fun getAllMaterials(): Flow<Result<List<StarterMaterial>, MaterialError>>
+    fun getAllMaterials(): Flow<Result<List<MaterialsModel>, MaterialError>>
+    fun searchMaterials(query: String, tradeTypes: Set<TradeType>? = null): Flow<Result<List<MaterialsModel>, MaterialError>>
 
-    suspend fun getMaterialById(id: String): Result<StarterMaterial?, MaterialError>
+    suspend fun getMaterialById(id: String): Result<MaterialsModel?, MaterialError>
 
     suspend fun deleteMaterial(id: String): Result<Unit, MaterialError>
 
-    suspend fun updateMaterial(material: StarterMaterial): Result<Unit, MaterialError>
+    suspend fun updateMaterial(material: MaterialsModel): Result<Unit, MaterialError>
 
 }

@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
+import com.karigo.app.feature.materials.list.MaterialsListScreen
 import com.karigojobs.app.feature.homeScreen.HomeScreen
 import com.karigojobs.app.feature.job.create.JobCreateScreen
 import com.karigojobs.app.feature.job.details.JobDetailsScreen
@@ -15,6 +16,7 @@ import com.karigojobs.presentation.dashboard.HomeViewModel
 import com.karigojobs.presentation.job.create.AddJobViewModel
 import com.karigojobs.presentation.job.details.JobDetailsViewModel
 import com.karigojobs.presentation.job.jobList.JobListViewModel
+import com.karigojobs.presentation.materials.list.MaterialListViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -100,12 +102,23 @@ fun NavGraphBuilder.contentNavigation(
                 jobListState = jobListState,
                 onJobClick = { jobId ->
                     navHostController.navigate(MainRoute.JobDetailsRoute(jobId = jobId))
-                }
+                },
+                event = viewModel::onEvent
             )
         }
 
         composable<MainRoute.ClientRoute> {
             // TODO: Implement Client Screen
+        }
+
+        composable<MainRoute.Materials> {
+
+            val viewModel = koinViewModel<MaterialListViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            MaterialsListScreen(
+                state = state,
+                event = viewModel::onEvent
+            )
         }
 
         composable<MainRoute.SettingRoute> {

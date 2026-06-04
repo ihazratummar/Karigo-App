@@ -31,6 +31,14 @@ SELECT * FROM job WHERE client_id=? ORDER BY created_at DESC ;
 getActiveJobs:
 SELECT job.* , client.name AS client_name FROM job INNER JOIN client ON job.client_id = client.id WHERE job.status IN ('draft', 'in_progress');
 
+searchJobs:
+SELECT job.*, client.name AS client_name
+FROM job
+INNER JOIN client ON job.client_id = client.id
+WHERE job.title LIKE ('%' || :query || '%')
+OR client.name LIKE ('%' || :query || '%')
+ORDER BY job.created_at DESC;
+
 countJobsInRange:
 SELECT COUNT(*) FROM job WHERE created_at >= ? AND created_at < ?;
 

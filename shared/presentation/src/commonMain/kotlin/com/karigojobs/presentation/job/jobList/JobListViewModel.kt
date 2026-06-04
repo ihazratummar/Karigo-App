@@ -4,7 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.job.GetAllJobUseCase
+import com.karigojobs.domain.usecase.job.SearchJobUseCase
+import com.karigojobs.share.model.JobModel
 import com.karigojobs.presentation.erroMap.asString
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -12,6 +16,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -22,7 +30,8 @@ import kotlinx.coroutines.launch
  */
 
 class JobListViewModel (
-    private val getAllJobUseCase: GetAllJobUseCase
+    private val getAllJobUseCase: GetAllJobUseCase,
+    private val searchJobUseCase: SearchJobUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(JobListState())
@@ -33,10 +42,37 @@ class JobListViewModel (
 
 
     init {
-        loadAllJob()
+        observeSearchText()
     }
 
 
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    private fun observeSearchText() {
+        viewModelScope.launch {
+            _state.map { it.searchJobText }
+                .distinctUntilChanged()
+                .debounce(300L)
+                .flatMapLatest { query ->
+                    _state.update { it.copy(isLoading = true) }
+                    if (query.isBlank()) {
+                        getAllJobUseCase()
+                    } else {
+                        searchJobUseCase(query)
+                    }
+                }.collectLatest { result ->
+                    when (result) {
+                        is Result.Success<List<JobModel>> -> {
+                            _state.update { it.copy(jobs = result.data, isLoading = false) }
+                        }
+
+                        is Result.Error -> {
+                            _state.update { it.copy(isLoading = false) }
+                            _effect.emit(JobListEffect.Error(message = result.error.asString()))
+                        }
+                    }
+                }
+        }
+    }
 
     fun onEvent(event: JobListIntent){
         when(event){
@@ -47,25 +83,6 @@ class JobListViewModel (
                     it.copy(
                         searchJobText = event.text
                     )
-                }
-            }
-        }
-    }
-
-    private fun loadAllJob() {
-        _state.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
-            getAllJobUseCase().collectLatest { result ->
-                when (result) {
-                    is Result.Success -> {
-                        _state.update { it.copy(jobs = result.data, isLoading = false) }
-                        println("Jobs Data -> $result.data")
-                    }
-
-                    is Result.Error -> {
-                        _state.update { it.copy(isLoading = false) }
-                        _effect.emit(JobListEffect.Error(message = result.error.asString()))
-                    }
                 }
             }
         }

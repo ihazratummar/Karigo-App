@@ -8,7 +8,8 @@ import com.karigojobs.data.safeCall
 import com.karigojobs.domain.repository.MaterialRepository
 import com.karigojobs.domain.result.MaterialError
 import com.karigojobs.domain.result.Result
-import com.karigojobs.share.model.StarterMaterial
+import com.karigojobs.share.model.MaterialsModel
+import com.karigojobs.share.model.TradeType
 import com.karigojobs.shared.database.EpochUtils
 import com.karigojobs.shared.database.KarigojobsDatabase
 import com.karigojobs.shared.database.UuidGenerator
@@ -28,7 +29,7 @@ class MaterialRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : MaterialRepository {
 
-    override suspend fun insertMaterial(material: List<StarterMaterial>): Result<Unit, MaterialError> {
+    override suspend fun insertMaterial(material: List<MaterialsModel>): Result<Unit, MaterialError> {
         return safeCall(MaterialError.DatabaseError) {
             database.materialQueries.transaction {
                 material.forEach { material ->
@@ -46,7 +47,7 @@ class MaterialRepositoryImpl(
         }
     }
 
-    override suspend fun getAllMaterials(): Flow<Result<List<StarterMaterial>, MaterialError>> {
+    override  fun getAllMaterials(): Flow<Result<List<MaterialsModel>, MaterialError>> {
         return database.materialQueries
             .getAllMaterials()
             .asFlow()
@@ -58,7 +59,27 @@ class MaterialRepositoryImpl(
             }
     }
 
-    override suspend fun getMaterialById(id: String): Result<StarterMaterial?, MaterialError> {
+    override fun searchMaterials(
+        query: String,
+        tradeTypes: Set<TradeType>?
+    ): Flow<Result<List<MaterialsModel>, MaterialError>> {
+        val types = tradeTypes?.map { it.name } ?: emptyList()
+        return database.materialQueries
+            .searchMaterials(
+                query = query,
+                tradeTypes = types,
+                tradeTypesCount = types.size.toLong()
+            )
+            .asFlow()
+            .mapToList(ioDispatcher)
+            .map { materials ->
+                Result.Success(materials.toDomainList())
+            }.catch {
+                Result.Error(MaterialError.DatabaseError)
+            }
+    }
+
+    override suspend fun getMaterialById(id: String): Result<MaterialsModel?, MaterialError> {
         return safeCall(MaterialError.DatabaseError) {
             database.materialQueries.selectMaterialById(id = id)
                 .executeAsOneOrNull()
@@ -74,7 +95,7 @@ class MaterialRepositoryImpl(
         }
     }
 
-    override suspend fun updateMaterial(material: StarterMaterial): Result<Unit, MaterialError>  {
+    override suspend fun updateMaterial(material: MaterialsModel): Result<Unit, MaterialError>  {
         return safeCall(MaterialError.DatabaseError){
             database.materialQueries.updateMaterial(
                 id = material.id,

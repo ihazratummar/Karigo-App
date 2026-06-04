@@ -4,7 +4,7 @@ import com.karigojobs.domain.repository.DeviceContact
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
-import com.karigojobs.share.model.StarterMaterial
+import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 
 
@@ -32,7 +32,7 @@ data class AddJobState(
     val labourItemDraft: LabourItem = LabourItem(),
 
     // Materials
-    val availableMaterials: List<StarterMaterial> = emptyList(),
+    val availableMaterials: List<MaterialsModel> = emptyList(),
     val selectedMaterials: List<JobMaterialItemModel> = emptyList(),
     val isMaterialLibraryModalOpen : Boolean = false
 

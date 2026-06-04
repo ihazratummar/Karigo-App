@@ -7,6 +7,7 @@ import com.karigojobs.data.dto.toActiveModelList
 import com.karigojobs.data.dto.toIdModel
 import com.karigojobs.data.dto.toModelList
 import com.karigojobs.data.dto.toModelListJobMaterial
+import com.karigojobs.data.dto.toSearchModelList
 import com.karigojobs.data.safeCall
 import com.karigojobs.domain.repository.JobRepository
 import com.karigojobs.domain.result.JobError
@@ -41,6 +42,18 @@ class JobRepositoryImpl(
             .mapToList(ioDispatcher)
             .map { jobs ->
                 Result.Success(jobs.toModelList()) as Result<List<JobModel>, JobError>
+            }.catch {
+                emit(Result.Error(JobError.NotFound))
+            }
+    }
+
+    override fun searchJobs(query: String): Flow<Result<List<JobModel>, JobError>> {
+        return karigojobsDatabase.jobQueries
+            .searchJobs(query = query)
+            .asFlow()
+            .mapToList(ioDispatcher)
+            .map { jobs ->
+                Result.Success(jobs.toSearchModelList()) as Result<List<JobModel>, JobError>
             }.catch {
                 emit(Result.Error(JobError.NotFound))
             }

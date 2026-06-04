@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -93,6 +94,19 @@ import com.karigojobs.ui.theme.dimens
  * @author hazratummar
  * Created on 23/05/26
  */
+
+
+@Composable
+fun TopBarTitle(
+    modifier: Modifier = Modifier,
+    title: String
+) {
+    Text(
+        text =title,
+        style = MaterialTheme.typography.titleMedium,
+        modifier = modifier
+    )
+}
 
 
 @Composable
@@ -233,6 +247,14 @@ fun Modifier.dashedBorder(
     )
 }
 
+
+@Composable
+fun CustomCardBorder() : BorderStroke{
+    return BorderStroke(
+        width = dimens.Border.thin / 5f,
+        color = KarigojobsText2
+    )
+}
 
 fun Modifier.bounceClickable(
     onClick: () -> Unit

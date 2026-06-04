@@ -2,8 +2,6 @@ package com.karigojobs.app.feature.homeScreen.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,20 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import com.karigojob.share.utils.DateUtils.toReadableDate
 import com.karigojobs.app.android.ui.R
-import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
-import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.bounceClickable
-import com.karigojobs.ui.common.color
 import com.karigojobs.ui.icon
-import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
-import com.karigojobs.ui.theme.SurfaceOverlay
-import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 
 

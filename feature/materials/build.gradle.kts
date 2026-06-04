@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlin.serialization)
+
 }
 
 kotlin {
@@ -13,44 +13,33 @@ kotlin {
     }
 }
 dependencies {
-    api(projects.shared.di)
-    implementation(libs.koin.android)
-
-    api(projects.feature.onboarding)
-    implementation(projects.feature.homeScreen)
-    implementation(projects.feature.job)
-    implementation(projects.feature.materials)
-
-    implementation(libs.androidx.compose.adaptive)
     implementation(projects.android.ui)
+    implementation(projects.shared.model)
+    implementation(projects.shared.domain)
+    implementation(projects.shared.presentation)
+
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.ui)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.material3)
+
     implementation(libs.compose.uiToolingPreview)
+    implementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.compose.uiTooling)
 
-    implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.kotlinx.serialization.json)
+
+
 }
 
 android {
-    namespace = "com.karigojobs.app"
+    namespace = "com.karigojobs.app.feature.materials"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.karigojobs.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false

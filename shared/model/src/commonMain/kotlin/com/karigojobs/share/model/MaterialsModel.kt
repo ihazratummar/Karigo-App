@@ -1,6 +1,6 @@
 package com.karigojobs.share.model
 
-data class StarterMaterial(
+data class MaterialsModel(
     val name: String,
     val unit: String,
     val price: Double,

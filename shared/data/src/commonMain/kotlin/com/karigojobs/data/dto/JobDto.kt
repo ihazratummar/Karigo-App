@@ -7,6 +7,7 @@ import com.karigojobs.share.model.TradeType
 import com.karigojobs.shared.database.GetActiveJobs
 import com.karigojobs.shared.database.GetAllJobs
 import com.karigojobs.shared.database.GetJobById
+import com.karigojobs.shared.database.SearchJobs
 import com.karigojobs.shared.database.Job_material
 
 
@@ -35,6 +36,27 @@ fun GetAllJobs.toModel(): JobModel {
 
 fun List<GetAllJobs>.toModelList() : List<JobModel> {
     return this.map { it.toModel()}
+}
+
+fun SearchJobs.toSearchModel(): JobModel {
+    return JobModel(
+        id = this.id,
+        clientId = this.client_id,
+        clientName = client_name,
+        title = this.title,
+        description = this.decription,
+        status = JobStatus.valueOf(this.status),
+        tradeType = TradeType.valueOf(this.trade_type),
+        materialTotal = this.material_total,
+        total = this.total,
+        notes = this.notes,
+        jobDate = this.job_date,
+        createdAt = this.created_at
+    )
+}
+
+fun List<SearchJobs>.toSearchModelList() : List<JobModel> {
+    return this.map { it.toSearchModel()}
 }
 
 fun GetActiveJobs.toActiveModel() : JobModel {

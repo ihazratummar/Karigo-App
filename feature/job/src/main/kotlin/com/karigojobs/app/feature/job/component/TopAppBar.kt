@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
+import com.karigojobs.ui.common.TopBarTitle
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.NavInactive
 import com.karigojobs.ui.theme.dimens
@@ -30,17 +31,6 @@ import com.karigojobs.ui.theme.dimens
  */
 
 
-@Composable
-fun TopBarTitle(
-    modifier: Modifier = Modifier,
-    title: String
-) {
-    Text(
-        text =title,
-        style = MaterialTheme.typography.titleMedium,
-        modifier = modifier
-    )
-}
 
 
 

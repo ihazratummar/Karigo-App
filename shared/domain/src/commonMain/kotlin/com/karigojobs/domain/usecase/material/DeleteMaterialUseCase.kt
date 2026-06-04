@@ -3,20 +3,19 @@ package com.karigojobs.domain.usecase.material
 import com.karigojobs.domain.repository.MaterialRepository
 import com.karigojobs.domain.result.MaterialError
 import com.karigojobs.domain.result.Result
-import com.karigojobs.share.model.MaterialsModel
-import kotlinx.coroutines.flow.Flow
 
 
 /**
  * @author hazratummar
- * Created on 26/05/26
+ * Created on 04/06/26
  */
 
-class GetAllMaterialsUseCase(
+class DeleteMaterialUseCase(
     private val materialRepository: MaterialRepository
 ) {
 
-    suspend operator fun invoke () : Flow<Result<List<MaterialsModel>, MaterialError>> {
-        return materialRepository.getAllMaterials()
+    suspend operator fun invoke(materialId: String) : Result<Unit, MaterialError> {
+        return materialRepository.deleteMaterial(id = materialId)
     }
+
 }

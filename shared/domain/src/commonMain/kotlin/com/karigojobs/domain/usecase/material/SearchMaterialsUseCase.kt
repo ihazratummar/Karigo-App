@@ -4,19 +4,24 @@ import com.karigojobs.domain.repository.MaterialRepository
 import com.karigojobs.domain.result.MaterialError
 import com.karigojobs.domain.result.Result
 import com.karigojobs.share.model.MaterialsModel
+import com.karigojobs.share.model.TradeType
 import kotlinx.coroutines.flow.Flow
 
 
 /**
  * @author hazratummar
- * Created on 26/05/26
+ * Created on 04/06/26
  */
 
-class GetAllMaterialsUseCase(
+class SearchMaterialsUseCase(
     private val materialRepository: MaterialRepository
 ) {
 
-    suspend operator fun invoke () : Flow<Result<List<MaterialsModel>, MaterialError>> {
-        return materialRepository.getAllMaterials()
+    operator fun invoke(
+        query: String = "",
+        tradeTypes: Set<TradeType>? = null
+    ): Flow<Result<List<MaterialsModel>, MaterialError>> {
+        return materialRepository.searchMaterials(query = query, tradeTypes = tradeTypes)
     }
+
 }

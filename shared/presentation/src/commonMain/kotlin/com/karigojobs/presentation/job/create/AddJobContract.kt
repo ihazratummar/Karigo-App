@@ -80,6 +80,4 @@ data class LabourItem(
     val itemRate: Double = 0.0,
     val quantity: Int = 1,
     val unit: String = "Unit"
-){
-    val canAdd : Boolean  get() = itemName.isNotEmpty() && itemRate > 0
-}
+)

@@ -646,6 +646,7 @@ fun MaterialLibraryModal(
     onIntent: (AddJobIntent) -> Unit
 ) {
     ModalBottomSheet(
+        modifier = modifier,
         onDismissRequest = onDismiss,
         containerColor = ModalBackGround
     ) {
@@ -978,6 +979,7 @@ fun JobStatusChangeModal(
     jobStatus: JobStatus
 ) {
     ModalBottomSheet(
+        modifier = modifier,
         onDismissRequest = onDismiss,
         containerColor = ModalBackGround,
     ) {

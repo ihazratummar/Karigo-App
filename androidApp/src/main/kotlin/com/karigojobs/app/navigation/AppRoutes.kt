@@ -53,8 +53,8 @@ sealed class MainRoute {
 @Serializable
 sealed class BottomNavRoute<T>(
     val name: String,
-    @DrawableRes val unSelectedIcon: Int = R.drawable.ic_launcher_foreground,
-    @DrawableRes val fillIcon: Int = R.drawable.ic_launcher_foreground,
+    val unSelectedIcon: Int = R.drawable.ic_launcher_foreground,
+    val fillIcon: Int = R.drawable.ic_launcher_foreground,
     val route: T
 ) {
     @Serializable

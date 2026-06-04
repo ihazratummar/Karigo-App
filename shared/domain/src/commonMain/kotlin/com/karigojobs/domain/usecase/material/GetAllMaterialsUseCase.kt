@@ -16,7 +16,7 @@ class GetAllMaterialsUseCase(
     private val materialRepository: MaterialRepository
 ) {
 
-    suspend operator fun invoke () : Flow<Result<List<MaterialsModel>, MaterialError>> {
+    operator fun invoke () : Flow<Result<List<MaterialsModel>, MaterialError>> {
         return materialRepository.getAllMaterials()
     }
 }

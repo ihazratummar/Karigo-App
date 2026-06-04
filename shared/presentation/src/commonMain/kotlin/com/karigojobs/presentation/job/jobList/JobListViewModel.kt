@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 
 /**
@@ -51,7 +52,7 @@ class JobListViewModel (
         viewModelScope.launch {
             _state.map { it.searchJobText }
                 .distinctUntilChanged()
-                .debounce(300L)
+                .debounce(300L.milliseconds)
                 .flatMapLatest { query ->
                     _state.update { it.copy(isLoading = true) }
                     if (query.isBlank()) {

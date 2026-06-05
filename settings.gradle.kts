@@ -30,6 +30,7 @@ dependencyResolutionManagement {
 
 include(":androidApp")
 include(":android:ui")
+include(":android:services")
 
 include(":shared:di")
 include(":shared:data")

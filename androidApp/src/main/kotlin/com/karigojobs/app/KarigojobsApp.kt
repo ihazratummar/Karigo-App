@@ -2,6 +2,7 @@ package com.karigojobs.app
 
 import android.app.Application
 import android.content.Context
+import com.karigojobs.app.android.services.di.getUpdateModule
 import com.karigojobs.di.initKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -22,7 +23,8 @@ class KarigojobsApp : Application() {
             modules(
                 module {
                     single <String>{ applicationContext.filesDir.absolutePath }
-                }
+                },
+                getUpdateModule()
             )
         }
     }

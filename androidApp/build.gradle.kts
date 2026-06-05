@@ -16,6 +16,7 @@ dependencies {
     api(projects.shared.di)
     implementation(libs.koin.android)
 
+    implementation(projects.android.services)
     api(projects.feature.onboarding)
     implementation(projects.feature.homeScreen)
     implementation(projects.feature.job)
@@ -43,8 +44,8 @@ android {
         applicationId = "com.karigojobs.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.1"
     }
     packaging {
         resources {
@@ -53,7 +54,9 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {

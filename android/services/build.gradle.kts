@@ -13,26 +13,16 @@ kotlin {
     }
 }
 dependencies {
-    implementation(projects.android.ui)
-    implementation(projects.shared.utils)
-    implementation(projects.shared.model)
-    implementation(projects.shared.presentation)
+    //Google Play Store Update
+    implementation(libs.app.update)
+    implementation(libs.app.update.ktx)
 
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.compose.ui)
-    implementation(libs.androidx.foundation)
-    implementation(libs.androidx.material3)
-
-    implementation(libs.compose.uiToolingPreview)
-    implementation(platform(libs.androidx.compose.bom))
-    debugImplementation(libs.compose.uiTooling)
-
-
+    implementation(libs.koin.compose)
 
 }
 
 android {
-    namespace = "com.karigojobs.app.feature.homeScreen"
+    namespace = "com.karigojobs.app.android.services"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

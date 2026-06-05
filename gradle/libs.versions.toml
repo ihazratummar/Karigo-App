@@ -30,6 +30,11 @@ sqldelight = "2.3.2"
 kotlinx-datetime = "0.8.0"
 moko-permission = "0.20.0"
 
+# ===========================
+# App Update & Review (Play Core)
+# ===========================
+appUpdateKtx = "2.1.0"
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -74,6 +79,11 @@ moko-permission-core         = { module = "dev.icerock.moko:permissions",       
 moko-permission-contacts     = { module = "dev.icerock.moko:permissions-contacts",                version.ref = "moko-permission"}
 moko-permission-notification = { module = "dev.icerock.moko:permissions-notification",            version.ref = "moko-permission"}
 
+# ===========================
+# App Update & Review
+# ===========================
+app-update = { module = "com.google.android.play:app-update", version.ref = "appUpdateKtx" }
+app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdateKtx" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

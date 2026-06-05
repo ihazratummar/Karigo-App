@@ -247,11 +247,17 @@ fun Modifier.dashedBorder(
 
 
 @Composable
-fun CustomCardBorder() : BorderStroke{
+fun customCardBorder() : BorderStroke{
     return BorderStroke(
         width = dimens.Border.thin / 5f,
         color = KarigojobsText2
     )
+}
+
+
+@Composable
+fun Modifier.contentHorizontalPadding() : Modifier = composed {
+    this.padding(horizontal = dimens.Padding.base)
 }
 
 fun Modifier.bounceClickable(

@@ -28,7 +28,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.materials.list.MaterialListEvent
 import com.karigojobs.presentation.materials.list.MaterialListState
-import com.karigojobs.ui.common.CustomCardBorder
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.common.DeleteDialog
 import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
@@ -60,7 +60,7 @@ fun MaterialsListScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -74,7 +74,7 @@ fun MaterialsListScreen(
                         icon = R.drawable.add,
                         iconBackGroundColor = KarigojobsAccent,
                         iconColor = MaterialTheme.colorScheme.onPrimary,
-                        size = dimens.Icon._2xl
+                        size = dimens.Icon._2xl,
                     )
                 },
                 windowInsets = WindowInsets(),
@@ -82,9 +82,6 @@ fun MaterialsListScreen(
             )
         }
     ) { paddingValues ->
-
-
-
         if (state.isDeleting) {
             DeleteDialog(
                 onCancelClick = {
@@ -96,12 +93,20 @@ fun MaterialsListScreen(
                     )
                 },
                 onConfirmClick = {
-                    state.deletingMaterialId?.let {
+                    state.workingMaterialId?.let {
                         event(MaterialListEvent.DeleteMaterial(materialId = it))
                     }
                 },
                 dialogTitle = "Delete Material",
                 dialogDescription = "This action is permanent. Are you sure you want to delete this material."
+            )
+        }
+
+        if (state.isEditMaterialModalOpen){
+            MaterialEditModal(
+                onDismiss = { event(MaterialListEvent.ToggleEditMaterialModal(materialId = null, isEditing = false)) },
+                state = state,
+                event = event
             )
         }
 
@@ -127,7 +132,7 @@ fun MaterialsListScreen(
                         containerColor = KarigojobsCard
                     ),
                     shape = KarigojobsShapes.large,
-                    border = CustomCardBorder()
+                    border = customCardBorder()
                 ) {
                     Row(
                         modifier = Modifier
@@ -161,6 +166,19 @@ fun MaterialsListScreen(
                                 )
                             )
                         }
+
+                        KarigoIconWIthBgCick(
+                            icon = R.drawable.edit,
+                            iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            onClick = {
+                                event(
+                                    MaterialListEvent.ToggleEditMaterialModal(
+                                        isEditing = true,
+                                        materialId = material.id
+                                    )
+                                )
+                            }
+                        )
 
                         KarigoIconWIthBgCick(
                             icon = R.drawable.delete,
@@ -220,7 +238,7 @@ fun SearchAndFilter(
                             containerColor = if (isSelected) KarigojobsAccent else KarigojobsCard
                         ),
                         shape = KarigojobsShapes.large,
-                        border = CustomCardBorder()
+                        border = customCardBorder()
                     ) {
                         Text(
                             text = "All",
@@ -245,7 +263,7 @@ fun SearchAndFilter(
                             containerColor = if (isSelected) KarigojobsAccent else KarigojobsCard
                         ),
                         shape = KarigojobsShapes.large,
-                        border = CustomCardBorder()
+                        border = customCardBorder()
                     ) {
                         Text(
                             text = trade.displayName,

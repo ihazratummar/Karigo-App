@@ -1,6 +1,5 @@
 package com.karigojobs.app.navigation
 
-import androidx.annotation.DrawableRes
 import com.karigojobs.app.android.ui.R
 import kotlinx.serialization.Serializable
 
@@ -86,7 +85,7 @@ sealed class BottomNavRoute<T>(
     @Serializable
     data object Materials :
         BottomNavRoute<MainRoute.Materials>(
-            name = "Client",
+            name = "Materials",
             unSelectedIcon = R.drawable.stack,
             fillIcon = R.drawable.stack_fill,
             route = MainRoute.Materials

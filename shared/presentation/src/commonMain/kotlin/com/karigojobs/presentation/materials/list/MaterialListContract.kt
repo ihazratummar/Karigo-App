@@ -20,7 +20,11 @@ data class MaterialListState(
     val isDeleting : Boolean = false,
     val materialQuery : String = "",
     val materialFilter: MaterialListFilter = MaterialListFilter.All,
-    val deletingMaterialId: String?= null
+    val workingMaterialId: String?= null,
+
+    /// Edit Materials
+    val isEditMaterialModalOpen : Boolean = false,
+    val editingMaterial: MaterialsModel? = null
 )
 
 
@@ -31,10 +35,17 @@ sealed interface MaterialListFilter {
 
 sealed interface MaterialListEvent {
     data class ToggleDeleteMaterialClick(val isDeleting: Boolean, val materialId: String ? = null) : MaterialListEvent
+    data class ToggleEditMaterialModal(val materialId: String? , val isEditing: Boolean) : MaterialListEvent
     data class EditMaterial(val materialId: String) : MaterialListEvent
     data class SearchMaterial(val query: String) : MaterialListEvent
     data class SelectTradeType(val tradeType: TradeType?) : MaterialListEvent
     data class DeleteMaterial(val materialId: String) : MaterialListEvent
+
+    data class EditMaterialName(val name: String) : MaterialListEvent
+    data class EditMaterialPrice(val price: String) : MaterialListEvent
+    data class EditMaterialUnit(val unit: String) : MaterialListEvent
+
+    data object UpdateMaterials : MaterialListEvent
 }
 
 

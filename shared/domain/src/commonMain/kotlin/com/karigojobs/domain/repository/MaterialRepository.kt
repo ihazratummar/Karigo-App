@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface MaterialRepository {
 
-    suspend fun insertMaterial(material: List<MaterialsModel>) : Result<Unit, MaterialError>
+    suspend fun insertBulkMaterial(material: List<MaterialsModel>) : Result<Unit, MaterialError>
+
+    suspend fun insertMaterial(material : MaterialsModel) : Result<Unit, MaterialError>
 
     fun getAllMaterials(): Flow<Result<List<MaterialsModel>, MaterialError>>
     fun searchMaterials(query: String, tradeTypes: Set<TradeType>? = null): Flow<Result<List<MaterialsModel>, MaterialError>>

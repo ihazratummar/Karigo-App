@@ -14,11 +14,10 @@ import com.karigojobs.domain.result.ClientError
 
 fun ClientError.asString() : String {
     return when(this){
-        ClientError.Database -> ""
-        ClientError.FailedToDelete -> ""
-        ClientError.FailedToInsert -> ""
-        ClientError.FailedToUpdate -> ""
-        ClientError.UnknownError -> ""
-
+        ClientError.Database -> "Database error. Please try again later."
+        ClientError.FailedToDelete -> "Failed to delete the client."
+        ClientError.FailedToInsert -> "Failed to save the client."
+        ClientError.FailedToUpdate -> "Failed to update client information."
+        ClientError.UnknownError -> "An unexpected error occurred."
     }
 }

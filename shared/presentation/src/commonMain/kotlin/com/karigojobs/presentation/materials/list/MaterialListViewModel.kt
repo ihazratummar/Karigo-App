@@ -4,17 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.domain.usecase.material.AddMaterialUseCase
 import com.karigojobs.domain.usecase.material.DeleteMaterialUseCase
 import com.karigojobs.domain.usecase.material.GetMaterialByIdUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
 import com.karigojobs.domain.usecase.material.UpdateMaterialUseCase
+import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.materials.list.MaterialListFilter.*
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -41,12 +46,16 @@ class MaterialListViewModel(
     private val searchMaterialsUseCase: SearchMaterialsUseCase,
     private val deleteMaterialUseCase: DeleteMaterialUseCase,
     private val getMaterialByIdUseCase: GetMaterialByIdUseCase,
-    private val updateMaterialUseCase: UpdateMaterialUseCase
+    private val updateMaterialUseCase: UpdateMaterialUseCase,
+    private val addMaterialUseCase: AddMaterialUseCase
 ) : ViewModel() {
 
 
     private val _state = MutableStateFlow(MaterialListState())
     val state: StateFlow<MaterialListState> = _state.asStateFlow()
+
+    private val _effect = MutableSharedFlow<MaterialScreenEffect>(replay = 0)
+    val effect : SharedFlow<MaterialScreenEffect> = _effect.asSharedFlow()
 
     private val editingMaterialId = MutableStateFlow<String?>(null)
 
@@ -63,7 +72,10 @@ class MaterialListViewModel(
                 viewModelScope.launch {
                     val result = deleteMaterialUseCase.invoke(materialId = event.materialId)
                     when (result) {
-                        is Result.Error -> {}
+                        is Result.Error -> {
+                            _state.update { it.copy(isDeleting = false) }
+                            _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                        }
                         is Result.Success -> {
                             _state.update { it.copy(isDeleting = false) }
                         }
@@ -128,6 +140,7 @@ class MaterialListViewModel(
                     )
                 }
             }
+
             is MaterialListEvent.EditMaterialUnit -> {
                 _state.update {
                     it.copy(
@@ -141,7 +154,7 @@ class MaterialListViewModel(
                     if (editingMaterialId.value != null) {
 
                         val editMaterial = _state.value.editingMaterial
-                        if (editMaterial != null){
+                        if (editMaterial != null) {
                             val result = updateMaterialUseCase(
                                 material = MaterialsModel(
                                     name = editMaterial.name,
@@ -152,15 +165,88 @@ class MaterialListViewModel(
                                 )
                             )
 
-                            when(result){
-                                is Result.Error -> {}
+                            when (result) {
+                                is Result.Error -> {
+                                    _state.update {
+                                        it.copy(
+                                            isLoading = false,
+                                            isEditMaterialModalOpen = false
+                                        )
+                                    }
+                                    _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                                }
                                 is Result.Success -> {
-                                    _state.update { it.copy(isLoading = false, isEditMaterialModalOpen = false) }
+                                    _state.update {
+                                        it.copy(
+                                            isLoading = false,
+                                            isEditMaterialModalOpen = false
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
                 }
+            }
+
+            is MaterialListEvent.NewMaterialTradeType -> {
+                _state.update {
+                    it.copy(
+                        newMaterialTradeType = event.tradeType
+                    )
+                }
+            }
+
+            is MaterialListEvent.ToggleAddMaterialModal -> {
+                _state.update { it.copy(isNewMaterialAddingModalOpen = event.isOpen) }
+            }
+
+            MaterialListEvent.AddMaterial -> {
+                _state.update {
+                    it.copy(
+                        isAdding = false
+                    )
+                }
+                viewModelScope.launch {
+                    val result = addMaterialUseCase(
+                        material = MaterialsModel(
+                            name = _state.value.newMaterialName,
+                            unit = _state.value.newMaterialUnit,
+                            price = _state.value.newMaterialPrice.toDouble(),
+                            tradeType = _state.value.newMaterialTradeType ?: TradeType.ELECTRICIAN,
+                        )
+                    )
+
+                    when(result) {
+                        is Result.Error -> {
+                            _state.update {
+                                it.copy(
+                                    isNewMaterialAddingModalOpen = false,
+                                    isAdding = false
+                                )
+                            }
+                            _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                        }
+                        is Result.Success -> {
+                            _state.update {
+                                it.copy(
+                                    isNewMaterialAddingModalOpen = false,
+                                    isAdding = false
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            is MaterialListEvent.NewMaterialName -> {
+                _state.update { it.copy(newMaterialName = event.name) }
+            }
+            is MaterialListEvent.NewMaterialRate -> {
+                _state.update { it.copy(newMaterialPrice = event.rate) }
+            }
+            is MaterialListEvent.NewMaterialUnit -> {
+                _state.update { it.copy(newMaterialUnit = event.unit) }
             }
         }
     }
@@ -179,7 +265,15 @@ class MaterialListViewModel(
             }
             .onEach { result ->
                 when (result) {
-                    is Result.Error -> {}
+                    is Result.Error -> {
+                        _state.update {
+                            it.copy(
+                                isLoading = false
+                            )
+                        }
+                        _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+
+                    }
                     is Result.Success -> {
                         _state.update {
                             it.copy(
@@ -196,7 +290,11 @@ class MaterialListViewModel(
         viewModelScope.launch {
             getSelectedTradeTypeUseCase.invoke().collectLatest { result ->
                 when (result) {
-                    is Result.Error -> {}
+                    is Result.Error -> {
+
+                        _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+
+                    }
                     is Result.Success -> {
                         _state.update {
                             it.copy(
@@ -227,7 +325,9 @@ class MaterialListViewModel(
                 }.collectLatest { result ->
                     _state.update { it.copy(isLoading = false) }
                     when (result) {
-                        is Result.Error -> {}
+                        is Result.Error -> {
+                            _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                        }
                         is Result.Success -> {
                             _state.update {
                                 it.copy(

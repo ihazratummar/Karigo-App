@@ -11,8 +11,8 @@ import com.karigojobs.domain.result.MaterialError
 
 fun MaterialError.asString(): String {
     return when(this){
-        MaterialError.DatabaseError -> "Operation failed due to database error."
-        MaterialError.FailedUpdate -> "Update failed"
-        MaterialError.UnknownError -> "An unknown error occurred."
+        MaterialError.DatabaseError -> "Database error while processing materials. Please try again."
+        MaterialError.FailedUpdate -> "Failed to update material details. Please try again."
+        MaterialError.UnknownError -> "An unexpected error occurred while managing materials."
     }
 }

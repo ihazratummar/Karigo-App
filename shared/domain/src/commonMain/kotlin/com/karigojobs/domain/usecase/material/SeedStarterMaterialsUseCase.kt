@@ -29,7 +29,7 @@ class SeedStarterMaterialsUseCase (
                     tradeType = material.tradeType,
                 )
             }
-        val result = materialRepository.insertMaterial(materials)
+        val result = materialRepository.insertBulkMaterial(materials)
         return when(result){
             is Result.Success -> {
                 Result.Success(materials.size)

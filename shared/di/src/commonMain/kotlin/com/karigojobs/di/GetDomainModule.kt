@@ -15,6 +15,7 @@ import com.karigojobs.domain.usecase.job.GetJobLabourItemUseCase
 import com.karigojobs.domain.usecase.job.GetJobMaterialItemsUseCase
 import com.karigojobs.domain.usecase.job.SaveFullJobTransactionUseCase
 import com.karigojobs.domain.usecase.job.SearchJobUseCase
+import com.karigojobs.domain.usecase.material.AddMaterialUseCase
 import com.karigojobs.domain.usecase.material.DeleteMaterialUseCase
 import com.karigojobs.domain.usecase.material.GetMaterialByIdUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
@@ -41,6 +42,7 @@ fun getDomainModule() : Module = module {
     single { DeleteMaterialUseCase(materialRepository = get()) }
     single { UpdateMaterialUseCase(materialRepository = get()) }
     single { GetMaterialByIdUseCase(materialRepository = get()) }
+    single { AddMaterialUseCase(materialRepository = get()) }
 
 
     single { SaveFullJobTransactionUseCase(jobRepository = get()) }

@@ -17,10 +17,14 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +32,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.materials.list.MaterialListEvent
 import com.karigojobs.presentation.materials.list.MaterialListState
+import com.karigojobs.presentation.materials.list.MaterialScreenEffect
 import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.common.DeleteDialog
 import com.karigojobs.ui.common.KarigoIconWIthBg
@@ -41,6 +46,7 @@ import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.SurfaceOverlay
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import kotlinx.coroutines.flow.SharedFlow
 
 
 /**
@@ -54,12 +60,31 @@ import com.karigojobs.ui.theme.dimens
 fun MaterialsListScreen(
     modifier: Modifier = Modifier,
     state: MaterialListState,
-    event: (MaterialListEvent) -> Unit
+    event: (MaterialListEvent) -> Unit,
+    effect: SharedFlow<MaterialScreenEffect>?
 ) {
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
+    val snackbarState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        effect?.collect { effect ->
+            when(effect){
+                is MaterialScreenEffect.ShowError -> {
+                    snackbarState.showSnackbar(
+                        message = effect.message,
+                        withDismissAction = true
+                    )
+                }
+            }
+        }
+    }
+
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarState)
+        },
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
@@ -75,6 +100,7 @@ fun MaterialsListScreen(
                         iconBackGroundColor = KarigojobsAccent,
                         iconColor = MaterialTheme.colorScheme.onPrimary,
                         size = dimens.Icon._2xl,
+                        onClick = { event(MaterialListEvent.ToggleAddMaterialModal(isOpen = true)) }
                     )
                 },
                 windowInsets = WindowInsets(),
@@ -82,6 +108,15 @@ fun MaterialsListScreen(
             )
         }
     ) { paddingValues ->
+
+
+        if (state.isNewMaterialAddingModalOpen){
+            AddNewMaterialModal(
+                state = state,
+                event = event
+            )
+        }
+
         if (state.isDeleting) {
             DeleteDialog(
                 onCancelClick = {

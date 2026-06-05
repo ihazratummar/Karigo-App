@@ -117,7 +117,8 @@ fun NavGraphBuilder.contentNavigation(
             val state by viewModel.state.collectAsStateWithLifecycle()
             MaterialsListScreen(
                 state = state,
-                event = viewModel::onEvent
+                event = viewModel::onEvent,
+                effect = viewModel.effect
             )
         }
 

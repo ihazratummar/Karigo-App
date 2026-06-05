@@ -29,7 +29,7 @@ class MaterialRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : MaterialRepository {
 
-    override suspend fun insertMaterial(material: List<MaterialsModel>): Result<Unit, MaterialError> {
+    override suspend fun insertBulkMaterial(material: List<MaterialsModel>): Result<Unit, MaterialError> {
         return safeCall(MaterialError.DatabaseError) {
             database.materialQueries.transaction {
                 material.forEach { material ->
@@ -44,6 +44,21 @@ class MaterialRepositoryImpl(
                     )
                 }
             }
+        }
+    }
+
+    override suspend fun insertMaterial(material: MaterialsModel): Result<Unit, MaterialError> {
+        return safeCall(MaterialError.DatabaseError) {
+            database.materialQueries
+                .insertMaterial(
+                    id = UuidGenerator.generate(),
+                    name = material.name,
+                    unit = material.unit,
+                    rate = material.price,
+                    trade_type = material.tradeType.name,
+                    created_at = EpochUtils.now(),
+                    updated_at = EpochUtils.now()
+                )
         }
     }
 

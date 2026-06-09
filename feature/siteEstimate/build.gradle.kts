@@ -13,11 +13,10 @@ kotlin {
     }
 }
 dependencies {
-
+    implementation(projects.android.ui)
     implementation(projects.shared.model)
-    implementation(projects.shared.utils)
-    implementation(projects.shared.device)
     implementation(projects.shared.domain)
+    implementation(projects.shared.presentation)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.ui)
@@ -29,13 +28,11 @@ dependencies {
     debugImplementation(libs.compose.uiTooling)
 
 
-    implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.compose.adaptive)
 
 }
 
 android {
-    namespace = "com.karigojobs.app.android.ui"
+    namespace = "com.karigojobs.app.feature.siteEstimate"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

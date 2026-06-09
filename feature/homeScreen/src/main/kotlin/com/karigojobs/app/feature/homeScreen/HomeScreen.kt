@@ -50,7 +50,8 @@ fun HomeScreen(
     onSeeAllJobClick: () -> Unit,
     homeState: HomeState,
     homeEffect: SharedFlow<HomeEffect>?,
-    onJobClick : (String) -> Unit
+    onJobClick : (String) -> Unit,
+    navigateToAddEstimate : () -> Unit
 ) {
 
     val snackbarState = remember { SnackbarHostState() }
@@ -96,7 +97,9 @@ fun HomeScreen(
             }
 
             item {
-                SiteEstimatesCard()
+                SiteEstimatesCard(
+                    onAddEstimateClick = navigateToAddEstimate
+                )
             }
 
             item {

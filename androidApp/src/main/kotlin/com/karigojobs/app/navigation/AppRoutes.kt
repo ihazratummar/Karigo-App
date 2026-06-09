@@ -43,6 +43,15 @@ sealed class MainRoute {
     data object EarningRoute
 
     @Serializable
+    data object EstimateListRoute
+
+    @Serializable
+    data object AddEstimateRoute
+
+    @Serializable
+    data class EstimateDetailsRoute(val estimateId: String)
+
+    @Serializable
     data object SettingRoute
 
     @Serializable

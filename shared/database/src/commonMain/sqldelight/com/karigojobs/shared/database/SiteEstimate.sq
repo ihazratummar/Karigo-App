@@ -1,0 +1,49 @@
+import kotlin.Boolean;
+
+CREATE TABLE site_estimate (
+    id TEXT PRIMARY KEY NOT NULL,
+    client_id TEXT NOT NULL REFERENCES client(id) ON DELETE  CASCADE ,
+    project_title TEXT NOT NULL,
+    date INTEGER NOT NULL,
+    site_notes TEXT,
+    show_rate INTEGER AS Boolean NOT NULL DEFAULT 0,
+    total REAL,
+    create_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+getAllEstimate:
+SELECT site_estimate.* , client.name AS client_name
+FROM site_estimate INNER JOIN client
+ON site_estimate.client_id = client.id
+WHERE (site_estimate.project_title LIKE '%'||LOWER(:query)||'%') OR (client.name LIKE '%'||LOWER(:query)||'%')
+ORDER BY site_estimate.create_at DESC;
+
+getEstimateById:
+SELECT site_estimate.*, client.name AS client_name FROM site_estimate INNER JOIN client ON site_estimate.client_id = client.id
+WHERE site_estimate.id = :id;
+
+insertEstimate:
+INSERT INTO site_estimate(id, client_id, project_title, date, site_notes, show_rate, total, create_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteEstimate:
+DELETE FROM site_estimate
+WHERE id = :id;
+
+updateEstimateTotal:
+UPDATE site_estimate SET total = :total, updated_at = :updatedAt WHERE id = :id;
+
+updateEstimate:
+UPDATE site_estimate
+SET
+    client_id = ?,
+    project_title = ?,
+    date = ?,
+    site_notes = ?,
+    show_rate = ?,
+    total = ?,
+    updated_at = ?
+WHERE id = ?;
+
+

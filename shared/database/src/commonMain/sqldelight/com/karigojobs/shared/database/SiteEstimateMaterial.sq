@@ -1,0 +1,41 @@
+CREATE TABLE estimate_materials (
+
+    id TEXT PRIMARY KEY NOT NULL,
+
+    estimate_id TEXT NOT NULL REFERENCES site_estimate(id) ON DELETE CASCADE,
+    material_id TEXT NOT NULL REFERENCES materials(id) ON DELETE SET NULL,
+
+    material_name TEXT NOT NULL,
+    quantity REAL NOT NULL,
+    unit TEXT NOT NULL,
+    rate REAL,
+    amount REAL,
+    created_at INTEGER NOT NULL
+);
+
+insertMaterial:
+INSERT  INTO estimate_materials(id, estimate_id, material_id, material_name, quantity, unit, rate, amount, created_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?,  ?);
+
+getMaterialsForEstimate:
+SELECT * FROM estimate_materials
+WHERE estimate_id = :estimateId
+ORDER BY created_at DESC ;
+
+deleteMaterial:
+DELETE FROM estimate_materials
+WHERE id = :id;
+
+deleteMaterialsForEstimate:
+DELETE FROM estimate_materials
+WHERE estimate_id = :estimateId;
+
+updateMaterial:
+UPDATE estimate_materials
+SET material_name = ?,
+    quantity = ?,
+    unit = ?,
+    rate = ?,
+    amount = ?
+WHERE id = ?;
+

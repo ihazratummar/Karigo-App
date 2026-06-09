@@ -231,7 +231,10 @@ class MaterialListViewModel(
                             _state.update {
                                 it.copy(
                                     isNewMaterialAddingModalOpen = false,
-                                    isAdding = false
+                                    isAdding = false,
+                                    newMaterialUnit = "",
+                                    newMaterialPrice = "",
+                                    newMaterialName = ""
                                 )
                             }
                         }
@@ -248,6 +251,7 @@ class MaterialListViewModel(
             is MaterialListEvent.NewMaterialUnit -> {
                 _state.update { it.copy(newMaterialUnit = event.unit) }
             }
+
         }
     }
 

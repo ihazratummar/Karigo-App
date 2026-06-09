@@ -34,30 +34,6 @@ import com.karigojobs.ui.theme.dimens
 
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun JobTopAppBar(
-    onNavigationClick: () -> Unit = {},
-    title: String = "New Job",
-    action : @Composable () -> Unit
-) {
-    Column {
-        CenterAlignedTopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-            title = {
-                TopBarTitle(title = title)
-            },
-            navigationIcon = {
-                KarigoIconWIthBgCick(onClick = onNavigationClick)
-            },
-            actions = {
-                action()
-            },
-            windowInsets = WindowInsets(),
-        )
-        HorizontalDivider()
-    }
-}
 
 
 @Composable

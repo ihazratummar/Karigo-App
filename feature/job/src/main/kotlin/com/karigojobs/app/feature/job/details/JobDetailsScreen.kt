@@ -4,7 +4,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
@@ -21,20 +23,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.karigojobs.app.android.ui.R
-import com.karigojobs.app.feature.job.component.ClientInfo
 import com.karigojobs.app.feature.job.component.JobDetailsCard
 import com.karigojobs.app.feature.job.component.JobDetailsClientInfo
 import com.karigojobs.app.feature.job.component.JobDetailsStatusCard
 import com.karigojobs.app.feature.job.component.JobStatusChangeModal
-import com.karigojobs.app.feature.job.component.JobTopAppBar
 import com.karigojobs.app.feature.job.component.LabourItemList
 import com.karigojobs.app.feature.job.component.MaterialItemList
-import com.karigojobs.domain.repository.DeviceContact
 import com.karigojobs.presentation.job.details.JobDetailsEffect
 import com.karigojobs.presentation.job.details.JobDetailsIntent
 import com.karigojobs.presentation.job.details.JobDetailsState
 import com.karigojobs.ui.common.DeleteDialog
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
+import com.karigojobs.ui.common.KarigoMiddleTextTopAppBar
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.deviceInfo
@@ -80,7 +80,7 @@ fun JobDetailsScreen(
             SnackbarHost(hostState = snackbarState)
         },
         topBar = {
-            JobTopAppBar(
+            KarigoMiddleTextTopAppBar(
                 onNavigationClick = { onBackClick() },
                 title = "Job Details",
                 action = {
@@ -121,7 +121,7 @@ fun JobDetailsScreen(
             }
 
             LazyColumn(
-                modifier = Modifier
+                modifier = modifier
                     .padding(paddingValues)
                     .padding(horizontal = dimens.Padding.base)
                     .padding(top = dimens.Padding.base),
@@ -209,6 +209,9 @@ fun JobDetailsScreen(
                             )
                         }
                     }
+                }
+                item {
+                    Spacer(Modifier.height(dimens.Space._8xl))
                 }
             }
         }

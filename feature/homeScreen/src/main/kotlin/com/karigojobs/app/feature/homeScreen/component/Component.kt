@@ -93,7 +93,8 @@ fun ScrollableTradeView(trades: Set<TradeType> = emptySet()) {
 @Composable
 fun SiteEstimatesCard(
     modifier: Modifier = Modifier,
-    onSeeAllClick: () -> Unit = {}
+    onSeeAllClick: () -> Unit = {},
+    onAddEstimateClick : () -> Unit = {}
 ) {
 
     Card(
@@ -141,7 +142,7 @@ fun SiteEstimatesCard(
             )
 
             Button(
-                onClick = { /* TODO: Navigate to new estimate */ },
+                onClick = onAddEstimateClick,
                 shape = KarigojobsShapes.medium,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,

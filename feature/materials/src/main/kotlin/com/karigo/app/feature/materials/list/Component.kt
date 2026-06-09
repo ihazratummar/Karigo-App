@@ -25,7 +25,6 @@ import com.karigojobs.presentation.materials.list.MaterialListEvent
 import com.karigojobs.presentation.materials.list.MaterialListState
 import com.karigojobs.ui.common.KarigojobsTextField
 import com.karigojobs.ui.common.contentHorizontalPadding
-import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
@@ -219,8 +218,7 @@ fun AddNewMaterialModal(
                             colors = CardDefaults.cardColors(
                                 containerColor = if (isSelected) KarigojobsAccent else KarigojobsCard
                             ),
-                            shape = KarigojobsShapes.large,
-                            border = customCardBorder()
+                            shape = KarigojobsShapes.large
                         ) {
                             Text(
                                 text = tradeType.displayName,

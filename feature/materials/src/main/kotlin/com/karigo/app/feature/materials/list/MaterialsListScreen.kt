@@ -33,7 +33,6 @@ import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.materials.list.MaterialListEvent
 import com.karigojobs.presentation.materials.list.MaterialListState
 import com.karigojobs.presentation.materials.list.MaterialScreenEffect
-import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.common.DeleteDialog
 import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
@@ -167,7 +166,7 @@ fun MaterialsListScreen(
                         containerColor = KarigojobsCard
                     ),
                     shape = KarigojobsShapes.large,
-                    border = customCardBorder()
+
                 ) {
                     Row(
                         modifier = Modifier
@@ -273,7 +272,7 @@ fun SearchAndFilter(
                             containerColor = if (isSelected) KarigojobsAccent else KarigojobsCard
                         ),
                         shape = KarigojobsShapes.large,
-                        border = customCardBorder()
+
                     ) {
                         Text(
                             text = "All",
@@ -298,7 +297,7 @@ fun SearchAndFilter(
                             containerColor = if (isSelected) KarigojobsAccent else KarigojobsCard
                         ),
                         shape = KarigojobsShapes.large,
-                        border = customCardBorder()
+
                     ) {
                         Text(
                             text = trade.displayName,

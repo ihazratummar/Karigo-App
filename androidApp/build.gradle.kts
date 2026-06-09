@@ -21,6 +21,7 @@ dependencies {
     implementation(projects.feature.homeScreen)
     implementation(projects.feature.job)
     implementation(projects.feature.materials)
+    implementation(projects.feature.siteEstimate)
 
     implementation(libs.androidx.compose.adaptive)
     implementation(projects.android.ui)

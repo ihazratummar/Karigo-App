@@ -2,9 +2,12 @@ package com.karigojobs.ui.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,21 +16,41 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,6 +70,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -56,6 +81,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.karigojob.share.utils.DateUtils.toReadableDate
 import com.karigojobs.app.android.ui.R
+import com.karigojobs.domain.repository.DeviceContact
+import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
 import com.karigojobs.ui.icon
@@ -86,6 +113,11 @@ import com.karigojobs.ui.theme.StatusPendingSurface
 import com.karigojobs.ui.theme.SurfaceOverlay
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 
 /**
@@ -94,13 +126,61 @@ import com.karigojobs.ui.theme.dimens
  */
 
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun KarigoMiddleTextTopAppBar(
+    onNavigationClick: () -> Unit = {},
+    title: String = "New Job",
+    action: @Composable () -> Unit
+) {
+    Column {
+        CenterAlignedTopAppBar(
+            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+            title = {
+                TopBarTitle(title = title)
+            },
+            navigationIcon = {
+                KarigoIconWIthBgCick(onClick = onNavigationClick)
+            },
+            actions = {
+                action()
+            },
+            windowInsets = WindowInsets(),
+        )
+        HorizontalDivider()
+    }
+}
+
+
+@Composable
+fun SectionWithTitle(
+    modifier: Modifier = Modifier,
+    title: String,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.labelMedium.copy(
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        )
+        content()
+    }
+
+}
+
+
 @Composable
 fun TopBarTitle(
     modifier: Modifier = Modifier,
     title: String
 ) {
     Text(
-        text =title,
+        text = title,
         style = MaterialTheme.typography.titleMedium,
         modifier = modifier
     )
@@ -171,7 +251,10 @@ fun KarigojobsTextField(
     value: String = "",
     onValueChange: (String) -> Unit = {},
     placeholder: String = "Search Client...",
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
+    singleLine: Boolean = true,
+    maxLines : Int = 1,
+    minLines : Int = 1
 ) {
 
     var isFocused by remember { mutableStateOf(false) }
@@ -183,6 +266,9 @@ fun KarigojobsTextField(
             color = KarigojobsText
         ),
         cursorBrush = SolidColor(KarigojobsAccent),
+        singleLine = singleLine,
+        maxLines = maxLines,
+        minLines = minLines,
         modifier = modifier
             .fillMaxWidth()
             .onFocusChanged { isFocused = it.isFocused }
@@ -247,16 +333,16 @@ fun Modifier.dashedBorder(
 
 
 @Composable
-fun customCardBorder() : BorderStroke{
+fun customCardBorder(): BorderStroke {
     return BorderStroke(
-        width = dimens.Border.thin / 5f,
-        color = KarigojobsText2
+        width = dimens.Border.thin / 10f,
+        color = KarigojobsText2,
     )
 }
 
 
 @Composable
-fun Modifier.contentHorizontalPadding() : Modifier = composed {
+fun Modifier.contentHorizontalPadding(): Modifier = composed {
     this.padding(horizontal = dimens.Padding.base)
 }
 
@@ -301,13 +387,15 @@ fun CounterControl(
     icon: Int = R.drawable.add,
     iconColor: Color = MaterialTheme.colorScheme.primary,
     iconBackGroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    size : Dp = dimens.Height.minTouch
 ) {
+    val iconSize = size * 0.45f
     Box(
         modifier = modifier
-            .size(dimens.Height.minTouch)
+            .size(size)
             .bounceClickable(onClick = onClick)
-            .padding(dimens.Padding.sm)
+            .padding(size * 0.15f)
             .clip(KarigojobsShapes.small)
             .background(
                 color = iconBackGroundColor
@@ -317,7 +405,7 @@ fun CounterControl(
         Icon(
             painter = painterResource(icon),
             contentDescription = "Add",
-            modifier = Modifier.size(dimens.Icon.xs),
+            modifier = Modifier.size(iconSize),
             tint = iconColor
         )
     }
@@ -325,25 +413,29 @@ fun CounterControl(
 
 @Composable
 fun MinusButton(
-    onClick: () -> Unit
+    onClick: () -> Unit = {},
+    size : Dp = dimens.Height.minTouch
 ) {
     CounterControl(
         icon = R.drawable.substract,
         iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
         iconBackGroundColor = SurfaceOverlay,
-        onClick = onClick
+        onClick = onClick,
+        size = size
     )
 }
 
 @Composable
 fun PlusButton(
-    onClick: () -> Unit
+    onClick: () -> Unit = {},
+    size : Dp = dimens.Height.minTouch
 ) {
     CounterControl(
         icon = R.drawable.add,
         iconColor = MaterialTheme.colorScheme.primary,
         iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer,
-        onClick = onClick
+        onClick = onClick,
+        size = size
     )
 }
 
@@ -574,14 +666,13 @@ fun JobCard(
 }
 
 
-
 @Composable
 fun DeleteDialog(
     onCancelClick: () -> Unit,
     onConfirmClick: () -> Unit,
-    dialogTitle: String =  "Delete Job",
-    dialogDescription : String = "This will permanently remove this job and its invoice history."
-){
+    dialogTitle: String = "Delete Job",
+    dialogDescription: String = "This will permanently remove this job and its invoice history."
+) {
     PopUpDialog(
         onCancelClick = onCancelClick,
         onConfirmClick = onConfirmClick,
@@ -597,11 +688,11 @@ fun DeleteDialog(
 @Preview(showBackground = true, showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun PopUpDialog(
-    onCancelClick : () -> Unit = {},
-    onConfirmClick : () -> Unit = {},
+    onCancelClick: () -> Unit = {},
+    onConfirmClick: () -> Unit = {},
     confirmButtonText: String = "Delete",
     icon: Int = R.drawable.delete,
-    confirmButtonColor: Color  = MaterialTheme.colorScheme.error,
+    confirmButtonColor: Color = MaterialTheme.colorScheme.error,
     title: String = "",
     description: String = ""
 
@@ -670,10 +761,10 @@ private fun PopUpDialog(
 @Composable
 private fun DialogButton(
     modifier: Modifier = Modifier,
-    buttonColor : Color = KarigojobsCard,
+    buttonColor: Color = KarigojobsCard,
     buttonText: String = "Cancel",
     onClick: () -> Unit = {}
-){
+) {
     Button(
         onClick = onClick,
         modifier = modifier,
@@ -687,6 +778,374 @@ private fun DialogButton(
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.onBackground
             )
+        )
+    }
+}
+
+@Composable
+fun ClientPicker(
+    modifier: Modifier = Modifier,
+    onCardClick: () -> Unit,
+    selectedClient: ClientModel?
+) {
+    Card(
+        modifier = modifier.heightIn(min = dimens.Space._5xl),
+        onClick = onCardClick,
+        shape = KarigojobsShapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        )
+    ) {
+        if (selectedClient == null) {
+            Row(
+                modifier = Modifier
+                    .padding(dimens.Padding.md)
+                    .fillMaxWidth()
+                    .weight(1f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(dimens.Space.base)
+            ) {
+
+                Icon(
+                    painter = painterResource(R.drawable.user_search),
+                    contentDescription = "User search",
+                    modifier = Modifier.size(dimens.Icon.sm),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
+
+                Text(
+                    text = "Select Client...",
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                )
+            }
+        } else {
+            ClientInfo(
+                modifier = Modifier
+                    .padding(dimens.Padding.sm)
+                    .fillMaxWidth()
+                    .weight(1f),
+                deviceContact = DeviceContact(
+                    name = selectedClient.name,
+                    phoneNumber = listOf(selectedClient.phone)
+                )
+            )
+        }
+    }
+}
+
+
+@Composable
+fun ClientInfo(
+    modifier: Modifier = Modifier,
+    deviceContact: DeviceContact
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        KarigoIconWIthBgCick(
+            icon = R.drawable.user_line,
+            iconColor = MaterialTheme.colorScheme.primary,
+            iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer
+        )
+
+        Spacer(Modifier.width(dimens.Space.base))
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
+            Text(
+                text = deviceContact.name,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            )
+            Text(
+                text = deviceContact.phoneNumber.firstOrNull() ?: "",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            )
+        }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ContactPicker(
+    modifier: Modifier = Modifier,
+    onDismiss: () -> Unit,
+    onContactClick: (DeviceContact) -> Unit = {},
+    contacts: List<DeviceContact> = emptyList(),
+    isLoading: Boolean = false
+) {
+    var search by remember { mutableStateOf("") }
+    val filteredContacts = remember(search, contacts) {
+        if (search.isBlank()) contacts
+        else contacts.filter {
+            it.name.contains(search, ignoreCase = true) ||
+                    it.phoneNumber.any { number -> number.contains(search) }
+        }
+    }
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        modifier = modifier,
+        containerColor = ModalBackGround
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = dimens.Padding.xl),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
+        ) {
+            Text(
+                text = "Select Client",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+
+            KarigojobsSearchField(
+                modifier = Modifier,
+                query = search,
+                onQueryChange = { search = it },
+                placeholder = "Search Client..."
+            )
+            HorizontalDivider()
+
+            if (isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            } else if (filteredContacts.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No contacts found",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    )
+                }
+            } else {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
+                ) {
+                    items(filteredContacts) { contact ->
+                        ClientInfo(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(
+                                    onClick = {
+                                        onContactClick(contact)
+                                        onDismiss()
+                                    }
+                                ),
+                            deviceContact = contact
+                        )
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+
+@Composable
+fun KarigoDataPicker(
+    modifier: Modifier = Modifier,
+    selectedDateMillis: Long = System.currentTimeMillis(),
+    onClick: () -> Unit = {}
+) {
+    val formattedDate = remember(selectedDateMillis) {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        sdf.format(Date(selectedDateMillis))
+    }
+    Card(
+        modifier = modifier.heightIn(min = dimens.Space._5xl),
+        onClick = onClick,
+        shape = KarigojobsShapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        ),
+
+    ) {
+
+        Row(
+            modifier = Modifier
+                .padding(horizontal = dimens.Padding.base)
+                .fillMaxWidth()
+                .weight(1f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = formattedDate,
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Icon(
+                painter = painterResource(R.drawable.calendar1),
+                contentDescription = "Pick date",
+                tint = Color.White.copy(alpha = 0.6f),
+                modifier = Modifier.size(dimens.Icon.sm)
+            )
+        }
+
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun KarigoDatePickerSheet(
+    selectedDateMillis: Long,
+    onDateSelected: (Long) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    val initialMillis = remember(selectedDateMillis) {
+        // normalize to midnight UTC so M3 DatePicker doesn't shift days
+        val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+            timeInMillis = selectedDateMillis
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        cal.timeInMillis
+    }
+
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = initialMillis
+    )
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState,
+        containerColor = KarigojobsCard,
+        dragHandle = {
+            Box(
+                modifier = Modifier
+                    .padding(top = dimens.Padding.md, bottom = dimens.Padding.sm)
+                    .width(dimens.Height.minTouch)
+                    .height(dimens.Space.sm)
+                    .clip(RoundedCornerShape(dimens.Space.sm))
+                    .background(Color.White.copy(alpha = 0.3f))
+            )
+        }
+    ) {
+        DatePicker(
+            state = datePickerState,
+            showModeToggle = false,
+            colors = DatePickerDefaults.colors(
+                containerColor = KarigojobsCard,
+                titleContentColor = Color.White.copy(alpha = 0.7f),
+                headlineContentColor = Color.White,
+                weekdayContentColor = Color.White.copy(alpha = 0.5f),
+                subheadContentColor = Color.White.copy(alpha = 0.7f),
+                navigationContentColor = Color.White,
+                yearContentColor = Color.White,
+                currentYearContentColor = Color.White,
+                selectedYearContentColor = Color.White,
+                selectedYearContainerColor = Color(0xFF4B9EFF),
+                dayContentColor = Color.White,
+                selectedDayContentColor = Color.White,
+                selectedDayContainerColor = Color(0xFF4B9EFF),
+                todayContentColor = Color(0xFF4B9EFF),
+                todayDateBorderColor = Color(0xFF4B9EFF),
+                dayInSelectionRangeContentColor = Color.White,
+                dayInSelectionRangeContainerColor = Color(0xFF4B9EFF).copy(alpha = 0.2f)
+            )
+        )
+
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = dimens.Padding.base)
+                .padding(bottom = dimens.Padding.xl)
+                .height(dimens.Height.minTouch),
+            onClick = {
+                datePickerState.selectedDateMillis?.let { onDateSelected(it) }
+                onDismiss()
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF4B9EFF)
+            ),
+            shape = RoundedCornerShape(dimens.Space.base)
+        ) {
+            Text(
+                text = "Confirm",
+                fontWeight = FontWeight.Medium
+            )
+        }
+    }
+}
+
+
+
+@Composable
+fun SpringToggle(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val trackWidth = dimens.Size.toggleTrackW
+    val trackHeight = dimens.Size.toggleTrackH
+    val thumbSize = dimens.Size.toggleThumb
+    val gap = (trackHeight - thumbSize) / 2
+
+    val thumbOffset by animateDpAsState(
+        targetValue = if (checked) trackWidth - thumbSize - gap else gap,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
+        label = "thumbOffset"
+    )
+    val trackColor by animateColorAsState(
+        targetValue = if (checked) Color(0xFF1AAA80) else Color(0xFF3A4A52),
+        animationSpec = tween(200),
+        label = "trackColor"
+    )
+
+    Box(
+        modifier = modifier
+            .size(width = trackWidth, height = trackHeight)
+            .clip(CircleShape)
+            .background(trackColor)
+            .toggleable(
+                value = checked,
+                role = Role.Switch,
+                onValueChange = onCheckedChange
+            ).let{
+                if (!checked) it.border(
+                    width = dimens.Border.thin,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    shape = CircleShape
+                ) else it
+            }
+    ) {
+        Box(
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .offset(x = thumbOffset)
+                .size(thumbSize)
+                .clip(CircleShape)
+                .background(Color.White)
         )
     }
 }

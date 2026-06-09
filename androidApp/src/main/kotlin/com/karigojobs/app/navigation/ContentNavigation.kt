@@ -2,17 +2,20 @@ package com.karigojobs.app.navigation
 
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.karigo.app.feature.materials.list.MaterialsListScreen
+import com.karigo.app.feature.siteEstimate.add.AddEstimateScreen
 import com.karigojobs.app.feature.homeScreen.HomeScreen
 import com.karigojobs.app.feature.job.create.JobCreateScreen
 import com.karigojobs.app.feature.job.details.JobDetailsScreen
 import com.karigojobs.app.feature.job.joblist.JobListScreen
 import com.karigojobs.presentation.dashboard.HomeViewModel
+import com.karigojobs.presentation.estimate.SiteEstimateViewModel
 import com.karigojobs.presentation.job.create.AddJobViewModel
 import com.karigojobs.presentation.job.details.JobDetailsViewModel
 import com.karigojobs.presentation.job.jobList.JobListViewModel
@@ -46,10 +49,8 @@ fun NavGraphBuilder.contentNavigation(
                 },
                 onSeeAllJobClick = {
                     navHostController.navigate(MainRoute.JobsRoute) {
-                        navHostController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
-                            }
+                        popUpTo(navHostController.graph.findStartDestination().id) {
+                            saveState = true
                         }
                         launchSingleTop = true
                         restoreState = true
@@ -59,6 +60,9 @@ fun NavGraphBuilder.contentNavigation(
                 homeEffect = viewModel.effect,
                 onJobClick = { jobId ->
                     navHostController.navigate(MainRoute.JobDetailsRoute(jobId = jobId))
+                },
+                navigateToAddEstimate = {
+                    navHostController.navigate(MainRoute.AddEstimateRoute)
                 }
             )
         }
@@ -104,6 +108,19 @@ fun NavGraphBuilder.contentNavigation(
                     navHostController.navigate(MainRoute.JobDetailsRoute(jobId = jobId))
                 },
                 event = viewModel::onEvent
+            )
+        }
+
+        composable<MainRoute.AddEstimateRoute> {
+            val viewModel = koinViewModel<SiteEstimateViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            AddEstimateScreen(
+                onBackClick = {
+                    navHostController.popBackStack()
+                },
+                state = state,
+                event = viewModel::onEvent,
+                effect = viewModel.effect
             )
         }
 

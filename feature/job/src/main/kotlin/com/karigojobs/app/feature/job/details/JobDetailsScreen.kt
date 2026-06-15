@@ -35,7 +35,7 @@ import com.karigojobs.presentation.job.details.JobDetailsState
 import com.karigojobs.ui.common.DeleteDialog
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.KarigoMiddleTextTopAppBar
-import com.karigojobs.ui.theme.KarigojobsAccent
+import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
@@ -204,7 +204,7 @@ fun JobDetailsScreen(
                             Text(
                                 text = "${deviceInfo.currency}${jobDetailsState.jobModel?.total}",
                                 style = MaterialTheme.typography.headlineLarge.copy(
-                                    color = KarigojobsAccent
+                                    color = KarigojobsIconColor
                                 )
                             )
                         }

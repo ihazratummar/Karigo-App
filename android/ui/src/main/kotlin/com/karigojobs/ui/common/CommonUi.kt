@@ -86,7 +86,7 @@ import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
 import com.karigojobs.ui.icon
-import com.karigojobs.ui.theme.KarigojobsAccent
+import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsBorder
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
@@ -203,13 +203,13 @@ fun KarigojobsSearchField(
         textStyle = MaterialTheme.typography.titleMedium.copy(
             color = KarigojobsText
         ),
-        cursorBrush = SolidColor(KarigojobsAccent),
+        cursorBrush = SolidColor(KarigojobsIconColor),
         modifier = modifier
             .fillMaxWidth()
             .onFocusChanged { isFocused = it.isFocused }
             .border(
                 width = dimens.Border.thin,
-                color = if (isFocused) KarigojobsAccent else KarigojobsBorder,
+                color = if (isFocused) KarigojobsIconColor else KarigojobsBorder,
                 shape = KarigojobsShapes.medium
             )
             .background(
@@ -265,7 +265,7 @@ fun KarigojobsTextField(
         textStyle = MaterialTheme.typography.titleMedium.copy(
             color = KarigojobsText
         ),
-        cursorBrush = SolidColor(KarigojobsAccent),
+        cursorBrush = SolidColor(KarigojobsIconColor),
         singleLine = singleLine,
         maxLines = maxLines,
         minLines = minLines,
@@ -274,7 +274,7 @@ fun KarigojobsTextField(
             .onFocusChanged { isFocused = it.isFocused }
             .border(
                 width = dimens.Border.thin,
-                color = if (isFocused) KarigojobsAccent else KarigojobsBorder,
+                color = if (isFocused) KarigojobsIconColor else KarigojobsBorder,
                 shape = KarigojobsShapes.medium
             )
             .background(
@@ -592,7 +592,7 @@ fun JobCard(
             ) {
                 KarigoIconWIthBg(
                     icon = job.tradeType.icon(),
-                    iconColor = KarigojobsAccent,
+                    iconColor = KarigojobsIconColor,
                     iconBackGroundColor = SurfaceOverlay,
                     size = dimens.Height.minTouch / 1.1f
                 )

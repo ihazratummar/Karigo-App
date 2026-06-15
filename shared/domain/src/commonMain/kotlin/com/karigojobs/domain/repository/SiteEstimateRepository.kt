@@ -17,9 +17,11 @@ interface SiteEstimateRepository {
     fun getAllSiteEstimates(query: String) : Flow<Result<List<SiteEstimateModel>, SiteEstimateError>>
     fun getSiteEstimate(id: String) : Flow<Result<SiteEstimateModel, SiteEstimateError>>
 
+    fun getEstimateMaterials(estimateId : String) : Flow<Result<List<SiteEstimateMaterial> , SiteEstimateError>>
+
     suspend fun insertSiteEstimate(siteEstimateModel: SiteEstimateModel, siteEstimateMaterials : List<SiteEstimateMaterial>) : Result<Unit, SiteEstimateError>
     suspend fun updateSiteEstimate(siteEstimateModel: SiteEstimateModel, siteEstimateMaterial: List<SiteEstimateMaterial>) : Result<Unit, SiteEstimateError>
 
-
+    suspend fun deleteEstimate(estimateId: String) : Result<Unit, SiteEstimateError>
 
 }

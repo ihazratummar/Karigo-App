@@ -35,6 +35,7 @@ kotlin {
             dependencies {
                 implementation(projects.shared.domain)
                 implementation(projects.shared.model)
+                implementation(projects.shared.utils)
                 implementation(libs.kotlin.stdlib)
                 // Add KMP dependencies here
 

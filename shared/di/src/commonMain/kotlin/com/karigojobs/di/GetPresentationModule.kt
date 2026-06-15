@@ -1,7 +1,9 @@
 package com.karigojobs.di
 
 import com.karigojobs.presentation.dashboard.HomeViewModel
-import com.karigojobs.presentation.estimate.SiteEstimateViewModel
+import com.karigojobs.presentation.estimate.add.AddEstimateViewModel
+import com.karigojobs.presentation.estimate.details.EstimateDetailsViewModel
+import com.karigojobs.presentation.estimate.list.EstimateListViewModel
 import com.karigojobs.presentation.job.create.AddJobViewModel
 import com.karigojobs.presentation.job.details.JobDetailsViewModel
 import com.karigojobs.presentation.job.jobList.JobListViewModel
@@ -24,7 +26,8 @@ fun getPresentationModule(): Module = module {
     viewModelOf(::AddJobViewModel)
     viewModelOf(::JobListViewModel)
     viewModelOf(::MaterialListViewModel)
-    viewModelOf(::SiteEstimateViewModel)
+    viewModelOf(::AddEstimateViewModel)
+    viewModelOf(::EstimateListViewModel)
 
 
     viewModel { (jobId: String) ->
@@ -38,4 +41,14 @@ fun getPresentationModule(): Module = module {
             getJobMaterialItemsUseCase = get()
         )
     }
+
+    viewModel { (estimateId: String) ->
+        EstimateDetailsViewModel(
+            estimateId = estimateId,
+            getEstimateByIdUseCase = get(),
+            getEstimateMaterialsUseCase = get(),
+            deleteEstimateUseCase = get(),
+        )
+    }
+
 }

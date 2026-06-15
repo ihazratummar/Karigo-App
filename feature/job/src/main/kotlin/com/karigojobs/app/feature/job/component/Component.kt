@@ -67,7 +67,7 @@ import com.karigojobs.ui.common.color
 import com.karigojobs.ui.common.dashedBorder
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigoSelectedCardColor
-import com.karigojobs.ui.theme.KarigojobsAccent
+import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
@@ -810,7 +810,7 @@ fun JobDetailsCard(
                 ) {
                     KarigoIconWIthBg(
                         icon = job.tradeType.icon(),
-                        iconColor = KarigojobsAccent,
+                        iconColor = KarigojobsIconColor,
                         iconBackGroundColor = SurfaceOverlay,
                         size = dimens.Height.minTouch
                     )
@@ -919,7 +919,7 @@ fun JobDetailsStatusCard(
                             vertical = dimens.Padding.xs
                         ),
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = KarigojobsAccent
+                            color = KarigojobsIconColor
                         )
                     )
                 }
@@ -1052,7 +1052,7 @@ fun JobDetailsClientInfo(
             ) {
                 KarigoIconWIthBg(
                     icon = R.drawable.user_line,
-                    iconColor = KarigojobsAccent,
+                    iconColor = KarigojobsIconColor,
                     iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer
                 )
                 Column(
@@ -1128,7 +1128,7 @@ fun LabourItemList(
                 KarigoIconWIthBg(
                     icon = R.drawable.labour,
                     size = dimens.Icon.lg,
-                    iconColor = KarigojobsAccent,
+                    iconColor = KarigojobsIconColor,
                     iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer.copy(0.4f)
                 )
 
@@ -1150,7 +1150,7 @@ fun LabourItemList(
                     Text(
                         text = "Per Item",
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = KarigojobsAccent
+                            color = KarigojobsIconColor
                         ),
                         modifier = Modifier.padding(
                             horizontal = dimens.Padding.sm,
@@ -1204,7 +1204,7 @@ fun MaterialItemList(
                 KarigoIconWIthBg(
                     icon = R.drawable.stack,
                     size = dimens.Icon.lg,
-                    iconColor = KarigojobsAccent,
+                    iconColor = KarigojobsIconColor,
                     iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer.copy(0.4f)
                 )
 

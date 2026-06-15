@@ -1,7 +1,9 @@
 package com.karigojobs.data.dto
 
+import com.karigojobs.share.model.SiteEstimateMaterial
 import com.karigojobs.share.model.SiteEstimateModel
 import com.karigojobs.shared.database.EpochUtils
+import com.karigojobs.shared.database.Estimate_materials
 import com.karigojobs.shared.database.GetAllEstimate
 import com.karigojobs.shared.database.GetEstimateById
 
@@ -43,4 +45,22 @@ fun GetEstimateById.toOneEstimateModel() : SiteEstimateModel {
         total = total,
         createAt = create_at
     )
+}
+
+
+fun Estimate_materials.toEstimateMaterialModel() : SiteEstimateMaterial {
+    return SiteEstimateMaterial(
+        id = this.id,
+        estimateId = this.estimate_id,
+        materialId = this.material_id,
+        materialName = this.material_name,
+        quantity = this.quantity,
+        unit = this.unit,
+        rate = this.rate ?:0.0,
+        quantityInput = this.quantity.toString()
+    )
+}
+
+fun List<Estimate_materials>.toEstimateMaterialModelList() : List<SiteEstimateMaterial> {
+    return this.map { it.toEstimateMaterialModel() }
 }

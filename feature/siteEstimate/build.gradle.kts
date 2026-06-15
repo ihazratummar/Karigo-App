@@ -14,6 +14,7 @@ kotlin {
 }
 dependencies {
     implementation(projects.android.ui)
+    implementation(projects.shared.utils)
     implementation(projects.shared.model)
     implementation(projects.shared.domain)
     implementation(projects.shared.presentation)

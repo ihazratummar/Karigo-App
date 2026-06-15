@@ -4,6 +4,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.karigojobs.data.dto.toEstimateListModel
+import com.karigojobs.data.dto.toEstimateMaterialModelList
 import com.karigojobs.data.dto.toOneEstimateModel
 import com.karigojobs.data.safeCall
 import com.karigojobs.domain.repository.SiteEstimateRepository
@@ -58,6 +59,18 @@ class SiteEstimateRepositoryImpl(
             }
     }
 
+    override fun getEstimateMaterials(estimateId: String): Flow<Result<List<SiteEstimateMaterial>, SiteEstimateError>> {
+        return database.siteEstimateMaterialQueries
+            .getMaterialsForEstimate(estimateId = estimateId)
+            .asFlow()
+            .mapToList(ioDispatcher)
+            .map { data ->
+                Result.Success(data.toEstimateMaterialModelList())
+            }.catch {
+                Result.Error(SiteEstimateError.DatabaseError)
+            }
+    }
+
     override suspend fun insertSiteEstimate(
         siteEstimateModel: SiteEstimateModel,
         siteEstimateMaterials: List<SiteEstimateMaterial>
@@ -99,5 +112,11 @@ class SiteEstimateRepositoryImpl(
         siteEstimateMaterial: List<SiteEstimateMaterial>
     ): Result<Unit, SiteEstimateError> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteEstimate(estimateId: String): Result<Unit, SiteEstimateError> {
+        return safeCall(SiteEstimateError.DatabaseError) {
+            database.siteEstimateQueries.deleteEstimate(id = estimateId)
+        }
     }
 }

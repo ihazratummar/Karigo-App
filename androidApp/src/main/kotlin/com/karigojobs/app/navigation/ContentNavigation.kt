@@ -10,12 +10,16 @@ import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.karigo.app.feature.materials.list.MaterialsListScreen
 import com.karigo.app.feature.siteEstimate.add.AddEstimateScreen
+import com.karigo.app.feature.siteEstimate.details.EstimateDetailsScreen
+import com.karigo.app.feature.siteEstimate.list.EstimateListScreen
 import com.karigojobs.app.feature.homeScreen.HomeScreen
 import com.karigojobs.app.feature.job.create.JobCreateScreen
 import com.karigojobs.app.feature.job.details.JobDetailsScreen
 import com.karigojobs.app.feature.job.joblist.JobListScreen
 import com.karigojobs.presentation.dashboard.HomeViewModel
-import com.karigojobs.presentation.estimate.SiteEstimateViewModel
+import com.karigojobs.presentation.estimate.add.AddEstimateViewModel
+import com.karigojobs.presentation.estimate.details.EstimateDetailsViewModel
+import com.karigojobs.presentation.estimate.list.EstimateListViewModel
 import com.karigojobs.presentation.job.create.AddJobViewModel
 import com.karigojobs.presentation.job.details.JobDetailsViewModel
 import com.karigojobs.presentation.job.jobList.JobListViewModel
@@ -63,6 +67,9 @@ fun NavGraphBuilder.contentNavigation(
                 },
                 navigateToAddEstimate = {
                     navHostController.navigate(MainRoute.AddEstimateRoute)
+                },
+                onSeeAllEstimateClick = {
+                    navHostController.navigate(MainRoute.EstimateListRoute)
                 }
             )
         }
@@ -112,7 +119,7 @@ fun NavGraphBuilder.contentNavigation(
         }
 
         composable<MainRoute.AddEstimateRoute> {
-            val viewModel = koinViewModel<SiteEstimateViewModel>()
+            val viewModel = koinViewModel<AddEstimateViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             AddEstimateScreen(
                 onBackClick = {
@@ -121,6 +128,43 @@ fun NavGraphBuilder.contentNavigation(
                 state = state,
                 event = viewModel::onEvent,
                 effect = viewModel.effect
+            )
+        }
+        composable <MainRoute.EstimateListRoute>{
+            val viewModel = koinViewModel<EstimateListViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            EstimateListScreen(
+                state = state,
+                event = viewModel::onEvent,
+                effect = viewModel.effect,
+                onBackClick = {
+                    navHostController.popBackStack()
+                },
+                onAddClick = {
+                    navHostController.navigate(MainRoute.AddEstimateRoute)
+                },
+                onEstimateClick = {estimateId ->
+                    navHostController.navigate(MainRoute.EstimateDetailsRoute(estimateId = estimateId))
+                }
+            )
+
+        }
+
+        composable<MainRoute.EstimateDetailsRoute> {backStackEntry ->
+            val route = backStackEntry.toRoute<MainRoute.EstimateDetailsRoute>()
+
+            val viewModel = koinViewModel<EstimateDetailsViewModel>(
+                parameters = { parametersOf(route.estimateId) }
+            )
+            val state by viewModel.state.collectAsStateWithLifecycle()
+
+            EstimateDetailsScreen(
+                state = state,
+                event = viewModel::onEvent,
+                effect = viewModel.effect,
+                onBackClick = {
+                    navHostController.popBackStack()
+                }
             )
         }
 

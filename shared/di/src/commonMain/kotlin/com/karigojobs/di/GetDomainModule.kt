@@ -12,6 +12,10 @@ import com.karigojobs.domain.usecase.client.GetClientUseCase
 import com.karigojobs.domain.usecase.client.InsertClientUseCase
 import com.karigojobs.domain.usecase.client.IsClientExistUseCase
 import com.karigojobs.domain.usecase.estimate.AddNewSiteEstimateUseCase
+import com.karigojobs.domain.usecase.estimate.DeleteEstimateUseCase
+import com.karigojobs.domain.usecase.estimate.GetAllEstimateUseCase
+import com.karigojobs.domain.usecase.estimate.GetEstimateByIdUseCase
+import com.karigojobs.domain.usecase.estimate.GetEstimateMaterialsUseCase
 import com.karigojobs.domain.usecase.job.GetJobLabourItemUseCase
 import com.karigojobs.domain.usecase.job.GetJobMaterialItemsUseCase
 import com.karigojobs.domain.usecase.job.SaveFullJobTransactionUseCase
@@ -60,5 +64,9 @@ fun getDomainModule() : Module = module {
     single { GetClientUseCase(clientRepository = get()) }
 
     single { AddNewSiteEstimateUseCase(estimateRepository = get()) }
+    single { GetAllEstimateUseCase(estimateRepository = get()) }
+    single { GetEstimateByIdUseCase(estimateRepository = get()) }
+    single { GetEstimateMaterialsUseCase(estimateRepository = get()) }
+    single { DeleteEstimateUseCase(estimateRepository = get()) }
 
 }

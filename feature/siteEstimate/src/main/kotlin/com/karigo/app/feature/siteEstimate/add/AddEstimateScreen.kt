@@ -29,11 +29,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.karigo.app.feature.siteEstimate.component.AddMaterialCard
+import com.karigo.app.feature.siteEstimate.component.EstimateTotalCard
 import com.karigo.app.feature.siteEstimate.component.SelectMaterialModal
 import com.karigo.app.feature.siteEstimate.component.SelectedMaterialSection
-import com.karigojobs.presentation.estimate.EstimateEffect
-import com.karigojobs.presentation.estimate.SiteEstimateEvent
-import com.karigojobs.presentation.estimate.SiteEstimateState
+import com.karigojobs.presentation.estimate.add.EstimateEffect
+import com.karigojobs.presentation.estimate.add.SiteEstimateEvent
+import com.karigojobs.presentation.estimate.add.SiteEstimateState
 import com.karigojobs.ui.common.ClientPicker
 import com.karigojobs.ui.common.ContactPicker
 import com.karigojobs.ui.common.KarigoDataPicker
@@ -46,7 +47,7 @@ import com.karigojobs.ui.common.contentHorizontalPadding
 import com.karigojobs.ui.permission.AppPermission
 import com.karigojobs.ui.permission.PermissionRationaleDialog
 import com.karigojobs.ui.permission.rememberPermissionHandler
-import com.karigojobs.ui.theme.KarigojobsAccent
+import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
@@ -265,7 +266,7 @@ fun AddEstimateScreen(
 
                         SpringToggle(
                             checked = state.isRateVisible,
-                            onCheckedChange = { event(SiteEstimateEvent.ToggleRateVisibility(!state.isRateVisible)) }
+                            onCheckedChange = { event(SiteEstimateEvent.ToggleRateVisibility(it)) }
                         )
                     }
                 }
@@ -311,50 +312,11 @@ fun AddEstimateScreen(
 
             if (state.isRateVisible) {
                 item {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer
-                        ),
-                        shape = KarigojobsShapes.medium,
-                        border = BorderStroke(
-                            width = dimens.Border.thin,
-                            color = MaterialTheme.colorScheme.onBackground
-                        )
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(dimens.Padding.base)
-                                .fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(dimens.Space.sm),
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text(
-                                    text = "Estimate Total",
-                                    style = MaterialTheme.typography.bodyMedium.copy(
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                )
-                                Text(
-                                    text = "${state.selectedMaterials.size} items",
-                                    style = MaterialTheme.typography.labelSmall.copy(
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                )
-                            }
 
-                            Text(
-                                text = "${deviceInfo.currency}${state.materialsTotal}",
-                                style = MaterialTheme.typography.headlineLarge.copy(
-                                    color = KarigojobsAccent
-                                )
-                            )
-                        }
-                    }
+                    EstimateTotalCard(
+                        totalItemSize = state.selectedMaterials.size,
+                        estimateTotal = state.materialsTotal
+                    )
                 }
             }
 

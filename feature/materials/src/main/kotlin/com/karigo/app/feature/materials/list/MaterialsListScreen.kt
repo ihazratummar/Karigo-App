@@ -38,7 +38,7 @@ import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.KarigojobsSearchField
 import com.karigojobs.ui.common.TopBarTitle
-import com.karigojobs.ui.theme.KarigojobsAccent
+import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
@@ -96,7 +96,7 @@ fun MaterialsListScreen(
                 actions = {
                     KarigoIconWIthBgCick(
                         icon = R.drawable.add,
-                        iconBackGroundColor = KarigojobsAccent,
+                        iconBackGroundColor = KarigojobsIconColor,
                         iconColor = MaterialTheme.colorScheme.onPrimary,
                         size = dimens.Icon._2xl,
                         onClick = { event(MaterialListEvent.ToggleAddMaterialModal(isOpen = true)) }
@@ -178,7 +178,7 @@ fun MaterialsListScreen(
 
                         KarigoIconWIthBg(
                             icon = R.drawable.stack,
-                            iconColor = KarigojobsAccent,
+                            iconColor = KarigojobsIconColor,
                             iconBackGroundColor = SurfaceOverlay,
                             size = dimens.Icon._2xl
                         )
@@ -269,7 +269,7 @@ fun SearchAndFilter(
                             event(MaterialListEvent.SelectTradeType(tradeType = null))
                         },
                         colors = CardDefaults.cardColors(
-                            containerColor = if (isSelected) KarigojobsAccent else KarigojobsCard
+                            containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
                         ),
                         shape = KarigojobsShapes.large,
 
@@ -294,7 +294,7 @@ fun SearchAndFilter(
                             event(MaterialListEvent.SelectTradeType(tradeType = trade))
                         },
                         colors = CardDefaults.cardColors(
-                            containerColor = if (isSelected) KarigojobsAccent else KarigojobsCard
+                            containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
                         ),
                         shape = KarigojobsShapes.large,
 

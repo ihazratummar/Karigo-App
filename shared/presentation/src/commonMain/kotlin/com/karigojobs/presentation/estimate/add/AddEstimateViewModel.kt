@@ -1,4 +1,4 @@
-package com.karigojobs.presentation.estimate
+package com.karigojobs.presentation.estimate.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,7 @@ import com.karigojobs.domain.usecase.client.IsClientExistUseCase
 import com.karigojobs.domain.usecase.estimate.AddNewSiteEstimateUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
 import com.karigojobs.presentation.erroMap.asString
-import com.karigojobs.presentation.estimate.EstimateEffect.*
+import com.karigojobs.presentation.estimate.add.EstimateEffect.*
 import com.karigojobs.presentation.materials.list.MaterialListFilter.All
 import com.karigojobs.presentation.materials.list.MaterialListFilter.SelectedTrade
 import com.karigojobs.share.model.ClientModel
@@ -42,7 +42,7 @@ import kotlin.uuid.Uuid
  * Created on 09/06/26
  */
 
-class SiteEstimateViewModel(
+class AddEstimateViewModel(
     private val deviceContactProvider: DeviceContactProvider,
     private val isClientExistUseCase: IsClientExistUseCase,
     private val searchMaterialsUseCase: SearchMaterialsUseCase,

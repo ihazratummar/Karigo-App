@@ -52,7 +52,7 @@ class SiteEstimateRepositoryImpl(
                 if (siteEstimate != null) {
                     Result.Success(siteEstimate.toOneEstimateModel())
                 } else {
-                    Result.Error(SiteEstimateError.DatabaseError)
+                    Result.Error(SiteEstimateError.NotFound)
                 }
             }.catch {
                 Result.Error(SiteEstimateError.DatabaseError)
@@ -111,7 +111,36 @@ class SiteEstimateRepositoryImpl(
         siteEstimateModel: SiteEstimateModel,
         siteEstimateMaterial: List<SiteEstimateMaterial>
     ): Result<Unit, SiteEstimateError> {
-        TODO("Not yet implemented")
+        return safeCall(SiteEstimateError.DatabaseError) {
+            database.siteEstimateQueries.transaction {
+                database.siteEstimateQueries.updateEstimate(
+                    client_id = siteEstimateModel.clientId,
+                    project_title = siteEstimateModel.projectTitle,
+                    date = siteEstimateModel.date,
+                    site_notes = siteEstimateModel.siteNote,
+                    show_rate = siteEstimateModel.showRate,
+                    total = siteEstimateModel.total,
+                    updated_at = EpochUtils.now(),
+                    id = siteEstimateModel.id
+                )
+
+                database.siteEstimateMaterialQueries.deleteMaterialsForEstimate(estimateId = siteEstimateModel.id)
+
+                siteEstimateMaterial.forEach { siteMaterials ->
+                    database.siteEstimateMaterialQueries.insertMaterial(
+                        id = UuidGenerator.generate(),
+                        estimate_id = siteEstimateModel.id,
+                        material_id = siteMaterials.materialId,
+                        material_name = siteMaterials.materialName,
+                        quantity = siteMaterials.quantity,
+                        unit = siteMaterials.unit,
+                        rate = siteMaterials.rate,
+                        amount = siteMaterials.total,
+                        created_at = EpochUtils.now()
+                    )
+                }
+            }
+        }
     }
 
     override suspend fun deleteEstimate(estimateId: String): Result<Unit, SiteEstimateError> {

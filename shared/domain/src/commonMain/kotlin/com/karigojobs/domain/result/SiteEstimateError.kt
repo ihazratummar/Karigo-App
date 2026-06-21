@@ -7,7 +7,6 @@ package com.karigojobs.domain.result
  */
 
 sealed interface SiteEstimateError : RootError {
-
     data object DatabaseError : SiteEstimateError
-
+    data object NotFound : SiteEstimateError
 }

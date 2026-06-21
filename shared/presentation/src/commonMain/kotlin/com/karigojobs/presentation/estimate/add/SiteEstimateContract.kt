@@ -17,6 +17,7 @@ import kotlin.time.Clock
 
 
 data class SiteEstimateState(
+    val estimateId: String? = null,
     val isLoading: Boolean = false,
     val isContactPickerOpen : Boolean = false,
     val contacts: List<DeviceContact> = emptyList(),

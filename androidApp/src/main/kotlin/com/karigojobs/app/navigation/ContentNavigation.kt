@@ -66,7 +66,7 @@ fun NavGraphBuilder.contentNavigation(
                     navHostController.navigate(MainRoute.JobDetailsRoute(jobId = jobId))
                 },
                 navigateToAddEstimate = {
-                    navHostController.navigate(MainRoute.AddEstimateRoute)
+                    navHostController.navigate(MainRoute.AddEstimateRoute())
                 },
                 onSeeAllEstimateClick = {
                     navHostController.navigate(MainRoute.EstimateListRoute)
@@ -118,8 +118,11 @@ fun NavGraphBuilder.contentNavigation(
             )
         }
 
-        composable<MainRoute.AddEstimateRoute> {
-            val viewModel = koinViewModel<AddEstimateViewModel>()
+        composable<MainRoute.AddEstimateRoute> { backStackEntry ->
+            val route = backStackEntry.toRoute<MainRoute.AddEstimateRoute>()
+            val viewModel = koinViewModel<AddEstimateViewModel>(
+                parameters = { parametersOf(route.estimateId) }
+            )
             val state by viewModel.state.collectAsStateWithLifecycle()
             AddEstimateScreen(
                 onBackClick = {
@@ -141,7 +144,7 @@ fun NavGraphBuilder.contentNavigation(
                     navHostController.popBackStack()
                 },
                 onAddClick = {
-                    navHostController.navigate(MainRoute.AddEstimateRoute)
+                    navHostController.navigate(MainRoute.AddEstimateRoute())
                 },
                 onEstimateClick = {estimateId ->
                     navHostController.navigate(MainRoute.EstimateDetailsRoute(estimateId = estimateId))
@@ -164,6 +167,9 @@ fun NavGraphBuilder.contentNavigation(
                 effect = viewModel.effect,
                 onBackClick = {
                     navHostController.popBackStack()
+                },
+                onEditClick = { estimateId ->
+                    navHostController.navigate(MainRoute.AddEstimateRoute(estimateId = estimateId))
                 }
             )
         }

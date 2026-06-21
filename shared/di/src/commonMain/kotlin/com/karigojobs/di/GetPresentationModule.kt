@@ -26,7 +26,21 @@ fun getPresentationModule(): Module = module {
     viewModelOf(::AddJobViewModel)
     viewModelOf(::JobListViewModel)
     viewModelOf(::MaterialListViewModel)
-    viewModelOf(::AddEstimateViewModel)
+    viewModel { (estimateId: String?) ->
+        AddEstimateViewModel(
+            estimateId = estimateId,
+            deviceContactProvider = get(),
+            isClientExistUseCase = get(),
+            getClientUseCase = get(),
+            searchMaterialsUseCase = get(),
+            getSelectedTradeTypeUseCase = get(),
+            insertClientUseCase = get(),
+            addNewSiteEstimateUseCase = get(),
+            getEstimateByIdUseCase = get(),
+            getEstimateMaterialsUseCase = get(),
+            updateSiteEstimateUseCase = get()
+        )
+    }
     viewModelOf(::EstimateListViewModel)
 
 

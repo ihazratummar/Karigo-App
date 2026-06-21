@@ -113,7 +113,7 @@ fun AddEstimateScreen(
         topBar = {
             KarigoMiddleTextTopAppBar(
                 onNavigationClick = onBackClick,
-                title = "New Estimate",
+                title = if (state.estimateId == null) "New Estimate" else "Edit Estimate",
                 action = {
 
                 }
@@ -329,7 +329,7 @@ fun AddEstimateScreen(
                     shape = KarigojobsShapes.medium
                 ) {
                     Text(
-                        text = "Save Estimate"
+                        text = if (state.estimateId == null) "Save Estimate" else "Update Estimate"
                     )
                 }
             }

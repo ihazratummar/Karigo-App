@@ -48,6 +48,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -125,6 +126,31 @@ import java.util.TimeZone
  * Created on 23/05/26
  */
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun KarigoTopAppBar(
+    onNavigationClick: () -> Unit,
+    title: String = "Estimate",
+    action: @Composable () -> Unit
+) {
+    Column {
+        TopAppBar(
+            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+            title = {
+                TopBarTitle(title = title)
+            },
+            navigationIcon = {
+                KarigoIconWIthBgCick(onClick = onNavigationClick)
+            },
+            actions = {
+                action()
+            },
+            windowInsets = WindowInsets(),
+        )
+        HorizontalDivider()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -46,10 +46,10 @@ sealed class MainRoute {
     data object EstimateListRoute
 
     @Serializable
-    data object AddEstimateRoute
+    data class AddEstimateRoute(val estimateId: String? = null) : MainRoute()
 
     @Serializable
-    data class EstimateDetailsRoute(val estimateId: String)
+    data class EstimateDetailsRoute(val estimateId: String) : MainRoute()
 
     @Serializable
     data object SettingRoute

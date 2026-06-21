@@ -5,9 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.repository.DeviceContactProvider
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.domain.usecase.client.GetClientUseCase
 import com.karigojobs.domain.usecase.client.InsertClientUseCase
 import com.karigojobs.domain.usecase.client.IsClientExistUseCase
 import com.karigojobs.domain.usecase.estimate.AddNewSiteEstimateUseCase
+import com.karigojobs.domain.usecase.estimate.GetEstimateByIdUseCase
+import com.karigojobs.domain.usecase.estimate.GetEstimateMaterialsUseCase
+import com.karigojobs.domain.usecase.estimate.UpdateSiteEstimateUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.estimate.add.EstimateEffect.*
@@ -43,39 +47,103 @@ import kotlin.uuid.Uuid
  */
 
 class AddEstimateViewModel(
+    private val estimateId: String? = null,
     private val deviceContactProvider: DeviceContactProvider,
     private val isClientExistUseCase: IsClientExistUseCase,
+    private val getClientUseCase: GetClientUseCase,
     private val searchMaterialsUseCase: SearchMaterialsUseCase,
     private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase,
     private val insertClientUseCase: InsertClientUseCase,
-    private val addNewSiteEstimateUseCase: AddNewSiteEstimateUseCase
+    private val addNewSiteEstimateUseCase: AddNewSiteEstimateUseCase,
+    private val getEstimateByIdUseCase: GetEstimateByIdUseCase,
+    private val getEstimateMaterialsUseCase: GetEstimateMaterialsUseCase,
+    private val updateSiteEstimateUseCase: UpdateSiteEstimateUseCase
 ) : ViewModel() {
 
     @OptIn(ExperimentalUuidApi::class)
-    private val draftEstimateId = Uuid.random().toString()
+    private val draftEstimateId = estimateId ?: Uuid.random().toString()
 
     /**
      * State Declaration
      */
-    private val _state = MutableStateFlow(SiteEstimateState())
+    private val _state = MutableStateFlow(SiteEstimateState(estimateId = estimateId))
     val state: StateFlow<SiteEstimateState> = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<EstimateEffect>(replay = 0)
-    val effect : SharedFlow<EstimateEffect> = _effect.asSharedFlow()
+    val effect: SharedFlow<EstimateEffect> = _effect.asSharedFlow()
 
 
     init {
         loadMaterials()
         loadSelectedTrades()
+        if (estimateId != null) {
+            loadExistingEstimate()
+        }
     }
 
-    private fun loadContacts() {
-        if (_state.value.contacts.isNotEmpty()) return
+    private fun loadExistingEstimate() {
+        if (estimateId == null) return
 
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            val contacts = deviceContactProvider.getDeviceContacts()
-            _state.update { it.copy(contacts = contacts, isLoading = false) }
+            
+            // Load Estimate Details
+            getEstimateByIdUseCase(estimateId).collectLatest { result ->
+                when (result) {
+                    is Result.Success -> {
+                        _state.update {
+                            it.copy(
+                                projectTitle = result.data.projectTitle,
+                                siteNotes = result.data.siteNote ?: "",
+                                selectedDate = result.data.date,
+                                isRateVisible = result.data.showRate,
+                            )
+                        }
+                        
+                        // Fetch full client details
+                        val clientResult = getClientUseCase(result.data.clientId)
+                        if (clientResult is Result.Success) {
+                            _state.update { it.copy(selectedClient = clientResult.data) }
+                        } else {
+                            // Fallback to minimal client info if full fetch fails
+                             _state.update {
+                                it.copy(
+                                    selectedClient = ClientModel(
+                                        id = result.data.clientId,
+                                        name = result.data.clientName,
+                                        phone = "", 
+                                        email = "",
+                                        address = ""
+                                    )
+                                )
+                            }
+                        }
+                    }
+                    is Result.Error -> {
+                        _effect.emit(ShowError(result.error.asString()))
+                    }
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            // Load Estimate Materials
+            getEstimateMaterialsUseCase(estimateId).collectLatest { result ->
+                when (result) {
+                    is Result.Success -> {
+                        _state.update { 
+                            it.copy(
+                                selectedMaterials = result.data,
+                                isLoading = false 
+                            ) 
+                        }
+                    }
+                    is Result.Error -> {
+                        _state.update { it.copy(isLoading = false) }
+                        _effect.emit(ShowError(result.error.asString()))
+                    }
+                }
+            }
         }
     }
 
@@ -133,6 +201,16 @@ class AddEstimateViewModel(
         }
     }
 
+
+    private fun loadContacts() {
+        if (_state.value.contacts.isNotEmpty()) return
+
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            val contacts = deviceContactProvider.getDeviceContacts()
+            _state.update { it.copy(contacts = contacts, isLoading = false) }
+        }
+    }
 
     @OptIn(ExperimentalUuidApi::class)
     fun onEvent(event: SiteEstimateEvent) {
@@ -246,24 +324,34 @@ class AddEstimateViewModel(
 
             SiteEstimateEvent.SaveEstimate -> {
                 viewModelScope.launch {
-                    val result = addNewSiteEstimateUseCase(
-                        siteEstimateModel = SiteEstimateModel(
-                            id = draftEstimateId,
-                            projectTitle = _state.value.projectTitle,
-                            siteNote = _state.value.siteNotes,
-                            clientId = _state.value.selectedClient?.id?:"",
-                            clientName = _state.value.selectedClient?.name ?:"",
-                            date = _state.value.selectedDate,
-                            showRate = _state.value.isRateVisible,
-                            total = _state.value.materialsTotal
-                        ),
-                        siteEstimateMaterials = _state.value.selectedMaterials
+                    val estimateModel = SiteEstimateModel(
+                        id = draftEstimateId,
+                        projectTitle = _state.value.projectTitle,
+                        siteNote = _state.value.siteNotes,
+                        clientId = _state.value.selectedClient?.id ?: "",
+                        clientName = _state.value.selectedClient?.name ?: "",
+                        date = _state.value.selectedDate,
+                        showRate = _state.value.isRateVisible,
+                        total = _state.value.materialsTotal
                     )
-                    when(result){
-                        is Result.Error  -> {
+                    
+                    val result = if (estimateId == null) {
+                        addNewSiteEstimateUseCase(
+                            siteEstimateModel = estimateModel,
+                            siteEstimateMaterials = _state.value.selectedMaterials
+                        )
+                    } else {
+                        updateSiteEstimateUseCase(
+                            siteEstimateModel = estimateModel,
+                            siteEstimateMaterials = _state.value.selectedMaterials
+                        )
+                    }
+
+                    when (result) {
+                        is Result.Error -> {
                             _effect.emit(ShowError(result.error.toString()))
                         }
-                        is Result.Success  -> {
+                        is Result.Success -> {
                             _effect.emit(NavigationBack)
                         }
                     }

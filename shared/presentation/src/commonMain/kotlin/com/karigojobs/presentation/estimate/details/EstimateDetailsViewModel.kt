@@ -5,10 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.karigojob.share.utils.DateFormat
 import com.karigojob.share.utils.DateUtils.toReadableDate
 import com.karigojobs.domain.result.Result
+import com.karigojobs.domain.result.SiteEstimateError
 import com.karigojobs.domain.usecase.estimate.DeleteEstimateUseCase
 import com.karigojobs.domain.usecase.estimate.GetEstimateByIdUseCase
 import com.karigojobs.domain.usecase.estimate.GetEstimateMaterialsUseCase
-import com.karigojobs.presentation.estimate.list.EstimateListEffect
+import com.karigojobs.presentation.erroMap.asString
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -50,10 +51,10 @@ class EstimateDetailsViewModel(
             is EstimateDetailsEvent.DeleteEstimate -> {
                 viewModelScope.launch {
                     val result = deleteEstimateUseCase(id = estimateId)
-                    _state.update { it.copy(isDeleting = false) }
                     when (result) {
                         is Result.Error -> {
-                            _effect.emit(EstimateDetailsEffect.ShowError(result.error.toString()))
+                            _state.update { it.copy(isDeleting = false) }
+                            _effect.emit(EstimateDetailsEffect.ShowError(result.error.asString()))
                         }
 
                         is Result.Success<*> -> {
@@ -100,22 +101,23 @@ class EstimateDetailsViewModel(
 
     private fun loadEstimate() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true)
+            _state.update { it.copy(isLoading = true) }
             getEstimateByIdUseCase(estimateId = estimateId).collectLatest { result ->
                 when (result) {
                     is Result.Error -> {
-                        _state.value = _state.value.copy(
-                            isLoading = false
-                        )
-
-                        _effect.emit(EstimateDetailsEffect.ShowError(result.error.toString()))
+                        _state.update { it.copy(isLoading = false) }
+                        if (result.error != SiteEstimateError.NotFound) {
+                            _effect.emit(EstimateDetailsEffect.ShowError(result.error.asString()))
+                        }
                     }
 
                     is Result.Success -> {
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            estimateDetails = result.data
-                        )
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                estimateDetails = result.data
+                            )
+                        }
                     }
                 }
             }
@@ -124,22 +126,23 @@ class EstimateDetailsViewModel(
 
     private fun loadEstimateMaterial() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true)
+            _state.update { it.copy(isLoading = true) }
             getEstimateMaterialsUseCase(estimateId = estimateId).collectLatest { result ->
                 when (result) {
                     is Result.Error -> {
-                        _state.value = _state.value.copy(
-                            isLoading = false
-                        )
-
-                        _effect.emit(EstimateDetailsEffect.ShowError(result.error.toString()))
+                        _state.update { it.copy(isLoading = false) }
+                        if (result.error != SiteEstimateError.NotFound) {
+                            _effect.emit(EstimateDetailsEffect.ShowError(result.error.asString()))
+                        }
                     }
 
                     is Result.Success -> {
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            siteEstimateMaterial = result.data
-                        )
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                siteEstimateMaterial = result.data
+                            )
+                        }
                     }
                 }
             }

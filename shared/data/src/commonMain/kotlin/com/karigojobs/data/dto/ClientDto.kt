@@ -21,6 +21,8 @@ fun Client.toModel() : ClientModel {
         email =  email,
         address = address,
         outStandingBalance = outstanding_balance,
+        totalPaid = this.total_paid,
+        totalRevenue = this.total_revenue,
         totalJob = total_jobs.toInt(),
         cratedAt = created_at
     )

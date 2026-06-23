@@ -130,9 +130,10 @@ import java.util.TimeZone
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KarigoTopAppBar(
-    onNavigationClick: () -> Unit,
+    onNavigationClick: () -> Unit = {},
     title: String = "Estimate",
-    action: @Composable () -> Unit
+    action: @Composable () -> Unit = {},
+    isNavBack: Boolean = true
 ) {
     Column {
         TopAppBar(
@@ -141,7 +142,9 @@ fun KarigoTopAppBar(
                 TopBarTitle(title = title)
             },
             navigationIcon = {
-                KarigoIconWIthBgCick(onClick = onNavigationClick)
+                if (isNavBack){
+                    KarigoIconWIthBgCick(onClick = onNavigationClick)
+                }
             },
             actions = {
                 action()

@@ -1,0 +1,223 @@
+package com.karigojobs.feature.client
+
+import android.widget.Space
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import com.karigojob.share.utils.toInitials
+import com.karigojobs.app.android.ui.R
+import com.karigojobs.presentation.client.list.ClientListEffect
+import com.karigojobs.presentation.client.list.ClientListEvent
+import com.karigojobs.presentation.client.list.ClientListState
+import com.karigojobs.ui.common.KarigoTopAppBar
+import com.karigojobs.ui.common.TopBarTitle
+import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.theme.KarigojobsAccent
+import com.karigojobs.ui.theme.KarigojobsBorder
+import com.karigojobs.ui.theme.KarigojobsCard
+import com.karigojobs.ui.theme.KarigojobsError
+import com.karigojobs.ui.theme.KarigojobsShapes
+import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.KarigojobsText3
+import com.karigojobs.ui.theme.ModalBackGround
+import com.karigojobs.ui.theme.deviceInfo
+import com.karigojobs.ui.theme.dimens
+import kotlinx.coroutines.flow.SharedFlow
+
+
+/**
+ * @author hazratummar
+ * Created on 23/06/26
+ */
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ClientListScreen(
+    state: ClientListState,
+    event: (ClientListEvent) -> Unit,
+    effect: SharedFlow<ClientListEffect>?,
+    onClientClick: (String) -> Unit
+) {
+
+    val snackbarHost = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        effect?.collect { effect ->
+            when (effect) {
+                is ClientListEffect.ShowError -> {
+                    snackbarHost.showSnackbar(
+                        message = effect.message,
+                        withDismissAction = true
+                    )
+                }
+            }
+        }
+    }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHost) },
+        topBar = {
+            KarigoTopAppBar(
+                title = "Clients",
+                action = {
+                    Text(
+                        text = "${state.clients.size} clients",
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = KarigojobsText3
+                        )
+                    )
+                },
+                isNavBack = false
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(top = dimens.Padding.base)
+                .contentHorizontalPadding(),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
+        ) {
+            items(state.clients) { client ->
+                Card(
+                    onClick = {  },
+                    colors = CardDefaults.cardColors(
+                        containerColor = KarigojobsCard
+                    ),
+                    shape = KarigojobsShapes.medium
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(dimens.Padding.base)
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
+                        ) {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .size(dimens.Height.minTouch)
+                                    .padding(dimens.Padding._2xs)
+                                    .background(
+                                        color = MaterialTheme.colorScheme.primaryContainer.copy(0.5f),
+                                        shape = CircleShape
+                                    )
+                            ) {
+                                Text(
+                                    text = client.name.toInitials(),
+                                    style = MaterialTheme.typography.titleMedium.copy(
+                                        color = KarigojobsAccent
+                                    )
+                                )
+                            }
+
+                            Column(
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = client.name,
+                                    style = MaterialTheme.typography.bodyMedium.copy(
+                                        color = MaterialTheme.colorScheme.onBackground
+                                    )
+                                )
+                                Text(
+                                    text = client.phone,
+                                    style = MaterialTheme.typography.bodyMedium.copy(
+                                        color = KarigojobsText2
+                                    )
+                                )
+                            }
+                            if (client.outStandingBalance > 0.0){
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.background(
+                                        color = ModalBackGround,
+                                        shape = CircleShape
+                                    ).border(
+                                        width = dimens.Border.thin,
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                        shape = CircleShape
+                                    )
+                                ) {
+                                    Text(
+                                        text = "${deviceInfo.currency} ${client.outStandingBalance}",
+                                        style = MaterialTheme.typography.bodyMedium.copy(
+                                            color = KarigojobsError
+                                        ),
+                                        modifier = Modifier.padding(dimens.Padding.sm)
+                                    )
+                                }
+                            }
+                        }
+
+                        HorizontalDivider()
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.job_line),
+                                contentDescription = null,
+                                tint = KarigojobsText3,
+                                modifier = Modifier.size(dimens.Icon._2xs)
+                            )
+                            Text(
+                                text = client.totalJob.toString(),
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = KarigojobsText3
+                                )
+                            )
+                            Spacer(Modifier.height(dimens.Space._2xs))
+                            Icon(
+                                painter = painterResource(R.drawable.alumuniam),
+                                contentDescription = null,
+                                tint = KarigojobsText3,
+                                modifier = Modifier.size(dimens.Icon._2xs)
+                            )
+                            Text(
+                                text = "${deviceInfo.currency} ${client.totalRevenue}",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = KarigojobsText3
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

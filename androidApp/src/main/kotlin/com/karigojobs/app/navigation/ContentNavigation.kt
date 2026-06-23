@@ -16,6 +16,8 @@ import com.karigojobs.app.feature.homeScreen.HomeScreen
 import com.karigojobs.app.feature.job.create.JobCreateScreen
 import com.karigojobs.app.feature.job.details.JobDetailsScreen
 import com.karigojobs.app.feature.job.joblist.JobListScreen
+import com.karigojobs.feature.client.ClientListScreen
+import com.karigojobs.presentation.client.list.ClientListViewModel
 import com.karigojobs.presentation.dashboard.HomeViewModel
 import com.karigojobs.presentation.estimate.add.AddEstimateViewModel
 import com.karigojobs.presentation.estimate.details.EstimateDetailsViewModel
@@ -124,6 +126,20 @@ fun NavGraphBuilder.contentNavigation(
             )
         }
 
+        composable <MainRoute.ClientListRoute>{
+            val viewModel = koinViewModel<ClientListViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+
+            ClientListScreen(
+                state = state,
+                event = viewModel::onEvent,
+                effect = viewModel.effect,
+                onClientClick = { clientId ->
+                    navHostController.navigate(MainRoute.ClientDetailsRoute(clientId = clientId))
+                }
+            )
+        }
+
         composable<MainRoute.AddEstimateRoute> { backStackEntry ->
             val route = backStackEntry.toRoute<MainRoute.AddEstimateRoute>()
             val viewModel = koinViewModel<AddEstimateViewModel>(
@@ -178,10 +194,6 @@ fun NavGraphBuilder.contentNavigation(
                     navHostController.navigate(MainRoute.AddEstimateRoute(estimateId = estimateId))
                 }
             )
-        }
-
-        composable<MainRoute.ClientRoute> {
-            // TODO: Implement Client Screen
         }
 
         composable<MainRoute.Materials> {

@@ -1,5 +1,6 @@
 package com.karigojobs.di
 
+import com.karigojobs.presentation.client.list.ClientListViewModel
 import com.karigojobs.presentation.dashboard.HomeViewModel
 import com.karigojobs.presentation.estimate.add.AddEstimateViewModel
 import com.karigojobs.presentation.estimate.details.EstimateDetailsViewModel
@@ -23,6 +24,11 @@ import org.koin.dsl.module
 fun getPresentationModule(): Module = module {
     viewModelOf(::OnboardingViewModel)
     viewModelOf(::HomeViewModel)
+    viewModelOf(::JobListViewModel)
+    viewModelOf(::MaterialListViewModel)
+    viewModelOf(::EstimateListViewModel)
+    viewModelOf(::ClientListViewModel)
+
     viewModel { (jobId: String?) ->
         AddJobViewModel(
             jobId = jobId,
@@ -38,8 +44,6 @@ fun getPresentationModule(): Module = module {
             getClientUseCase = get()
         )
     }
-    viewModelOf(::JobListViewModel)
-    viewModelOf(::MaterialListViewModel)
     viewModel { (estimateId: String?) ->
         AddEstimateViewModel(
             estimateId = estimateId,
@@ -55,9 +59,6 @@ fun getPresentationModule(): Module = module {
             updateSiteEstimateUseCase = get()
         )
     }
-    viewModelOf(::EstimateListViewModel)
-
-
     viewModel { (jobId: String) ->
         JobDetailsViewModel(
             jobId = jobId,

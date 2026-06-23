@@ -83,6 +83,9 @@ class JobRepositoryImpl(
     ): Result<Unit, JobError> {
         return safeCall(JobError.SaveFailed) {
             karigojobsDatabase.transaction {
+                val existingJob = karigojobsDatabase.jobQueries.getJobById(id = job.id).executeAsOneOrNull()
+                val isNewJob = existingJob == null
+
                 karigojobsDatabase.jobQueries.insertJob(
                     id = job.id,
                     client_id = job.clientId,
@@ -94,8 +97,43 @@ class JobRepositoryImpl(
                     total = job.total,
                     notes = job.notes,
                     job_date = job.jobDate,
-                    created_at = EpochUtils.now(),
+                    created_at = existingJob?.created_at ?: EpochUtils.now(),
                     updated_at = EpochUtils.now(),
+                )
+
+                // 1. Update Job Count if it's a new job
+                if (isNewJob) {
+                    karigojobsDatabase.clientQueries.incrementJobCount(id = job.clientId)
+                }
+
+                // 2. Calculate Finance Deltas
+                val oldTotal = existingJob?.total ?: 0.0
+                val newTotal = job.total
+                val revenueDelta = newTotal - oldTotal
+
+                val isOldPaid = existingJob?.status == JobStatus.PAID.name
+                val isNewPaid = job.status == JobStatus.PAID
+
+                val paidDelta = when {
+                    !isOldPaid && isNewPaid -> newTotal
+                    isOldPaid && isNewPaid -> newTotal - oldTotal
+                    isOldPaid && !isNewPaid -> -oldTotal
+                    else -> 0.0
+                }
+
+                val outstandingDelta = when {
+                    !isOldPaid && !isNewPaid -> newTotal - oldTotal
+                    !isOldPaid && isNewPaid -> -oldTotal
+                    isOldPaid && !isNewPaid -> newTotal
+                    else -> 0.0
+                }
+
+                karigojobsDatabase.clientQueries.adjustClientFinances(
+                    revenueDelta = revenueDelta,
+                    paidDelta = paidDelta,
+                    outstandingDelta = outstandingDelta,
+                    updatedAt = EpochUtils.now(),
+                    id = job.clientId
                 )
 
                 // Delete existing items to handle updates cleanly
@@ -136,13 +174,57 @@ class JobRepositoryImpl(
         status: JobStatus
     ): Result<Unit, JobError> {
         return safeCall(JobError.UpdateFailed) {
-            karigojobsDatabase.jobQueries.updateJobStatus(id = id, status = status.name)
+            karigojobsDatabase.transaction {
+                val job = karigojobsDatabase.jobQueries.getJobById(id = id).executeAsOneOrNull()
+                if (job != null && job.status != status.name) {
+                    val isOldPaid = job.status == JobStatus.PAID.name
+                    val isNewPaid = status == JobStatus.PAID
+
+                    val revenueDelta = 0.0 // Status change doesn't change revenue
+                    val paidDelta = when {
+                        !isOldPaid && isNewPaid -> job.total
+                        isOldPaid && !isNewPaid -> -job.total
+                        else -> 0.0
+                    }
+                    val outstandingDelta = when {
+                        !isOldPaid && isNewPaid -> -job.total
+                        isOldPaid && !isNewPaid -> job.total
+                        else -> 0.0
+                    }
+
+                    karigojobsDatabase.clientQueries.adjustClientFinances(
+                        revenueDelta = revenueDelta,
+                        paidDelta = paidDelta,
+                        outstandingDelta = outstandingDelta,
+                        updatedAt = EpochUtils.now(),
+                        id = job.client_id
+                    )
+                }
+                karigojobsDatabase.jobQueries.updateJobStatus(id = id, status = status.name)
+            }
         }
     }
 
     override suspend fun deleteJob(id: String): Result<Unit, JobError> {
         return safeCall(JobError.DeleteFailed) {
-            karigojobsDatabase.jobQueries.deleteJob(id = id)
+            karigojobsDatabase.transaction {
+                val job = karigojobsDatabase.jobQueries.getJobById(id = id).executeAsOneOrNull()
+                if (job != null) {
+                    // 1. Decrement job count
+                    karigojobsDatabase.clientQueries.decrementJobCount(id = job.client_id)
+
+                    // 2. Adjust finances
+                    val isPaid = job.status == JobStatus.PAID.name
+                    karigojobsDatabase.clientQueries.adjustClientFinances(
+                        revenueDelta = -job.total,
+                        paidDelta = if (isPaid) -job.total else 0.0,
+                        outstandingDelta = if (!isPaid) -job.total else 0.0,
+                        updatedAt = EpochUtils.now(),
+                        id = job.client_id
+                    )
+                }
+                karigojobsDatabase.jobQueries.deleteJob(id = id)
+            }
         }
     }
 

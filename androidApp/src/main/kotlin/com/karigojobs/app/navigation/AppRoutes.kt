@@ -34,7 +34,7 @@ sealed class MainRoute {
     data class AddJobRoute(val jobId: String? = null) : MainRoute()
 
     @Serializable
-    data object ClientRoute
+    data object ClientListRoute
 
     @Serializable
     data object Materials
@@ -50,6 +50,9 @@ sealed class MainRoute {
 
     @Serializable
     data class EstimateDetailsRoute(val estimateId: String) : MainRoute()
+
+    @Serializable
+    data class ClientDetailsRoute(val clientId: String) : MainRoute()
 
     @Serializable
     data object SettingRoute
@@ -84,11 +87,11 @@ sealed class BottomNavRoute<T>(
 
     @Serializable
     data object Client :
-        BottomNavRoute<MainRoute.ClientRoute>(
+        BottomNavRoute<MainRoute.ClientListRoute>(
             name = "Client",
             unSelectedIcon = R.drawable.user_line,
             fillIcon = R.drawable.user_fill,
-            route = MainRoute.ClientRoute
+            route = MainRoute.ClientListRoute
         )
 
     @Serializable

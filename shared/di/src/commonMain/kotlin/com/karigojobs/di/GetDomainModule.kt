@@ -8,6 +8,7 @@ import com.karigojobs.domain.usecase.material.GetAllMaterialsUseCase
 import com.karigojobs.domain.usecase.job.GetJobDetailsUseCase
 import com.karigojobs.domain.usecase.onboarding.GetOnboardingStatusUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.domain.usecase.client.GetClientListUseCase
 import com.karigojobs.domain.usecase.client.GetClientUseCase
 import com.karigojobs.domain.usecase.client.InsertClientUseCase
 import com.karigojobs.domain.usecase.client.IsClientExistUseCase
@@ -63,6 +64,7 @@ fun getDomainModule() : Module = module {
     single { InsertClientUseCase(clientRepository = get()) }
     single { IsClientExistUseCase(clientRepository = get()) }
     single { GetClientUseCase(clientRepository = get()) }
+    single { GetClientListUseCase(clientRepository = get()) }
 
     single { AddNewSiteEstimateUseCase(estimateRepository = get()) }
     single { GetAllEstimateUseCase(estimateRepository = get()) }

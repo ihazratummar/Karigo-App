@@ -80,6 +80,9 @@ class ClientRepositoryImpl(
                 phone = clientModel.phone,
                 email = clientModel.email,
                 address = clientModel.address,
+                outstanding_balance = clientModel.outStandingBalance,
+                total_paid = clientModel.totalPaid,
+                total_revenue = clientModel.totalRevenue,
                 total_jobs = clientModel.totalJob.toLong(),
                 created_at = EpochUtils.now(),
                 updated_at = EpochUtils.now()

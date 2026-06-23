@@ -1,0 +1,5 @@
+-- Migration from version 0 to 1
+
+-- Add financial columns to client table
+ALTER TABLE client ADD COLUMN total_paid REAL NOT NULL DEFAULT 0.0;
+ALTER TABLE client ADD COLUMN total_revenue REAL NOT NULL DEFAULT 0.0;

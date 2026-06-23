@@ -2,7 +2,6 @@ package com.karigo.app.feature.siteEstimate.details
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -28,13 +27,9 @@ import com.karigojobs.presentation.estimate.details.EstimateDetailsEvent
 import com.karigojobs.presentation.estimate.details.EstimateDetailsState
 import com.karigojobs.ui.common.DeleteDialog
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
-import com.karigojobs.ui.common.KarigoMiddleTextTopAppBar
 import com.karigojobs.ui.common.KarigoTopAppBar
 import com.karigojobs.ui.common.contentHorizontalPadding
-import com.karigojobs.ui.theme.KarigojobsBorder
-import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
-import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
 
@@ -177,9 +172,6 @@ fun EstimateDetailsScreen(
                     }
                 }
             }
-
         }
-
     }
-
 }

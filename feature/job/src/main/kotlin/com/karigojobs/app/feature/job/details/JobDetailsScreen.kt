@@ -37,6 +37,7 @@ import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.KarigoMiddleTextTopAppBar
 import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsShapes
+import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
@@ -53,6 +54,7 @@ fun JobDetailsScreen(
     jobDetailsState: JobDetailsState,
     jobDetailsEffect: SharedFlow<JobDetailsEffect>?,
     onBackClick: () -> Unit,
+    onEditClick: (String) -> Unit,
     event: (JobDetailsIntent) -> Unit
 ) {
 
@@ -84,15 +86,29 @@ fun JobDetailsScreen(
                 onNavigationClick = { onBackClick() },
                 title = "Job Details",
                 action = {
-                    KarigoIconWIthBgCick(
-                        icon = R.drawable.delete,
-                        iconColor = MaterialTheme.colorScheme.error,
-                        iconBackGroundColor = Color.Transparent,
-                        isBorder = true,
-                        onClick = {
-                            event(JobDetailsIntent.DeletePopUpOpen(isOpen = true))
-                        }
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(-dimens.Space.sm)
+                    ) {
+
+                        KarigoIconWIthBgCick(
+                            icon = R.drawable.edit,
+                            iconColor = KarigojobsText3,
+                            size = dimens.Height.minTouch / 0.9f,
+                            onClick = {
+                                jobDetailsState.jobModel?.id?.let { onEditClick(it) }
+                            }
+                        )
+                        KarigoIconWIthBgCick(
+                            icon = R.drawable.delete,
+                            iconColor = MaterialTheme.colorScheme.error,
+                            iconBackGroundColor = Color.Transparent,
+                            isBorder = true,
+                            onClick = {
+                                event(JobDetailsIntent.DeletePopUpOpen(isOpen = true))
+                            }
+                        )
+                    }
                 }
             )
         }

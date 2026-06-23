@@ -49,7 +49,7 @@ fun NavGraphBuilder.contentNavigation(
                     navHostController.navigate(MainRoute.NotificationRoute)
                 },
                 onFabClick = {
-                    navHostController.navigate(MainRoute.AddJobRoute)
+                    navHostController.navigate(MainRoute.AddJobRoute())
                 },
                 onSeeAllJobClick = {
                     navHostController.navigate(MainRoute.JobsRoute) {
@@ -74,8 +74,11 @@ fun NavGraphBuilder.contentNavigation(
             )
         }
 
-        composable<MainRoute.AddJobRoute> {
-            val viewModel = koinViewModel<AddJobViewModel>()
+        composable<MainRoute.AddJobRoute> { backStackEntry ->
+            val route = backStackEntry.toRoute<MainRoute.AddJobRoute>()
+            val viewModel = koinViewModel<AddJobViewModel>(
+                parameters = { parametersOf(route.jobId) }
+            )
             val state by viewModel.addJobState.collectAsStateWithLifecycle()
             JobCreateScreen(
                 addJobState = state,
@@ -100,6 +103,9 @@ fun NavGraphBuilder.contentNavigation(
                 jobDetailsEffect = viewModel.effect,
                 onBackClick = {
                     navHostController.popBackStack()
+                },
+                onEditClick = { jobId ->
+                    navHostController.navigate(MainRoute.AddJobRoute(jobId = jobId))
                 },
                 event = viewModel::onEven
             )

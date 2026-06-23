@@ -39,11 +39,11 @@ import com.karigojobs.ui.theme.dimens
 @Composable
 fun CanSaveButton(
     onAction: () -> Unit,
-    canSave: Boolean
+    canSave: Boolean,
+    text: String = "Save"
 ){
     Box(
         modifier = Modifier
-            .size(dimens.Space._4xl)
             .padding(vertical = dimens.Space._2md)
             .clip(KarigojobsShapes.medium)
             .background(
@@ -53,7 +53,7 @@ fun CanSaveButton(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Save",
+            text = text,
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = if (canSave) MaterialTheme.colorScheme.primary else NavInactive
             ),

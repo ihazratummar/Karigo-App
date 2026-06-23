@@ -97,12 +97,14 @@ fun JobCreateScreen(
         topBar = {
             KarigoMiddleTextTopAppBar(
                 onNavigationClick = onBackClick,
+                title = if (addJobState.jobId == null) "New Job" else "Edit Job",
                 action = {
                     CanSaveButton(
                         onAction = {
                             onIntent(AddJobIntent.SaveJob)
                         },
-                        canSave = addJobState.canContinue
+                        canSave = addJobState.canContinue,
+                        text = if (addJobState.jobId == null) "Save" else "Update"
                     )
                 }
             )

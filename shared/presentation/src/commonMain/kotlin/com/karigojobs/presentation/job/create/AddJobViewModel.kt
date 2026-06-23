@@ -6,8 +6,12 @@ import com.karigojobs.domain.repository.DeviceContactProvider
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.material.GetAllMaterialsUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.domain.usecase.client.GetClientUseCase
 import com.karigojobs.domain.usecase.client.InsertClientUseCase
 import com.karigojobs.domain.usecase.client.IsClientExistUseCase
+import com.karigojobs.domain.usecase.job.GetJobDetailsUseCase
+import com.karigojobs.domain.usecase.job.GetJobLabourItemUseCase
+import com.karigojobs.domain.usecase.job.GetJobMaterialItemsUseCase
 import com.karigojobs.domain.usecase.job.SaveFullJobTransactionUseCase
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.job.create.AddJobEffect.ShowError
@@ -36,18 +40,23 @@ import kotlin.uuid.Uuid
  */
 
 class AddJobViewModel(
+    private val jobId: String? = null,
     private val deviceContactProvider: DeviceContactProvider,
     private val saveFullJobTransactionUseCase: SaveFullJobTransactionUseCase,
     private val isClientExistUseCase: IsClientExistUseCase,
     private val insertClientUseCase: InsertClientUseCase,
     private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase,
-    private val getAllMaterialUseCase: GetAllMaterialsUseCase
+    private val getAllMaterialUseCase: GetAllMaterialsUseCase,
+    private val getJobDetailsUseCase: GetJobDetailsUseCase,
+    private val getJobLabourItemUseCase: GetJobLabourItemUseCase,
+    private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase,
+    private val getClientUseCase: GetClientUseCase
 ) : ViewModel() {
 
     @OptIn(ExperimentalUuidApi::class)
-    private val draftJobId = Uuid.random().toString()
+    private val draftJobId = jobId ?: Uuid.random().toString()
 
-    private val _state = MutableStateFlow(AddJobState())
+    private val _state = MutableStateFlow(AddJobState(jobId = jobId))
     val addJobState: StateFlow<AddJobState> = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<AddJobEffect>(replay = 0)
@@ -57,6 +66,68 @@ class AddJobViewModel(
     init {
         loadSelectedTradeType()
         loadMaterials()
+        if (jobId != null) {
+            loadExistingJob()
+        }
+    }
+
+    private fun loadExistingJob() {
+        if (jobId == null) return
+
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            getJobDetailsUseCase(jobId).collectLatest { result ->
+                when (result) {
+                    is Result.Success -> {
+                        val job = result.data ?: return@collectLatest
+                        _state.update {
+                            it.copy(
+                                title = job.title,
+                                selectedTradeType = job.tradeType,
+                                status = job.status
+                            )
+                        }
+
+                        // Load full client details
+                        val clientResult = getClientUseCase(job.clientId)
+                        if (clientResult is Result.Success) {
+                            _state.update { it.copy(selectedClient = clientResult.data) }
+                        } else {
+                            _state.update {
+                                it.copy(
+                                    selectedClient = ClientModel(
+                                        id = job.clientId,
+                                        name = job.clientName,
+                                        phone = "",
+                                        email = "",
+                                        address = ""
+                                    )
+                                )
+                            }
+                        }
+                    }
+                    is Result.Error -> {
+                        _effect.emit(ShowError(result.error.asString()))
+                    }
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            getJobLabourItemUseCase(jobId).collectLatest { result ->
+                if (result is Result.Success) {
+                    _state.update { it.copy(labourItems = result.data) }
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            getJobMaterialItemsUseCase(jobId).collectLatest { result ->
+                if (result is Result.Success) {
+                    _state.update { it.copy(selectedMaterials = result.data, isLoading = false) }
+                }
+            }
+        }
     }
 
     private fun loadContacts() {
@@ -312,7 +383,7 @@ class AddJobViewModel(
                             clientName = _state.value.selectedClient?.name ?: "",
                             title = _state.value.title,
                             description = _state.value.title,
-                            status = JobStatus.PENDING,
+                            status = _state.value.status,
                             tradeType = _state.value.selectedTradeType ?: TradeType.PLUMBER,
                             materialTotal = _state.value.materialTotal,
                             total = _state.value.grandTotal,

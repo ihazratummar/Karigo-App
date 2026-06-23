@@ -97,10 +97,15 @@ class JobRepositoryImpl(
                     created_at = EpochUtils.now(),
                     updated_at = EpochUtils.now(),
                 )
+
+                // Delete existing items to handle updates cleanly
+                karigojobsDatabase.jobLabourItemQueries.deleteLabourItemByJob(job_id = job.id)
+                karigojobsDatabase.jobMaterialQueries.deleteJobMaterialByJob(job_id = job.id)
+
                 jobLabourItemModel.forEach { itemModel ->
                     karigojobsDatabase.jobLabourItemQueries.insertLabourItemsByJob(
-                        id = itemModel.id,
-                        job_id = itemModel.jobId,
+                        id = if (itemModel.id.isBlank() || itemModel.id.length < 5) UuidGenerator.generate() else itemModel.id,
+                        job_id = job.id,
                         description = itemModel.itemName,
                         quantity = itemModel.quantity,
                         rate = itemModel.rate,
@@ -111,8 +116,8 @@ class JobRepositoryImpl(
 
                 jobMaterialItemModel.forEach { material ->
                     karigojobsDatabase.jobMaterialQueries.insertJobMaterial(
-                        id = material.id,
-                        job_id = material.jobId,
+                        id = if (material.id.isBlank() || material.id.length < 5) UuidGenerator.generate() else material.id,
+                        job_id = job.id,
                         material_id = material.materialId,
                         name = material.name,
                         unit = material.unit,

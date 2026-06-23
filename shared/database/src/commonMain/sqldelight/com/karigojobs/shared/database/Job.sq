@@ -45,7 +45,7 @@ SELECT COUNT(*) FROM job WHERE created_at >= ? AND created_at < ?;
 ---------- WRITE -----------
 
 insertJob:
-INSERT INTO job(id, client_id, title, decription, status, trade_type,  material_total,
+INSERT OR REPLACE INTO job(id, client_id, title, decription, status, trade_type,  material_total,
 total, notes, job_date, created_at, updated_at)
 VALUES (?,?,?,?,?, ?, ?,?,?,?,?,?);
 

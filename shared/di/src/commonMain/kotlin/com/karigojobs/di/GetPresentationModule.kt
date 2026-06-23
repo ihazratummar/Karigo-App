@@ -23,7 +23,21 @@ import org.koin.dsl.module
 fun getPresentationModule(): Module = module {
     viewModelOf(::OnboardingViewModel)
     viewModelOf(::HomeViewModel)
-    viewModelOf(::AddJobViewModel)
+    viewModel { (jobId: String?) ->
+        AddJobViewModel(
+            jobId = jobId,
+            deviceContactProvider = get(),
+            saveFullJobTransactionUseCase = get(),
+            isClientExistUseCase = get(),
+            insertClientUseCase = get(),
+            getSelectedTradeTypeUseCase = get(),
+            getAllMaterialUseCase = get(),
+            getJobDetailsUseCase = get(),
+            getJobLabourItemUseCase = get(),
+            getJobMaterialItemsUseCase = get(),
+            getClientUseCase = get()
+        )
+    }
     viewModelOf(::JobListViewModel)
     viewModelOf(::MaterialListViewModel)
     viewModel { (estimateId: String?) ->

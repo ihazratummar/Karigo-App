@@ -4,6 +4,7 @@ import com.karigojobs.domain.repository.DeviceContact
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
+import com.karigojobs.share.model.JobStatus
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 
@@ -15,6 +16,7 @@ import com.karigojobs.share.model.TradeType
 
 
 data class AddJobState(
+    val jobId: String? = null,
     val isLoading: Boolean = false,
 
     // Job Details
@@ -24,6 +26,7 @@ data class AddJobState(
     val tradeTypes: List<TradeType> = emptyList(),
     val selectedTradeType: TradeType? = null,
     val title: String = "",
+    val status: JobStatus = JobStatus.PENDING,
     val isClientPickerModalOpen : Boolean = false,
 
     // Labour Mode: Per Item vs Hours

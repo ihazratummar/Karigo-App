@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 interface ClientRepository {
 
     fun getAllClients(): Flow<Result<List<ClientModel>, ClientError>>
+    fun getClient(clientId: String) : Flow<Result<ClientModel?, ClientError>>
     suspend fun getClientById(id: String): Result<ClientModel?, ClientError>
     suspend fun getClientByMobile(mobile: String): Result<ClientModel?, ClientError>
     fun searchClients(query: String): Flow<Result<List<ClientModel>, ClientError>>

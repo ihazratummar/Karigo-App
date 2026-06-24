@@ -13,3 +13,19 @@ fun String.toInitials(): String {
         .map { it.first().uppercaseChar() }
         .joinToString("")
 }
+
+fun String?.firstName(): String {
+    return this
+        ?.trim()
+        ?.takeIf { it.isNotBlank() }
+        ?.substringBefore(" ")
+        ?: ""
+}
+
+fun Double.formatNumber() : String {
+    return if (this % 1.0 == 0.0) {
+        this.toInt().toString()
+    }else{
+        this.toString()
+    }
+}

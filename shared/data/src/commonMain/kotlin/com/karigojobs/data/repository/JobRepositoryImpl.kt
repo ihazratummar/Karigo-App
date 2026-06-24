@@ -4,8 +4,10 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.karigojobs.data.dto.toActiveModelList
-import com.karigojobs.data.dto.toIdModel
-import com.karigojobs.data.dto.toModelList
+import com.karigojobs.data.dto.toJobByIdModel
+import com.karigojobs.data.dto.toAllJobModelList
+import com.karigojobs.data.dto.toJobLabourModelList
+import com.karigojobs.data.dto.toJobListModel
 import com.karigojobs.data.dto.toModelListJobMaterial
 import com.karigojobs.data.dto.toSearchModelList
 import com.karigojobs.data.safeCall
@@ -41,7 +43,7 @@ class JobRepositoryImpl(
             .asFlow()
             .mapToList(ioDispatcher)
             .map { jobs ->
-                Result.Success(jobs.toModelList()) as Result<List<JobModel>, JobError>
+                Result.Success(jobs.toAllJobModelList()) as Result<List<JobModel>, JobError>
             }.catch {
                 emit(Result.Error(JobError.NotFound))
             }
@@ -72,7 +74,7 @@ class JobRepositoryImpl(
             .asFlow()
             .mapToOneOrNull(ioDispatcher)
             .map {job ->
-                Result.Success(job?.toIdModel())
+                Result.Success(job?.toJobByIdModel())
             }
 
     }
@@ -94,6 +96,7 @@ class JobRepositoryImpl(
                     status = job.status.name,
                     trade_type = job.tradeType.name,
                     material_total = job.materialTotal,
+                    total_items = jobLabourItemModel.size.toLong() + jobMaterialItemModel.size.toLong(),
                     total = job.total,
                     notes = job.notes,
                     job_date = job.jobDate,
@@ -234,7 +237,7 @@ class JobRepositoryImpl(
             .asFlow()
             .mapToList(ioDispatcher)
             .map { items ->
-                Result.Success(items.toModelList()) as Result<List<JobLabourItemModel>, JobError>
+                Result.Success(items.toJobLabourModelList()) as Result<List<JobLabourItemModel>, JobError>
             }.catch {
                 emit(Result.Error(JobError.Database))
             }
@@ -306,5 +309,17 @@ class JobRepositoryImpl(
         return safeCall(JobError.Database) {
             karigojobsDatabase.jobMaterialQueries.deleteJobMaterial(id = itemId)
         }
+    }
+
+    override fun getJobByClient(clientId: String): Flow<Result<List<JobModel>, JobError>> {
+        return karigojobsDatabase.jobQueries
+            .getJobByClient(client_id = clientId)
+            .asFlow()
+            .mapToList(ioDispatcher)
+            .map { jobs ->
+                Result.Success(jobs.toJobListModel())
+            }.catch {
+                Result.Error(JobError.NotFound)
+            }
     }
 }

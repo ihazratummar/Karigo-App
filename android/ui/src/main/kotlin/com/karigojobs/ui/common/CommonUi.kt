@@ -93,6 +93,7 @@ import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText
 import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.KarigojobsThemePreview
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.NavInactive
@@ -142,7 +143,7 @@ fun KarigoTopAppBar(
                 TopBarTitle(title = title)
             },
             navigationIcon = {
-                if (isNavBack){
+                if (isNavBack) {
                     KarigoIconWIthBgCick(onClick = onNavigationClick)
                 }
             },
@@ -282,8 +283,8 @@ fun KarigojobsTextField(
     placeholder: String = "Search Client...",
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
-    maxLines : Int = 1,
-    minLines : Int = 1
+    maxLines: Int = 1,
+    minLines: Int = 1
 ) {
 
     var isFocused by remember { mutableStateOf(false) }
@@ -417,7 +418,7 @@ fun CounterControl(
     iconColor: Color = MaterialTheme.colorScheme.primary,
     iconBackGroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
     onClick: () -> Unit = {},
-    size : Dp = dimens.Height.minTouch
+    size: Dp = dimens.Height.minTouch
 ) {
     val iconSize = size * 0.45f
     Box(
@@ -443,7 +444,7 @@ fun CounterControl(
 @Composable
 fun MinusButton(
     onClick: () -> Unit = {},
-    size : Dp = dimens.Height.minTouch
+    size: Dp = dimens.Height.minTouch
 ) {
     CounterControl(
         icon = R.drawable.substract,
@@ -457,7 +458,7 @@ fun MinusButton(
 @Composable
 fun PlusButton(
     onClick: () -> Unit = {},
-    size : Dp = dimens.Height.minTouch
+    size: Dp = dimens.Height.minTouch
 ) {
     CounterControl(
         icon = R.drawable.add,
@@ -599,7 +600,8 @@ data class ColorPalate(
 fun JobCard(
     modifier: Modifier = Modifier,
     job: JobModel,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isClientJob: Boolean = false
 ) {
     Card(
         onClick = onClick,
@@ -639,12 +641,21 @@ fun JobCard(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
-                    Text(
-                        text = job.clientName,
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    if (isClientJob) {
+                        Text(
+                            text = job.createdAt.toReadableDate(),
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
                         )
-                    )
+                    } else {
+                        Text(
+                            text = job.clientName,
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        )
+                    }
                 }
                 Box(
                     modifier = Modifier
@@ -675,14 +686,30 @@ fun JobCard(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
             ) {
-                Text(
-                    text = job.createdAt.toReadableDate(),
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                if (isClientJob) {
+                    Icon(
+                        painter = painterResource(R.drawable.stack),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(dimens.Icon._2xs)
                     )
-                )
+                    Text(
+                        text = "${job.totalItems} items",
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    )
+                } else {
+                    Text(
+                        text = job.createdAt.toReadableDate(),
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    )
+                }
+                Spacer(Modifier.weight(1f))
                 Text(
                     text = "${deviceInfo.currency}${job.total}",
                     style = MaterialTheme.typography.bodyMedium.copy(
@@ -1011,7 +1038,7 @@ fun KarigoDataPicker(
             containerColor = KarigojobsCard
         ),
 
-    ) {
+        ) {
 
         Row(
             modifier = Modifier
@@ -1125,7 +1152,6 @@ fun KarigoDatePickerSheet(
 }
 
 
-
 @Composable
 fun SpringToggle(
     checked: Boolean,
@@ -1160,7 +1186,7 @@ fun SpringToggle(
                 value = checked,
                 role = Role.Switch,
                 onValueChange = onCheckedChange
-            ).let{
+            ).let {
                 if (!checked) it.border(
                     width = dimens.Border.thin,
                     color = MaterialTheme.colorScheme.onBackground,
@@ -1176,5 +1202,50 @@ fun SpringToggle(
                 .clip(CircleShape)
                 .background(Color.White)
         )
+    }
+}
+
+
+@Composable
+fun CommunicationButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    buttonColor: Color,
+    contentColor: Color,
+    icon: Int,
+    buttonText: String
+) {
+    Button(
+        modifier = modifier,
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = buttonColor,
+            contentColor = contentColor
+        ),
+        border = BorderStroke(
+            width = dimens.Border.thin,
+            color = MaterialTheme.colorScheme.onBackground
+        ),
+        shape = KarigojobsShapes.medium
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                painter = painterResource(icon),
+                contentDescription = null,
+                tint = contentColor,
+                modifier = Modifier.size(dimens.Icon._2xs)
+            )
+            Spacer(Modifier.width(dimens.Space.sm))
+            Text(
+                text = buttonText,
+                style = MaterialTheme.typography.labelSmall.copy(
+                    color = contentColor
+                )
+            )
+        }
     }
 }

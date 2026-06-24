@@ -1,7 +1,7 @@
 package com.karigojobs.data.dto
 
 import com.karigojobs.share.model.JobLabourItemModel
-import com.karigojobs.shared.database.Job_labour_item
+import com.karigojobs.shared.database.tables.Job_labour_item
 
 
 /**
@@ -10,7 +10,7 @@ import com.karigojobs.shared.database.Job_labour_item
  */
  
 
-fun Job_labour_item.toModel() : JobLabourItemModel {
+fun Job_labour_item.toJobMaterialModel() : JobLabourItemModel {
     return JobLabourItemModel(
         id = id,
         jobId = job_id,
@@ -22,6 +22,6 @@ fun Job_labour_item.toModel() : JobLabourItemModel {
     )
 }
 
-fun List<Job_labour_item>.toModelList() : List<JobLabourItemModel> {
-    return this.map { it.toModel() }
+fun List<Job_labour_item>.toJobLabourModelList() : List<JobLabourItemModel> {
+    return this.map { it.toJobMaterialModel() }
 }

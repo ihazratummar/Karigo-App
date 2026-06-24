@@ -1,6 +1,5 @@
-package com.karigojobs.feature.client
+package com.karigojobs.feature.client.list
 
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +24,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -38,10 +36,8 @@ import com.karigojobs.presentation.client.list.ClientListEffect
 import com.karigojobs.presentation.client.list.ClientListEvent
 import com.karigojobs.presentation.client.list.ClientListState
 import com.karigojobs.ui.common.KarigoTopAppBar
-import com.karigojobs.ui.common.TopBarTitle
 import com.karigojobs.ui.common.contentHorizontalPadding
 import com.karigojobs.ui.theme.KarigojobsAccent
-import com.karigojobs.ui.theme.KarigojobsBorder
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsError
 import com.karigojobs.ui.theme.KarigojobsShapes
@@ -108,7 +104,7 @@ fun ClientListScreen(
         ) {
             items(state.clients) { client ->
                 Card(
-                    onClick = {  },
+                    onClick = { onClientClick(client.id) },
                     colors = CardDefaults.cardColors(
                         containerColor = KarigojobsCard
                     ),
@@ -195,7 +191,7 @@ fun ClientListScreen(
                                 modifier = Modifier.size(dimens.Icon._2xs)
                             )
                             Text(
-                                text = client.totalJob.toString(),
+                                text = "${client.totalJob} jobs",
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = KarigojobsText3
                                 )
@@ -208,7 +204,7 @@ fun ClientListScreen(
                                 modifier = Modifier.size(dimens.Icon._2xs)
                             )
                             Text(
-                                text = "${deviceInfo.currency} ${client.totalRevenue}",
+                                text = "${deviceInfo.currency} ${client.totalRevenue} billed",
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = KarigojobsText3
                                 )
@@ -216,6 +212,9 @@ fun ClientListScreen(
                         }
                     }
                 }
+            }
+            item {
+                Spacer(Modifier.height(dimens.Padding.screenV))
             }
         }
     }

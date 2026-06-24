@@ -31,10 +31,12 @@ sealed class MainRoute {
     data class JobDetailsRoute(val jobId: String) : MainRoute()
 
     @Serializable
-    data class AddJobRoute(val jobId: String? = null) : MainRoute()
+    data class AddJobRoute(val jobId: String? = null, val clientId : String ? = null) : MainRoute()
 
     @Serializable
     data object ClientListRoute
+    @Serializable
+    data class ClientDetailsRoute(val clientId: String) : MainRoute()
 
     @Serializable
     data object Materials
@@ -51,8 +53,7 @@ sealed class MainRoute {
     @Serializable
     data class EstimateDetailsRoute(val estimateId: String) : MainRoute()
 
-    @Serializable
-    data class ClientDetailsRoute(val clientId: String) : MainRoute()
+
 
     @Serializable
     data object SettingRoute

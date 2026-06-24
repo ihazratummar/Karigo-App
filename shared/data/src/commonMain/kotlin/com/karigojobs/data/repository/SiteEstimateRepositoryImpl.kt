@@ -87,6 +87,7 @@ class SiteEstimateRepositoryImpl(
                     show_rate = siteEstimateModel.showRate,
                     total = siteEstimateModel.total,
                     create_at = EpochUtils.now(),
+                    total_items = siteEstimateModel.totalItems,
                     updated_at = EpochUtils.now()
                 )
 
@@ -120,6 +121,7 @@ class SiteEstimateRepositoryImpl(
                     site_notes = siteEstimateModel.siteNote,
                     show_rate = siteEstimateModel.showRate,
                     total = siteEstimateModel.total,
+                    total_items =siteEstimateModel.totalItems,
                     updated_at = EpochUtils.now(),
                     id = siteEstimateModel.id
                 )

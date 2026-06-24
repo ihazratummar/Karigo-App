@@ -38,4 +38,6 @@ interface JobRepository {
     fun getMaterials(jobId: String): Flow<Result<List<JobMaterialItemModel>, JobError>>
     suspend fun addMaterial(item: JobMaterialItemModel) : Result<Unit, JobError>
     suspend fun removeMaterial(itemId: String) : Result<Unit, JobError>
+
+    fun getJobByClient(clientId: String) : Flow<Result<List<JobModel>, JobError>>
 }

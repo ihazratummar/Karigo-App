@@ -2,8 +2,8 @@ package com.karigojobs.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.karigojobs.data.dto.toDomain
-import com.karigojobs.data.dto.toDomainList
+import com.karigojobs.data.dto.toMaterialDomain
+import com.karigojobs.data.dto.toMaterialDomainList
 import com.karigojobs.data.safeCall
 import com.karigojobs.domain.repository.MaterialRepository
 import com.karigojobs.domain.result.MaterialError
@@ -68,7 +68,7 @@ class MaterialRepositoryImpl(
             .asFlow()
             .mapToList(ioDispatcher)
             .map { materials ->
-                Result.Success(materials.toDomainList())
+                Result.Success(materials.toMaterialDomainList())
             }.catch {
                 Result.Error(MaterialError.DatabaseError)
             }
@@ -88,7 +88,7 @@ class MaterialRepositoryImpl(
             .asFlow()
             .mapToList(ioDispatcher)
             .map { materials ->
-                Result.Success(materials.toDomainList())
+                Result.Success(materials.toMaterialDomainList())
             }.catch {
                 Result.Error(MaterialError.DatabaseError)
             }
@@ -98,7 +98,7 @@ class MaterialRepositoryImpl(
         return safeCall(MaterialError.DatabaseError) {
             database.materialQueries.selectMaterialById(id = id)
                 .executeAsOneOrNull()
-                ?.toDomain()
+                ?.toMaterialDomain()
         }
     }
 

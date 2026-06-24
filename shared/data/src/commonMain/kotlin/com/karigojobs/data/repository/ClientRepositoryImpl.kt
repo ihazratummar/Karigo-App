@@ -2,8 +2,10 @@ package com.karigojobs.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.karigojobs.data.dto.toModel
-import com.karigojobs.data.dto.toModelList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
+import com.karigojobs.data.dto.toClientModel
+import com.karigojobs.data.dto.toJobMaterialModel
+import com.karigojobs.data.dto.toJobLabourModelList
 import com.karigojobs.data.safeCall
 import com.karigojobs.domain.repository.ClientRepository
 import com.karigojobs.domain.result.ClientError
@@ -11,14 +13,9 @@ import com.karigojobs.domain.result.Result
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.shared.database.EpochUtils
 import com.karigojobs.shared.database.KarigojobsDatabase
-import com.karigojobs.shared.database.UuidGenerator
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
 
@@ -38,7 +35,18 @@ class ClientRepositoryImpl(
             .asFlow()
             .mapToList(ioDispatcher)
             .map { clients ->
-                Result.Success(clients.toModelList())
+                Result.Success(clients.toJobLabourModelList())
+            }.catch {
+                Result.Error(ClientError.Database)
+            }
+    }
+
+    override fun getClient(clientId: String): Flow<Result<ClientModel?, ClientError>> {
+        return database.clientQueries.getClientById(id = clientId)
+            .asFlow()
+            .mapToOneOrNull(ioDispatcher)
+            .map { client ->
+                Result.Success(client?.toClientModel())
             }.catch {
                 Result.Error(ClientError.Database)
             }
@@ -48,7 +56,7 @@ class ClientRepositoryImpl(
         return safeCall(ClientError.Database){
             database.clientQueries
                 .getClientById(id = id)
-                .executeAsOneOrNull()?.toModel()
+                .executeAsOneOrNull()?.toClientModel()
         }
     }
 
@@ -56,7 +64,7 @@ class ClientRepositoryImpl(
         return safeCall(ClientError.Database){
             database.clientQueries
                 .getClientByPhone(phone = mobile)
-                .executeAsOneOrNull()?.toModel()
+                .executeAsOneOrNull()?.toClientModel()
         }
     }
 
@@ -66,7 +74,7 @@ class ClientRepositoryImpl(
             .asFlow()
             .mapToList(ioDispatcher)
             .map { clients ->
-                Result.Success(clients.toModelList())
+                Result.Success(clients.toJobLabourModelList())
             }.catch {
                 Result.Error(ClientError.Database)
             }

@@ -7,6 +7,7 @@ CREATE TABLE site_estimate (
     date INTEGER NOT NULL,
     site_notes TEXT,
     show_rate INTEGER AS Boolean NOT NULL DEFAULT 0,
+    total_items REAL NOT NULL DEFAULT 0,
     total REAL,
     create_at INTEGER NOT NULL,
     updated_at INTEGER NOT NULL
@@ -24,8 +25,8 @@ SELECT site_estimate.*, client.name AS client_name FROM site_estimate INNER JOIN
 WHERE site_estimate.id = :id;
 
 insertEstimate:
-INSERT INTO site_estimate(id, client_id, project_title, date, site_notes, show_rate, total, create_at, updated_at)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO site_estimate(id, client_id, project_title, date, site_notes, show_rate, total_items,  total, create_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?);
 
 deleteEstimate:
 DELETE FROM site_estimate
@@ -43,6 +44,7 @@ SET
     site_notes = ?,
     show_rate = ?,
     total = ?,
+    total_items = ?,
     updated_at = ?
 WHERE id = ?;
 

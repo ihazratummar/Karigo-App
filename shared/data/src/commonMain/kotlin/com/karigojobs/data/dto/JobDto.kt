@@ -4,11 +4,12 @@ import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
 import com.karigojobs.share.model.TradeType
-import com.karigojobs.shared.database.GetActiveJobs
-import com.karigojobs.shared.database.GetAllJobs
-import com.karigojobs.shared.database.GetJobById
-import com.karigojobs.shared.database.SearchJobs
-import com.karigojobs.shared.database.Job_material
+import com.karigojobs.shared.database.tables.GetActiveJobs
+import com.karigojobs.shared.database.tables.GetAllJobs
+import com.karigojobs.shared.database.tables.GetJobById
+import com.karigojobs.shared.database.tables.Job
+import com.karigojobs.shared.database.tables.Job_material
+import com.karigojobs.shared.database.tables.SearchJobs
 
 
 /**
@@ -17,7 +18,30 @@ import com.karigojobs.shared.database.Job_material
  */
 
 
-fun GetAllJobs.toModel(): JobModel {
+
+fun Job.toJobModel() : JobModel {
+    return JobModel(
+        id = id,
+        clientId = client_id,
+        clientName = "",
+        title = title,
+        description = decription,
+        status = JobStatus.valueOf(status),
+        tradeType = TradeType.valueOf(trade_type),
+        materialTotal = material_total,
+        total = total,
+        totalItems = total_items.toInt(),
+        notes = notes,
+        jobDate = job_date,
+        createdAt = created_at
+    )
+}
+
+fun List<Job>.toJobListModel() : List<JobModel> {
+    return this.map { it.toJobModel() }
+}
+
+fun GetAllJobs.toAllJobModel(): JobModel {
     return JobModel(
         id = this.id,
         clientId = this.client_id,
@@ -27,6 +51,7 @@ fun GetAllJobs.toModel(): JobModel {
         status = JobStatus.valueOf(this.status),
         tradeType = TradeType.valueOf( this.trade_type),
         materialTotal = this.material_total,
+        totalItems = this.total_items.toInt(),
         total = this.total,
         notes = this.notes,
         jobDate = this.job_date,
@@ -34,11 +59,11 @@ fun GetAllJobs.toModel(): JobModel {
     )
 }
 
-fun List<GetAllJobs>.toModelList() : List<JobModel> {
-    return this.map { it.toModel()}
+fun List<GetAllJobs>.toAllJobModelList() : List<JobModel> {
+    return this.map { it.toAllJobModel()}
 }
 
-fun SearchJobs.toSearchModel(): JobModel {
+fun SearchJobs.toAllJobModel(): JobModel {
     return JobModel(
         id = this.id,
         clientId = this.client_id,
@@ -56,10 +81,10 @@ fun SearchJobs.toSearchModel(): JobModel {
 }
 
 fun List<SearchJobs>.toSearchModelList() : List<JobModel> {
-    return this.map { it.toSearchModel()}
+    return this.map { it.toAllJobModel()}
 }
 
-fun GetActiveJobs.toActiveModel() : JobModel {
+fun GetActiveJobs.toAllJobModel() : JobModel {
     return JobModel(
         id = this.id,
         clientId = this.client_id,
@@ -79,11 +104,11 @@ fun GetActiveJobs.toActiveModel() : JobModel {
 
 
 fun List<GetActiveJobs>.toActiveModelList() : List<JobModel> {
-    return this.map { it.toActiveModel()}
+    return this.map { it.toAllJobModel()}
 }
 
 
-fun GetJobById.toIdModel() : JobModel {
+fun GetJobById.toJobByIdModel() : JobModel {
     return JobModel(
         id = this.id,
         clientId = this.client_id,
@@ -101,7 +126,7 @@ fun GetJobById.toIdModel() : JobModel {
 }
 
 
-fun Job_material.toModel() : JobMaterialItemModel {
+fun Job_material.toJobMaterialModel() : JobMaterialItemModel {
     return JobMaterialItemModel(
         id = id,
         jobId = job_id,
@@ -114,5 +139,5 @@ fun Job_material.toModel() : JobMaterialItemModel {
     )
 }
 fun List<Job_material>.toModelListJobMaterial() : List<JobMaterialItemModel>{
-    return this.map { it.toModel() }
+    return this.map { it.toJobMaterialModel() }
 }

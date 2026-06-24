@@ -2,10 +2,9 @@ package com.karigojobs.data.dto
 
 import com.karigojobs.share.model.SiteEstimateMaterial
 import com.karigojobs.share.model.SiteEstimateModel
-import com.karigojobs.shared.database.EpochUtils
-import com.karigojobs.shared.database.Estimate_materials
-import com.karigojobs.shared.database.GetAllEstimate
-import com.karigojobs.shared.database.GetEstimateById
+import com.karigojobs.shared.database.tables.Estimate_materials
+import com.karigojobs.shared.database.tables.GetAllEstimate
+import com.karigojobs.shared.database.tables.GetEstimateById
 
 
 /**
@@ -23,6 +22,7 @@ fun GetAllEstimate.toEstimateModel(): SiteEstimateModel {
         clientName = client_name,
         date = date,
         showRate = show_rate,
+        totalItems = total_items,
         total = total,
         createAt = create_at
     )
@@ -42,6 +42,7 @@ fun GetEstimateById.toOneEstimateModel() : SiteEstimateModel {
         clientName = client_name,
         date = date,
         showRate = show_rate,
+        totalItems = total_items,
         total = total,
         createAt = create_at
     )

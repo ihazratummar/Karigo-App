@@ -10,6 +10,7 @@ data class JobModel(
     val tradeType: TradeType,
     val materialTotal: Double,
     val total: Double,
+    val totalItems: Int = 0,
     val notes: String,
     val jobDate: Long = 0L,
     val createdAt: Long = 0L

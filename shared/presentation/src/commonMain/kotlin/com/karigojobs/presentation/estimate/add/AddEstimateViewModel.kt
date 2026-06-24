@@ -332,6 +332,7 @@ class AddEstimateViewModel(
                         clientName = _state.value.selectedClient?.name ?: "",
                         date = _state.value.selectedDate,
                         showRate = _state.value.isRateVisible,
+                        totalItems = _state.value.selectedMaterials.size.toDouble(),
                         total = _state.value.materialsTotal
                     )
                     

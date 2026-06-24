@@ -1,5 +1,6 @@
 package com.karigojobs.di
 
+import com.karigojobs.presentation.client.details.ClientDetailsViewModel
 import com.karigojobs.presentation.client.list.ClientListViewModel
 import com.karigojobs.presentation.dashboard.HomeViewModel
 import com.karigojobs.presentation.estimate.add.AddEstimateViewModel
@@ -29,9 +30,10 @@ fun getPresentationModule(): Module = module {
     viewModelOf(::EstimateListViewModel)
     viewModelOf(::ClientListViewModel)
 
-    viewModel { (jobId: String?) ->
+    viewModel { (jobId: String?, clientId: String?) ->
         AddJobViewModel(
             jobId = jobId,
+            clientId = clientId,
             deviceContactProvider = get(),
             saveFullJobTransactionUseCase = get(),
             isClientExistUseCase = get(),
@@ -77,6 +79,15 @@ fun getPresentationModule(): Module = module {
             getEstimateByIdUseCase = get(),
             getEstimateMaterialsUseCase = get(),
             deleteEstimateUseCase = get(),
+        )
+    }
+
+    viewModel { (clientId: String) ->
+        ClientDetailsViewModel(
+            clientId = clientId,
+            getClientUseCase = get(),
+            getJobByClientUseCase = get(),
+            deleteClientUseCase = get()
         )
     }
 

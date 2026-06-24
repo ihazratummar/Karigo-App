@@ -16,7 +16,9 @@ import com.karigojobs.app.feature.homeScreen.HomeScreen
 import com.karigojobs.app.feature.job.create.JobCreateScreen
 import com.karigojobs.app.feature.job.details.JobDetailsScreen
 import com.karigojobs.app.feature.job.joblist.JobListScreen
-import com.karigojobs.feature.client.ClientListScreen
+import com.karigojobs.feature.client.details.ClientDetailsScreen
+import com.karigojobs.feature.client.list.ClientListScreen
+import com.karigojobs.presentation.client.details.ClientDetailsViewModel
 import com.karigojobs.presentation.client.list.ClientListViewModel
 import com.karigojobs.presentation.dashboard.HomeViewModel
 import com.karigojobs.presentation.estimate.add.AddEstimateViewModel
@@ -79,7 +81,7 @@ fun NavGraphBuilder.contentNavigation(
         composable<MainRoute.AddJobRoute> { backStackEntry ->
             val route = backStackEntry.toRoute<MainRoute.AddJobRoute>()
             val viewModel = koinViewModel<AddJobViewModel>(
-                parameters = { parametersOf(route.jobId) }
+                parameters = { parametersOf(route.jobId, route.clientId) }
             )
             val state by viewModel.addJobState.collectAsStateWithLifecycle()
             JobCreateScreen(
@@ -139,6 +141,31 @@ fun NavGraphBuilder.contentNavigation(
                 }
             )
         }
+
+        composable <MainRoute.ClientDetailsRoute>{backStackEntry ->
+            val clientId = backStackEntry.toRoute<MainRoute.ClientDetailsRoute>().clientId
+
+            val viewModel = koinViewModel<ClientDetailsViewModel>(
+                parameters = { parametersOf(clientId) }
+            )
+            val state by viewModel.state.collectAsStateWithLifecycle()
+
+            ClientDetailsScreen(
+                state = state,
+                event = viewModel::onEvent,
+                effect = viewModel.effect,
+                onJobClick = {
+                    navHostController.navigate(MainRoute.JobDetailsRoute(jobId = it))
+                },
+                onNewJobClick = {clientId ->
+                    navHostController.navigate(MainRoute.AddJobRoute(clientId = clientId))
+                },
+                onBackClick = {
+                    navHostController.popBackStack()
+                }
+            )
+        }
+
 
         composable<MainRoute.AddEstimateRoute> { backStackEntry ->
             val route = backStackEntry.toRoute<MainRoute.AddEstimateRoute>()

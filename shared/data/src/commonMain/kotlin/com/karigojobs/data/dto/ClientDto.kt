@@ -1,7 +1,7 @@
 package com.karigojobs.data.dto
 
 import com.karigojobs.share.model.ClientModel
-import com.karigojobs.shared.database.Client
+import com.karigojobs.shared.database.tables.Client
 
 
 /**
@@ -13,7 +13,7 @@ import com.karigojobs.shared.database.Client
 
 
 
-fun Client.toModel() : ClientModel {
+fun Client.toClientModel() : ClientModel {
     return ClientModel(
         id = id,
         name = name,
@@ -28,6 +28,6 @@ fun Client.toModel() : ClientModel {
     )
 }
 
-fun List<Client>.toModelList() : List<ClientModel> {
-    return this.map { it.toModel()}
+fun List<Client>.toJobLabourModelList() : List<ClientModel> {
+    return this.map { it.toClientModel()}
 }

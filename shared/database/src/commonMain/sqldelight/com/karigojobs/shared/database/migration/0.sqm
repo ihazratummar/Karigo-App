@@ -1,3 +1,5 @@
+import kotlin.Boolean;
+
 -- Initial Schema (Version 0)
 
 CREATE TABLE client (
@@ -22,6 +24,7 @@ CREATE TABLE job (
     material_total REAL NOT NULL DEFAULT 0.0,
     total REAL NOT NULL DEFAULT 0.0,
     notes TEXT NOT NULL DEFAULT '',
+    total_items INTEGER NOT NULL DEFAULT 0,
     job_date INTEGER NOT NULL,
     created_at INTEGER NOT NULL,
     updated_at INTEGER NOT NULL
@@ -58,4 +61,17 @@ CREATE TABLE job_labour_item (
     unit TEXT NOT NULL DEFAULT 'point',
     total REAL NOT NULL DEFAULT 0.0,
     created_at INTEGER NOT NULL
+);
+
+
+CREATE TABLE site_estimate (
+    id TEXT PRIMARY KEY NOT NULL,
+    client_id TEXT NOT NULL REFERENCES client(id) ON DELETE  CASCADE ,
+    project_title TEXT NOT NULL,
+    date INTEGER NOT NULL,
+    site_notes TEXT,
+    show_rate INTEGER AS Boolean NOT NULL DEFAULT 0,
+    total REAL,
+    create_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
 );

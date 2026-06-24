@@ -8,6 +8,7 @@ data class SiteEstimateModel(
     val clientName: String,
     val date : Long,
     val showRate: Boolean,
+    val totalItems : Double,
     val total: Double?,
     val createAt: Long = 0L
 )

@@ -1,0 +1,1 @@
+ALTER TABLE site_estimate ADD COLUMN total_items REAL NOT NULL DEFAULT 0.0;

@@ -39,8 +39,12 @@ import kotlin.uuid.Uuid
  * Created on 23/05/26
  */
 
+/**
+ * ViewModel managing the state and events for adding or editing a job.
+ */
 class AddJobViewModel(
     private val jobId: String? = null,
+    private val clientId: String? = null,
     private val deviceContactProvider: DeviceContactProvider,
     private val saveFullJobTransactionUseCase: SaveFullJobTransactionUseCase,
     private val isClientExistUseCase: IsClientExistUseCase,
@@ -53,24 +57,51 @@ class AddJobViewModel(
     private val getClientUseCase: GetClientUseCase
 ) : ViewModel() {
 
+    /** Unique draft or existing job ID. */
     @OptIn(ExperimentalUuidApi::class)
     private val draftJobId = jobId ?: Uuid.random().toString()
 
+    /** Internal UI state. */
     private val _state = MutableStateFlow(AddJobState(jobId = jobId))
+    /** Exposed UI state for observers. */
     val addJobState: StateFlow<AddJobState> = _state.asStateFlow()
 
+    /** Internal side effects. */
     private val _effect = MutableSharedFlow<AddJobEffect>(replay = 0)
+    /** Exposed side effects (e.g., navigation, toasts). */
     val addJobEffect: SharedFlow<AddJobEffect> = _effect.asSharedFlow()
 
 
+    /** Initializes data required for the job form. */
     init {
         loadSelectedTradeType()
         loadMaterials()
         if (jobId != null) {
             loadExistingJob()
         }
+        loadClient()
     }
 
+
+    /** Loads pre-selected client details if [clientId] was provided. */
+    private fun loadClient() {
+        viewModelScope.launch {
+            if (clientId != null) {
+                val clientResult = getClientUseCase(clientId)
+                when(clientResult){
+                    is Result.Error -> {
+                        _effect.emit(ShowError(clientResult.error.asString()))
+                    }
+                    is Result.Success -> {
+                        _state.update { it.copy(selectedClient = clientResult.data) }
+                    }
+                }
+
+            }
+        }
+    }
+
+    /** Fetches and populates existing job details, labour, and materials. */
     private fun loadExistingJob() {
         if (jobId == null) return
 
@@ -130,6 +161,7 @@ class AddJobViewModel(
         }
     }
 
+    /** Fetches device contacts for client selection. */
     private fun loadContacts() {
         if (_state.value.contacts.isNotEmpty()) return
 
@@ -140,6 +172,7 @@ class AddJobViewModel(
         }
     }
 
+    /** Fetches available materials from the local library. */
     private fun loadMaterials() {
         viewModelScope.launch {
             getAllMaterialUseCase().collectLatest { result ->
@@ -156,6 +189,7 @@ class AddJobViewModel(
         }
     }
 
+    /** Fetches available trade types and sets a default selection. */
     private fun loadSelectedTradeType() {
         _state.update { it.copy(isLoading = false) }
         viewModelScope.launch {
@@ -187,6 +221,7 @@ class AddJobViewModel(
     }
 
 
+    /** Handles UI intents and updates state or triggers respective actions. */
     @OptIn(ExperimentalUuidApi::class)
     fun event(event: AddJobIntent) {
         when (event) {
@@ -202,7 +237,7 @@ class AddJobViewModel(
                         is Result.Success -> {
                             if (result.data == null) {
                                 val client = ClientModel(
-                                    id = Uuid.random().toString(),
+                                    id = clientId ?: Uuid.random().toString(),
                                     name = event.contact.name,
                                     phone = safePhone,
                                     email = "",

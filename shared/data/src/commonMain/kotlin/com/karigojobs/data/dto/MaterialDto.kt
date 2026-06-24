@@ -2,10 +2,10 @@ package com.karigojobs.data.dto
 
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
-import com.karigojobs.shared.database.Materials
+import com.karigojobs.shared.database.tables.Materials
 
 
-fun Materials.toDomain() : MaterialsModel {
+fun Materials.toMaterialDomain() : MaterialsModel {
     return MaterialsModel(
         id = this.id,
         name = this.name,
@@ -15,6 +15,6 @@ fun Materials.toDomain() : MaterialsModel {
     )
 }
 
-fun List<Materials>.toDomainList() : List<MaterialsModel> {
-    return this.map { it.toDomain() }
+fun List<Materials>.toMaterialDomainList() : List<MaterialsModel> {
+    return this.map { it.toMaterialDomain() }
 }

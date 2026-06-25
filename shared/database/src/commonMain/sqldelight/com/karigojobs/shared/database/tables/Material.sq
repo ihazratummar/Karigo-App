@@ -4,6 +4,7 @@ CREATE TABLE materials(
     unit TEXT NOT NULL,
     rate REAL NOT NULL,
     trade_type TEXT NOT NULL,
+    category_id TEXT REFERENCES MaterialCategory(id) ON DELETE SET NULL ,
     created_at INTEGER NOT NULL,
     updated_at INTEGER NOT NULL
 );
@@ -18,17 +19,20 @@ selectMaterialByTrade:
 SELECT * FROM materials WHERE trade_type = ?;
 
 searchMaterials:
-SELECT * FROM materials
-WHERE (name LIKE '%'||:query||'%')
-AND (trade_type IN :tradeTypes OR :tradeTypesCount = 0)
-ORDER BY name;
+SELECT m.*, c.name AS category_name
+FROM materials m
+LEFT JOIN MaterialCategory c ON m.category_id = c.id
+WHERE (m.name LIKE '%'||:query||'%')
+AND (m.trade_type IN :tradeTypes OR :tradeTypesCount = 0)
+AND (m.category_id = :categoryId OR :categoryId IS NULL)
+ORDER BY m.name;
 
 insertMaterial:
-INSERT OR REPLACE INTO materials(id, name, unit, rate, trade_type,created_at, updated_at)
-VALUES (?, ?, ?, ?, ?, ?,?);
+INSERT OR REPLACE INTO materials(id, name, unit, rate, trade_type, category_id, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
 updateMaterial:
-UPDATE materials SET name = ?, unit = ?, rate = ?, trade_type = ?, updated_at = ? WHERE id = ?;
+UPDATE materials SET name = ?, unit = ?, rate = ?, trade_type = ?, category_id = ?, updated_at = ? WHERE id = ?;
 
 deleteMaterialById:
 DELETE FROM materials WHERE id = ?;

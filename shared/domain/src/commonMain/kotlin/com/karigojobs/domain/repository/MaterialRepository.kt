@@ -14,12 +14,16 @@ import kotlinx.coroutines.flow.Flow
 
 interface MaterialRepository {
 
-    suspend fun insertBulkMaterial(material: List<MaterialsModel>) : Result<Unit, MaterialError>
+    suspend fun insertBulkMaterial(material: List<MaterialsModel>): Result<Unit, MaterialError>
 
-    suspend fun insertMaterial(material : MaterialsModel) : Result<Unit, MaterialError>
+    suspend fun insertMaterial(material: MaterialsModel): Result<Unit, MaterialError>
 
     fun getAllMaterials(): Flow<Result<List<MaterialsModel>, MaterialError>>
-    fun searchMaterials(query: String, tradeTypes: Set<TradeType>? = null): Flow<Result<List<MaterialsModel>, MaterialError>>
+    fun searchMaterials(
+        query: String,
+        tradeTypes: Set<TradeType>? = null,
+        categoryId: String ? = null
+    ): Flow<Result<List<MaterialsModel>, MaterialError>>
 
     suspend fun getMaterialById(id: String): Result<MaterialsModel?, MaterialError>
 

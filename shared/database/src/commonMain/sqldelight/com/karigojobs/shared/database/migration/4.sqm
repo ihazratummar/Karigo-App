@@ -1,0 +1,1 @@
+ALTER TABLE client ADD COLUMN pending_amount REAL NOT NULL DEFAULT 0.0;

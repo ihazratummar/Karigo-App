@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.SharedFlow
 
 @Composable
 fun OnboardingScreen(
-    modifier: Modifier = Modifier,
     state: OnboardingState,
     event: (OnboardingIntent) -> Unit,
     effect: SharedFlow<OnboardingEffect>?,

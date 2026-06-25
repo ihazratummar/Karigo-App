@@ -9,6 +9,7 @@ data class ClientModel(
     val outStandingBalance: Double = 0.0,
     val totalRevenue : Double = 0.0,
     val totalPaid: Double = 0.0,
+    val pendingAmount: Double = 0.0,
     val totalJob: Int =0 ,
     val cratedAt: Long = 0L
 )

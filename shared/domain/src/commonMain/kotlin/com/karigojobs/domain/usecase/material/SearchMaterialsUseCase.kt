@@ -19,9 +19,10 @@ class SearchMaterialsUseCase(
 
     operator fun invoke(
         query: String = "",
-        tradeTypes: Set<TradeType>? = null
+        tradeTypes: Set<TradeType>? = null,
+        categoryId: String ? = null
     ): Flow<Result<List<MaterialsModel>, MaterialError>> {
-        return materialRepository.searchMaterials(query = query, tradeTypes = tradeTypes)
+        return materialRepository.searchMaterials(query = query, tradeTypes = tradeTypes, categoryId = categoryId)
     }
 
 }

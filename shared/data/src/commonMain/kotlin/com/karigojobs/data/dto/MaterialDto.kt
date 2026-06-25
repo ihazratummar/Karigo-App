@@ -3,6 +3,7 @@ package com.karigojobs.data.dto
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.shared.database.tables.Materials
+import com.karigojobs.shared.database.tables.SearchMaterials
 
 
 fun Materials.toMaterialDomain() : MaterialsModel {
@@ -11,8 +12,25 @@ fun Materials.toMaterialDomain() : MaterialsModel {
         name = this.name,
         unit = this.unit,
         price = this.rate,
-        tradeType = TradeType.valueOf(this.trade_type)
+        tradeType = TradeType.valueOf(this.trade_type),
+        categoryId = this.category_id,
     )
+}
+
+fun SearchMaterials.toSearchModel() : MaterialsModel {
+    return MaterialsModel(
+        id = this.id,
+        name = this.name,
+        unit = this.unit,
+        price = this.rate,
+        tradeType = TradeType.valueOf(this.trade_type),
+        categoryId = this.category_id,
+        categoryName = this.category_name
+    )
+}
+
+fun List<SearchMaterials>.toSearchMaterialList() : List<MaterialsModel> {
+    return this.map { it.toSearchModel() }
 }
 
 fun List<Materials>.toMaterialDomainList() : List<MaterialsModel> {

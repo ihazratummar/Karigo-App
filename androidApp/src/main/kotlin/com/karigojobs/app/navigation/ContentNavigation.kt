@@ -18,6 +18,7 @@ import com.karigojobs.app.feature.job.details.JobDetailsScreen
 import com.karigojobs.app.feature.job.joblist.JobListScreen
 import com.karigojobs.feature.client.details.ClientDetailsScreen
 import com.karigojobs.feature.client.list.ClientListScreen
+import com.karigojobs.feature.settings.SettingsScreen
 import com.karigojobs.presentation.client.details.ClientDetailsViewModel
 import com.karigojobs.presentation.client.list.ClientListViewModel
 import com.karigojobs.presentation.dashboard.HomeViewModel
@@ -27,7 +28,9 @@ import com.karigojobs.presentation.estimate.list.EstimateListViewModel
 import com.karigojobs.presentation.job.create.AddJobViewModel
 import com.karigojobs.presentation.job.details.JobDetailsViewModel
 import com.karigojobs.presentation.job.jobList.JobListViewModel
+import com.karigojobs.presentation.materials.list.MaterialCategoryViewModel
 import com.karigojobs.presentation.materials.list.MaterialListViewModel
+import com.karigojobs.presentation.settings.SettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -227,15 +230,26 @@ fun NavGraphBuilder.contentNavigation(
 
             val viewModel = koinViewModel<MaterialListViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
+
+            val categoryViewModel = koinViewModel<MaterialCategoryViewModel>()
+            val categoryState by categoryViewModel.state.collectAsStateWithLifecycle()
+
             MaterialsListScreen(
                 state = state,
                 event = viewModel::onEvent,
-                effect = viewModel.effect
+                effect = viewModel.effect,
+                categoryState = categoryState,
+                categoryEvent = categoryViewModel::onEvent,
+                categoryEffect = categoryViewModel.effect
             )
         }
 
         composable<MainRoute.SettingRoute> {
-            // TODO: Implement Setting Screen
+            val viewModel = koinViewModel<SettingsViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            SettingsScreen(
+                state = state
+            )
         }
 
         composable<MainRoute.NotificationRoute> {

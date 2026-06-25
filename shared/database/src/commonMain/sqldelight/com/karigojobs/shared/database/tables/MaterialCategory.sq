@@ -1,0 +1,24 @@
+CREATE TABLE MaterialCategory (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    trade_type TEXT NOT NULL,
+    createdAt INTEGER NOT NULL,
+    updatedAt INTEGER NOT NULL
+);
+
+
+insertCategory:
+INSERT INTO  MaterialCategory(id, name, trade_type, createdAt, updatedAt)
+VALUES (?,?,?,?,?);
+
+updateCategory:
+UPDATE MaterialCategory SET name = ? , updatedAt = ? WHERE id = ?;
+
+deleteCategory:
+DELETE FROM MaterialCategory WHERE id = ?;
+
+getCategoryByTrade:
+SELECT * FROM MaterialCategory WHERE (trade_type = :tradeType OR :tradeType IS NULL) ORDER BY name ASC;
+
+getCategoryById:
+SELECT * FROM MaterialCategory WHERE id = ?;

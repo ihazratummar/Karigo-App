@@ -9,8 +9,10 @@ import com.karigojobs.presentation.estimate.list.EstimateListViewModel
 import com.karigojobs.presentation.job.create.AddJobViewModel
 import com.karigojobs.presentation.job.details.JobDetailsViewModel
 import com.karigojobs.presentation.job.jobList.JobListViewModel
+import com.karigojobs.presentation.materials.list.MaterialCategoryViewModel
 import com.karigojobs.presentation.materials.list.MaterialListViewModel
 import com.karigojobs.presentation.onboarding.OnboardingViewModel
+import com.karigojobs.presentation.settings.SettingsViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
@@ -27,8 +29,10 @@ fun getPresentationModule(): Module = module {
     viewModelOf(::HomeViewModel)
     viewModelOf(::JobListViewModel)
     viewModelOf(::MaterialListViewModel)
+    viewModelOf(::MaterialCategoryViewModel)
     viewModelOf(::EstimateListViewModel)
     viewModelOf(::ClientListViewModel)
+    viewModelOf(::SettingsViewModel)
 
     viewModel { (jobId: String?, clientId: String?) ->
         AddJobViewModel(

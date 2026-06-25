@@ -23,6 +23,7 @@ dependencies {
     implementation(projects.feature.client)
     implementation(projects.feature.materials)
     implementation(projects.feature.siteEstimate)
+    implementation(projects.feature.settings)
 
     implementation(libs.androidx.compose.adaptive)
     implementation(projects.android.ui)

@@ -31,6 +31,11 @@ import com.karigojobs.domain.usecase.material.GetMaterialByIdUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
 import com.karigojobs.domain.usecase.material.SeedStarterMaterialsUseCase
 import com.karigojobs.domain.usecase.material.UpdateMaterialUseCase
+import com.karigojobs.domain.usecase.materialCategory.DeleteMaterialCategoryUseCase
+import com.karigojobs.domain.usecase.materialCategory.GetMaterialCategoryUseCase
+import com.karigojobs.domain.usecase.materialCategory.InsertMaterialCategoryUseCase
+import com.karigojobs.domain.usecase.materialCategory.UpdateMaterialCategoryUseCase
+import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -53,6 +58,11 @@ fun getDomainModule() : Module = module {
     single { UpdateMaterialUseCase(materialRepository = get()) }
     single { GetMaterialByIdUseCase(materialRepository = get()) }
     single { AddMaterialUseCase(materialRepository = get()) }
+
+    single { GetMaterialCategoryUseCase(materialCategoryRepository = get()) }
+    single { InsertMaterialCategoryUseCase(repository = get()) }
+    single { UpdateMaterialCategoryUseCase(repository = get()) }
+    single { DeleteMaterialCategoryUseCase(repository = get()) }
 
 
     single { SaveFullJobTransactionUseCase(jobRepository = get()) }
@@ -78,5 +88,7 @@ fun getDomainModule() : Module = module {
     single { GetEstimateMaterialsUseCase(estimateRepository = get()) }
     single { DeleteEstimateUseCase(estimateRepository = get()) }
     single { UpdateSiteEstimateUseCase(repository = get()) }
+
+    single { GetWorkerProfileUseCase(workerRepository = get()) }
 
 }

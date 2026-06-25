@@ -4,6 +4,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.karigojobs.data.dto.toMaterialDomain
 import com.karigojobs.data.dto.toMaterialDomainList
+import com.karigojobs.data.dto.toSearchMaterialList
 import com.karigojobs.data.safeCall
 import com.karigojobs.domain.repository.MaterialRepository
 import com.karigojobs.domain.result.MaterialError
@@ -39,6 +40,7 @@ class MaterialRepositoryImpl(
                         unit = material.unit,
                         rate = material.price,
                         trade_type = material.tradeType.name,
+                        category_id = material.categoryId,
                         created_at = EpochUtils.now(),
                         updated_at = EpochUtils.now()
                     )
@@ -55,6 +57,7 @@ class MaterialRepositoryImpl(
                     name = material.name,
                     unit = material.unit,
                     rate = material.price,
+                    category_id = material.categoryId,
                     trade_type = material.tradeType.name,
                     created_at = EpochUtils.now(),
                     updated_at = EpochUtils.now()
@@ -76,19 +79,21 @@ class MaterialRepositoryImpl(
 
     override fun searchMaterials(
         query: String,
-        tradeTypes: Set<TradeType>?
+        tradeTypes: Set<TradeType>?,
+        categoryId: String?
     ): Flow<Result<List<MaterialsModel>, MaterialError>> {
         val types = tradeTypes?.map { it.name } ?: emptyList()
         return database.materialQueries
             .searchMaterials(
                 query = query,
                 tradeTypes = types,
-                tradeTypesCount = types.size.toLong()
+                tradeTypesCount = types.size.toLong(),
+                categoryId = categoryId
             )
             .asFlow()
             .mapToList(ioDispatcher)
             .map { materials ->
-                Result.Success(materials.toMaterialDomainList())
+                Result.Success(materials.toSearchMaterialList())
             }.catch {
                 Result.Error(MaterialError.DatabaseError)
             }
@@ -96,9 +101,18 @@ class MaterialRepositoryImpl(
 
     override suspend fun getMaterialById(id: String): Result<MaterialsModel?, MaterialError> {
         return safeCall(MaterialError.DatabaseError) {
-            database.materialQueries.selectMaterialById(id = id)
+            val material = database.materialQueries.selectMaterialById(id = id)
                 .executeAsOneOrNull()
-                ?.toMaterialDomain()
+            if (material != null) {
+                val categoryName = material.category_id?.let { catId ->
+                    database.materialCategoryQueries.getCategoryById(id = catId)
+                        .executeAsOneOrNull()
+                        ?.name
+                }
+                material.toMaterialDomain().copy(categoryName = categoryName)
+            } else {
+                null
+            }
         }
     }
 
@@ -117,6 +131,7 @@ class MaterialRepositoryImpl(
                 name = material.name,
                 unit = material.unit,
                 rate = material.price,
+                category_id = material.categoryId,
                 trade_type = material.tradeType.name,
                 updated_at = EpochUtils.now(),
             )

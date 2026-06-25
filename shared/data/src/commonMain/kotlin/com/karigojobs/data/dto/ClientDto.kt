@@ -23,6 +23,7 @@ fun Client.toClientModel() : ClientModel {
         outStandingBalance = outstanding_balance,
         totalPaid = this.total_paid,
         totalRevenue = this.total_revenue,
+        pendingAmount = this.pending_amount,
         totalJob = total_jobs.toInt(),
         cratedAt = created_at
     )

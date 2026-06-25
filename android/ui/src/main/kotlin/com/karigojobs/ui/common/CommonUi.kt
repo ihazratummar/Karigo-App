@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -95,6 +96,7 @@ import com.karigojobs.ui.theme.KarigojobsText
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.KarigojobsThemePreview
+import com.karigojobs.ui.theme.KarigojobsWarning
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.NavInactive
 import com.karigojobs.ui.theme.OnStatusDone
@@ -134,7 +136,8 @@ fun KarigoTopAppBar(
     onNavigationClick: () -> Unit = {},
     title: String = "Estimate",
     action: @Composable () -> Unit = {},
-    isNavBack: Boolean = true
+    isNavBack: Boolean = true,
+    isDivider : Boolean = true
 ) {
     Column {
         TopAppBar(
@@ -152,7 +155,9 @@ fun KarigoTopAppBar(
             },
             windowInsets = WindowInsets(),
         )
-        HorizontalDivider()
+        if (isDivider){
+            HorizontalDivider()
+        }
     }
 }
 
@@ -1246,6 +1251,75 @@ fun CommunicationButton(
                     color = contentColor
                 )
             )
+        }
+    }
+}
+
+
+
+@Composable
+fun ActionNeedBanner(
+    onClick: () -> Unit = {}
+) {
+    Card(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
+        shape = KarigojobsShapes.large,
+        border = BorderStroke(width = dimens.Border.thin, color = MaterialTheme.colorScheme.onBackground),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent
+        )
+    ) {
+        Row(
+            modifier = Modifier.padding(dimens.Padding.base).fillMaxWidth(),
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.user_action),
+                contentDescription = null,
+                tint = KarigojobsWarning,
+                modifier = Modifier.size(dimens.Icon.md)
+            )
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.md),
+                horizontalAlignment = Alignment.Start
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.base)
+                ) {
+                    Text(
+                        text = "ACTION NEEDED",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = KarigojobsWarning,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    Text(
+                        text = "2 missing",
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = KarigojobsWarning,
+                        )
+                    )
+                }
+                Text(
+                    text = "Complete your business profile",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Text(
+                    text = "Add Owner Name and Business Name so your estimate and invoices look professional",
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                )
+            }
         }
     }
 }

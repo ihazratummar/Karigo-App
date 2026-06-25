@@ -1,5 +1,6 @@
 package com.karigojobs.presentation.materials.list
 
+import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 
@@ -31,7 +32,11 @@ data class MaterialListState(
     val newMaterialPrice: String = "",
     val newMaterialUnit: String = "",
     val newMaterialTradeType: TradeType? = null,
-    val isAdding: Boolean = false
+    val newMaterialCategoryName: String = "",
+    val isAdding: Boolean = false,
+
+    val materialCategory : List<MaterialCategoryModel> = emptyList(),
+    val selectedCategory : MaterialCategoryModel? = null
 ) {
     val canAddNewMaterial : Boolean get() = newMaterialName.isNotBlank() && newMaterialPrice.isNotBlank()
             && newMaterialUnit.isNotBlank()
@@ -50,11 +55,14 @@ sealed interface MaterialListEvent {
     data class SearchMaterial(val query: String) : MaterialListEvent
 
     data class SelectTradeType(val tradeType: TradeType?) : MaterialListEvent
+    data class SelectCategory(val category: MaterialCategoryModel?) : MaterialListEvent
     data class DeleteMaterial(val materialId: String) : MaterialListEvent
     data class EditMaterialName(val name: String) : MaterialListEvent
 
     data class EditMaterialPrice(val price: String) : MaterialListEvent
     data class EditMaterialUnit(val unit: String) : MaterialListEvent
+    data class EditMaterialCategoryName(val name: String) : MaterialListEvent
+    data class EditMaterialTradeType(val tradeType: TradeType) : MaterialListEvent
     data object UpdateMaterials : MaterialListEvent
 
     // New Material Adding
@@ -64,6 +72,7 @@ sealed interface MaterialListEvent {
     data class NewMaterialName(val name: String) : MaterialListEvent
     data class NewMaterialUnit(val unit: String) : MaterialListEvent
     data class NewMaterialRate(val rate: String) : MaterialListEvent
+    data class NewMaterialCategoryName(val name: String) : MaterialListEvent
 }
 
 

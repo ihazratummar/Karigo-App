@@ -117,8 +117,6 @@ class OnboardingViewModel(
                     _state.update { it.copy(isLoading = false, error = result.error.asString()) }
                 }
             }
-
-
         }
     }
 

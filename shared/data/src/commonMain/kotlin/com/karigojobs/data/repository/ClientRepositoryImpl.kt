@@ -91,6 +91,7 @@ class ClientRepositoryImpl(
                 outstanding_balance = clientModel.outStandingBalance,
                 total_paid = clientModel.totalPaid,
                 total_revenue = clientModel.totalRevenue,
+                pending_amount = clientModel.pendingAmount,
                 total_jobs = clientModel.totalJob.toLong(),
                 created_at = EpochUtils.now(),
                 updated_at = EpochUtils.now()

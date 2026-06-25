@@ -9,8 +9,11 @@ import com.karigojobs.domain.usecase.material.DeleteMaterialUseCase
 import com.karigojobs.domain.usecase.material.GetMaterialByIdUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
 import com.karigojobs.domain.usecase.material.UpdateMaterialUseCase
+import com.karigojobs.domain.usecase.materialCategory.GetMaterialCategoryUseCase
+import com.karigojobs.domain.usecase.materialCategory.InsertMaterialCategoryUseCase
 import com.karigojobs.presentation.erroMap.asString
-import com.karigojobs.presentation.materials.list.MaterialListFilter.*
+import com.karigojobs.presentation.materials.list.MaterialScreenEffect.*
+import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,6 +37,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.uuid.Uuid
 
 
 /**
@@ -47,7 +51,9 @@ class MaterialListViewModel(
     private val deleteMaterialUseCase: DeleteMaterialUseCase,
     private val getMaterialByIdUseCase: GetMaterialByIdUseCase,
     private val updateMaterialUseCase: UpdateMaterialUseCase,
-    private val addMaterialUseCase: AddMaterialUseCase
+    private val addMaterialUseCase: AddMaterialUseCase,
+    private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase,
+    private val insertMaterialCategoryUseCase: InsertMaterialCategoryUseCase
 ) : ViewModel() {
 
 
@@ -55,7 +61,7 @@ class MaterialListViewModel(
     val state: StateFlow<MaterialListState> = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<MaterialScreenEffect>(replay = 0)
-    val effect : SharedFlow<MaterialScreenEffect> = _effect.asSharedFlow()
+    val effect: SharedFlow<MaterialScreenEffect> = _effect.asSharedFlow()
 
     private val editingMaterialId = MutableStateFlow<String?>(null)
 
@@ -63,6 +69,7 @@ class MaterialListViewModel(
     init {
         loadSelectedTrades()
         observeEditingMaterial()
+        observeActiveCategoryLoading()
         loadMaterials()
     }
 
@@ -74,8 +81,9 @@ class MaterialListViewModel(
                     when (result) {
                         is Result.Error -> {
                             _state.update { it.copy(isDeleting = false) }
-                            _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                            _effect.emit(ShowError(result.error.asString()))
                         }
+
                         is Result.Success -> {
                             _state.update { it.copy(isDeleting = false) }
                         }
@@ -91,8 +99,8 @@ class MaterialListViewModel(
                 _state.update {
                     it.copy(
                         selectedTradeType = event.tradeType,
-                        materialFilter = if (event.tradeType == null) All
-                        else SelectedTrade(setOf(event.tradeType))
+                        materialFilter = if (event.tradeType == null) MaterialListFilter.All
+                        else MaterialListFilter.SelectedTrade(setOf(event.tradeType))
                     )
                 }
             }
@@ -114,7 +122,8 @@ class MaterialListViewModel(
                 _state.update {
                     it.copy(
                         isEditMaterialModalOpen = event.isEditing,
-                        workingMaterialId = event.materialId
+                        workingMaterialId = event.materialId,
+                        editingMaterial = if (!event.isEditing) null else it.editingMaterial
                     )
                 }
 
@@ -148,6 +157,22 @@ class MaterialListViewModel(
                     )
                 }
             }
+            
+            is MaterialListEvent.EditMaterialCategoryName -> {
+                _state.update { 
+                    it.copy(
+                        editingMaterial = it.editingMaterial?.copy(categoryName = event.name)
+                    )
+                }
+            }
+
+            is MaterialListEvent.EditMaterialTradeType -> {
+                _state.update {
+                    it.copy(
+                        editingMaterial = it.editingMaterial?.copy(tradeType = event.tradeType)
+                    )
+                }
+            }
 
             is MaterialListEvent.UpdateMaterials -> {
                 viewModelScope.launch {
@@ -155,13 +180,42 @@ class MaterialListViewModel(
 
                         val editMaterial = _state.value.editingMaterial
                         if (editMaterial != null) {
+                            var categoryIdToSave = editMaterial.categoryId
+                            val typedCategoryName = editMaterial.categoryName?.trim()
+                            
+                            // Check if it is a new category
+                            if (!typedCategoryName.isNullOrBlank() && 
+                                _state.value.materialCategory.none { it.id == editMaterial.categoryId && it.name == typedCategoryName }) {
+                                
+                                val existingCategory = _state.value.materialCategory.find { it.name.equals(typedCategoryName, ignoreCase = true) }
+                                
+                                if (existingCategory != null) {
+                                    categoryIdToSave = existingCategory.id
+                                } else {
+                                    val newCategoryId = Uuid.random().toString()
+                                    val newCategory = MaterialCategoryModel(
+                                        id = newCategoryId,
+                                        name = typedCategoryName,
+                                        tradeType = editMaterial.tradeType
+                                    )
+                                    val insertResult = insertMaterialCategoryUseCase(newCategory)
+                                    if (insertResult is Result.Success) {
+                                        categoryIdToSave = newCategoryId
+                                    } else if (insertResult is Result.Error) {
+                                        _effect.emit(ShowError(insertResult.error.asString()))
+                                        return@launch
+                                    }
+                                }
+                            }
+
                             val result = updateMaterialUseCase(
                                 material = MaterialsModel(
                                     name = editMaterial.name,
                                     unit = editMaterial.unit,
                                     price = editMaterial.price,
                                     tradeType = editMaterial.tradeType,
-                                    id = editMaterial.id
+                                    id = editMaterial.id,
+                                    categoryId = categoryIdToSave
                                 )
                             )
 
@@ -173,8 +227,9 @@ class MaterialListViewModel(
                                             isEditMaterialModalOpen = false
                                         )
                                     }
-                                    _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                                    _effect.emit(ShowError(result.error.asString()))
                                 }
+
                                 is Result.Success -> {
                                     _state.update {
                                         it.copy(
@@ -198,26 +253,64 @@ class MaterialListViewModel(
             }
 
             is MaterialListEvent.ToggleAddMaterialModal -> {
-                _state.update { it.copy(isNewMaterialAddingModalOpen = event.isOpen) }
+                _state.update {
+                    it.copy(
+                        isNewMaterialAddingModalOpen = event.isOpen,
+                        newMaterialTradeType = if (event.isOpen) {
+                            it.selectedTradeType ?: it.selectTrades.firstOrNull() ?: TradeType.ELECTRICIAN
+                        } else null,
+                        newMaterialName = if (!event.isOpen) "" else it.newMaterialName,
+                        newMaterialPrice = if (!event.isOpen) "" else it.newMaterialPrice,
+                        newMaterialUnit = if (!event.isOpen) "" else it.newMaterialUnit,
+                        newMaterialCategoryName = if (!event.isOpen) "" else it.newMaterialCategoryName
+                    )
+                }
             }
 
             MaterialListEvent.AddMaterial -> {
                 _state.update {
                     it.copy(
-                        isAdding = false
+                        isAdding = true
                     )
                 }
                 viewModelScope.launch {
+                    val tradeTypeToSave = _state.value.newMaterialTradeType ?: TradeType.ELECTRICIAN
+                    var categoryIdToSave = _state.value.selectedCategory?.id
+                    val typedCategoryName = _state.value.newMaterialCategoryName.trim()
+
+                    if (typedCategoryName.isNotBlank() && _state.value.selectedCategory?.name != typedCategoryName) {
+                        val existingCategory = _state.value.materialCategory.find { it.name.equals(typedCategoryName, ignoreCase = true) }
+                        if (existingCategory != null) {
+                            categoryIdToSave = existingCategory.id
+                        } else {
+                            val newCategoryId = Uuid.random().toString()
+                            val newCategory = MaterialCategoryModel(
+                                id = newCategoryId,
+                                name = typedCategoryName,
+                                tradeType = tradeTypeToSave
+                            )
+                            val insertResult = insertMaterialCategoryUseCase(newCategory)
+                            if (insertResult is Result.Success) {
+                                categoryIdToSave = newCategoryId
+                            } else if (insertResult is Result.Error) {
+                                _state.update { it.copy(isAdding = false) }
+                                _effect.emit(ShowError(insertResult.error.asString()))
+                                return@launch
+                            }
+                        }
+                    }
+
                     val result = addMaterialUseCase(
                         material = MaterialsModel(
                             name = _state.value.newMaterialName,
                             unit = _state.value.newMaterialUnit,
                             price = _state.value.newMaterialPrice.toDouble(),
-                            tradeType = _state.value.newMaterialTradeType ?: TradeType.ELECTRICIAN,
+                            tradeType = tradeTypeToSave,
+                            categoryId = categoryIdToSave
                         )
                     )
 
-                    when(result) {
+                    when (result) {
                         is Result.Error -> {
                             _state.update {
                                 it.copy(
@@ -225,8 +318,9 @@ class MaterialListViewModel(
                                     isAdding = false
                                 )
                             }
-                            _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                            _effect.emit(ShowError(result.error.asString()))
                         }
+
                         is Result.Success -> {
                             _state.update {
                                 it.copy(
@@ -245,13 +339,22 @@ class MaterialListViewModel(
             is MaterialListEvent.NewMaterialName -> {
                 _state.update { it.copy(newMaterialName = event.name) }
             }
+
             is MaterialListEvent.NewMaterialRate -> {
                 _state.update { it.copy(newMaterialPrice = event.rate) }
             }
+
             is MaterialListEvent.NewMaterialUnit -> {
                 _state.update { it.copy(newMaterialUnit = event.unit) }
             }
+            
+            is MaterialListEvent.NewMaterialCategoryName -> {
+                _state.update { it.copy(newMaterialCategoryName = event.name) }
+            }
 
+            is MaterialListEvent.SelectCategory -> {
+                _state.update { it.copy(selectedCategory = event.category) }
+            }
         }
     }
 
@@ -278,6 +381,7 @@ class MaterialListViewModel(
                         _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
 
                     }
+
                     is Result.Success -> {
                         _state.update {
                             it.copy(
@@ -290,6 +394,40 @@ class MaterialListViewModel(
             }.launchIn(viewModelScope)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun observeActiveCategoryLoading() {
+        viewModelScope.launch {
+            combine(
+                _state.map { it.selectedTradeType }.distinctUntilChanged(),
+                _state.map { it.isEditMaterialModalOpen }.distinctUntilChanged(),
+                _state.map { it.editingMaterial?.tradeType }.distinctUntilChanged(),
+                _state.map { it.isNewMaterialAddingModalOpen }.distinctUntilChanged(),
+                _state.map { it.newMaterialTradeType }.distinctUntilChanged()
+            ) { selectedTradeType, isEditOpen, editTradeType, isAddOpen, addTradeType ->
+                when {
+                    isEditOpen -> editTradeType
+                    isAddOpen -> addTradeType
+                    else -> selectedTradeType
+                }
+            }
+            .distinctUntilChanged()
+            .flatMapLatest { tradeType ->
+                getMaterialCategoryUseCase(tradeType)
+            }
+            .collectLatest { result ->
+                when (result) {
+                    is Result.Error -> {
+                        _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                    }
+
+                    is Result.Success -> {
+                        _state.update { it.copy(materialCategory = result.data) }
+                    }
+                }
+            }
+        }
+    }
+
     private fun loadSelectedTrades() {
         viewModelScope.launch {
             getSelectedTradeTypeUseCase.invoke().collectLatest { result ->
@@ -299,6 +437,7 @@ class MaterialListViewModel(
                         _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
 
                     }
+
                     is Result.Success -> {
                         _state.update {
                             it.copy(
@@ -316,22 +455,35 @@ class MaterialListViewModel(
         viewModelScope.launch {
             combine(
                 _state.map { it.materialQuery }.distinctUntilChanged(),
-                _state.map { it.materialFilter }.distinctUntilChanged()
-            ) { query, filter -> query to filter }
+                _state.map { it.materialFilter }.distinctUntilChanged(),
+                _state.map { it.selectedCategory }.distinctUntilChanged()
+            ) { query, filter, category -> Triple(query, filter, category) }
                 .debounce(300.milliseconds)
-                .flatMapLatest { (query, filter) ->
+                .flatMapLatest { (query, filter, category) ->
                     _state.update { it.copy(isLoading = true) }
                     val tradeTypes = when (filter) {
-                        is All -> null
-                        is SelectedTrade -> filter.selectedTrade
+                        is MaterialListFilter.All -> null
+                        is MaterialListFilter.SelectedTrade -> filter.selectedTrade
                     }
-                    searchMaterialsUseCase(query = query, tradeTypes = tradeTypes)
+                    val queryCategoryId = if (category?.id == "uncategorized") null else category?.id
+                    searchMaterialsUseCase(
+                        query = query,
+                        tradeTypes = tradeTypes,
+                        categoryId = queryCategoryId
+                    ).map { result ->
+                        if (category?.id == "uncategorized" && result is Result.Success) {
+                            Result.Success(result.data.filter { it.categoryId == null })
+                        } else {
+                            result
+                        }
+                    }
                 }.collectLatest { result ->
                     _state.update { it.copy(isLoading = false) }
                     when (result) {
                         is Result.Error -> {
                             _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
                         }
+
                         is Result.Success -> {
                             _state.update {
                                 it.copy(

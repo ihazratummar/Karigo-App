@@ -1,0 +1,25 @@
+CREATE TABLE MaterialCategory (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    trade_type TEXT NOT NULL,
+    createdAt INTEGER NOT NULL,
+    updatedAt INTEGER NOT NULL
+);
+
+CREATE TABLE materials_new(
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    unit TEXT NOT NULL,
+    rate REAL NOT NULL,
+    trade_type TEXT NOT NULL,
+    category_id TEXT REFERENCES MaterialCategory(id) ON DELETE SET NULL ,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+INSERT INTO materials_new (id, name, unit, rate, trade_type, category_id, created_at, updated_at)
+SELECT id, name, unit, rate, trade_type, NULL, created_at, updated_at FROM materials;
+
+DROP TABLE materials;
+
+ALTER TABLE materials_new RENAME TO materials;

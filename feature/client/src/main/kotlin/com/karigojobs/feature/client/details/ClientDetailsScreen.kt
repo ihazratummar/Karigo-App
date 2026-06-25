@@ -137,7 +137,7 @@ fun ClientDetailsScreen(
                 ),
                 EarningState(
                     title = "PENDING",
-                    number = 0.0,
+                    number = clientModel.pendingAmount,
                     color = StatusPending
                 ),
                 EarningState(

@@ -164,7 +164,8 @@ fun SelectMaterialModal(
                 KarigojobsSearchField(
                     modifier = Modifier.contentHorizontalPadding(),
                     query = state.materialQuery,
-                    onQueryChange = { event(SiteEstimateEvent.SearchMaterials(it)) }
+                    onQueryChange = { event(SiteEstimateEvent.SearchMaterials(it)) },
+                    placeholder = "Search Materials"
                 )
                 LazyRow(
                     modifier = Modifier

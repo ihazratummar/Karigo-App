@@ -73,7 +73,7 @@ class JobRepositoryImpl(
             .getJobById(id = id)
             .asFlow()
             .mapToOneOrNull(ioDispatcher)
-            .map {job ->
+            .map { job ->
                 Result.Success(job?.toJobByIdModel())
             }
 
@@ -85,7 +85,8 @@ class JobRepositoryImpl(
     ): Result<Unit, JobError> {
         return safeCall(JobError.SaveFailed) {
             karigojobsDatabase.transaction {
-                val existingJob = karigojobsDatabase.jobQueries.getJobById(id = job.id).executeAsOneOrNull()
+                val existingJob =
+                    karigojobsDatabase.jobQueries.getJobById(id = job.id).executeAsOneOrNull()
                 val isNewJob = existingJob == null
 
                 karigojobsDatabase.jobQueries.insertJob(
@@ -116,6 +117,11 @@ class JobRepositoryImpl(
 
                 val isOldPaid = existingJob?.status == JobStatus.PAID.name
                 val isNewPaid = job.status == JobStatus.PAID
+                val isOldPending = existingJob?.status == JobStatus.PENDING.name
+                val isNewPending = job.status == JobStatus.PENDING
+
+                val isOldOutstanding = existingJob != null && !isOldPaid && !isOldPending
+                val isNewOutstanding = !isNewPaid && !isNewPending
 
                 val paidDelta = when {
                     !isOldPaid && isNewPaid -> newTotal
@@ -125,9 +131,16 @@ class JobRepositoryImpl(
                 }
 
                 val outstandingDelta = when {
-                    !isOldPaid && !isNewPaid -> newTotal - oldTotal
-                    !isOldPaid && isNewPaid -> -oldTotal
-                    isOldPaid && !isNewPaid -> newTotal
+                    !isOldOutstanding && isNewOutstanding -> newTotal
+                    isOldOutstanding && isNewOutstanding -> newTotal - oldTotal
+                    isOldOutstanding && !isNewOutstanding -> -oldTotal
+                    else -> 0.0
+                }
+
+                val pendingDelta = when {
+                    !isOldPending && isNewPending -> newTotal
+                    isOldPending && isNewPending -> newTotal - oldTotal
+                    isOldPending && !isNewPending -> -oldTotal
                     else -> 0.0
                 }
 
@@ -135,6 +148,7 @@ class JobRepositoryImpl(
                     revenueDelta = revenueDelta,
                     paidDelta = paidDelta,
                     outstandingDelta = outstandingDelta,
+                    pendingDelta = pendingDelta,
                     updatedAt = EpochUtils.now(),
                     id = job.clientId
                 )
@@ -182,6 +196,11 @@ class JobRepositoryImpl(
                 if (job != null && job.status != status.name) {
                     val isOldPaid = job.status == JobStatus.PAID.name
                     val isNewPaid = status == JobStatus.PAID
+                    val isOldPending = job.status == JobStatus.PENDING.name
+                    val isNewPending = status == JobStatus.PENDING
+                    
+                    val isOldOutstanding = !isOldPaid && !isOldPending
+                    val isNewOutstanding = !isNewPaid && !isNewPending
 
                     val revenueDelta = 0.0 // Status change doesn't change revenue
                     val paidDelta = when {
@@ -190,8 +209,14 @@ class JobRepositoryImpl(
                         else -> 0.0
                     }
                     val outstandingDelta = when {
-                        !isOldPaid && isNewPaid -> -job.total
-                        isOldPaid && !isNewPaid -> job.total
+                        !isOldOutstanding && isNewOutstanding -> job.total
+                        isOldOutstanding && !isNewOutstanding -> -job.total
+                        else -> 0.0
+                    }
+
+                    val pendingDelta = when {
+                        !isOldPending && isNewPending -> job.total
+                        isOldPending && !isNewPending -> -job.total
                         else -> 0.0
                     }
 
@@ -199,6 +224,7 @@ class JobRepositoryImpl(
                         revenueDelta = revenueDelta,
                         paidDelta = paidDelta,
                         outstandingDelta = outstandingDelta,
+                        pendingDelta = pendingDelta,
                         updatedAt = EpochUtils.now(),
                         id = job.client_id
                     )
@@ -218,10 +244,13 @@ class JobRepositoryImpl(
 
                     // 2. Adjust finances
                     val isPaid = job.status == JobStatus.PAID.name
+                    val isPending = job.status == JobStatus.PENDING.name
+                    val isOutstanding = !isPaid && !isPending
                     karigojobsDatabase.clientQueries.adjustClientFinances(
                         revenueDelta = -job.total,
                         paidDelta = if (isPaid) -job.total else 0.0,
-                        outstandingDelta = if (!isPaid) -job.total else 0.0,
+                        outstandingDelta = if (isOutstanding) -job.total else 0.0,
+                        pendingDelta = if (isPending) -job.total else 0.0,
                         updatedAt = EpochUtils.now(),
                         id = job.client_id
                     )

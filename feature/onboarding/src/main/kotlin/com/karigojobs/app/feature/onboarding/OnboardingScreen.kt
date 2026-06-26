@@ -66,7 +66,6 @@ fun OnboardingScreen(
             SnackbarHost(hostState = snackbarState)
         }
     ){paddingValues ->
-
         AnimatedContent(
             targetState = state.currentStep,
             label = "onboarding_step_animation",
@@ -79,7 +78,6 @@ fun OnboardingScreen(
                         ) + fadeOut()
             }
         ) {step ->
-
             when(step){
                 OnboardingStep.WELCOME -> {
                     WelcomeContent(

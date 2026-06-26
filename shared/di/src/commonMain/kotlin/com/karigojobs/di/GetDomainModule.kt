@@ -36,6 +36,7 @@ import com.karigojobs.domain.usecase.materialCategory.GetMaterialCategoryUseCase
 import com.karigojobs.domain.usecase.materialCategory.InsertMaterialCategoryUseCase
 import com.karigojobs.domain.usecase.materialCategory.UpdateMaterialCategoryUseCase
 import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
+import com.karigojobs.domain.usecase.settings.SaveWorkerProfileUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -90,5 +91,6 @@ fun getDomainModule() : Module = module {
     single { UpdateSiteEstimateUseCase(repository = get()) }
 
     single { GetWorkerProfileUseCase(workerRepository = get()) }
+    single { SaveWorkerProfileUseCase(workerRepository = get()) }
 
 }

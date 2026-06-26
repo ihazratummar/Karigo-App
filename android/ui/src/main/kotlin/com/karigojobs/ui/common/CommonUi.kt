@@ -289,7 +289,9 @@ fun KarigojobsTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
     maxLines: Int = 1,
-    minLines: Int = 1
+    minLines: Int = 1,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    trailingIcon: (@Composable () -> Unit)? = null
 ) {
 
     var isFocused by remember { mutableStateOf(false) }
@@ -319,8 +321,12 @@ fun KarigojobsTextField(
             .padding(horizontal = dimens.Padding.base, vertical = dimens.Padding.md),
         decorationBox = { innerTextField ->
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
             ) {
+                if (leadingIcon != null) {
+                    leadingIcon()
+                }
                 Box(modifier = Modifier.weight(1f)) {
                     if (value.isEmpty()) {
                         Text(
@@ -331,6 +337,9 @@ fun KarigojobsTextField(
                     }
                     innerTextField()
                 }
+                if (trailingIcon != null) {
+                    trailingIcon()
+                }
             }
         },
         keyboardOptions = KeyboardOptions(
@@ -339,6 +348,31 @@ fun KarigojobsTextField(
     )
 
 }
+
+
+@Composable
+fun IconPlaceholder(
+    modifier: Modifier = Modifier,
+    size: Dp? = null,
+    color: Color = Color.White.copy(alpha = 0.2f)
+) {
+    val actualSize = size ?: dimens.Icon.base
+    Box(
+        modifier = modifier
+            .size(actualSize)
+            .background(
+                color = color.copy(alpha = 0.08f),
+                shape = RoundedCornerShape(dimens.Radius.xs)
+            )
+            .border(
+                width = dimens.Border.thin,
+                color = color.copy(alpha = 0.25f),
+                shape = RoundedCornerShape(dimens.Radius.xs)
+            )
+    )
+}
+
+
 
 
 // ─────────────────────────────────────────────

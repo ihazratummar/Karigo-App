@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.job.GetAllJobUseCase
 import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
 import com.karigojobs.presentation.erroMap.asString
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +26,8 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase,
-    private val getAllJobUseCase: GetAllJobUseCase
+    private val getAllJobUseCase: GetAllJobUseCase,
+    private val getWorkerProfileUseCase: GetWorkerProfileUseCase
 ) : ViewModel() {
 
 
@@ -39,6 +41,7 @@ class HomeViewModel(
     init {
         loadSelectedTrade()
         loadAllJob()
+        loadWorker()
     }
 
 
@@ -82,6 +85,19 @@ class HomeViewModel(
                             )
                         }
                         _effect.emit(HomeEffect.ShowError(message = result.error.toString()))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadWorker() {
+        viewModelScope.launch {
+            getWorkerProfileUseCase().collectLatest { result ->
+                when(result){
+                    is Result.Error -> {}
+                    is Result.Success -> {
+                        _state.update { it.copy(workerProfileModel = result.data) }
                     }
                 }
             }

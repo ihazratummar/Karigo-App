@@ -8,5 +8,6 @@ data class WorkerProfileModel(
     val phone: String,
     val gstNumber: String  = "",
     val logoPath : String?  = "",
-    val email : String = ""
+    val email : String = "",
 )
+

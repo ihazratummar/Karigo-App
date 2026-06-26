@@ -16,6 +16,7 @@ import com.karigojobs.app.feature.homeScreen.HomeScreen
 import com.karigojobs.app.feature.job.create.JobCreateScreen
 import com.karigojobs.app.feature.job.details.JobDetailsScreen
 import com.karigojobs.app.feature.job.joblist.JobListScreen
+import com.karigojobs.app.feature.onboarding.WorkerOnboarding
 import com.karigojobs.feature.client.details.ClientDetailsScreen
 import com.karigojobs.feature.client.list.ClientListScreen
 import com.karigojobs.feature.settings.SettingsScreen
@@ -30,6 +31,7 @@ import com.karigojobs.presentation.job.details.JobDetailsViewModel
 import com.karigojobs.presentation.job.jobList.JobListViewModel
 import com.karigojobs.presentation.materials.list.MaterialCategoryViewModel
 import com.karigojobs.presentation.materials.list.MaterialListViewModel
+import com.karigojobs.presentation.onboarding.WorkerProfileViewModel
 import com.karigojobs.presentation.settings.SettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -77,6 +79,9 @@ fun NavGraphBuilder.contentNavigation(
                 },
                 onSeeAllEstimateClick = {
                     navHostController.navigate(MainRoute.EstimateListRoute)
+                },
+                onCompleteBannerClick = {
+                    navHostController.navigate(MainRoute.SetupWorkerRoute)
                 }
             )
         }
@@ -251,6 +256,19 @@ fun NavGraphBuilder.contentNavigation(
                 state = state,
                 onCompleteBannerClick = {
                     navHostController.navigate(MainRoute.SetupWorkerRoute)
+                }
+            )
+        }
+
+        composable<MainRoute.SetupWorkerRoute> {
+            val viewModel = koinViewModel<WorkerProfileViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            WorkerOnboarding(
+                state = state,
+                event = viewModel::onEvent,
+                effect = viewModel.effect,
+                onBackClick = {
+                    navHostController.popBackStack()
                 }
             )
         }

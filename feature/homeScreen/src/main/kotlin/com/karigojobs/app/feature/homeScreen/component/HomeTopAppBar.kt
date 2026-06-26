@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.karigojobs.share.model.WorkerProfileModel
 import com.karigojobs.ui.theme.dimens
 
 
@@ -23,7 +24,8 @@ import com.karigojobs.ui.theme.dimens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopAppBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    profile : WorkerProfileModel?
 ) {
     TopAppBar(
         title = {
@@ -32,13 +34,13 @@ fun HomeTopAppBar(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
-                    text = "Good Morning, Hazrat Ummar",
+                    text = "Good Morning, ${profile?.ownerName?:"Contractor"}",
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
                 Text(
-                    text = "Ummar Construction",
+                    text = profile?.businessName?:"Karigo",
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground
                     )

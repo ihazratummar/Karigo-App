@@ -28,6 +28,7 @@ import com.karigojobs.app.feature.homeScreen.component.ScrollableTradeView
 import com.karigojobs.app.feature.homeScreen.component.SiteEstimatesCard
 import com.karigojobs.presentation.dashboard.HomeEffect
 import com.karigojobs.presentation.dashboard.HomeState
+import com.karigojobs.ui.common.ActionNeedBanner
 import com.karigojobs.ui.common.JobCard
 import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.theme.dimens
@@ -52,10 +53,12 @@ fun HomeScreen(
     homeEffect: SharedFlow<HomeEffect>?,
     onJobClick : (String) -> Unit,
     navigateToAddEstimate : () -> Unit,
-    onSeeAllEstimateClick : () -> Unit
+    onSeeAllEstimateClick : () -> Unit,
+    onCompleteBannerClick : () -> Unit
 ) {
 
     val snackbarState = remember { SnackbarHostState() }
+    val profile = homeState.workerProfileModel
 
     LaunchedEffect(Unit) {
         homeEffect?.collectLatest { effect ->
@@ -76,7 +79,7 @@ fun HomeScreen(
         },
         modifier = modifier,
         topBar = {
-            HomeTopAppBar()
+            HomeTopAppBar(profile = profile)
         },
         contentWindowInsets = WindowInsets(),
         floatingActionButton = {
@@ -93,6 +96,12 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(dimens.Space.base),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            item {
+                if (profile == null) {
+                    ActionNeedBanner(onClick = onCompleteBannerClick)
+                }
+            }
+
             item {
                 ScrollableTradeView(trades = homeState.selectedTrades)
             }

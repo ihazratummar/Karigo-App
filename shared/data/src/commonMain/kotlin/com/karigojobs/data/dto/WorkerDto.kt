@@ -18,6 +18,7 @@ fun Worker_profile.toWorkerModel() : WorkerProfileModel {
         ownerName = owner_name,
         address = address,
         phone = phone,
+        email = email,
         gstNumber = gst_number,
         logoPath = logo_path
     )

@@ -1,11 +1,719 @@
 package com.karigojobs.app.feature.onboarding
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+
+import com.karigojobs.app.android.ui.R
+import com.karigojobs.presentation.onboarding.WorkerProfileEffect
+import com.karigojobs.presentation.onboarding.WorkerProfileEvent
+import com.karigojobs.presentation.onboarding.WorkerProfileState
+import com.karigojobs.presentation.onboarding.WorkerProfileStep
+import com.karigojobs.ui.common.IconPlaceholder
+import com.karigojobs.ui.common.KarigoIconWIthBgCick
+import com.karigojobs.ui.common.KarigojobsTextField
+import com.karigojobs.ui.theme.KarigojobsIconColor
+import com.karigojobs.ui.theme.KarigojobsShapes
+import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.KarigojobsText3
+import com.karigojobs.ui.theme.dimens
+import kotlinx.coroutines.flow.SharedFlow
 
 /**
- * @author hazratummar
- * Created on 24/06/26
+ * Worker Onboarding wizard screen consisting of 4 steps to set up their profile.
  */
- 
+@Composable
+fun WorkerOnboarding(
+    modifier: Modifier = Modifier,
+    state: WorkerProfileState,
+    event: (WorkerProfileEvent) -> Unit,
+    effect: SharedFlow<WorkerProfileEffect>?,
+    onBackClick: () -> Unit
+) {
+    val snackbarHostState = remember { SnackbarHostState() }
 
+    LaunchedEffect(Unit) {
+        effect?.collect { effect ->
+            when (effect) {
+                WorkerProfileEffect.NavBack -> {
+                    onBackClick()
+                }
+                is WorkerProfileEffect.ShowError -> {
+                    snackbarHostState.showSnackbar(effect.message)
+                }
+            }
+        }
+    }
 
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        modifier = modifier.fillMaxSize(),
+        containerColor = MaterialTheme.colorScheme.background,
+        topBar = {
+            OnboardingHeader(
+                step = state.currentStep,
+                onBack = onBackClick
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(horizontal = dimens.Padding.base)
+                .fillMaxSize()
+        ) {
+            Spacer(modifier = Modifier.height(dimens.Space.xl))
 
+            // Body Step Views
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            ) {
+                AnimatedContent(
+                    targetState = state.currentStep,
+                    transitionSpec = { fadeIn() togetherWith fadeOut() },
+                    label = "step_transition"
+                ) { step ->
+                    when (step) {
+                        WorkerProfileStep.OWNER_NAME -> {
+                            OwnerNameStep(
+                                name = state.ownerName,
+                                onNameChange = { event(WorkerProfileEvent.OwnerNameField(it)) }
+                            )
+                        }
+                        WorkerProfileStep.BUSINESS_NAME -> {
+                            BusinessNameStep(
+                                businessName = state.businessName,
+                                onBusinessNameChange = { event(WorkerProfileEvent.BusinessNameField(it)) }
+                            )
+                        }
+                        WorkerProfileStep.CONTACT_DETAILS -> {
+                            ContactDetailsStep(
+                                phone = state.phoneNumber,
+                                email = state.email,
+                                onPhoneChange = { event(WorkerProfileEvent.PhoneNumberField(it)) },
+                                onEmailChange = { event(WorkerProfileEvent.EmailField(it)) }
+                            )
+                        }
+                        WorkerProfileStep.EXTRA_INFO -> {
+                            ExtraInfoStep(
+                                gst = state.gstNumber,
+                                address = state.address,
+                                onGstChange = { event(WorkerProfileEvent.GstNumberField(it)) },
+                                onAddressChange = { event(WorkerProfileEvent.AddressField(it)) }
+                            )
+                        }
+                    }
+                }
+            }
+
+            // Bottom Navigation Card & Button Controls
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = dimens.Padding.base),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.sm),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Your Progress Card on Steps 3 and 4
+                if (state.currentStep == WorkerProfileStep.CONTACT_DETAILS || state.currentStep == WorkerProfileStep.EXTRA_INFO) {
+                    ProgressCard(state = state)
+                }
+
+                HorizontalDivider(color = Color(0xFF1E1E1E), thickness = dimens.Divider.thickness)
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+                ) {
+                    // Left navigation button (back or restart)
+                    if (state.currentStep != WorkerProfileStep.OWNER_NAME) {
+                        Box(
+                            modifier = Modifier
+                                .size(dimens.Icon._3xl)
+                                .clip(KarigojobsShapes.medium)
+                                .background(Color(0xFF1E1E1E))
+                                .clickable {
+                                    when (state.currentStep) {
+                                        WorkerProfileStep.BUSINESS_NAME -> event(WorkerProfileEvent.BackToOwnerName)
+                                        WorkerProfileStep.CONTACT_DETAILS -> event(WorkerProfileEvent.BackToBusiness)
+                                        WorkerProfileStep.EXTRA_INFO -> event(WorkerProfileEvent.BackToContactDetails)
+                                        else -> {}
+                                    }
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.arrow_left),
+                                contentDescription = "Back",
+                                tint = Color.White,
+                                modifier = Modifier.size(dimens.Icon.sm)
+                            )
+                        }
+                    }
+
+                    // Main Action Button (Continue / Finish Setup)
+                    val isLastStep = state.currentStep == WorkerProfileStep.EXTRA_INFO
+                    val isStepValid = when (state.currentStep) {
+                        WorkerProfileStep.OWNER_NAME -> state.ownerName.isNotBlank()
+                        WorkerProfileStep.BUSINESS_NAME -> state.businessName.isNotBlank()
+                        else -> true
+                    }
+
+                    val buttonColor = if (isStepValid) KarigojobsIconColor else Color(0xFF1E1E1E)
+                    val contentColor = if (isStepValid) Color.Black else KarigojobsText3
+
+                    Button(
+                        onClick = {
+                            if (isStepValid) {
+                                when (state.currentStep) {
+                                    WorkerProfileStep.OWNER_NAME -> event(WorkerProfileEvent.OwnerNameComplete)
+                                    WorkerProfileStep.BUSINESS_NAME -> event(WorkerProfileEvent.BusinessNameCompete)
+                                    WorkerProfileStep.CONTACT_DETAILS -> event(WorkerProfileEvent.ContactDetailsComplete)
+                                    WorkerProfileStep.EXTRA_INFO -> event(WorkerProfileEvent.ExtraInfoComplete)
+                                }
+                            }
+                        },
+                        modifier = Modifier.weight(1f).height(dimens.Height.minTouch),
+                        enabled = isStepValid,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = buttonColor,
+                            contentColor = contentColor,
+                            disabledContainerColor = Color(0xFF1E1E1E),
+                            disabledContentColor = KarigojobsText3
+                        ),
+                        shape = KarigojobsShapes.medium
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+                        ) {
+                            if (isLastStep) {
+                                Icon(
+                                    painter = painterResource(R.drawable.check),
+                                    contentDescription = null,
+                                    tint = contentColor,
+                                    modifier = Modifier.size(dimens.Icon.xs)
+                                )
+                                Text(
+                                    text = "Finish Setup",
+                                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                                )
+                            } else {
+                                Text(
+                                    text = "Continue",
+                                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                                )
+                                Icon(
+                                    painter = painterResource(R.drawable.arrow_right),
+                                    contentDescription = null,
+                                    tint = contentColor,
+                                    modifier = Modifier.size(dimens.Icon.xs)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Skip button for optional steps (Steps 3 & 4)
+                if (state.currentStep == WorkerProfileStep.CONTACT_DETAILS || state.currentStep == WorkerProfileStep.EXTRA_INFO) {
+                    TextButton(
+                        onClick = {
+                            when (state.currentStep) {
+                                WorkerProfileStep.CONTACT_DETAILS -> event(WorkerProfileEvent.ContactDetailsComplete)
+                                WorkerProfileStep.EXTRA_INFO -> event(WorkerProfileEvent.ExtraInfoComplete)
+                                else -> {}
+                            }
+                        }
+                    ) {
+                        Text(
+                            text = "Skip this step",
+                            style = MaterialTheme.typography.labelLarge.copy(color = KarigojobsText2)
+                        )
+                    }
+                } else {
+                    Spacer(modifier = Modifier.height(dimens.Space.xl))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun OnboardingHeader(
+    step: WorkerProfileStep,
+    onBack: () -> Unit
+) {
+    val (stepNumber, progress, percentage) = when (step) {
+        WorkerProfileStep.OWNER_NAME -> Triple("Step 1 of 4", 0.25f, "25%")
+        WorkerProfileStep.BUSINESS_NAME -> Triple("Step 2 of 4", 0.50f, "50%")
+        WorkerProfileStep.CONTACT_DETAILS -> Triple("Step 3 of 4", 0.75f, "75%")
+        WorkerProfileStep.EXTRA_INFO -> Triple("Step 4 of 4", 1.00f, "100%")
+    }
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // Squared back button inside dark card background
+        KarigoIconWIthBgCick(
+            icon =R.drawable.arrow_left,
+            iconColor = MaterialTheme.colorScheme.onBackground,
+            onClick = onBack
+        )
+        Spacer(modifier = Modifier.width(dimens.Space.base))
+
+        Column(
+            modifier = Modifier.padding(end = dimens.Padding.base).weight(1f)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "$stepNumber ",
+                    style = MaterialTheme.typography.bodySmall.copy(color = KarigojobsText2)
+                )
+                Text(
+                    text = percentage,
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = KarigojobsIconColor
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.height(dimens.Space.xs))
+
+            // Horizon Progress Bar
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(dimens.Height.progressTrack)
+                    .clip(CircleShape)
+                    .background(Color(0xFF1E1E1E))
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(progress)
+                        .fillMaxHeight()
+                        .clip(CircleShape)
+                        .background(
+                            Brush.horizontalGradient(
+                                colors = listOf(KarigojobsIconColor, Color.Transparent)
+                            )
+                        )
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun OwnerNameStep(
+    name: String,
+    onNameChange: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Who are you?",
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+        )
+        Text(
+            text = "Let's start with your name",
+            style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
+        )
+
+        Spacer(modifier = Modifier.height(dimens.Space._2xl))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+        ) {
+            Text(
+                text = "OWNER NAME",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = KarigojobsText2
+                )
+            )
+            Text(
+                text = "REQUIRED",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Red
+                )
+            )
+        }
+
+        Spacer(modifier = Modifier.height(dimens.Space.sm))
+
+        KarigojobsTextField(
+            value = name,
+            onValueChange = onNameChange,
+            placeholder = "Your full name",
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.user_line),
+                    contentDescription = null,
+                    tint = KarigojobsText2,
+                    modifier = Modifier.size(dimens.Icon.sm)
+                )
+            }
+        )
+    }
+}
+
+@Composable
+private fun BusinessNameStep(
+    businessName: String,
+    onBusinessNameChange: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Your Business",
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+        )
+        Text(
+            text = "What do you call your work?",
+            style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
+        )
+
+        Spacer(modifier = Modifier.height(dimens.Space._2xl))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+        ) {
+            Text(
+                text = "BUSINESS NAME",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = KarigojobsText2
+                )
+            )
+            Text(
+                text = "REQUIRED",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Red
+                )
+            )
+        }
+
+        Spacer(modifier = Modifier.height(dimens.Space.sm))
+
+        KarigojobsTextField(
+            value = businessName,
+            onValueChange = onBusinessNameChange,
+            placeholder = "Your shop or business name",
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.store),
+                    contentDescription = null,
+                    tint = KarigojobsText2,
+                    modifier = Modifier.size(dimens.Icon.sm)
+                )
+            }
+        )
+    }
+}
+
+@Composable
+private fun ContactDetailsStep(
+    phone: String,
+    email: String,
+    onPhoneChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Contact Details",
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+        )
+        Text(
+            text = "So clients can reach you",
+            style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
+        )
+
+        Spacer(modifier = Modifier.height(dimens.Space._2xl))
+
+        Text(
+            text = "PHONE NUMBER",
+            style = MaterialTheme.typography.bodySmall.copy(
+                fontWeight = FontWeight.Bold,
+                color = KarigojobsText2
+            )
+        )
+        Spacer(modifier = Modifier.height(dimens.Space.sm))
+        KarigojobsTextField(
+            value = phone,
+            onValueChange = onPhoneChange,
+            placeholder = "+91 98765 43210",
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.phone),
+                    contentDescription = null,
+                    tint = KarigojobsText2,
+                    modifier = Modifier.size(dimens.Icon.sm)
+                )
+            }
+        )
+        Spacer(modifier = Modifier.height(dimens.Space.xs))
+        Text(
+            text = "Optional — you can skip this",
+            style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
+        )
+
+        Spacer(modifier = Modifier.height(dimens.Space.lg))
+
+        Text(
+            text = "EMAIL ADDRESS",
+            style = MaterialTheme.typography.bodySmall.copy(
+                fontWeight = FontWeight.Bold,
+                color = KarigojobsText2
+            )
+        )
+        Spacer(modifier = Modifier.height(dimens.Space.sm))
+        KarigojobsTextField(
+            value = email,
+            onValueChange = onEmailChange,
+            placeholder = "your@email.com",
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.email),
+                    contentDescription = null,
+                    tint = KarigojobsText2,
+                    modifier = Modifier.size(dimens.Icon.sm)
+                )
+            }
+        )
+        Spacer(modifier = Modifier.height(dimens.Space.xs))
+        Text(
+            text = "Optional — you can skip this",
+            style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
+        )
+    }
+}
+
+@Composable
+private fun ExtraInfoStep(
+    gst: String,
+    address: String,
+    onGstChange: (String) -> Unit,
+    onAddressChange: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Extra Info",
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+        )
+        Text(
+            text = "Optional but helpful",
+            style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
+        )
+
+        Spacer(modifier = Modifier.height(dimens.Space._2xl))
+
+        Text(
+            text = "GST NUMBER",
+            style = MaterialTheme.typography.bodySmall.copy(
+                fontWeight = FontWeight.Bold,
+                color = KarigojobsText2
+            )
+        )
+        Spacer(modifier = Modifier.height(dimens.Space.sm))
+        KarigojobsTextField(
+            value = gst,
+            onValueChange = onGstChange,
+            placeholder = "22AAAAA0000A1Z5",
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.estimate),
+                    contentDescription = null,
+                    tint = KarigojobsText2,
+                    modifier = Modifier.size(dimens.Icon.sm)
+                )
+            }
+        )
+        Spacer(modifier = Modifier.height(dimens.Space.xs))
+        Text(
+            text = "Optional — you can skip this",
+            style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
+        )
+
+        Spacer(modifier = Modifier.height(dimens.Space.lg))
+
+        Text(
+            text = "BUSINESS ADDRESS",
+            style = MaterialTheme.typography.bodySmall.copy(
+                fontWeight = FontWeight.Bold,
+                color = KarigojobsText2
+            )
+        )
+        Spacer(modifier = Modifier.height(dimens.Space.sm))
+        KarigojobsTextField(
+            value = address,
+            onValueChange = onAddressChange,
+            placeholder = "Full business address",
+            singleLine = false,
+            minLines = 3,
+            maxLines = 3,
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.map_point),
+                    contentDescription = null,
+                    tint = KarigojobsText2,
+                    modifier = Modifier.size(dimens.Icon.sm)
+                )
+            }
+        )
+        Spacer(modifier = Modifier.height(dimens.Space.xs))
+        Text(
+            text = "Optional — you can skip this",
+            style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
+        )
+    }
+}
+
+@Composable
+private fun ProgressCard(state: WorkerProfileState) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFF161616)
+        ),
+        shape = KarigojobsShapes.medium,
+        border = BorderStroke(dimens.Border.thin, Color(0xFF2E2E2E))
+    ) {
+        Column(
+            modifier = Modifier.padding(dimens.Padding.base),
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.check),
+                    contentDescription = null,
+                    tint = Color(0xFF00E6C3),
+                    modifier = Modifier.size(dimens.Icon.xs)
+                )
+                Text(
+                    text = "Your Progress",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.height(dimens.Space._2xs))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Required fields",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = KarigojobsText2
+                )
+                val requiredCount = (if (state.ownerName.isNotBlank()) 1 else 0) + (if (state.businessName.isNotBlank()) 1 else 0)
+                Text(
+                    text = "$requiredCount/2",
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        fontWeight = FontWeight.Bold
+                    ),
+                    color = if (requiredCount == 2) Color(0xFF00E6C3) else Color.White
+                )
+            }
+
+            if (state.currentStep == WorkerProfileStep.EXTRA_INFO) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Optional details",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = KarigojobsText2
+                    )
+                    val optionalCount = (if (state.phoneNumber.isNotBlank()) 1 else 0) +
+                            (if (state.email.isNotBlank()) 1 else 0) +
+                            (if (state.gstNumber.isNotBlank()) 1 else 0) +
+                            (if (state.address.isNotBlank()) 1 else 0)
+                    Text(
+                        text = "$optionalCount/4",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = if (optionalCount == 4) Color(0xFF00E6C3) else Color.White
+                    )
+                }
+            }
+        }
+    }
+}

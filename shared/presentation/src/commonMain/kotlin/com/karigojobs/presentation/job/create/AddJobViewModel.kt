@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.repository.DeviceContactProvider
 import com.karigojobs.domain.result.Result
-import com.karigojobs.domain.usecase.material.GetAllMaterialsUseCase
-import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
+import com.karigojobs.domain.usecase.materialCategory.GetMaterialCategoryUseCase
 import com.karigojobs.domain.usecase.client.GetClientUseCase
 import com.karigojobs.domain.usecase.client.InsertClientUseCase
 import com.karigojobs.domain.usecase.client.IsClientExistUseCase
@@ -20,7 +20,10 @@ import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
+import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.share.model.TradeType
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -29,7 +32,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -49,8 +58,9 @@ class AddJobViewModel(
     private val saveFullJobTransactionUseCase: SaveFullJobTransactionUseCase,
     private val isClientExistUseCase: IsClientExistUseCase,
     private val insertClientUseCase: InsertClientUseCase,
-    private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase,
-    private val getAllMaterialUseCase: GetAllMaterialsUseCase,
+    private val getSelectedTradeTypeUseCase: com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase,
+    private val searchMaterialsUseCase: SearchMaterialsUseCase,
+    private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase,
     private val getJobDetailsUseCase: GetJobDetailsUseCase,
     private val getJobLabourItemUseCase: GetJobLabourItemUseCase,
     private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase,
@@ -75,7 +85,8 @@ class AddJobViewModel(
     /** Initializes data required for the job form. */
     init {
         loadSelectedTradeType()
-        loadMaterials()
+        observeMaterialsSearch()
+        observeCategoriesLoading()
         if (jobId != null) {
             loadExistingJob()
         }
@@ -172,20 +183,55 @@ class AddJobViewModel(
         }
     }
 
-    /** Fetches available materials from the local library. */
-    private fun loadMaterials() {
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    private fun observeMaterialsSearch() {
         viewModelScope.launch {
-            getAllMaterialUseCase().collectLatest { result ->
-                when (result) {
-                    is Result.Success -> {
-                        _state.update { it.copy(availableMaterials = result.data) }
+            combine(
+                _state.map { it.materialQuery }.distinctUntilChanged(),
+                _state.map { it.selectedMaterialTradeType }.distinctUntilChanged(),
+                _state.map { it.selectedMaterialCategory }.distinctUntilChanged()
+            ) { query, tradeType, category -> Triple(query, tradeType, category) }
+                .debounce(300.milliseconds)
+                .flatMapLatest { (query, tradeType, category) ->
+                    _state.update { it.copy(isLoading = true) }
+                    val tradeTypes = tradeType?.let { setOf(it) }
+                    val queryCategoryId = if (category?.id == "uncategorized") null else category?.id
+                    searchMaterialsUseCase(
+                        query = query,
+                        tradeTypes = tradeTypes,
+                        categoryId = queryCategoryId
+                    ).map { result ->
+                        if (category?.id == "uncategorized" && result is Result.Success) {
+                            Result.Success(result.data.filter { it.categoryId == null })
+                        } else {
+                            result
+                        }
                     }
-
-                    is Result.Error -> {
+                }
+                .collectLatest { result ->
+                    _state.update { it.copy(isLoading = false) }
+                    if (result is Result.Success) {
+                        _state.update { it.copy(availableMaterials = result.data) }
+                    } else if (result is Result.Error) {
                         _effect.emit(ShowError(result.error.asString()))
                     }
                 }
-            }
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun observeCategoriesLoading() {
+        viewModelScope.launch {
+            _state.map { it.selectedMaterialTradeType }
+                .distinctUntilChanged()
+                .flatMapLatest { tradeType ->
+                    getMaterialCategoryUseCase(tradeType)
+                }
+                .collectLatest { result ->
+                    if (result is Result.Success) {
+                        _state.update { it.copy(materialCategories = result.data) }
+                    }
+                }
         }
     }
 
@@ -357,44 +403,101 @@ class AddJobViewModel(
                 }
             }
 
-            is AddJobIntent.ToggleMaterialLibrary -> {
-                _state.update { it.copy(isMaterialLibraryModalOpen = event.isOpen) }
-            }
-            is AddJobIntent.IncreaseMaterialQuantity -> {
-                val existingItem = _state.value.selectedMaterials.find { it.materialId == event.id }
-                if (existingItem != null){
-                    val updatedList  = _state.value.selectedMaterials.map { item ->
-                        if (item.materialId == event.id){
-                            val newQty = item.quantity + 1
-                            item.copy(quantity = newQty, total = newQty * item.unitPrice)
-                        }else item
-                    }
-                    _state.update { it.copy(selectedMaterials = updatedList) }
-                }else{
-                    val starterMat = _state.value.availableMaterials.find { it.id == event.id }
-                    if (starterMat != null){
-                        val newItem = JobMaterialItemModel(
-                            id = Uuid.random().toString(),
-                            jobId = draftJobId,
-                            materialId = starterMat.id,
-                            name =  starterMat.name,
-                            unit = starterMat.unit,
-                            unitPrice = starterMat.price,
-                            quantity = 1,
-                            total = starterMat.price
-                        )
-                        _state.update { it.copy(selectedMaterials = it.selectedMaterials + newItem) }
-                    }
+            is AddJobIntent.ToggleMaterialPicker -> {
+                _state.update {
+                    it.copy(
+                        isMaterialPickerOpen = event.isOpen,
+                        materialQuery = if (!event.isOpen) "" else it.materialQuery,
+                        selectedMaterialTradeType = if (!event.isOpen) null else it.selectedMaterialTradeType,
+                        selectedMaterialCategory = if (!event.isOpen) null else it.selectedMaterialCategory
+                    )
                 }
             }
+
+            is AddJobIntent.SearchMaterials -> {
+                _state.update { it.copy(materialQuery = event.query) }
+            }
+
+            is AddJobIntent.SelectMaterialTradeType -> {
+                _state.update {
+                    it.copy(
+                        selectedMaterialTradeType = event.tradeType,
+                        selectedMaterialCategory = null
+                    )
+                }
+            }
+
+            is AddJobIntent.SelectMaterialCategory -> {
+                _state.update { it.copy(selectedMaterialCategory = event.category) }
+            }
+
+            is AddJobIntent.AddMaterials -> {
+                _state.update { currentState ->
+                    val existingMaterialIds = currentState.selectedMaterials.mapNotNull { it.materialId }.toSet()
+                    val updatedList = currentState.selectedMaterials.filter { it.materialId in event.materials }.toMutableList()
+                    val newMaterialIds = event.materials.filter { it !in existingMaterialIds }
+
+                    newMaterialIds.forEach { id ->
+                        currentState.availableMaterials.find { it.id == id }?.let { material ->
+                            updatedList.add(
+                                JobMaterialItemModel(
+                                    id = Uuid.random().toString(),
+                                    jobId = draftJobId,
+                                    materialId = material.id,
+                                    name = material.name,
+                                    unit = material.unit,
+                                    unitPrice = material.price,
+                                    quantity = 1,
+                                    total = material.price
+                                )
+                            )
+                        }
+                    }
+                    currentState.copy(selectedMaterials = updatedList)
+                }
+            }
+
+            is AddJobIntent.ChangeMaterialQuantity -> {
+                val updatedList = _state.value.selectedMaterials.map { item ->
+                    if (item.materialId == event.id) {
+                        val cleanedInput = event.quantity.replace(",", ".")
+                        val parsedQty = cleanedInput.toIntOrNull() ?: item.quantity
+                        item.copy(
+                            quantity = parsedQty,
+                            quantityInput = event.quantity,
+                            total = parsedQty * item.unitPrice
+                        )
+                    } else item
+                }
+                _state.update { it.copy(selectedMaterials = updatedList) }
+            }
+
+            is AddJobIntent.IncreaseMaterialQuantity -> {
+                val updatedList = _state.value.selectedMaterials.map { item ->
+                    if (item.materialId == event.id) {
+                        val newQty = item.quantity + 1
+                        item.copy(
+                            quantity = newQty,
+                            quantityInput = newQty.toString(),
+                            total = newQty * item.unitPrice
+                        )
+                    } else item
+                }
+                _state.update { it.copy(selectedMaterials = updatedList) }
+            }
+
             is AddJobIntent.MinusMaterialQuantity -> {
                 val updateList = _state.value.selectedMaterials.mapNotNull { item ->
                     if (item.materialId == event.id) {
                         if (item.quantity > 1) {
                             val newQty = item.quantity - 1
-                            item.copy(quantity = newQty, total = newQty * item.unitPrice)
+                            item.copy(
+                                quantity = newQty,
+                                quantityInput = newQty.toString(),
+                                total = newQty * item.unitPrice
+                            )
                         } else {
-                            null // If quantity drops below 1, remove the item entirely
+                            null
                         }
                     } else item
                 }

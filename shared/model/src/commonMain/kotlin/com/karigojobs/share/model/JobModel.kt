@@ -66,7 +66,8 @@ data class JobMaterialItemModel(
     val unit: String,
     val unitPrice: Double,
     val quantity: Int,
-    val total: Double
+    val total: Double,
+    val quantityInput: String = quantity.toString()
 ) {
 
     val mainTotal: Double get() = unitPrice * quantity

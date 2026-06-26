@@ -25,7 +25,7 @@ import com.karigojobs.app.feature.job.component.AddMaterialItemSection
 import com.karigojobs.app.feature.job.component.CanSaveButton
 import com.karigojobs.app.feature.job.component.CreateLabourItemModal
 import com.karigojobs.app.feature.job.component.JobTitleSection
-import com.karigojobs.app.feature.job.component.MaterialLibraryModal
+import com.karigojobs.ui.common.SelectMaterialModal
 import com.karigojobs.app.feature.job.component.SelectTradeSection
 import com.karigojobs.app.feature.job.component.TotalScreenCard
 import com.karigojobs.presentation.job.create.AddJobEffect
@@ -136,13 +136,20 @@ fun JobCreateScreen(
             )
         }
 
-        if (addJobState.isMaterialLibraryModalOpen) {
-            MaterialLibraryModal(
-                onDismiss = {
-                    onIntent(AddJobIntent.ToggleMaterialLibrary(false))
-                },
-                addJobState = addJobState,
-                onIntent = onIntent
+        if (addJobState.isMaterialPickerOpen) {
+            SelectMaterialModal(
+                onDismiss = { onIntent(AddJobIntent.ToggleMaterialPicker(false)) },
+                availableMaterials = addJobState.availableMaterials,
+                tradeTypes = addJobState.tradeTypes,
+                selectedTradeType = addJobState.selectedMaterialTradeType,
+                onTradeTypeSelected = { onIntent(AddJobIntent.SelectMaterialTradeType(it)) },
+                materialCategories = addJobState.materialCategories,
+                selectedCategory = addJobState.selectedMaterialCategory,
+                onCategorySelected = { onIntent(AddJobIntent.SelectMaterialCategory(it)) },
+                searchQuery = addJobState.materialQuery,
+                onSearchQueryChanged = { onIntent(AddJobIntent.SearchMaterials(it)) },
+                selectedMaterialIds = addJobState.selectedMaterials.mapNotNull { it.materialId }.toSet(),
+                onConfirmClick = { onIntent(AddJobIntent.AddMaterials(it)) }
             )
         }
 
@@ -220,9 +227,14 @@ fun JobCreateScreen(
             item {
                 AddMaterialItemSection(
                     onClick = {
-                        onIntent(AddJobIntent.ToggleMaterialLibrary(true))
+                        onIntent(AddJobIntent.ToggleMaterialPicker(true))
                     },
                     materialsItems = addJobState.selectedMaterials,
+                    onMaterialQuantityChange = { id, qty ->
+                        onIntent(AddJobIntent.ChangeMaterialQuantity(id, qty))
+                    },
+                    onMaterialMinusClick = { onIntent(AddJobIntent.MinusMaterialQuantity(it)) },
+                    onMaterialPlusClick = { onIntent(AddJobIntent.IncreaseMaterialQuantity(it)) },
                     onRemoveMaterialItemClick = { onIntent(AddJobIntent.RemoveMaterial(it)) }
                 )
             }

@@ -5,6 +5,7 @@ import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobStatus
+import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 
@@ -37,7 +38,11 @@ data class AddJobState(
     // Materials
     val availableMaterials: List<MaterialsModel> = emptyList(),
     val selectedMaterials: List<JobMaterialItemModel> = emptyList(),
-    val isMaterialLibraryModalOpen : Boolean = false
+    val isMaterialPickerOpen : Boolean = false,
+    val materialQuery: String = "",
+    val selectedMaterialTradeType: TradeType? = null,
+    val selectedMaterialCategory: MaterialCategoryModel? = null,
+    val materialCategories: List<MaterialCategoryModel> = emptyList()
 
     ){
 
@@ -63,7 +68,12 @@ sealed interface AddJobIntent {
     data class RemoveLabourItem(val id: String) : AddJobIntent
     data class LabourItemModalOpen(val isOpen: Boolean) : AddJobIntent
 
-    data class ToggleMaterialLibrary(val isOpen: Boolean) : AddJobIntent
+    data class ToggleMaterialPicker(val isOpen: Boolean) : AddJobIntent
+    data class SearchMaterials(val query: String) : AddJobIntent
+    data class SelectMaterialTradeType(val tradeType: TradeType?) : AddJobIntent
+    data class SelectMaterialCategory(val category: MaterialCategoryModel?) : AddJobIntent
+    data class AddMaterials(val materials: List<String>) : AddJobIntent
+    data class ChangeMaterialQuantity(val id: String, val quantity: String) : AddJobIntent
     data class IncreaseMaterialQuantity(val id: String) : AddJobIntent
     data class MinusMaterialQuantity(val id: String) : AddJobIntent
     data class RemoveMaterial(val id: String) : AddJobIntent

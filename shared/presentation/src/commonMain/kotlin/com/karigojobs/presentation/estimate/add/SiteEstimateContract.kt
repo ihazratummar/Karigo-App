@@ -3,6 +3,7 @@ package com.karigojobs.presentation.estimate.add
 import com.karigojobs.domain.repository.DeviceContact
 import com.karigojobs.presentation.materials.list.MaterialListFilter
 import com.karigojobs.share.model.ClientModel
+import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.SiteEstimateMaterial
 import com.karigojobs.share.model.TradeType
@@ -34,6 +35,8 @@ data class SiteEstimateState(
     val materialFilter: MaterialListFilter = MaterialListFilter.All,
     val tradeTypes : Set<TradeType> ? = null,
     val selectedTradeType : TradeType? = null,
+    val materialCategories: List<MaterialCategoryModel> = emptyList(),
+    val selectedCategory: MaterialCategoryModel? = null,
     val isMaterialPickerOpen : Boolean = false
 ){
     val materialsTotal : Double get() = selectedMaterials.sumOf { it.quantity * it.rate }
@@ -54,6 +57,7 @@ sealed interface SiteEstimateEvent {
     data class ToggleRateVisibility( val isVisible: Boolean) : SiteEstimateEvent
     data class SearchMaterials (val query: String) : SiteEstimateEvent
     data class SelectTradeType(val tradeType: TradeType?) : SiteEstimateEvent
+    data class SelectCategory(val category: MaterialCategoryModel?) : SiteEstimateEvent
 
     data class ToggleMaterialPicker(val isOpen: Boolean) : SiteEstimateEvent
     data class AddMaterials(val materials: List<String>) : SiteEstimateEvent

@@ -248,7 +248,10 @@ fun NavGraphBuilder.contentNavigation(
             val viewModel = koinViewModel<SettingsViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             SettingsScreen(
-                state = state
+                state = state,
+                onCompleteBannerClick = {
+                    navHostController.navigate(MainRoute.SetupWorkerRoute)
+                }
             )
         }
 

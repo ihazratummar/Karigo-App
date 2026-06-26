@@ -60,6 +60,9 @@ sealed class MainRoute {
 
     @Serializable
     data object NotificationRoute
+
+    @Serializable
+    data object SetupWorkerRoute
 }
 
 @Serializable

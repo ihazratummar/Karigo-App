@@ -30,7 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.karigo.app.feature.siteEstimate.component.AddMaterialCard
 import com.karigo.app.feature.siteEstimate.component.EstimateTotalCard
-import com.karigo.app.feature.siteEstimate.component.SelectMaterialModal
+import com.karigojobs.ui.common.SelectMaterialModal
 import com.karigo.app.feature.siteEstimate.component.SelectedMaterialSection
 import com.karigojobs.presentation.estimate.add.EstimateEffect
 import com.karigojobs.presentation.estimate.add.SiteEstimateEvent
@@ -124,8 +124,17 @@ fun AddEstimateScreen(
         if (state.isMaterialPickerOpen) {
             SelectMaterialModal(
                 onDismiss = { event(SiteEstimateEvent.ToggleMaterialPicker(false)) },
-                state = state,
-                event = event
+                availableMaterials = state.availableMaterials,
+                tradeTypes = state.tradeTypes?.toList(),
+                selectedTradeType = state.selectedTradeType,
+                onTradeTypeSelected = { event(SiteEstimateEvent.SelectTradeType(it)) },
+                materialCategories = state.materialCategories,
+                selectedCategory = state.selectedCategory,
+                onCategorySelected = { event(SiteEstimateEvent.SelectCategory(it)) },
+                searchQuery = state.materialQuery,
+                onSearchQueryChanged = { event(SiteEstimateEvent.SearchMaterials(it)) },
+                selectedMaterialIds = state.selectedMaterials.map { it.materialId }.toSet(),
+                onConfirmClick = { event(SiteEstimateEvent.AddMaterials(it)) }
             )
         }
 

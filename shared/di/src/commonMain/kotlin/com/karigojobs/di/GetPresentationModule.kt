@@ -43,7 +43,8 @@ fun getPresentationModule(): Module = module {
             isClientExistUseCase = get(),
             insertClientUseCase = get(),
             getSelectedTradeTypeUseCase = get(),
-            getAllMaterialUseCase = get(),
+            searchMaterialsUseCase = get(),
+            getMaterialCategoryUseCase = get(),
             getJobDetailsUseCase = get(),
             getJobLabourItemUseCase = get(),
             getJobMaterialItemsUseCase = get(),
@@ -62,7 +63,8 @@ fun getPresentationModule(): Module = module {
             addNewSiteEstimateUseCase = get(),
             getEstimateByIdUseCase = get(),
             getEstimateMaterialsUseCase = get(),
-            updateSiteEstimateUseCase = get()
+            updateSiteEstimateUseCase = get(),
+            getMaterialCategoryUseCase = get()
         )
     }
     viewModel { (jobId: String) ->

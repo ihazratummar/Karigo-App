@@ -263,6 +263,9 @@ fun MaterialsListScreen(
                 }
             }
 
+            item {
+                Spacer(Modifier.height(dimens.Space._7xl))
+            }
         }
 
     }

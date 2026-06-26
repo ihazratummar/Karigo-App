@@ -13,6 +13,8 @@ import com.karigojobs.domain.usecase.estimate.GetEstimateByIdUseCase
 import com.karigojobs.domain.usecase.estimate.GetEstimateMaterialsUseCase
 import com.karigojobs.domain.usecase.estimate.UpdateSiteEstimateUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
+import com.karigojobs.domain.usecase.materialCategory.GetMaterialCategoryUseCase
+import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.estimate.add.EstimateEffect.*
 import com.karigojobs.presentation.materials.list.MaterialListFilter.All
@@ -57,7 +59,8 @@ class AddEstimateViewModel(
     private val addNewSiteEstimateUseCase: AddNewSiteEstimateUseCase,
     private val getEstimateByIdUseCase: GetEstimateByIdUseCase,
     private val getEstimateMaterialsUseCase: GetEstimateMaterialsUseCase,
-    private val updateSiteEstimateUseCase: UpdateSiteEstimateUseCase
+    private val updateSiteEstimateUseCase: UpdateSiteEstimateUseCase,
+    private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase
 ) : ViewModel() {
 
     @OptIn(ExperimentalUuidApi::class)
@@ -76,6 +79,7 @@ class AddEstimateViewModel(
     init {
         loadMaterials()
         loadSelectedTrades()
+        observeCategories()
         if (estimateId != null) {
             loadExistingEstimate()
         }
@@ -173,16 +177,28 @@ class AddEstimateViewModel(
         viewModelScope.launch {
             combine(
                 _state.map { it.materialQuery }.distinctUntilChanged(),
-                _state.map { it.materialFilter }.distinctUntilChanged()
-            ) { query, filter -> query to filter }
+                _state.map { it.materialFilter }.distinctUntilChanged(),
+                _state.map { it.selectedCategory }.distinctUntilChanged()
+            ) { query, filter, category -> Triple(query, filter, category) }
                 .debounce(300.milliseconds)
-                .flatMapLatest { (query, filter) ->
+                .flatMapLatest { (query, filter, category) ->
                     _state.update { it.copy(isLoading = true) }
                     val tradeTypes = when (filter) {
                         is All -> null
                         is SelectedTrade -> filter.selectedTrade
                     }
-                    searchMaterialsUseCase(query = query, tradeTypes = tradeTypes)
+                    val queryCategoryId = if (category?.id == "uncategorized") null else category?.id
+                    searchMaterialsUseCase(
+                        query = query,
+                        tradeTypes = tradeTypes,
+                        categoryId = queryCategoryId
+                    ).map { result ->
+                        if (category?.id == "uncategorized" && result is Result.Success) {
+                            Result.Success(result.data.filter { it.categoryId == null })
+                        } else {
+                            result
+                        }
+                    }
                 }.collectLatest { result ->
                     _state.update { it.copy(isLoading = false) }
                     when (result) {
@@ -196,6 +212,22 @@ class AddEstimateViewModel(
                                 )
                             }
                         }
+                    }
+                }
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun observeCategories() {
+        viewModelScope.launch {
+            _state.map { it.selectedTradeType }
+                .distinctUntilChanged()
+                .flatMapLatest { tradeType ->
+                    getMaterialCategoryUseCase(tradeType)
+                }
+                .collectLatest { result ->
+                    if (result is Result.Success) {
+                        _state.update { it.copy(materialCategories = result.data) }
                     }
                 }
         }
@@ -283,13 +315,26 @@ class AddEstimateViewModel(
                     it.copy(
                         selectedTradeType = event.tradeType,
                         materialFilter = if (event.tradeType == null) All
-                        else SelectedTrade(setOf(event.tradeType))
+                        else SelectedTrade(setOf(event.tradeType)),
+                        selectedCategory = null
                     )
                 }
             }
 
+            is SiteEstimateEvent.SelectCategory -> {
+                _state.update { it.copy(selectedCategory = event.category) }
+            }
+
             is SiteEstimateEvent.ToggleMaterialPicker -> {
-                _state.update { it.copy(isMaterialPickerOpen = event.isOpen) }
+                _state.update {
+                    it.copy(
+                        isMaterialPickerOpen = event.isOpen,
+                        materialQuery = if (!event.isOpen) "" else it.materialQuery,
+                        selectedTradeType = if (!event.isOpen) null else it.selectedTradeType,
+                        selectedCategory = if (!event.isOpen) null else it.selectedCategory,
+                        materialFilter = if (!event.isOpen) All else it.materialFilter
+                    )
+                }
             }
 
             is SiteEstimateEvent.AddMaterials -> {

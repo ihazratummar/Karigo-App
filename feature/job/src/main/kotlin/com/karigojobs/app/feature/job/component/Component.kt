@@ -39,10 +39,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.karigojob.share.utils.DateUtils.toReadableDate
 import com.karigojobs.app.android.ui.R
@@ -374,7 +377,10 @@ fun AddMaterialItemSection(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     materialsItems: List<JobMaterialItemModel>,
-    onRemoveMaterialItemClick: (String) -> Unit,
+    onMaterialQuantityChange: (String, String) -> Unit,
+    onMaterialMinusClick: (String) -> Unit,
+    onMaterialPlusClick: (String) -> Unit,
+    onRemoveMaterialItemClick: (String) -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -406,14 +412,18 @@ fun AddMaterialItemSection(
         Spacer(Modifier.height(dimens.Space.base))
 
         if (materialsItems.isNotEmpty()) {
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm),
+            Column(
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
             ) {
-                materialsItems.forEach { item ->
-                    MaterialSelectedChip(
-                        item = item,
-                        onRemoveClick = { item.materialId?.let { onRemoveMaterialItemClick(it) } }
+                materialsItems.forEachIndexed { index, item ->
+                    JobMaterialSelectedCard(
+                        selectedMaterial = item,
+                        number = index + 1,
+                        onMaterialQuantityChange = { onMaterialQuantityChange(item.materialId ?: "", it) },
+                        onMaterialMinusClick = { onMaterialMinusClick(item.materialId ?: "") },
+                        onMaterialPlusClick = { onMaterialPlusClick(item.materialId ?: "") },
+                        onRemoveMaterialItemClick = { item.materialId?.let { onRemoveMaterialItemClick(it) } }
                     )
                 }
             }
@@ -424,65 +434,147 @@ fun AddMaterialItemSection(
             text = "Add Materials",
             onClick = onClick
         )
-
     }
 }
 
 @Composable
-fun MaterialSelectedChip(
-    item: JobMaterialItemModel,
-    onRemoveClick: () -> Unit
+fun JobMaterialSelectedCard(
+    modifier: Modifier = Modifier,
+    selectedMaterial: JobMaterialItemModel,
+    number: Int,
+    onMaterialQuantityChange: (String) -> Unit,
+    onMaterialMinusClick: () -> Unit,
+    onMaterialPlusClick: () -> Unit,
+    onRemoveMaterialItemClick: () -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .clip(KarigojobsShapes.large)
-            .border(
-                BorderStroke(
-                    width = dimens.Border.thin,
-                    color = MaterialTheme.colorScheme.onBackground,
-                ),
-                shape = KarigojobsShapes.large
-            )
-            .background(
-                shape = KarigojobsShapes.large,
-                color = MaterialTheme.colorScheme.primaryContainer,
-            )
-
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = KarigojobsCard
+        )
     ) {
-        Row(
-            modifier = Modifier.padding(
-                horizontal = dimens.Padding.sm,
-                vertical = dimens.Padding.sm
-            ),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                text = item.name,
-                style = MaterialTheme.typography.labelMedium.copy(color = MaterialTheme.colorScheme.primary)
-            )
-            Spacer(Modifier.width(dimens.Space.xs))
-            Text(
-                text = "x${item.quantity}",
-                style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
-            )
-            Spacer(Modifier.width(dimens.Space.sm))
-            Box(
+            Row(
                 modifier = Modifier
-                    .bounceClickable(onRemoveClick)
-                    .background(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(
-                            alpha = 0.1f
-                        ),
-                        shape = CircleShape
-                    )
+                    .padding(dimens.Padding.md)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                Box(
+                    modifier = Modifier
+                        .background(
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            shape = CircleShape
+                        )
+                        .size(dimens.Icon.base),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "$number",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            color = KarigojobsIconColor
+                        )
+                    )
+                }
+                Spacer(Modifier.width(dimens.Space.sm))
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+                ) {
+                    Text(
+                        text = selectedMaterial.name,
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    )
+                    Text(
+                        text = "${deviceInfo.currency}${selectedMaterial.unitPrice} / ${selectedMaterial.unit}",
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = KarigojobsText2
+                        )
+                    )
+                }
+
                 Icon(
                     painter = painterResource(R.drawable.close),
-                    contentDescription = "Remove",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    contentDescription = null,
                     modifier = Modifier
-                        .size(dimens.Icon._2xs)
+                        .size(dimens.Icon.xs)
+                        .clickable(
+                            onClick = onRemoveMaterialItemClick
+                        ),
+                    tint = MaterialTheme.colorScheme.error,
                 )
+            }
+
+            Row(
+                modifier = Modifier
+                    .padding(dimens.Padding.sm)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
+            ) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .background(
+                            color = SurfaceOverlay,
+                            shape = KarigojobsShapes.medium
+                        )
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = dimens.Padding.sm),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+                    ) {
+                        MinusButton(
+                            size = dimens.Icon.lg,
+                            onClick = onMaterialMinusClick
+                        )
+                        BasicTextField(
+                            value = selectedMaterial.quantityInput,
+                            onValueChange = onMaterialQuantityChange,
+                            modifier = Modifier.width(dimens.Icon._3xl),
+                            textStyle = androidx.compose.ui.text.TextStyle(
+                                textAlign = TextAlign.Center,
+                                color = MaterialTheme.colorScheme.onBackground
+                            ),
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number
+                            )
+                        )
+                        PlusButton(
+                            size = dimens.Icon.lg,
+                            onClick = onMaterialPlusClick
+                        )
+                    }
+                }
+
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .background(
+                            color = SurfaceOverlay,
+                            shape = KarigojobsShapes.small
+                        )
+                ) {
+                    Text(
+                        text = "${deviceInfo.currency}${selectedMaterial.mainTotal}",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier.padding(
+                            horizontal = dimens.Padding.sm,
+                            vertical = dimens.Padding.xs
+                        )
+                    )
+                }
             }
         }
     }
@@ -637,147 +729,7 @@ fun CreateLabourItemModal(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MaterialLibraryModal(
-    modifier: Modifier = Modifier,
-    onDismiss: () -> Unit,
-    addJobState: AddJobState,
-    onIntent: (AddJobIntent) -> Unit
-) {
-    ModalBottomSheet(
-        modifier = modifier,
-        onDismissRequest = onDismiss,
-        containerColor = ModalBackGround
-    ) {
-        Box(
-            modifier = Modifier.padding(horizontal = dimens.Padding.base)
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
-            ) {
-                Text(
-                    text = "Materials Library",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-                Text(
-                    text = "Tap items to add, adjust quantities",
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                )
-                HorizontalDivider()
 
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f, fill = false),
-                    verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
-                ) {
-                    items(addJobState.availableMaterials) { material ->
-                        val selectedItem =
-                            addJobState.selectedMaterials.find { it.materialId == material.id }
-                        val isSelected = selectedItem != null
-
-                        MaterialItemCard(
-                            materialItemModel = material,
-                            isSelected = isSelected,
-                            selectedQuantity = selectedItem?.quantity ?: 0,
-                            onAddClick = { onIntent(AddJobIntent.IncreaseMaterialQuantity(material.id)) },
-                            onMinusClick = { onIntent(AddJobIntent.MinusMaterialQuantity(material.id)) }
-                        )
-                    }
-                }
-
-                // Sticky Confirm Button
-                if (addJobState.selectedMaterials.isNotEmpty()) {
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = dimens.Padding.base),
-                        onClick = onDismiss,
-                        shape = KarigojobsShapes.medium
-                    ) {
-                        Text(text = "Confirm — ${deviceInfo.currency}${addJobState.materialTotal}")
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun MaterialItemCard(
-    modifier: Modifier = Modifier,
-    materialItemModel: MaterialsModel,
-    isSelected: Boolean = false,
-    selectedQuantity: Int = 0,
-    onAddClick: () -> Unit,
-    onMinusClick: () -> Unit
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) KarigoSelectedCardColor else Color.Transparent
-        ),
-        border = if (isSelected) BorderStroke(
-            width = dimens.Border.thin,
-            color = MaterialTheme.colorScheme.onBackground
-        ) else null
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = dimens.Padding.base, vertical = dimens.Padding.sm),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
-            ) {
-                Text(
-                    text = materialItemModel.name,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                )
-                Text(
-                    text = "${deviceInfo.currency}${materialItemModel.price} / ${materialItemModel.unit}",
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                )
-            }
-            Spacer(Modifier.width(dimens.Space.md))
-
-            if (isSelected) {
-                MinusButton(
-                    onClick = onMinusClick
-                )
-                Spacer(Modifier.width(dimens.Space.sm))
-                Text(
-                    text = selectedQuantity.toString(),
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-                Spacer(Modifier.width(dimens.Space.sm))
-                PlusButton(
-                    onClick = onAddClick
-                )
-            } else {
-                PlusButton(
-                    onClick = onAddClick
-                )
-            }
-        }
-    }
-}
 
 
 @Composable

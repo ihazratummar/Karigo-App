@@ -37,6 +37,7 @@ import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.dimens
 import karigojobs.shared.resources.generated.resources.Res
 import karigojobs.shared.resources.generated.resources.common_see_all
+import karigojobs.shared.resources.generated.resources.home_estimate_desctiption
 import karigojobs.shared.resources.generated.resources.home_site_estimate
 import org.jetbrains.compose.resources.stringResource
 
@@ -105,7 +106,7 @@ fun SiteEstimatesCard(
             }
 
             Text(
-                text = "Walk a job site, build a material list, and WhatsApp it to client.",
+                text =stringResource(Res.string.home_estimate_desctiption),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

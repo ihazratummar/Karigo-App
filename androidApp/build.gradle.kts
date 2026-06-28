@@ -91,6 +91,10 @@ val copyComposeResourcesForAndroidApp = tasks.register<Copy>("copyComposeResourc
     dependsOn(project(":shared:resources").tasks.matching { it.name.contains("ComposeResources") || it.name.contains("XmlValueResources") })
 }
 
-tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }.configureEach {
+tasks.matching { 
+    it.name.contains("lint", ignoreCase = true) || 
+    (it.name.startsWith("merge") && it.name.endsWith("Assets")) ||
+    (it.name.startsWith("package") && it.name.endsWith("Assets"))
+}.configureEach {
     dependsOn(copyComposeResourcesForAndroidApp)
 }

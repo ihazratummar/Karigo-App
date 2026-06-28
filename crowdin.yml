@@ -1,0 +1,8 @@
+project_id_env: CROWDIN_PROJECT_ID
+api_token_env: CROWDIN_KEY
+
+preserve_hierarchy: true
+
+files:
+  - source: /shared/resources/src/commonMain/composeResources/values/strings_*.xml
+    translation: /shared/resources/src/commonMain/composeResources/values-%two_letters_code%/%original_file_name%

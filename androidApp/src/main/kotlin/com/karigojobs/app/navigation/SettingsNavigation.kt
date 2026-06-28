@@ -10,6 +10,8 @@ import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.karigojobs.feature.settings.SettingsNavigation
 import com.karigojobs.feature.settings.SettingsScreen
+import com.karigojobs.feature.settings.LegalScreen
+import com.karigojobs.feature.settings.AboutScreen
 import com.karigojobs.presentation.settings.SettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -77,12 +79,17 @@ fun NavGraphBuilder.settingsNav(
         }
 
         composable<SettingsRootRoute.AboutRoute> {
-            PlaceholderSettingsScreen(title = "About", onBack = { navHostController.popBackStack() })
+            AboutScreen(
+                onBack = { navHostController.popBackStack() }
+            )
         }
 
         composable<SettingsRootRoute.LegalRoute> { backStackEntry ->
             val route = backStackEntry.toRoute<SettingsRootRoute.LegalRoute>()
-            PlaceholderSettingsScreen(title = route.pageTitle, onBack = { navHostController.popBackStack() })
+            LegalScreen(
+                pageKey = route.pageTitle,
+                onBack = { navHostController.popBackStack() }
+            )
         }
     }
 }

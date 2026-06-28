@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_home">Home</string>
+    <string name="nav_jobs">Jobs</string>
+    <string name="nav_clients">Client</string>
+    <string name="nav_materials">Materials</string>
+    <string name="nav_settings">Settings</string>
+</resources>

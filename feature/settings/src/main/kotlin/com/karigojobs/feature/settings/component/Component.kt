@@ -3,6 +3,7 @@ package com.karigojobs.feature.settings.component
 import androidx.annotation.UiContext
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -147,7 +148,7 @@ fun SettingsComponent(
 
 data class SettingsTabData(
     val icon: Int,
-    val name : String,
+    val name: String,
     val onClick: () -> Unit
 )
 
@@ -155,11 +156,15 @@ data class SettingsTabData(
 fun SettingsOptionRow(
     modifier: Modifier = Modifier,
     icon: Int,
-    tabName : String,
-
+    tabName: String,
+    onClick: () -> Unit
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.clickable(
+            onClick = onClick,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }
+        ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
     ) {

@@ -93,7 +93,7 @@ fun SettingsScreen(
             SettingsTabData(
                 icon = R.drawable.about,
                 name = "About Karigo",
-                onClick = { settingsNavigation.navigateToAbout }
+                onClick = settingsNavigation.navigateToAbout
             ),
             SettingsTabData(
                 icon = R.drawable.privacy_policy,
@@ -176,7 +176,8 @@ fun SettingsScreen(
                         SettingsOptionRow(
                             modifier = Modifier.fillMaxWidth(),
                             icon = legal.icon ,
-                            tabName = legal.name
+                            tabName = legal.name,
+                            onClick = legal.onClick
                         )
                     }
                 }

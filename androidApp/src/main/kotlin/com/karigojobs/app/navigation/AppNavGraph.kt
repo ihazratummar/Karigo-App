@@ -46,7 +46,6 @@ fun AppNavigation(
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            HorizontalDivider()
             BottomBar(navHostController = navController)
         }
     ) { paddingValues ->
@@ -107,6 +106,7 @@ fun BottomBar(
         bottomNavItems.any { currentDestination?.hasRoute(it.route::class) == true }
 
     if (isBottomBarVisible) {
+        HorizontalDivider()
         NavigationBar(containerColor = Color.Transparent ) {
             bottomNavItems.forEach { screen ->
                 val isSelected =

@@ -3,7 +3,7 @@ package com.karigojobs.presentation.materials.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.result.Result
-import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.domain.usecase.trade.GetSelectedTradeTypeUseCase
 import com.karigojobs.domain.usecase.material.AddMaterialUseCase
 import com.karigojobs.domain.usecase.material.DeleteMaterialUseCase
 import com.karigojobs.domain.usecase.material.GetMaterialByIdUseCase

@@ -24,6 +24,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -41,6 +42,7 @@ import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
@@ -66,12 +68,15 @@ fun SelectMaterialModal(
     val selectedMaterials = remember(selectedMaterialIds) {
         mutableStateOf(selectedMaterialIds.toList())
     }
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
+    val modalSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = {newValue ->
+            newValue != SheetValue.Hidden
+        }
     )
 
     ModalBottomSheet(
-        sheetState = sheetState,
+        sheetState = modalSheetState,
         modifier = modifier,
         onDismissRequest = onDismiss,
         containerColor = ModalBackGround
@@ -85,14 +90,26 @@ fun SelectMaterialModal(
                     .padding(bottom = dimens.Height.minTouch * 1.5f),
                 verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
             ) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    modifier = Modifier.contentHorizontalPadding()
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier.contentHorizontalPadding()
+                    )
+
+                    KarigoIconWIthBgCick(
+                        icon = R.drawable.close,
+                        iconColor = KarigojobsText3,
+                        onClick = onDismiss
+                    )
+                }
 
                 HorizontalDivider()
 

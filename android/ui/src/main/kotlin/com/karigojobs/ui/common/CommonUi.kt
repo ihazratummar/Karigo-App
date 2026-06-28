@@ -87,7 +87,10 @@ import com.karigojobs.domain.repository.DeviceContact
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
+import com.karigojobs.share.model.TradeType
+import com.karigojobs.ui.color
 import com.karigojobs.ui.icon
+import com.karigojobs.ui.theme.ChartBarInactive
 import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsBorder
 import com.karigojobs.ui.theme.KarigojobsCard
@@ -130,6 +133,50 @@ import java.util.TimeZone
  */
 
 
+@Composable
+fun TradeCard(
+    modifier: Modifier = Modifier,
+    trade: TradeType
+) {
+    Box(
+        modifier = modifier
+            .padding(vertical = dimens.Padding.xs, horizontal = dimens.Padding.xs)
+            .clip(KarigojobsShapes.medium)
+            .background(color = ChartBarInactive),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            modifier = Modifier.padding(
+                vertical = dimens.Padding.sm,
+                horizontal = dimens.Padding.md
+            ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(dimens.Icon.xs)
+                    .clip(RoundedCornerShape(dimens.Radius.xs))
+                    .background(
+                        color = trade.color().copy(0.2f)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(trade.icon()),
+                    contentDescription = null,
+                    modifier = Modifier.size(dimens.Icon._2xs),
+                    tint = trade.color()
+                )
+            }
+            Text(
+                text = trade.displayName,
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KarigoTopAppBar(
@@ -137,7 +184,7 @@ fun KarigoTopAppBar(
     title: String = "Estimate",
     action: @Composable () -> Unit = {},
     isNavBack: Boolean = true,
-    isDivider : Boolean = true
+    isDivider: Boolean = true
 ) {
     Column {
         TopAppBar(
@@ -155,7 +202,7 @@ fun KarigoTopAppBar(
             },
             windowInsets = WindowInsets(),
         )
-        if (isDivider){
+        if (isDivider) {
             HorizontalDivider()
         }
     }
@@ -373,8 +420,6 @@ fun IconPlaceholder(
 }
 
 
-
-
 // ─────────────────────────────────────────────
 //  Dashed border modifier
 // ─────────────────────────────────────────────
@@ -563,9 +608,9 @@ fun KarigoIconWIthBg(
     @DrawableRes icon: Int = R.drawable.arrow_left,
     iconColor: Color = NavInactive,
     size: Dp = dimens.Height.minTouch,
-    iconBackGroundColor: Color = MaterialTheme.colorScheme.surfaceVariant
+    iconBackGroundColor: Color = SurfaceOverlay
 ) {
-    val iconSize = size * 0.4f
+    val iconSize = size * 0.6f
 
     Box(
         modifier = modifier
@@ -1290,7 +1335,6 @@ fun CommunicationButton(
 }
 
 
-
 @Composable
 fun ActionNeedBanner(
     onClick: () -> Unit = {}
@@ -1299,13 +1343,18 @@ fun ActionNeedBanner(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         shape = KarigojobsShapes.large,
-        border = BorderStroke(width = dimens.Border.thin, color = MaterialTheme.colorScheme.onBackground),
+        border = BorderStroke(
+            width = dimens.Border.thin,
+            color = MaterialTheme.colorScheme.onBackground
+        ),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
         )
     ) {
         Row(
-            modifier = Modifier.padding(dimens.Padding.base).fillMaxWidth(),
+            modifier = Modifier
+                .padding(dimens.Padding.base)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
         ) {
@@ -1356,4 +1405,48 @@ fun ActionNeedBanner(
             }
         }
     }
+}
+
+
+@Composable
+fun KarigoButtons(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    buttonColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
+    label : String,
+    icon: Int? = null,
+    enabled: Boolean = true
+) {
+
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = buttonColor,
+            contentColor = contentColor
+        ),
+        shape = KarigojobsShapes.medium,
+        modifier = modifier,
+        enabled = enabled
+    ) {
+
+        icon?.let {
+            Icon(
+                painter = painterResource(icon),
+                contentDescription = null,
+                tint = contentColor,
+                modifier = Modifier.size(dimens.Icon.xs)
+            )
+            Spacer(Modifier.width(dimens.Space.md))
+        }
+
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium.copy(
+                color = contentColor,
+                fontWeight = FontWeight.Medium
+            )
+        )
+    }
+
 }

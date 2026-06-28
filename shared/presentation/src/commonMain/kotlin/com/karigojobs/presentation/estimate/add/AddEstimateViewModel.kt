@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.repository.DeviceContactProvider
 import com.karigojobs.domain.result.Result
-import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.domain.usecase.trade.GetSelectedTradeTypeUseCase
 import com.karigojobs.domain.usecase.client.GetClientUseCase
 import com.karigojobs.domain.usecase.client.InsertClientUseCase
 import com.karigojobs.domain.usecase.client.IsClientExistUseCase
@@ -14,7 +14,6 @@ import com.karigojobs.domain.usecase.estimate.GetEstimateMaterialsUseCase
 import com.karigojobs.domain.usecase.estimate.UpdateSiteEstimateUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
 import com.karigojobs.domain.usecase.materialCategory.GetMaterialCategoryUseCase
-import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.estimate.add.EstimateEffect.*
 import com.karigojobs.presentation.materials.list.MaterialListFilter.All

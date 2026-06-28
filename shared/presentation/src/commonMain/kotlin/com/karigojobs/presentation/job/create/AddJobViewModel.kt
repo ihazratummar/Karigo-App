@@ -13,14 +13,13 @@ import com.karigojobs.domain.usecase.job.GetJobDetailsUseCase
 import com.karigojobs.domain.usecase.job.GetJobLabourItemUseCase
 import com.karigojobs.domain.usecase.job.GetJobMaterialItemsUseCase
 import com.karigojobs.domain.usecase.job.SaveFullJobTransactionUseCase
+import com.karigojobs.domain.usecase.trade.GetSelectedTradeTypeUseCase
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.job.create.AddJobEffect.ShowError
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
-import com.karigojobs.share.model.JobStatus
-import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.share.model.TradeType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -58,7 +57,7 @@ class AddJobViewModel(
     private val saveFullJobTransactionUseCase: SaveFullJobTransactionUseCase,
     private val isClientExistUseCase: IsClientExistUseCase,
     private val insertClientUseCase: InsertClientUseCase,
-    private val getSelectedTradeTypeUseCase: com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase,
+    private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase,
     private val searchMaterialsUseCase: SearchMaterialsUseCase,
     private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase,
     private val getJobDetailsUseCase: GetJobDetailsUseCase,

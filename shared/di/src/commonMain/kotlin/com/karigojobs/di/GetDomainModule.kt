@@ -7,7 +7,7 @@ import com.karigojobs.domain.usecase.job.GetAllJobUseCase
 import com.karigojobs.domain.usecase.material.GetAllMaterialsUseCase
 import com.karigojobs.domain.usecase.job.GetJobDetailsUseCase
 import com.karigojobs.domain.usecase.onboarding.GetOnboardingStatusUseCase
-import com.karigojobs.domain.usecase.GetSelectedTradeTypeUseCase
+import com.karigojobs.domain.usecase.trade.GetSelectedTradeTypeUseCase
 import com.karigojobs.domain.usecase.client.DeleteClientUseCase
 import com.karigojobs.domain.usecase.client.GetClientFlowUseCase
 import com.karigojobs.domain.usecase.client.GetClientListUseCase
@@ -37,6 +37,7 @@ import com.karigojobs.domain.usecase.materialCategory.InsertMaterialCategoryUseC
 import com.karigojobs.domain.usecase.materialCategory.UpdateMaterialCategoryUseCase
 import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
 import com.karigojobs.domain.usecase.settings.SaveWorkerProfileUseCase
+import com.karigojobs.domain.usecase.trade.SaveTradesUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -45,12 +46,14 @@ import org.koin.dsl.module
  * @author hazratummar
  * Created on 21/05/26
  */
- 
 
-fun getDomainModule() : Module = module {
+
+fun getDomainModule(): Module = module {
     single { CompleteOnboardingUseCase(onboardingStore = get()) }
     single { GetOnboardingStatusUseCase(onboardingStore = get()) }
     single { GetSelectedTradeTypeUseCase(onboardingStore = get(), ioDispatcher = get()) }
+    single { SaveTradesUseCase(onboardingStore = get()) }
+
 
     single { SeedStarterMaterialsUseCase(materialRepository = get()) }
     single { GetAllMaterialsUseCase(materialRepository = get()) }

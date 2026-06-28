@@ -47,4 +47,10 @@ class OnboardingStore(
         }
     }
 
+    suspend fun saveTrades(trades: Set<TradeType>) {
+        dataStore.edit {pref ->
+            pref[SELECTED_TRADES] = trades.joinToString(","){it.name}
+        }
+    }
+
 }

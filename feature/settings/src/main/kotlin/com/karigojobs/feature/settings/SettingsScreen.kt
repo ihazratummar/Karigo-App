@@ -28,7 +28,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 
 import com.karigojobs.app.android.ui.R
+import com.karigojobs.feature.settings.component.QuickAccessData
+import com.karigojobs.feature.settings.component.SettingsComponent
+import com.karigojobs.feature.settings.component.SettingsOptionRow
+import com.karigojobs.feature.settings.component.SettingsScreenQuickAction
+import com.karigojobs.feature.settings.component.SettingsTabData
+import com.karigojobs.feature.settings.component.SettingsTradeCard
+import com.karigojobs.feature.settings.component.SettingsTradeChangeModal
 import com.karigojobs.feature.settings.component.WorkerProfileCard
+import com.karigojobs.presentation.settings.SettingsEvent
 import com.karigojobs.presentation.settings.SettingsState
 import com.karigojobs.ui.common.ActionNeedBanner
 import com.karigojobs.ui.common.IconPlaceholder
@@ -47,7 +55,9 @@ import com.karigojobs.ui.theme.dimens
 @Composable
 fun SettingsScreen(
     state: SettingsState,
-    onCompleteBannerClick: () -> Unit = {}
+    onCompleteBannerClick: () -> Unit = {},
+    settingsNavigation: SettingsNavigation,
+    event: (SettingsEvent) -> Unit
 ) {
     val snackbarState = remember { SnackbarHostState() }
 
@@ -60,6 +70,62 @@ fun SettingsScreen(
             )
         }
     ) { paddingValues ->
+
+        val quickAccessData = listOf(
+            QuickAccessData(
+                icon = R.drawable.stack,
+                label = "Materials",
+                onClick = settingsNavigation.navigateToMaterial,
+            ),
+            QuickAccessData(
+                icon = R.drawable.estimate,
+                label = "Estimates",
+                onClick = settingsNavigation.navigateToEstimate,
+            ),
+            QuickAccessData(
+                icon = R.drawable.earning,
+                label = "Earnings",
+                onClick = settingsNavigation.navigateToEarnings,
+            ),
+        )
+
+        val legalAndInfoTabs = listOf(
+            SettingsTabData(
+                icon = R.drawable.about,
+                name = "About Karigo",
+                onClick = { settingsNavigation.navigateToAbout }
+            ),
+            SettingsTabData(
+                icon = R.drawable.privacy_policy,
+                name = "Privacy Policy",
+                onClick = { settingsNavigation.navigateToLegalPage("privacy") }
+            ),
+            SettingsTabData(
+                icon = R.drawable.terms_of_service,
+                name = "Terms of Service",
+                onClick = { settingsNavigation.navigateToLegalPage("tos") }
+            ),
+            SettingsTabData(
+                icon = R.drawable.terms_of_condition,
+                name = "Terms of Condition",
+                onClick = { settingsNavigation.navigateToLegalPage("toc") }
+            ),
+            SettingsTabData(
+                icon = R.drawable.alert,
+                name = "Disclaimer",
+                onClick = { settingsNavigation.navigateToLegalPage("disclaimer") }
+            ),
+        )
+
+        if (state.isTradeSelectModalOpen) {
+            SettingsTradeChangeModal(
+                modifier = Modifier.fillMaxWidth(),
+                onDismiss = { event(SettingsEvent.ToggleTradeSelectModal(false)) },
+                state = state,
+                event = event
+            )
+        }
+
         LazyColumn(
             modifier = Modifier
                 .padding(paddingValues)
@@ -75,6 +141,44 @@ fun SettingsScreen(
                         profile = profile,
                         onEditClick = onCompleteBannerClick
                     )
+                }
+            }
+
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
+                ) {
+                    quickAccessData.forEach { data ->
+                        SettingsScreenQuickAction(
+                            modifier = Modifier.weight(1f),
+                            icon = data.icon,
+                            label = data.label,
+                            onClick = data.onClick,
+                        )
+                    }
+                }
+            }
+            item {
+                SettingsTradeCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { event(SettingsEvent.ToggleTradeSelectModal(true)) },
+                    trades = state.selectedTrades
+                )
+            }
+            
+            item {
+                SettingsComponent(
+                    title = "LEGAL & INFO"
+                ){
+                    legalAndInfoTabs.forEach {legal ->
+                        SettingsOptionRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            icon = legal.icon ,
+                            tabName = legal.name
+                        )
+                    }
                 }
             }
         }

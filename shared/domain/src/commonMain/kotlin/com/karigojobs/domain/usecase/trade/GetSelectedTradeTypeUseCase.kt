@@ -1,4 +1,4 @@
-package com.karigojobs.domain.usecase
+package com.karigojobs.domain.usecase.trade
 
 import com.karigojobs.datastore.store.OnboardingStore
 import com.karigojobs.domain.result.HomeError
@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-
 
 /**
  * @author hazratummar

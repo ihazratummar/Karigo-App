@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karigo — Legal Pages</title>
+    <style>
+        :root {
+          --bg: #ffffff;
+          --bg2: #f9f9f7;
+          --bg3: #f2f0ec;
+          --border: #e2dfd8;
+          --border2: #cccac4;
+          --text: #1a1a18;
+          --text2: #47453f;
+          --text3: #888680;
+          --accent: #1a1a18;
+          --link: #1a56db;
+          --green-bg: #f0faf4;
+          --green-border: #c3e6d0;
+          --green-text: #166534;
+          --amber-bg: #fffbeb;
+          --amber-border: #fde68a;
+          --amber-text: #92400e;
+          --blue-bg: #eff6ff;
+          --blue-border: #bfdbfe;
+          --blue-text: #1e40af;
+          --red-bg: #fef2f2;
+          --red-border: #fecaca;
+          --red-text: #991b1b;
+        }
+        @media (prefers-color-scheme: dark) {
+          :root {
+            --bg: #0f0f0d; --bg2: #161614; --bg3: #1e1e1a;
+            --border: #2a2a26; --border2: #3a3a34;
+            --text: #e8e6de; --text2: #9a9890; --text3: #5a5a54;
+            --link: #7db3ff;
+            --green-bg: rgba(16,185,129,.07); --green-border: rgba(16,185,129,.25); --green-text: #6ee7b7;
+            --amber-bg: rgba(245,158,11,.07); --amber-border: rgba(245,158,11,.25); --amber-text: #fcd34d;
+            --blue-bg: rgba(59,130,246,.07); --blue-border: rgba(59,130,246,.25); --blue-text: #93c5fd;
+            --red-bg: rgba(239,68,68,.07); --red-border: rgba(239,68,68,.25); --red-text: #fca5a5;
+          }
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.75; }
+
+        /* ── HEADER ── */
+        .site-header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 200; }
+        .app-brand { display: flex; align-items: center; gap: 10px; }
+        .app-logo { width: 32px; height: 32px; background: var(--text); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--bg); font-weight: 800; font-size: 14px; flex-shrink: 0; }
+        .app-name { font-weight: 700; font-size: 15px; color: var(--text); }
+        .app-pkg { font-size: 11px; color: var(--text3); font-family: 'SF Mono', 'Fira Code', monospace; }
+
+        /* ── TABS ── */
+        .tabs-bar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
+        .tab-btn { font-size: 13px; padding: .85rem 1.25rem; cursor: pointer; color: var(--text3); background: none; border: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .2s; font-family: inherit; }
+        .tab-btn:hover { color: var(--text2); }
+        .tab-btn.active { color: var(--text); border-bottom-color: var(--text); font-weight: 600; }
+
+        /* ── LAYOUT ── */
+        .page-wrap { max-width: 820px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+        .doc-panel { display: none; }
+        .doc-panel.active { display: block; }
+
+        /* ── DOC HEADER ── */
+        .doc-header { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+        .doc-badge { display: inline-block; font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 3px 9px; color: var(--text3); margin-bottom: .75rem; }
+        .doc-title { font-size: 2rem; font-weight: 800; letter-spacing: -.025em; line-height: 1.2; margin-bottom: .75rem; }
+        .doc-meta { font-size: 13px; color: var(--text3); font-family: 'SF Mono', 'Fira Code', monospace; display: flex; flex-wrap: wrap; gap: 1rem; }
+
+        /* ── TOC ── */
+        .toc { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 2.5rem; }
+        .toc-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text3); font-family: 'SF Mono', 'Fira Code', monospace; margin-bottom: .75rem; }
+        .toc ol { padding-left: 1.25rem; columns: 2; column-gap: 2rem; }
+        @media(max-width:560px){ .toc ol { columns: 1; } }
+        .toc li { margin-bottom: .2rem; }
+        .toc a { color: var(--link); font-size: 13.5px; text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+
+        /* ── SECTIONS ── */
+        .legal-section { margin-bottom: 2.75rem; scroll-margin-top: 6rem; }
+        h2.sec { font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; padding-bottom: .6rem; border-bottom: 1px solid var(--border); margin-bottom: 1.1rem; display: flex; align-items: center; gap: .75rem; }
+        .sec-n { font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; color: var(--text3); flex-shrink: 0; }
+        h3.sub { font-size: .95rem; font-weight: 700; color: var(--text); margin: 1.25rem 0 .45rem; }
+        p { margin-bottom: .9rem; color: var(--text2); }
+        p:last-child { margin-bottom: 0; }
+        ul, ol { padding-left: 1.5rem; margin-bottom: .9rem; }
+        li { margin-bottom: .35rem; color: var(--text2); }
+        strong { color: var(--text); font-weight: 600; }
+        a { color: var(--link); }
+        em { color: var(--text3); font-style: italic; }
+
+        /* ── CALLOUTS ── */
+        .callout { border-radius: 8px; padding: 1rem 1.25rem; margin: 1.1rem 0; display: flex; gap: 10px; }
+        .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+        .callout-body { font-size: 13.5px; line-height: 1.7; }
+        .callout-body p { margin-bottom: .4rem; }
+        .callout-body p:last-child { margin-bottom: 0; }
+        .callout.green { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green-text); }
+        .callout.amber { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber-text); }
+        .callout.blue { background: var(--blue-bg); border: 1px solid var(--blue-border); color: var(--blue-text); }
+        .callout.red { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red-text); }
+        .callout .callout-body strong { color: inherit; }
+
+        /* ── TABLE ── */
+        .legal-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 1rem 0 1.25rem; }
+        .legal-table th { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text3); font-family: 'SF Mono', 'Fira Code', monospace; text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--bg2); }
+        .legal-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+        .legal-table tr:last-child td { border-bottom: none; }
+        .legal-table td:first-child { color: var(--text); font-weight: 500; font-size: 13px; }
+        .badge { display: inline-block; font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; padding: 2px 7px; border-radius: 999px; }
+        .badge.no { background: var(--green-bg); color: var(--green-text); border: 1px solid var(--green-border); }
+        .badge.yes { background: var(--amber-bg); color: var(--amber-text); border: 1px solid var(--amber-border); }
+        .badge.opt { background: var(--blue-bg); color: var(--blue-text); border: 1px solid var(--blue-border); }
+
+        /* ── CONTACT BLOCK ── */
+        .contact-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 1rem; }
+        .contact-card p { margin-bottom: .35rem; }
+        .contact-card p:last-child { margin-bottom: 0; }
+
+        /* ── FOOTER ── */
+        .doc-footer { border-top: 1px solid var(--border); padding-top: 1.5rem; font-size: 13px; color: var(--text3); text-align: center; margin-top: 3rem; }
+
+        /* ── PAGE NAV INDEX ── */
+        .pages-index { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 2.5rem; }
+        .page-index-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; cursor: pointer; transition: border-color .2s, background .2s; }
+        .page-index-card:hover { border-color: var(--border2); background: var(--bg3); }
+        .pic-num { font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; color: var(--text3); margin-bottom: .4rem; }
+        .pic-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: .3rem; }
+        .pic-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+        hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="app-brand">
+        <div class="app-logo">K</div>
+        <div>
+            <div class="app-name">Karigo</div>
+            <div class="app-pkg">com.karigojobs.app</div>
+        </div>
+    </div>
+    <div style="font-size:12px;color:var(--text3);font-family:'SF Mono','Fira Code',monospace;">Legal Documents · v1.0 · 2026</div>
+</header>
+
+<div class="tabs-bar">
+    <button class="tab-btn active" onclick="showDoc('index')">📄 Overview</button>
+    <button class="tab-btn" onclick="showDoc('privacy')">🔒 Privacy Policy</button>
+    <button class="tab-btn" onclick="showDoc('tos')">📋 Terms of Service</button>
+    <button class="tab-btn" onclick="showDoc('tandc')">⚖️ Terms & Conditions</button>
+    <button class="tab-btn" onclick="showDoc('disclaimer')">⚠️ Disclaimer</button>
+</div>
+
+<div class="page-wrap">
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- INDEX                                   -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="doc-panel active" id="doc-index">
+        <div class="doc-header">
+            <div class="doc-badge">Legal Documentation Package</div>
+            <div class="doc-title">Karigo Legal Pages</div>
+            <div class="doc-meta">
+                <span>App: Karigo (com.karigojobs.app)</span>
+                <span>Effective: June 30, 2026</span>
+                <span>Developer: Independent Solo Developer</span>
+            </div>
+        </div>
+
+        <div class="callout green">
+            <div class="callout-icon">✅</div>
+            <div class="callout-body">
+                <p><strong>All four legal documents are included in this file.</strong> Use the tabs above to navigate to each document. Each document can be hosted on its own page or as a single scrollable page. All comply with Indian IT Act 2000, DPDPA 2023, GDPR (EU), and CCPA (California).</p>
+            </div>
+        </div>
+
+        <div class="pages-index">
+            <div class="page-index-card" onclick="showDoc('privacy')">
+                <div class="pic-num">Document 01</div>
+                <div class="pic-title">🔒 Privacy Policy</div>
+                <div class="pic-desc">What data we collect, how we use it, your rights. Required by Google Play, DPDPA, and GDPR.</div>
+            </div>
+            <div class="page-index-card" onclick="showDoc('tos')">
+                <div class="pic-num">Document 02</div>
+                <div class="pic-title">📋 Terms of Service</div>
+                <div class="pic-desc">The binding legal agreement between Karigo and every user. Covers subscription, refunds, IP, and liability.</div>
+            </div>
+            <div class="page-index-card" onclick="showDoc('tandc')">
+                <div class="pic-num">Document 03</div>
+                <div class="pic-title">⚖️ Terms & Conditions</div>
+                <div class="pic-desc">Specific conditions of app use — permitted conduct, Pro plan conditions, data ownership, and restrictions.</div>
+            </div>
+            <div class="page-index-card" onclick="showDoc('disclaimer')">
+                <div class="pic-num">Document 04</div>
+                <div class="pic-title">⚠️ Disclaimer</div>
+                <div class="pic-desc">Limitation of liability, accuracy disclaimers, no professional advice, and as-is software notice.</div>
+            </div>
+        </div>
+
+        <h3 class="sub">Where to use each document</h3>
+        <table class="legal-table">
+            <thead><tr><th>Document</th><th>Required by</th><th>Where to link it</th></tr></thead>
+            <tbody>
+            <tr><td>Privacy Policy</td><td>Google Play Console (mandatory), DPDPA 2023, GDPR</td><td>Play Console → Store listing → Privacy Policy URL; App Settings screen; App onboarding</td></tr>
+            <tr><td>Terms of Service</td><td>Best practice; required if selling subscriptions</td><td>App Settings screen; Play Console store listing; Paywall screen ("By subscribing you agree to…")</td></tr>
+            <tr><td>Terms & Conditions</td><td>Consumer Protection Act 2019 (India) for paid apps</td><td>App Settings screen; shown on first launch with accept button; Paywall screen</td></tr>
+            <tr><td>Disclaimer</td><td>Best practice; protects against user liability claims</td><td>App Settings screen; About screen; footer of website if you build one</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout amber">
+            <div class="callout-icon">⚠️</div>
+            <div class="callout-body">
+                <p><strong>Important:</strong> These documents are drafted for Karigo's specific use case — an offline, no-backend Android app with subscription billing. They are not generic templates. If you significantly change the app's features (e.g., add a backend, user accounts, or cloud sync), these documents will need to be updated to reflect those changes.</p>
+                <p style="margin-top:.5rem">These documents are drafted in good faith for informational purposes. For jurisdiction-specific legal advice, consult a qualified lawyer.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- PRIVACY POLICY                          -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="doc-panel" id="doc-privacy">
+        <div class="doc-header">
+            <div class="doc-badge">Document 01 · Privacy Policy</div>
+            <div class="doc-title">Privacy Policy</div>
+            <div class="doc-meta">
+                <span>App: Karigo</span>
+                <span>Package: com.karigojobs.app</span>
+                <span>Effective: June 30, 2026</span>
+                <span>Last updated: June 30, 2026</span>
+            </div>
+        </div>
+
+        <div class="callout green">
+            <div class="callout-icon">🔒</div>
+            <div class="callout-body"><p><strong>Plain language summary:</strong> Karigo is an offline app. All the data you enter — clients, jobs, materials, invoices — lives only on your device. We have no server. We cannot see your data. The only external data processing is your subscription status through RevenueCat and Google Play.</p></div>
+        </div>
+
+        <div class="toc">
+            <div class="toc-label">Contents</div>
+            <ol>
+                <li><a href="#pp1">Who We Are</a></li>
+                <li><a href="#pp2">Scope of This Policy</a></li>
+                <li><a href="#pp3">Data We Do Not Collect</a></li>
+                <li><a href="#pp4">Data Processed by Third Parties</a></li>
+                <li><a href="#pp5">Data Stored on Your Device</a></li>
+                <li><a href="#pp6">Android Permissions</a></li>
+                <li><a href="#pp7">How We Use Information</a></li>
+                <li><a href="#pp8">Legal Bases for Processing</a></li>
+                <li><a href="#pp9">Data Sharing & Disclosure</a></li>
+                <li><a href="#pp10">International Transfers</a></li>
+                <li><a href="#pp11">Data Retention & Deletion</a></li>
+                <li><a href="#pp12">Children's Privacy</a></li>
+                <li><a href="#pp13">Your Rights</a></li>
+                <li><a href="#pp14">Security</a></li>
+                <li><a href="#pp15">Changes to This Policy</a></li>
+                <li><a href="#pp16">Contact & Grievance Officer</a></li>
+            </ol>
+        </div>
+
+        <div class="legal-section" id="pp1">
+            <h2 class="sec"><span class="sec-n">01</span>Who We Are</h2>
+            <p>Karigo ("we", "our", "us", "the Developer") is a mobile application developed and published by an independent solo developer based in West Bengal, India. The application is available on Google Play Store under the package name <strong>com.karigojobs.app</strong>.</p>
+            <p>Karigo is a job logging, material tracking, and invoice generation tool designed for field workers, tradesmen, and contractors. The application is designed to function entirely without internet connectivity for all core features. For all enquiries relating to this Privacy Policy, contact us at: <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a></p>
+        </div>
+
+        <div class="legal-section" id="pp2">
+            <h2 class="sec"><span class="sec-n">02</span>Scope of This Policy</h2>
+            <p>This Privacy Policy applies to your use of the Karigo mobile application on Android devices. It describes how we handle information in connection with your use of the app, including data that may be processed by third-party service providers on our behalf.</p>
+            <p>This policy does not apply to third-party websites, applications, or services that may be linked from within our app (such as Google Play or WhatsApp). Those services are governed by their own privacy policies.</p>
+            <p>This policy applies globally to all users of Karigo, including users in India, the European Economic Area (GDPR), California, USA (CCPA/CPRA), and all other jurisdictions.</p>
+        </div>
+
+        <div class="legal-section" id="pp3">
+            <h2 class="sec"><span class="sec-n">03</span>Data We Do Not Collect</h2>
+            <div class="callout green">
+                <div class="callout-icon">✅</div>
+                <div class="callout-body"><p>Karigo does not operate any servers. We do not transmit, store, or have any access to the business data you enter into the application. The following categories of data are <strong>never collected by Karigo</strong>:</p></div>
+            </div>
+            <ul>
+                <li>Client names, phone numbers, or addresses</li>
+                <li>Job records, materials, labour rates, or any business data</li>
+                <li>Invoice contents, amounts, or payment records</li>
+                <li>Your business name, logo, or UPI ID</li>
+                <li>Device location or GPS coordinates</li>
+                <li>Contact list or call logs</li>
+                <li>Photos taken within the app</li>
+                <li>Any biometric data</li>
+                <li>Any financial account information</li>
+                <li>Email address (unless you contact us voluntarily)</li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="pp4">
+            <h2 class="sec"><span class="sec-n">04</span>Data Processed by Third-Party Services</h2>
+            <p>Karigo uses the following third-party services, each of which may process limited data as described below. We do not control how these services collect or process data beyond what is described here.</p>
+
+            <h3 class="sub">4.1 Google Play Billing</h3>
+            <p>When you purchase the Pro subscription, your payment is processed entirely by Google Play. Google may process your Google account identifier, payment method details, and transaction history. Karigo does not receive your payment card details, bank account information, or UPI credentials at any time.</p>
+            <p><strong>Google's Privacy Policy:</strong> <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></p>
+
+            <h3 class="sub">4.2 RevenueCat</h3>
+            <p>Karigo uses RevenueCat to manage subscription entitlements. When you purchase or restore a subscription, RevenueCat receives your Google Play purchase token and a pseudonymous app user identifier to verify and cache your subscription status. RevenueCat does not receive any personal information you enter into Karigo (no names, phone numbers, job data, or invoice data). RevenueCat stores purchase timestamps, subscription status, and app version.</p>
+            <p><strong>RevenueCat's Privacy Policy:</strong> <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">revenuecat.com/privacy</a></p>
+
+            <h3 class="sub">4.3 Android Vitals / Google Play Crash Reporting</h3>
+            <p>If you have enabled "Share usage and diagnostics" in your Android device settings, Google may automatically collect anonymised crash reports and performance data from Karigo. These reports contain technical stack trace information but do not include any personal data or business data you have entered into the app. You can disable this at any time in your device settings under <strong>Settings → Privacy → Usage & Diagnostics</strong>.</p>
+
+            <h3 class="sub">4.4 No Advertising or Analytics SDKs</h3>
+            <p>Karigo contains no advertising networks, no analytics platforms (such as Firebase Analytics, Mixpanel, Amplitude, or similar), no social media SDKs, and no cross-app tracking. We do not display advertisements. We do not sell data to any third party for advertising purposes.</p>
+
+            <table class="legal-table">
+                <thead><tr><th>Data type</th><th>Collected by Karigo?</th><th>Where stored</th></tr></thead>
+                <tbody>
+                <tr><td>Business data (clients, jobs, invoices)</td><td><span class="badge no">Not by Karigo</span></td><td>Your device only</td></tr>
+                <tr><td>Purchase token / subscription status</td><td><span class="badge yes">RevenueCat + Google</span></td><td>RevenueCat servers</td></tr>
+                <tr><td>Payment details</td><td><span class="badge no">Not by Karigo</span></td><td>Google servers only</td></tr>
+                <tr><td>Crash diagnostics</td><td><span class="badge opt">Only if opted in on device</span></td><td>Google Play Console</td></tr>
+                <tr><td>Location, contacts, microphone, SMS</td><td><span class="badge no">Never</span></td><td>N/A — not accessed</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="legal-section" id="pp5">
+            <h2 class="sec"><span class="sec-n">05</span>Data Stored Locally on Your Device</h2>
+            <p>All business data entered into Karigo is stored exclusively in a local SQLite database on your device (implemented via SQLDelight). This data is contained within Android's sandboxed private app storage and is not accessible by other applications without root access.</p>
+            <p>Locally stored data includes: client profiles, job records, material rate library, job material entries, invoice records, and your business settings (name, phone, UPI ID, and logo image).</p>
+            <div class="callout amber">
+                <div class="callout-icon">⚠️</div>
+                <div class="callout-body"><p><strong>Data loss risk:</strong> Because your data is stored only on your device, it will be permanently lost if you uninstall Karigo, factory-reset your device, or lose your device without first exporting your data. We have no ability to recover lost data on your behalf. We strongly recommend using the CSV export feature in Settings regularly.</p></div>
+            </div>
+        </div>
+
+        <div class="legal-section" id="pp6">
+            <h2 class="sec"><span class="sec-n">06</span>Android Permissions We Request</h2>
+            <table class="legal-table">
+                <thead><tr><th>Permission</th><th>Purpose</th><th>Required?</th></tr></thead>
+                <tbody>
+                <tr><td>CAMERA</td><td>Capture photos of your business logo or job site photos using CameraX. Photos are saved to device private storage only — never uploaded.</td><td><span class="badge opt">Optional</span></td></tr>
+                <tr><td>READ_MEDIA_IMAGES (API 33+) / READ_EXTERNAL_STORAGE</td><td>Select an existing photo from your gallery to use as your business logo.</td><td><span class="badge opt">Optional</span></td></tr>
+                <tr><td>WRITE_EXTERNAL_STORAGE (API ≤ 28)</td><td>Save PDF invoices to your device's Downloads folder so they can be accessed externally.</td><td><span class="badge opt">Optional</span></td></tr>
+                <tr><td>POST_NOTIFICATIONS (API 33+)</td><td>Send local on-device reminders about unpaid invoices and overdue jobs. No server is involved — all notifications are generated entirely on-device.</td><td><span class="badge opt">Optional</span></td></tr>
+                <tr><td>RECEIVE_BOOT_COMPLETED</td><td>Reschedule local WorkManager notification jobs after a device restart.</td><td><span class="badge yes">Required (notifications only)</span></td></tr>
+                <tr><td>INTERNET</td><td>Used exclusively by RevenueCat and Google Play Billing to verify subscription status when connectivity is available. Core app features work fully without active internet.</td><td><span class="badge yes">Required (billing only)</span></td></tr>
+                </tbody>
+            </table>
+            <p>Karigo does not request access to Location, Microphone, Contacts, Call Logs, SMS, Sensors, or any other sensitive Android permissions.</p>
+        </div>
+
+        <div class="legal-section" id="pp7">
+            <h2 class="sec"><span class="sec-n">07</span>How We Use Information</h2>
+            <p>The limited data processed through RevenueCat and Google Play is used solely for:</p>
+            <ul>
+                <li><strong>Subscription verification:</strong> To determine whether your Pro subscription is active and unlock Pro features accordingly</li>
+                <li><strong>Purchase acknowledgment:</strong> Google Play requires all purchases to be acknowledged within 3 days to prevent automatic refunds — RevenueCat handles this on our behalf</li>
+                <li><strong>Purchase restoration:</strong> When you reinstall the app or change devices, to restore your Pro access via your Google account</li>
+                <li><strong>Bug diagnosis:</strong> Anonymised crash reports (if opted in at Android system level) are used solely to identify and fix technical bugs in future versions</li>
+            </ul>
+            <p>We do not use any data for profiling, targeted advertising, marketing, sale to third parties, or any purpose other than those stated above.</p>
+        </div>
+
+        <div class="legal-section" id="pp8">
+            <h2 class="sec"><span class="sec-n">08</span>Legal Bases for Processing (GDPR)</h2>
+            <p>For users in the European Economic Area, we process data on the following legal bases under the General Data Protection Regulation (EU) 2016/679:</p>
+            <ul>
+                <li><strong>Contract performance (Art. 6(1)(b) GDPR):</strong> Processing your subscription purchase token through RevenueCat is necessary to fulfil our contract with you to provide Pro features.</li>
+                <li><strong>Legitimate interests (Art. 6(1)(f) GDPR):</strong> Processing anonymised crash reports to improve app stability, where such interests are not overridden by your fundamental rights.</li>
+                <li><strong>Consent (Art. 6(1)(a) GDPR):</strong> Processing of usage and diagnostics data through Android's opt-in system, where you have given consent via your device settings.</li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="pp9">
+            <h2 class="sec"><span class="sec-n">09</span>Data Sharing & Disclosure</h2>
+            <p>We do not sell, rent, trade, or otherwise transfer your personal information to third parties for commercial purposes.</p>
+            <p>The only data that leaves your device is:</p>
+            <ul>
+                <li>Your Google Play purchase token — shared with RevenueCat solely for subscription verification</li>
+                <li>Anonymised crash diagnostics — shared with Google Play Console only if you have opted in at the device level</li>
+            </ul>
+            <p><strong>Legal disclosures:</strong> We may disclose information to comply with applicable law, a valid legal process, governmental request, or court order. As an offline app with no server, we hold no business data that could be disclosed. Only RevenueCat subscription records would be subject to such disclosure.</p>
+            <p><strong>WhatsApp sharing:</strong> When you use Karigo's "Share via WhatsApp" feature to send a PDF invoice, this is initiated entirely by you through Android's system share intent. Karigo does not intercept or log the content of shares. The privacy policies of WhatsApp (Meta Platforms) apply to that transfer.</p>
+        </div>
+
+        <div class="legal-section" id="pp10">
+            <h2 class="sec"><span class="sec-n">10</span>International Data Transfers</h2>
+            <p>RevenueCat is a US-based company. When your subscription purchase token is transmitted to RevenueCat's servers, this constitutes a transfer of data to the United States. RevenueCat complies with applicable data protection frameworks including the EU-US Data Privacy Framework for transfers from the European Economic Area.</p>
+            <p>By using Karigo's Pro subscription features, you consent to this limited international transfer of your purchase token for the sole purpose of subscription verification.</p>
+        </div>
+
+        <div class="legal-section" id="pp11">
+            <h2 class="sec"><span class="sec-n">11</span>Data Retention & Deletion</h2>
+            <h3 class="sub">On-device data</h3>
+            <p>All data stored locally on your device is retained until you delete it manually within the app or uninstall Karigo. Uninstalling the app will delete all local data permanently.</p>
+            <h3 class="sub">RevenueCat data</h3>
+            <p>RevenueCat retains purchase records in accordance with their own retention policy. To request deletion of your RevenueCat data, email us at <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a> with subject "RevenueCat Data Deletion" and we will submit a deletion request on your behalf.</p>
+            <h3 class="sub">How to delete your data</h3>
+            <ul>
+                <li><strong>Delete all on-device data:</strong> Android Settings → Apps → Karigo → Storage → Clear Data</li>
+                <li><strong>Uninstall:</strong> Removes all local data permanently</li>
+                <li><strong>Request RevenueCat deletion:</strong> Email <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a></li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="pp12">
+            <h2 class="sec"><span class="sec-n">12</span>Children's Privacy</h2>
+            <p>Karigo is designed for working adults — specifically tradesmen, field workers, and contractors — and is not directed at children under the age of 13 (or 16 in EU jurisdictions under GDPR, or 18 in jurisdictions where that age applies).</p>
+            <p>We do not knowingly collect personal information from children. If you believe a child has used Karigo and provided personal information, please contact us at <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a> immediately.</p>
+        </div>
+
+        <div class="legal-section" id="pp13">
+            <h2 class="sec"><span class="sec-n">13</span>Your Rights</h2>
+            <p>Depending on your country of residence, you may have the following rights:</p>
+            <ul>
+                <li><strong>Right to access:</strong> Request a copy of personal data held about you</li>
+                <li><strong>Right to rectification:</strong> Request correction of inaccurate personal data</li>
+                <li><strong>Right to erasure:</strong> Request deletion of your personal data</li>
+                <li><strong>Right to data portability:</strong> Export all your on-device data at any time via Settings → Export CSV</li>
+                <li><strong>Right to object:</strong> Object to processing of your personal data</li>
+                <li><strong>Right to withdraw consent:</strong> Disable crash reporting in Android Settings → Privacy → Usage & Diagnostics at any time</li>
+                <li><strong>Right to lodge a complaint:</strong> Lodge a complaint with your national data protection authority</li>
+            </ul>
+            <p>These rights are guaranteed under India's Digital Personal Data Protection Act 2023, the EU GDPR, the UK GDPR, and the CCPA/CPRA (California). To exercise any right, email <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a>. We will respond within 30 days.</p>
+        </div>
+
+        <div class="legal-section" id="pp14">
+            <h2 class="sec"><span class="sec-n">14</span>Security</h2>
+            <p>Your data is stored in a SQLite database within Android's sandboxed private app storage, not accessible to other apps. All communication with RevenueCat is encrypted using TLS 1.2 or higher. PDF files generated by Karigo are stored in private storage and are only shared when you explicitly initiate a share action.</p>
+            <p>While we implement appropriate technical measures, no security system is infallible. We recommend keeping your device locked, running a current Android version, and keeping Karigo updated to the latest version.</p>
+        </div>
+
+        <div class="legal-section" id="pp15">
+            <h2 class="sec"><span class="sec-n">15</span>Changes to This Policy</h2>
+            <p>We may update this Privacy Policy when we make material changes to the app, particularly if we introduce features that change our data practices. Material changes will be communicated through an in-app notification on the next app launch and by updating the "Last updated" date above. Continued use of Karigo after any update constitutes acceptance of the revised policy.</p>
+        </div>
+
+        <div class="legal-section" id="pp16">
+            <h2 class="sec"><span class="sec-n">16</span>Contact & Grievance Officer</h2>
+            <p>For all privacy enquiries, data deletion requests, or to exercise your rights under applicable data protection law:</p>
+            <div class="contact-card">
+                <p><strong>App:</strong> Karigo (com.karigojobs.app)</p>
+                <p><strong>Developer / Data Controller:</strong> Independent Solo Developer</p>
+                <p><strong>Country:</strong> India (West Bengal)</p>
+                <p><strong>Email:</strong> <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a></p>
+                <p><strong>Grievance Officer (India — DPDPA 2023):</strong> Same contact above</p>
+                <p><strong>Response time:</strong> Within 30 days of receipt</p>
+            </div>
+        </div>
+
+        <div class="doc-footer">Privacy Policy · Karigo (com.karigojobs.app) · Effective June 30, 2026</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- TERMS OF SERVICE                        -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="doc-panel" id="doc-tos">
+        <div class="doc-header">
+            <div class="doc-badge">Document 02 · Terms of Service</div>
+            <div class="doc-title">Terms of Service</div>
+            <div class="doc-meta">
+                <span>App: Karigo</span>
+                <span>Package: com.karigojobs.app</span>
+                <span>Effective: June 30, 2026</span>
+            </div>
+        </div>
+
+        <div class="callout blue">
+            <div class="callout-icon">📋</div>
+            <div class="callout-body"><p>Please read these Terms of Service carefully before using Karigo. By downloading, installing, or using the app, you agree to be bound by these terms. If you do not agree, do not use the app.</p></div>
+        </div>
+
+        <div class="toc">
+            <div class="toc-label">Contents</div>
+            <ol>
+                <li><a href="#tos1">Acceptance of Terms</a></li>
+                <li><a href="#tos2">Description of Service</a></li>
+                <li><a href="#tos3">Eligibility</a></li>
+                <li><a href="#tos4">User Accounts</a></li>
+                <li><a href="#tos5">Subscription & Billing</a></li>
+                <li><a href="#tos6">Refund Policy</a></li>
+                <li><a href="#tos7">Free Tier Limitations</a></li>
+                <li><a href="#tos8">Intellectual Property</a></li>
+                <li><a href="#tos9">Your Content & Data</a></li>
+                <li><a href="#tos10">Prohibited Uses</a></li>
+                <li><a href="#tos11">Disclaimer of Warranties</a></li>
+                <li><a href="#tos12">Limitation of Liability</a></li>
+                <li><a href="#tos13">Indemnification</a></li>
+                <li><a href="#tos14">Termination</a></li>
+                <li><a href="#tos15">Governing Law & Disputes</a></li>
+                <li><a href="#tos16">Severability</a></li>
+                <li><a href="#tos17">Changes to Terms</a></li>
+                <li><a href="#tos18">Contact</a></li>
+            </ol>
+        </div>
+
+        <div class="legal-section" id="tos1">
+            <h2 class="sec"><span class="sec-n">01</span>Acceptance of Terms</h2>
+            <p>These Terms of Service ("Terms") constitute a legally binding agreement between you ("User", "you") and the independent developer of Karigo ("Developer", "we", "us"), governing your use of the Karigo mobile application ("App", "Service").</p>
+            <p>By downloading, installing, accessing, or using Karigo in any way, you confirm that you have read, understood, and agree to be bound by these Terms in full. If you are using the app on behalf of a business entity, you represent and warrant that you have authority to bind that entity to these Terms.</p>
+            <p>These Terms incorporate our Privacy Policy, Terms & Conditions, and Disclaimer, each of which forms part of this agreement.</p>
+        </div>
+
+        <div class="legal-section" id="tos2">
+            <h2 class="sec"><span class="sec-n">02</span>Description of Service</h2>
+            <p>Karigo is an Android mobile application that enables field workers, tradesmen, contractors, and small business owners to: log job details; track materials used and labour hours; generate professional PDF invoices; manage a client database; and view earnings summaries. The application operates primarily without internet connectivity ("offline-first").</p>
+            <p>Karigo is a software tool only. It does not provide legal, financial, accounting, tax, or professional advice of any kind. Users are solely responsible for the accuracy of all data they enter, all invoices they generate, and all business decisions made using the app.</p>
+        </div>
+
+        <div class="legal-section" id="tos3">
+            <h2 class="sec"><span class="sec-n">03</span>Eligibility</h2>
+            <p>You must be at least 18 years of age (or the age of legal majority in your jurisdiction) to use Karigo and enter into this agreement. By using Karigo, you represent and warrant that you meet this age requirement.</p>
+            <p>Karigo is available to users worldwide, subject to applicable laws in your jurisdiction. It is your responsibility to ensure that your use of Karigo complies with all local laws and regulations.</p>
+        </div>
+
+        <div class="legal-section" id="tos4">
+            <h2 class="sec"><span class="sec-n">04</span>User Accounts</h2>
+            <p>Karigo does not require you to create an account to use the app. There is no registration, no login, and no user profile on our servers. All app data is stored locally on your device.</p>
+            <p>You are responsible for maintaining the physical security of your device and for any use of Karigo on that device. We are not responsible for any loss of data resulting from device theft, loss, damage, or unauthorized access to your device.</p>
+        </div>
+
+        <div class="legal-section" id="tos5">
+            <h2 class="sec"><span class="sec-n">05</span>Subscription & Billing</h2>
+            <h3 class="sub">5.1 Pro Subscription</h3>
+            <p>Karigo offers a free tier with limited functionality and a paid "Pro" subscription that unlocks additional features including unlimited job logging, PDF invoice generation, WhatsApp sharing, and the earnings dashboard.</p>
+            <h3 class="sub">5.2 Payment Processing</h3>
+            <p>All payments are processed by Google Play Billing. By subscribing, you agree to Google Play's payment terms in addition to these Terms. Karigo does not receive, store, or process any payment card details, bank account information, or UPI credentials.</p>
+            <h3 class="sub">5.3 Subscription Terms</h3>
+            <ul>
+                <li>Pro subscriptions automatically renew at the end of each billing period unless cancelled before the renewal date</li>
+                <li>Your Google Play account will be charged within 24 hours prior to the end of the current billing period</li>
+                <li>Subscription pricing is displayed in the app before purchase and may vary by region</li>
+                <li>Price changes will be communicated at least 30 days in advance with the ability to cancel before the new price takes effect</li>
+            </ul>
+            <h3 class="sub">5.4 Cancellation</h3>
+            <p>You may cancel your subscription at any time through your Google Play account settings. Cancellation takes effect at the end of the current billing period. You will retain Pro access until the end of the paid period. Cancelling does not delete your locally stored data.</p>
+            <h3 class="sub">5.5 Lifetime Purchase (if offered)</h3>
+            <p>Where a one-time lifetime purchase option is offered, it grants access to Pro features as they exist at the time of purchase and all future updates to those features for the lifetime of the application. "Lifetime" means the period during which Karigo remains available on Google Play. We reserve the right to discontinue offering lifetime purchases at any time without affecting existing purchasers.</p>
+            <h3 class="sub">5.6 Free Trial</h3>
+            <p>Where a free trial is offered, it will be clearly communicated within the app and Play Store listing. If you do not cancel before the trial period ends, you will be automatically charged for the subscription.</p>
+        </div>
+
+        <div class="legal-section" id="tos6">
+            <h2 class="sec"><span class="sec-n">06</span>Refund Policy</h2>
+            <p>All purchases are processed through Google Play. Refund requests are subject to <a href="https://support.google.com/googleplay/answer/2479637" target="_blank" rel="noopener">Google Play's refund policy</a>. In general, Google Play allows refund requests within 48 hours of purchase for subscriptions and 2 hours for apps.</p>
+            <p>For purchases outside Google's standard refund window, you may contact us at <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a> to discuss your case. We will consider refund requests on a case-by-case basis in the following circumstances:</p>
+            <ul>
+                <li>You were charged in error due to a technical fault</li>
+                <li>The app failed to function as described and we were unable to resolve the issue</li>
+                <li>You were charged after cancelling your subscription due to a billing system error</li>
+            </ul>
+            <p>We do not offer refunds for change of mind, unused subscription periods, or failure to cancel before a renewal date.</p>
+        </div>
+
+        <div class="legal-section" id="tos7">
+            <h2 class="sec"><span class="sec-n">07</span>Free Tier Limitations</h2>
+            <p>The free tier of Karigo provides access to a limited set of features, currently including up to 5 job entries per calendar month, unlimited client and material library access, and basic job viewing. Features available in the free tier may change over time at our discretion.</p>
+            <p>We reserve the right to modify, restrict, or discontinue any free tier features at any time with reasonable notice. Free tier users have no entitlement to Pro features.</p>
+        </div>
+
+        <div class="legal-section" id="tos8">
+            <h2 class="sec"><span class="sec-n">08</span>Intellectual Property</h2>
+            <p>Karigo, including its source code, design, user interface, graphics, logos, and all associated materials, is the intellectual property of the Developer and is protected under applicable copyright, trademark, and intellectual property laws.</p>
+            <p>We grant you a limited, non-exclusive, non-transferable, revocable licence to use the Karigo app on Android devices you own or control, solely for your personal or business use in accordance with these Terms.</p>
+            <p>You may not: copy, modify, distribute, sell, or sublicense any part of the app; reverse-engineer, decompile, or disassemble the app except as permitted by applicable law; remove or alter any proprietary notices; or use the Karigo name or logo without our written permission.</p>
+        </div>
+
+        <div class="legal-section" id="tos9">
+            <h2 class="sec"><span class="sec-n">09</span>Your Content & Data</h2>
+            <p>All data you enter into Karigo — client information, job records, invoices, and all related content — belongs to you. We make no claim of ownership over your data.</p>
+            <p>Because all data is stored locally on your device, you are solely responsible for: the accuracy and legality of all data entered; backing up your data; and exporting your data before uninstalling the app or changing devices.</p>
+            <p>You warrant that all data you enter into Karigo does not infringe the intellectual property rights, privacy rights, or any other rights of any third party.</p>
+        </div>
+
+        <div class="legal-section" id="tos10">
+            <h2 class="sec"><span class="sec-n">10</span>Prohibited Uses</h2>
+            <p>You agree not to use Karigo:</p>
+            <ul>
+                <li>For any unlawful purpose or in violation of any applicable laws or regulations</li>
+                <li>To generate fraudulent invoices or to facilitate any form of fraud or financial crime</li>
+                <li>To impersonate any person or entity or misrepresent your affiliation with any person or entity</li>
+                <li>To attempt to reverse engineer, decompile, or extract the source code of the application</li>
+                <li>To bypass, disable, or circumvent any feature limitation or subscription restriction within the app</li>
+                <li>To share your Pro subscription access with other individuals or entities not covered by your subscription</li>
+                <li>In any manner that could damage, disable, overburden, or impair the app</li>
+                <li>In violation of Google Play's Developer Programme Policies</li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="tos11">
+            <h2 class="sec"><span class="sec-n">11</span>Disclaimer of Warranties</h2>
+            <p>Karigo is provided on an <strong>"as is" and "as available"</strong> basis without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, accuracy, reliability, or non-infringement.</p>
+            <p>We do not warrant that: the app will be error-free or uninterrupted; defects will be corrected; the app will meet your specific requirements; or data calculated by the app (such as invoice totals or earnings) will be free of errors. You are solely responsible for verifying all figures generated by the app.</p>
+            <p>Nothing in these Terms excludes or limits liability that cannot be excluded under applicable law.</p>
+        </div>
+
+        <div class="legal-section" id="tos12">
+            <h2 class="sec"><span class="sec-n">12</span>Limitation of Liability</h2>
+            <p>To the maximum extent permitted by applicable law, in no event shall the Developer be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, loss of data, loss of revenue, loss of business, or loss of goodwill, arising out of or in connection with your use of, or inability to use, Karigo.</p>
+            <p>In no event shall the Developer's total aggregate liability to you exceed the amount paid by you for the Karigo subscription in the 12 months immediately preceding the event giving rise to the claim, or ₹500 (five hundred Indian rupees) if no payment was made.</p>
+            <p>Some jurisdictions do not allow the exclusion or limitation of certain types of liability. In such jurisdictions, our liability shall be limited to the maximum extent permitted by law.</p>
+        </div>
+
+        <div class="legal-section" id="tos13">
+            <h2 class="sec"><span class="sec-n">13</span>Indemnification</h2>
+            <p>You agree to indemnify, defend, and hold harmless the Developer from and against any claims, liabilities, damages, losses, costs, and expenses (including reasonable legal fees) arising out of or in any way connected with: your use of Karigo; your violation of these Terms; your violation of any applicable law or regulation; or any content or data you enter into the app.</p>
+        </div>
+
+        <div class="legal-section" id="tos14">
+            <h2 class="sec"><span class="sec-n">14</span>Termination</h2>
+            <p>We may suspend or terminate your access to Pro features immediately, without prior notice or liability, if you breach these Terms in any material way, including but not limited to attempting to circumvent subscription restrictions or using the app for fraudulent purposes.</p>
+            <p>Upon termination, your right to use Pro features ceases immediately. Your locally stored data remains on your device and is not deleted by us.</p>
+            <p>You may stop using Karigo at any time by uninstalling the app from your device.</p>
+        </div>
+
+        <div class="legal-section" id="tos15">
+            <h2 class="sec"><span class="sec-n">15</span>Governing Law & Dispute Resolution</h2>
+            <p>These Terms are governed by and construed in accordance with the laws of India, specifically the Indian Contract Act 1872, the Information Technology Act 2000 and its amendments, the Consumer Protection Act 2019, and the Digital Personal Data Protection Act 2023, without regard to its conflict of law provisions.</p>
+            <p><strong>For users in India:</strong> Any dispute arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts located in West Bengal, India. Before initiating any legal proceedings, both parties agree to attempt to resolve disputes amicably by email within 30 days.</p>
+            <p><strong>For users in the EU/EEA:</strong> If you are a consumer in the European Union, you may also have recourse to the EU Online Dispute Resolution platform at <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>.</p>
+            <p><strong>For users in other jurisdictions:</strong> You may have additional rights under local consumer protection laws. Nothing in these Terms limits those rights.</p>
+        </div>
+
+        <div class="legal-section" id="tos16">
+            <h2 class="sec"><span class="sec-n">16</span>Severability & Entire Agreement</h2>
+            <p>If any provision of these Terms is found to be unenforceable or invalid by a court of competent jurisdiction, that provision shall be limited or eliminated to the minimum extent necessary so that the remaining Terms remain in full force and effect.</p>
+            <p>These Terms, together with the Privacy Policy, Terms & Conditions, and Disclaimer, constitute the entire agreement between you and the Developer regarding your use of Karigo and supersede all prior agreements.</p>
+        </div>
+
+        <div class="legal-section" id="tos17">
+            <h2 class="sec"><span class="sec-n">17</span>Changes to Terms</h2>
+            <p>We reserve the right to modify these Terms at any time. Material changes will be communicated via an in-app notification at least 14 days before taking effect. Your continued use of Karigo after any changes constitutes acceptance of the revised Terms. If you do not agree to the revised Terms, you must stop using the app.</p>
+        </div>
+
+        <div class="legal-section" id="tos18">
+            <h2 class="sec"><span class="sec-n">18</span>Contact</h2>
+            <div class="contact-card">
+                <p><strong>App:</strong> Karigo (com.karigojobs.app)</p>
+                <p><strong>Developer:</strong> Independent Solo Developer — West Bengal, India</p>
+                <p><strong>Email:</strong> <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a></p>
+                <p><strong>Response time:</strong> Within 30 days</p>
+            </div>
+        </div>
+
+        <div class="doc-footer">Terms of Service · Karigo (com.karigojobs.app) · Effective June 30, 2026</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- TERMS & CONDITIONS                      -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="doc-panel" id="doc-tandc">
+        <div class="doc-header">
+            <div class="doc-badge">Document 03 · Terms & Conditions</div>
+            <div class="doc-title">Terms & Conditions</div>
+            <div class="doc-meta">
+                <span>App: Karigo</span>
+                <span>Package: com.karigojobs.app</span>
+                <span>Effective: June 30, 2026</span>
+            </div>
+        </div>
+
+        <div class="callout blue">
+            <div class="callout-icon">⚖️</div>
+            <div class="callout-body"><p>These Terms & Conditions govern the specific conditions of use of the Karigo application, including the Pro subscription plan, feature access, data ownership, and acceptable conduct. They complement the Terms of Service and are incorporated into it by reference.</p></div>
+        </div>
+
+        <div class="toc">
+            <div class="toc-label">Contents</div>
+            <ol>
+                <li><a href="#tc1">Agreement to These T&amp;Cs</a></li>
+                <li><a href="#tc2">App Features & Limitations</a></li>
+                <li><a href="#tc3">Pro Plan Conditions</a></li>
+                <li><a href="#tc4">Subscription Pricing & Fairness</a></li>
+                <li><a href="#tc5">Offline Operation Conditions</a></li>
+                <li><a href="#tc6">Invoice Accuracy & Legal Compliance</a></li>
+                <li><a href="#tc7">Data Ownership & Portability</a></li>
+                <li><a href="#tc8">User Responsibilities</a></li>
+                <li><a href="#tc9">Updates & Feature Changes</a></li>
+                <li><a href="#tc10">App Availability</a></li>
+                <li><a href="#tc11">Feedback & Suggestions</a></li>
+                <li><a href="#tc12">Third-Party Integrations</a></li>
+                <li><a href="#tc13">Consumer Rights (India)</a></li>
+                <li><a href="#tc14">Consumer Rights (EU/EEA)</a></li>
+                <li><a href="#tc15">Contact</a></li>
+            </ol>
+        </div>
+
+        <div class="legal-section" id="tc1">
+            <h2 class="sec"><span class="sec-n">01</span>Agreement to These Terms & Conditions</h2>
+            <p>By using Karigo, you confirm that you have read and agree to these Terms & Conditions. These T&Cs form part of the overall legal agreement between you and the Developer, alongside the Terms of Service, Privacy Policy, and Disclaimer.</p>
+            <p>If you are a paying subscriber (Pro plan), these T&Cs additionally govern your subscription arrangement. The Consumer Protection Act 2019 (India) and equivalent consumer protection laws in your jurisdiction apply to your purchase.</p>
+        </div>
+
+        <div class="legal-section" id="tc2">
+            <h2 class="sec"><span class="sec-n">02</span>App Features & Limitations</h2>
+            <p>Karigo is provided with the following understood limitations that form part of your agreement to use the app:</p>
+            <ul>
+                <li><strong>No cloud backup:</strong> Your data is stored only on your device. The Developer has no ability to back up, restore, or recover your data if it is lost</li>
+                <li><strong>No multi-device sync:</strong> The current version of Karigo does not synchronise data across multiple devices</li>
+                <li><strong>No real-time collaboration:</strong> Karigo is a single-user, single-device application</li>
+                <li><strong>PDF generation accuracy:</strong> PDF invoices are generated based on data you enter. The Developer is not responsible for errors in invoices resulting from incorrect data entry</li>
+                <li><strong>WhatsApp sharing:</strong> The WhatsApp share feature uses Android's system intent and requires WhatsApp to be installed on your device. We cannot guarantee WhatsApp compatibility with future versions</li>
+                <li><strong>Android compatibility:</strong> Karigo requires Android 6.0 (API 23) or higher. Functionality on older Android versions is not guaranteed</li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="tc3">
+            <h2 class="sec"><span class="sec-n">03</span>Pro Plan Conditions</h2>
+            <p>The Pro plan grants access to the following features (as currently offered; subject to change with notice):</p>
+            <ul>
+                <li>Unlimited job entries per month (no monthly cap)</li>
+                <li>PDF invoice generation using your business name, logo, and itemised details</li>
+                <li>WhatsApp invoice sharing via Android system share intent</li>
+                <li>Monthly earnings dashboard with bar chart visualisation</li>
+                <li>Business logo inclusion on invoices</li>
+                <li>CSV data export from Settings</li>
+                <li>Invoice discount field</li>
+                <li>All future Pro features added to Karigo during your active subscription period</li>
+            </ul>
+            <h3 class="sub">Pro plan is per-user and non-transferable</h3>
+            <p>Your Pro subscription is licensed to a single user account linked to your Google Play account. Sharing of subscription access with other users is prohibited.</p>
+            <h3 class="sub">Lifetime plan (if purchased)</h3>
+            <p>A lifetime Pro purchase grants permanent access to Pro features on the device linked to the purchasing Google account. "Permanent" is conditional on Karigo remaining an active, published application. If Karigo is discontinued, lifetime purchasers will receive at least 90 days' advance notice.</p>
+        </div>
+
+        <div class="legal-section" id="tc4">
+            <h2 class="sec"><span class="sec-n">04</span>Subscription Pricing & Fairness</h2>
+            <p>We are committed to fair pricing practices. The following commitments apply to all paying users:</p>
+            <ul>
+                <li><strong>Price increase notice:</strong> We will provide at least 30 days' advance notice of any subscription price increase, with the ability to cancel before the increase takes effect</li>
+                <li><strong>Early adopter protection:</strong> Users who subscribe during a promotional early-adopter pricing period will be honoured at the promotional rate for as long as they maintain a continuous subscription</li>
+                <li><strong>Lifetime purchasers:</strong> Users who purchase a lifetime plan will never be charged recurring fees for the features included at the time of their purchase</li>
+                <li><strong>Feature removal:</strong> If a feature you relied upon is removed from the Pro plan, you will be notified at least 14 days in advance and offered a pro-rated refund for the remaining subscription period</li>
+                <li><strong>No hidden fees:</strong> The price displayed in Google Play is the full price. There are no in-app purchases, additional feature unlocks, or hidden charges beyond the subscription fee</li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="tc5">
+            <h2 class="sec"><span class="sec-n">05</span>Offline Operation Conditions</h2>
+            <p>Karigo is designed to function without internet connectivity for all core features. However, the following conditions apply:</p>
+            <ul>
+                <li><strong>Subscription status while offline:</strong> RevenueCat caches your subscription status locally. Pro features remain accessible offline for up to 5 days without internet connectivity. After 5 days without network access, the app may require a connectivity check to re-verify your subscription</li>
+                <li><strong>Purchase restoration:</strong> Restoring purchases after a reinstall requires an active internet connection to contact RevenueCat and Google Play servers</li>
+                <li><strong>New subscriptions:</strong> Purchasing a new subscription requires an active internet connection at the time of purchase</li>
+                <li><strong>App updates:</strong> Receiving app updates through Google Play requires internet connectivity</li>
+            </ul>
+            <p>We do not guarantee that all features will be available under all network conditions or on all device configurations.</p>
+        </div>
+
+        <div class="legal-section" id="tc6">
+            <h2 class="sec"><span class="sec-n">06</span>Invoice Accuracy & Legal Compliance</h2>
+            <p>Karigo generates invoices based on the information you provide. The following conditions and responsibilities apply to all users generating invoices through the app:</p>
+            <ul>
+                <li>You are solely responsible for ensuring that all prices, quantities, client details, and business information entered into Karigo are accurate and truthful</li>
+                <li>Karigo does not validate invoice amounts, tax calculations, or compliance with any tax authority requirements</li>
+                <li>If you are GST-registered, you are responsible for ensuring your invoices comply with GST invoicing requirements under the CGST Act 2017 or applicable state GST laws. Karigo's invoice template may not be GST-compliant without customisation</li>
+                <li>Karigo is not a registered accounting software and invoices generated by Karigo may not substitute for legally required financial records in all jurisdictions</li>
+                <li>You must not use Karigo to generate false, fraudulent, or misleading invoices</li>
+                <li>The Developer is not liable for any tax liability, regulatory penalty, or legal consequence arising from invoices generated using Karigo</li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="tc7">
+            <h2 class="sec"><span class="sec-n">07</span>Data Ownership & Portability</h2>
+            <p>All data you enter into Karigo — including client information, job records, materials, and invoice data — is exclusively owned by you. The Developer makes no claim of any kind over your business data.</p>
+            <p>You have the right to export your data at any time using the CSV export function in Settings. You do not need to contact us to export your data. Exported data is provided in CSV format which can be opened in any spreadsheet application.</p>
+            <p>You may delete your data at any time by clearing the app's data in Android Settings or by uninstalling the app. We have no copy of your data and cannot restore it after deletion.</p>
+        </div>
+
+        <div class="legal-section" id="tc8">
+            <h2 class="sec"><span class="sec-n">08</span>User Responsibilities</h2>
+            <p>As a user of Karigo, you agree that you are solely responsible for:</p>
+            <ul>
+                <li>All data entered into the app, including its accuracy and legality</li>
+                <li>Ensuring clients' phone numbers and contact details you store in the app are lawfully obtained and that storing them complies with applicable data protection laws (including India's DPDPA 2023)</li>
+                <li>Maintaining regular backups or CSV exports of your data</li>
+                <li>Keeping your Android device secure and updated</li>
+                <li>Compliance with all applicable tax laws, invoicing regulations, and business licensing requirements in your jurisdiction</li>
+                <li>Ensuring that invoices generated through Karigo comply with the legal and tax requirements applicable to your business</li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="tc9">
+            <h2 class="sec"><span class="sec-n">09</span>Updates & Feature Changes</h2>
+            <p>We may release updates to Karigo that add, modify, or remove features. We will aim to communicate significant changes through in-app notifications and Play Store update notes.</p>
+            <p>Updates are delivered through Google Play. We recommend enabling automatic updates for Karigo to ensure you have the latest bug fixes and security improvements.</p>
+            <p>Core features of the Pro plan will not be removed without at least 14 days' prior notice. We reserve the right to modify the free tier at any time, including reducing or expanding the features available for free.</p>
+        </div>
+
+        <div class="legal-section" id="tc10">
+            <h2 class="sec"><span class="sec-n">10</span>App Availability</h2>
+            <p>We aim to keep Karigo available on Google Play indefinitely. However, we reserve the right to discontinue the application with at least 90 days' prior notice to users. In such an event:</p>
+            <ul>
+                <li>Pro subscribers will receive pro-rated refunds for any unused subscription period</li>
+                <li>Lifetime purchasers will be notified at least 90 days in advance</li>
+                <li>All users will retain access to their locally stored data until they uninstall the app</li>
+                <li>CSV export functionality will remain available for at least 90 days after discontinuation notice</li>
+            </ul>
+            <p>Because Karigo is offline-first, discontinuation of the app does not affect your existing locally stored data.</p>
+        </div>
+
+        <div class="legal-section" id="tc11">
+            <h2 class="sec"><span class="sec-n">11</span>Feedback & Suggestions</h2>
+            <p>We welcome feedback, feature suggestions, and bug reports. Any feedback you provide to us may be used by us to improve Karigo without any obligation to compensate you or to implement the suggestion.</p>
+            <p>By submitting feedback, you grant us a non-exclusive, royalty-free, perpetual, irrevocable licence to use, copy, modify, and incorporate the feedback into Karigo or related products without attribution or compensation.</p>
+        </div>
+
+        <div class="legal-section" id="tc12">
+            <h2 class="sec"><span class="sec-n">12</span>Third-Party Integrations</h2>
+            <p><strong>WhatsApp:</strong> Karigo's "Share via WhatsApp" feature uses Android's standard system share intent. WhatsApp is a third-party application owned by Meta Platforms, Inc. We have no partnership or affiliation with WhatsApp/Meta. Use of WhatsApp is subject to WhatsApp's own Terms of Service and Privacy Policy.</p>
+            <p><strong>Google Play:</strong> Karigo is distributed through Google Play, owned by Google LLC. Use of Google Play is subject to Google's Terms of Service.</p>
+            <p><strong>RevenueCat:</strong> Subscription management is handled by RevenueCat, Inc. Use of RevenueCat services is subject to their Terms of Service. We are responsible for our use of RevenueCat's services but not for RevenueCat's own conduct.</p>
+            <p>We are not responsible for the availability, accuracy, or conduct of any third-party services used in connection with Karigo.</p>
+        </div>
+
+        <div class="legal-section" id="tc13">
+            <h2 class="sec"><span class="sec-n">13</span>Consumer Rights (India)</h2>
+            <p>If you are a consumer in India, you have additional rights under the Consumer Protection Act, 2019 and the Consumer Protection (E-Commerce) Rules, 2020, including:</p>
+            <ul>
+                <li>The right to a refund for defective products or services not matching their description</li>
+                <li>The right to file a consumer complaint with the District Consumer Disputes Redressal Commission</li>
+                <li>The right to approach the National Consumer Helpline (NCH) for grievance resolution</li>
+            </ul>
+            <p>Our Grievance Officer for the purposes of Indian consumer law is reachable at <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a>. We will acknowledge grievances within 48 hours and endeavour to resolve them within 30 days.</p>
+        </div>
+
+        <div class="legal-section" id="tc14">
+            <h2 class="sec"><span class="sec-n">14</span>Consumer Rights (EU/EEA)</h2>
+            <p>If you are a consumer in the European Economic Area:</p>
+            <ul>
+                <li>You have a 14-day right of withdrawal from the date of purchase of a subscription under the EU Consumer Rights Directive, unless digital content delivery has commenced with your prior express consent</li>
+                <li>You have the right to receive the service in conformity with the contract</li>
+                <li>You have access to the EU Online Dispute Resolution platform at ec.europa.eu/consumers/odr</li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="tc15">
+            <h2 class="sec"><span class="sec-n">15</span>Contact</h2>
+            <div class="contact-card">
+                <p><strong>App:</strong> Karigo (com.karigojobs.app)</p>
+                <p><strong>Developer:</strong> Independent Solo Developer — West Bengal, India</p>
+                <p><strong>Email:</strong> <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a></p>
+                <p><strong>Consumer Grievance Officer (India):</strong> Same contact above</p>
+                <p><strong>Response time:</strong> Acknowledgement within 48 hours; resolution within 30 days</p>
+            </div>
+        </div>
+
+        <div class="doc-footer">Terms & Conditions · Karigo (com.karigojobs.app) · Effective June 30, 2026</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- DISCLAIMER                              -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="doc-panel" id="doc-disclaimer">
+        <div class="doc-header">
+            <div class="doc-badge">Document 04 · Disclaimer</div>
+            <div class="doc-title">Disclaimer</div>
+            <div class="doc-meta">
+                <span>App: Karigo</span>
+                <span>Package: com.karigojobs.app</span>
+                <span>Effective: June 30, 2026</span>
+            </div>
+        </div>
+
+        <div class="callout amber">
+            <div class="callout-icon">⚠️</div>
+            <div class="callout-body"><p>This Disclaimer limits our liability for various aspects of Karigo's use. Please read it carefully. It is incorporated into the Terms of Service by reference and forms part of the overall legal agreement governing your use of the app.</p></div>
+        </div>
+
+        <div class="toc">
+            <div class="toc-label">Contents</div>
+            <ol>
+                <li><a href="#d1">As-Is Software Disclaimer</a></li>
+                <li><a href="#d2">No Professional Advice</a></li>
+                <li><a href="#d3">Invoice & Financial Accuracy</a></li>
+                <li><a href="#d4">Tax & Legal Compliance</a></li>
+                <li><a href="#d5">Data Loss Disclaimer</a></li>
+                <li><a href="#d6">Third-Party Services</a></li>
+                <li><a href="#d7">External Links</a></li>
+                <li><a href="#d8">Device Compatibility</a></li>
+                <li><a href="#d9">Availability Disclaimer</a></li>
+                <li><a href="#d10">No Endorsement</a></li>
+                <li><a href="#d11">Limitation of Liability Recap</a></li>
+                <li><a href="#d12">Jurisdiction & Applicability</a></li>
+                <li><a href="#d13">Contact</a></li>
+            </ol>
+        </div>
+
+        <div class="legal-section" id="d1">
+            <h2 class="sec"><span class="sec-n">01</span>As-Is Software Disclaimer</h2>
+            <p>Karigo is provided on an <strong>"as is" and "as available" basis</strong> without any representations or warranties, express or implied. The Developer makes no representations or warranties in relation to the app or the information and materials provided on the app.</p>
+            <p>Without prejudice to the generality of the foregoing, the Developer does not warrant or represent that:</p>
+            <ul>
+                <li>Karigo will be constantly available or available at all times</li>
+                <li>The information in the app is complete, true, accurate, or non-misleading</li>
+                <li>The app will be free of bugs, errors, or technical defects at all times</li>
+                <li>The app will function uninterrupted on any particular Android device or Android version</li>
+                <li>Any specific feature will remain available in future updates</li>
+            </ul>
+            <p>Nothing on or in Karigo constitutes, or is meant to constitute, advice of any kind.</p>
+        </div>
+
+        <div class="legal-section" id="d2">
+            <h2 class="sec"><span class="sec-n">02</span>No Professional Advice</h2>
+            <div class="callout red">
+                <div class="callout-icon">⛔</div>
+                <div class="callout-body">
+                    <p><strong>Karigo does not provide legal, financial, accounting, tax, or business advice of any kind.</strong></p>
+                    <p>The Developer is a software developer, not a chartered accountant, tax advisor, lawyer, or financial advisor. Nothing in the app, its documentation, or any communication from us should be interpreted as professional advice.</p>
+                </div>
+            </div>
+            <p>Specifically:</p>
+            <ul>
+                <li><strong>Not accounting software:</strong> Karigo is not a certified accounting system. It is a job logging and invoicing tool. It should not be used as your sole financial record-keeping system</li>
+                <li><strong>Not tax advice:</strong> Karigo does not provide tax calculations, GST advice, or any guidance on your tax obligations. You are responsible for understanding and complying with your tax obligations</li>
+                <li><strong>Not legal advice:</strong> Invoices generated by Karigo are not guaranteed to be legally compliant in your jurisdiction. You should consult a qualified professional to ensure your invoicing practices comply with applicable laws</li>
+                <li><strong>Not financial advice:</strong> Earnings data displayed in Karigo is based solely on figures you have entered. It does not account for actual bank receipts, taxes, expenses, or other financial factors</li>
+            </ul>
+            <p>Always seek the advice of a qualified and licensed professional for any legal, financial, tax, or accounting matter. Do not rely on information derived from Karigo as a substitute for professional advice.</p>
+        </div>
+
+        <div class="legal-section" id="d3">
+            <h2 class="sec"><span class="sec-n">03</span>Invoice & Financial Accuracy Disclaimer</h2>
+            <p>Karigo calculates invoice totals based on the data you enter, including labour hours, labour rates, material quantities, material rates, and any discounts applied. The accuracy of all calculations is entirely dependent on the accuracy of the data you provide.</p>
+            <p>The Developer disclaims all liability for:</p>
+            <ul>
+                <li>Calculation errors resulting from incorrect data entry</li>
+                <li>Disputes between you and your clients arising from invoices generated using Karigo</li>
+                <li>Financial losses resulting from reliance on figures displayed in the app</li>
+                <li>Rounding errors in currency calculations</li>
+                <li>Incorrect earnings totals resulting from incomplete or inaccurate job records</li>
+            </ul>
+            <p><strong>You are solely responsible for verifying all invoice amounts before sending them to clients.</strong> The PDF invoice you generate is a record of the data you entered — it is not independently verified by us.</p>
+        </div>
+
+        <div class="legal-section" id="d4">
+            <h2 class="sec"><span class="sec-n">04</span>Tax & Legal Compliance Disclaimer</h2>
+            <p>Karigo's invoice template is a general-purpose document. It is <strong>not guaranteed to comply</strong> with any specific legal invoicing requirements, including but not limited to:</p>
+            <ul>
+                <li>GST-compliant tax invoices under the CGST Act 2017 or applicable state GST laws (India)</li>
+                <li>VAT invoices in EU member states</li>
+                <li>Tax invoice requirements in any other jurisdiction</li>
+            </ul>
+            <p>If your business is GST-registered or subject to any statutory invoicing requirements, you must consult a qualified tax professional to determine whether invoices generated by Karigo are legally sufficient. The Developer accepts no liability for any tax penalties, fines, or legal consequences arising from the use of Karigo's invoice generation feature.</p>
+        </div>
+
+        <div class="legal-section" id="d5">
+            <h2 class="sec"><span class="sec-n">05</span>Data Loss Disclaimer</h2>
+            <p>Because all data in Karigo is stored exclusively on your device, the Developer has <strong>no ability to recover lost data</strong> under any circumstances. Data may be permanently lost due to:</p>
+            <ul>
+                <li>Accidental deletion of the app or clearing of app data</li>
+                <li>Device theft, loss, damage, or failure</li>
+                <li>Factory reset of your Android device</li>
+                <li>Android system updates that affect app data</li>
+                <li>Migration to a new device without first exporting data</li>
+                <li>Technical faults or bugs in the app</li>
+            </ul>
+            <p>The Developer expressly disclaims all liability for any data loss, regardless of the cause. You assume full responsibility for backing up your data through the CSV export feature in Settings or through Android's device backup functionality.</p>
+        </div>
+
+        <div class="legal-section" id="d6">
+            <h2 class="sec"><span class="sec-n">06</span>Third-Party Services Disclaimer</h2>
+            <p>Karigo integrates with Google Play Billing and RevenueCat for subscription management. The Developer is not responsible for:</p>
+            <ul>
+                <li>Downtime, errors, or failures of Google Play Billing or RevenueCat systems</li>
+                <li>Subscription billing errors caused by Google Play or RevenueCat</li>
+                <li>Failure of WhatsApp to receive or display shared invoice PDFs</li>
+                <li>Changes to Google Play's or RevenueCat's policies, pricing, or features that affect Karigo's subscription functionality</li>
+                <li>Data handling by Google Play, RevenueCat, or WhatsApp under their respective privacy policies</li>
+            </ul>
+            <p>If you experience billing issues, we encourage you to contact Google Play support directly for resolution. We will assist where we can but are not responsible for third-party service failures.</p>
+        </div>
+
+        <div class="legal-section" id="d7">
+            <h2 class="sec"><span class="sec-n">07</span>External Links Disclaimer</h2>
+            <p>Karigo may contain links to third-party websites or services (such as Google Play, RevenueCat, or WhatsApp). These links are provided for your convenience only. The inclusion of any link does not imply our endorsement of the linked website or service. We have no control over the content, privacy practices, or reliability of linked third-party resources.</p>
+            <p>We accept no responsibility for any loss or damage that may arise from your use of any linked third-party website or service.</p>
+        </div>
+
+        <div class="legal-section" id="d8">
+            <h2 class="sec"><span class="sec-n">08</span>Device Compatibility Disclaimer</h2>
+            <p>Karigo is designed for Android devices running Android 6.0 (API 23) or higher. While we aim to maintain compatibility with a wide range of Android devices, we do not guarantee that the app will function correctly on all devices, all Android versions, all custom Android skins (such as MIUI, One UI, ColorOS, etc.), or devices with restricted permissions due to manufacturer customisation.</p>
+            <p>The Developer is not responsible for:</p>
+            <ul>
+                <li>App malfunction due to device-specific hardware or software configurations</li>
+                <li>WorkManager notification failures due to manufacturer-specific battery optimisation</li>
+                <li>PDF rendering differences across different Android versions</li>
+                <li>Features that require permissions that have been denied by your device's permission management system</li>
+            </ul>
+            <p>If you experience device-specific issues, please contact us at <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a> with your device model and Android version and we will endeavour to assist.</p>
+        </div>
+
+        <div class="legal-section" id="d9">
+            <h2 class="sec"><span class="sec-n">09</span>App Availability Disclaimer</h2>
+            <p>The Developer makes no commitment that Karigo will remain available on Google Play indefinitely or that it will continue to be updated or maintained. While we intend to continue developing and supporting Karigo, we reserve the right to:</p>
+            <ul>
+                <li>Cease development and updates at any time</li>
+                <li>Remove the app from Google Play with reasonable notice</li>
+                <li>Change the app's features, pricing, or terms at any time with appropriate notice</li>
+            </ul>
+            <p>Because Karigo is offline-first and your data is stored locally, discontinuation of the app does not affect your existing data on your device.</p>
+        </div>
+
+        <div class="legal-section" id="d10">
+            <h2 class="sec"><span class="sec-n">10</span>No Endorsement Disclaimer</h2>
+            <p>References in the app or its documentation to any trade names, products, services, processes, or other information by trade name, trademark, manufacturer, supplier, or otherwise do not constitute or imply endorsement, sponsorship, or recommendation by us. Karigo is an independent product and is not affiliated with, endorsed by, or sponsored by Google, Meta (WhatsApp), or any other company whose services may be mentioned in the app.</p>
+            <p>"Karigo" and the Karigo logo are trademarks of the Developer. All other trademarks mentioned in connection with the app belong to their respective owners.</p>
+        </div>
+
+        <div class="legal-section" id="d11">
+            <h2 class="sec"><span class="sec-n">11</span>Limitation of Liability — Recap</h2>
+            <p>To the fullest extent permitted by applicable law, the Developer shall not be liable for any loss or damage of any nature, including but not limited to:</p>
+            <ul>
+                <li>Loss of data, business, revenue, profits, or goodwill</li>
+                <li>Any indirect, consequential, special, punitive, or incidental damage</li>
+                <li>Losses caused by the actions of any third-party service (Google Play, RevenueCat, WhatsApp)</li>
+                <li>Losses arising from your failure to back up data</li>
+                <li>Losses arising from reliance on invoice or financial data generated by the app</li>
+                <li>Losses arising from your failure to comply with tax or legal requirements in your jurisdiction</li>
+                <li>Losses arising from device failure, theft, or loss</li>
+            </ul>
+            <p>The Developer's aggregate maximum liability to you under all circumstances shall not exceed the amount you have paid for Karigo Pro in the 12 months preceding the event giving rise to the claim, or ₹500 (five hundred Indian rupees), whichever is greater.</p>
+            <p>Some jurisdictions do not permit the exclusion of implied warranties or limitation of liability. Where such restrictions apply, the Developer's liability is limited to the maximum extent permitted by law in that jurisdiction.</p>
+        </div>
+
+        <div class="legal-section" id="d12">
+            <h2 class="sec"><span class="sec-n">12</span>Jurisdiction & Applicability</h2>
+            <p>This Disclaimer is governed by the laws of India. It applies to all users of Karigo globally. Users in specific jurisdictions may have additional rights under local consumer protection or data protection law that supplement or, where required by law, override the limitations expressed in this Disclaimer.</p>
+            <p>Nothing in this Disclaimer is intended to exclude rights that cannot be lawfully excluded under applicable consumer protection legislation in your jurisdiction.</p>
+        </div>
+
+        <div class="legal-section" id="d13">
+            <h2 class="sec"><span class="sec-n">13</span>Contact</h2>
+            <p>For any questions about this Disclaimer or any other legal documents, contact us:</p>
+            <div class="contact-card">
+                <p><strong>App:</strong> Karigo (com.karigojobs.app)</p>
+                <p><strong>Developer:</strong> Independent Solo Developer — West Bengal, India</p>
+                <p><strong>Email:</strong> <a href="mailto:hazratummar9@gmail.com">hazratummar9@gmail.com</a></p>
+                <p><strong>Response time:</strong> Within 30 days</p>
+            </div>
+        </div>
+
+        <div class="doc-footer">Disclaimer · Karigo (com.karigojobs.app) · Effective June 30, 2026</div>
+    </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+    function showDoc(id) {
+      document.querySelectorAll('.doc-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('doc-' + id).classList.add('active');
+      const tabs = document.querySelectorAll('.tab-btn');
+      const map = { index: 0, privacy: 1, tos: 2, tandc: 3, disclaimer: 4 };
+      if (map[id] !== undefined) tabs[map[id]].classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>

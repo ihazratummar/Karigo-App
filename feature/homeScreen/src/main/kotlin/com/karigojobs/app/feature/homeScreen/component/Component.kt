@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
+import com.karigojobs.ui.common.TradeCard
 import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsCard
@@ -48,43 +49,7 @@ fun ScrollableTradeView(trades: Set<TradeType> = emptySet()) {
         modifier = Modifier.fillMaxWidth()
     ) {
         items(trades.toList()) { trade ->
-            Box(
-                modifier = Modifier
-                    .padding(vertical = dimens.Padding.xs, horizontal = dimens.Padding.xs)
-                    .clip(KarigojobsShapes.medium)
-                    .background(color = MaterialTheme.colorScheme.surfaceVariant),
-                contentAlignment = Alignment.Center
-            ) {
-                Row(
-                    modifier = Modifier.padding(
-                        vertical = dimens.Padding.xs,
-                        horizontal = dimens.Padding.sm
-                    ),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(dimens.Icon.xs)
-                            .clip(KarigojobsShapes.small)
-                            .background(
-                                color = trade.color().copy(0.2f)
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(trade.icon()),
-                            contentDescription = null,
-                            modifier = Modifier.size(dimens.Icon._2xs),
-                            tint = trade.color()
-                        )
-                    }
-                    Text(
-                        text = trade.displayName,
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                }
-            }
+            TradeCard(trade = trade)
         }
     }
 }

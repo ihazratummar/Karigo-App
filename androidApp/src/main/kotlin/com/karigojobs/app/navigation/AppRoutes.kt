@@ -19,6 +19,34 @@ sealed class RootNav {
     data object Onboarding
 }
 
+
+@Serializable
+sealed class SettingsRootRoute {
+    @Serializable
+    data object SettingsGraphRoute : SettingsRootRoute()
+
+    @Serializable
+    data object SettingsRoute
+
+    @Serializable
+    data object ProOverviewRoute
+
+    @Serializable
+    data object NotificationRoute
+
+    @Serializable
+    data object DataBackUpRoute
+
+    @Serializable
+    data object HelpAndSupportRoute
+
+    @Serializable
+    data object AboutRoute
+
+    @Serializable
+    data class LegalRoute(val pageTitle: String) : SettingsRootRoute()
+}
+
 @Serializable
 sealed class MainRoute {
     @Serializable
@@ -109,10 +137,10 @@ sealed class BottomNavRoute<T>(
 
     @Serializable
     data object Settings :
-        BottomNavRoute<MainRoute.SettingRoute>(
+        BottomNavRoute<SettingsRootRoute.SettingsRoute>(
             name = "Settings",
             unSelectedIcon = R.drawable.settings_line,
             fillIcon = R.drawable.settings_fill,
-            route = MainRoute.SettingRoute
+            route = SettingsRootRoute.SettingsRoute
         )
 }

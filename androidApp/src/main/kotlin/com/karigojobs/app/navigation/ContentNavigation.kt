@@ -19,6 +19,7 @@ import com.karigojobs.app.feature.job.joblist.JobListScreen
 import com.karigojobs.app.feature.onboarding.WorkerOnboarding
 import com.karigojobs.feature.client.details.ClientDetailsScreen
 import com.karigojobs.feature.client.list.ClientListScreen
+import com.karigojobs.feature.settings.SettingsNavigation
 import com.karigojobs.feature.settings.SettingsScreen
 import com.karigojobs.presentation.client.details.ClientDetailsViewModel
 import com.karigojobs.presentation.client.list.ClientListViewModel
@@ -136,7 +137,7 @@ fun NavGraphBuilder.contentNavigation(
             )
         }
 
-        composable <MainRoute.ClientListRoute>{
+        composable<MainRoute.ClientListRoute> {
             val viewModel = koinViewModel<ClientListViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -150,7 +151,7 @@ fun NavGraphBuilder.contentNavigation(
             )
         }
 
-        composable <MainRoute.ClientDetailsRoute>{backStackEntry ->
+        composable<MainRoute.ClientDetailsRoute> { backStackEntry ->
             val clientId = backStackEntry.toRoute<MainRoute.ClientDetailsRoute>().clientId
 
             val viewModel = koinViewModel<ClientDetailsViewModel>(
@@ -165,7 +166,7 @@ fun NavGraphBuilder.contentNavigation(
                 onJobClick = {
                     navHostController.navigate(MainRoute.JobDetailsRoute(jobId = it))
                 },
-                onNewJobClick = {clientId ->
+                onNewJobClick = { clientId ->
                     navHostController.navigate(MainRoute.AddJobRoute(clientId = clientId))
                 },
                 onBackClick = {
@@ -190,7 +191,7 @@ fun NavGraphBuilder.contentNavigation(
                 effect = viewModel.effect
             )
         }
-        composable <MainRoute.EstimateListRoute>{
+        composable<MainRoute.EstimateListRoute> {
             val viewModel = koinViewModel<EstimateListViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
             EstimateListScreen(
@@ -203,14 +204,14 @@ fun NavGraphBuilder.contentNavigation(
                 onAddClick = {
                     navHostController.navigate(MainRoute.AddEstimateRoute())
                 },
-                onEstimateClick = {estimateId ->
+                onEstimateClick = { estimateId ->
                     navHostController.navigate(MainRoute.EstimateDetailsRoute(estimateId = estimateId))
                 }
             )
 
         }
 
-        composable<MainRoute.EstimateDetailsRoute> {backStackEntry ->
+        composable<MainRoute.EstimateDetailsRoute> { backStackEntry ->
             val route = backStackEntry.toRoute<MainRoute.EstimateDetailsRoute>()
 
             val viewModel = koinViewModel<EstimateDetailsViewModel>(
@@ -249,16 +250,7 @@ fun NavGraphBuilder.contentNavigation(
             )
         }
 
-        composable<MainRoute.SettingRoute> {
-            val viewModel = koinViewModel<SettingsViewModel>()
-            val state by viewModel.state.collectAsStateWithLifecycle()
-            SettingsScreen(
-                state = state,
-                onCompleteBannerClick = {
-                    navHostController.navigate(MainRoute.SetupWorkerRoute)
-                }
-            )
-        }
+        settingsNav(navHostController = navHostController)
 
         composable<MainRoute.SetupWorkerRoute> {
             val viewModel = koinViewModel<WorkerProfileViewModel>()

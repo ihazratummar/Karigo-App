@@ -35,6 +35,10 @@ import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_see_all
+import karigojobs.shared.resources.generated.resources.home_site_estimate
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -80,7 +84,7 @@ fun SiteEstimatesCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Site Estimates",
+                    text = stringResource(Res.string.home_site_estimate),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Bold
@@ -92,7 +96,7 @@ fun SiteEstimatesCard(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "See all",
+                        text = stringResource(Res.string.common_see_all),
                         style = MaterialTheme.typography.labelMedium.copy(
                             color = MaterialTheme.colorScheme.primary
                         )

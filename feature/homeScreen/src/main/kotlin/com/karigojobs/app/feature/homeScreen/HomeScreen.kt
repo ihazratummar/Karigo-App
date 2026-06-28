@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.karigojobs.app.feature.homeScreen.component.HomeFloatingActionButton
 import com.karigojobs.app.feature.homeScreen.component.HomeTopAppBar
@@ -32,8 +33,12 @@ import com.karigojobs.ui.common.ActionNeedBanner
 import com.karigojobs.ui.common.JobCard
 import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_see_all
+import karigojobs.shared.resources.generated.resources.home_recent_job
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -120,7 +125,7 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Recent Jobs",
+                        text = stringResource(Res.string.home_recent_job),
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.Bold
@@ -132,7 +137,7 @@ fun HomeScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "See all",
+                            text = stringResource(Res.string.common_see_all),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = MaterialTheme.colorScheme.primary
                             )

@@ -25,6 +25,12 @@ dependencies {
     implementation(projects.feature.siteEstimate)
     implementation(projects.feature.settings)
 
+    implementation(projects.shared.presentation)
+    implementation(projects.shared.domain)
+    implementation(projects.shared.model)
+    implementation(projects.shared.device)
+    implementation(projects.shared.resources)
+
     implementation(libs.androidx.compose.adaptive)
     implementation(projects.android.ui)
     implementation(libs.androidx.activity.compose)
@@ -55,6 +61,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    sourceSets {
+        getByName("main") {
+            assets.srcDirs(
+                "${layout.buildDirectory.get().asFile}/generated/customAssets"
+            )
+        }
+    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
@@ -66,4 +79,22 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+
+val copyComposeResourcesForAndroidApp = tasks.register<Copy>("copyComposeResourcesForAndroidApp") {
+    val sourceDir = project(":shared:resources").layout.buildDirectory.dir("generated/compose/resourceGenerator/preparedResources/commonMain/composeResources")
+    val destDir = layout.buildDirectory.dir("generated/customAssets/composeResources/karigojobs.shared.resources.generated.resources")
+    
+    from(sourceDir)
+    into(destDir)
+    
+    dependsOn(project(":shared:resources").tasks.matching { it.name.contains("ComposeResources") || it.name.contains("XmlValueResources") })
+}
+
+tasks.matching { 
+    it.name.contains("lint", ignoreCase = true) || 
+    (it.name.startsWith("merge") && it.name.endsWith("Assets")) ||
+    (it.name.startsWith("package") && it.name.endsWith("Assets"))
+}.configureEach {
+    dependsOn(copyComposeResourcesForAndroidApp)
 }

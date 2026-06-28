@@ -56,7 +56,6 @@ object DateUtils {
             DateFormat.TIME_ONLY -> timePart
         }
     }
-
 }
 
 enum class DateFormat {
@@ -64,3 +63,6 @@ enum class DateFormat {
     DATE_ONLY,
     TIME_ONLY
 }
+
+
+expect fun Long.formatToLocalizeDate() : String

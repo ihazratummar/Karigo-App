@@ -82,6 +82,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.karigojob.share.utils.DateUtils.toReadableDate
+import com.karigojob.share.utils.formatToLocalizeDate
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.domain.repository.DeviceContact
 import com.karigojobs.share.model.ClientModel
@@ -787,7 +788,7 @@ fun JobCard(
                     )
                 } else {
                     Text(
-                        text = job.createdAt.toReadableDate(),
+                        text = job.createdAt.formatToLocalizeDate(),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

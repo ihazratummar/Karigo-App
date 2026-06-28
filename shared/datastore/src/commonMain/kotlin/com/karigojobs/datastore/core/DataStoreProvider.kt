@@ -17,4 +17,8 @@ class DataStoreProvider(
         createDataStore { "$baseDir/onboarding.preferences_pb" }
     }
 
+    val settings : DataStore<Preferences> by lazy {
+        createDataStore { "$baseDir/settings.preferences_pb" }
+    }
+
 }

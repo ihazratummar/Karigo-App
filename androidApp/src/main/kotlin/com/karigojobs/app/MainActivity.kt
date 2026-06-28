@@ -1,25 +1,34 @@
 package com.karigojobs.app
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.karigojobs.app.android.services.UpdateManager
 import com.karigojobs.app.navigation.AppNavigation
+import com.karigojobs.domain.usecase.settings.GetAppPreferencesUseCase
 import com.karigojobs.presentation.onboarding.OnboardingCompleteState
 import com.karigojobs.presentation.onboarding.OnboardingViewModel
+import com.karigojobs.share.model.AppLanguage
+import com.karigojobs.share.model.ThemePreference
+import com.karigojobs.shared.device.LocaleManager
 import com.karigojobs.ui.theme.KarigojobsTheme
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var onboardingViewModel: OnboardingViewModel
     private val updateManager : UpdateManager by inject ()
+    private val getAppPreferencesUseCase: GetAppPreferencesUseCase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashscreen = installSplashScreen()
@@ -35,9 +44,33 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
+            val appPreferencesState = getAppPreferencesUseCase().collectAsStateWithLifecycle(
+                initialValue = null
+            )
+            
+            val appPreferences = appPreferencesState.value ?: GetAppPreferencesUseCase.AppPreferences(
+                theme = ThemePreference.SYSTEM,
+                language = AppLanguage.ENGLISH
+            )
+
+            LaunchedEffect(appPreferencesState.value?.language) {
+                appPreferencesState.value?.language?.let { language ->
+                    if (LocaleManager.getAppLocale() != language.code) {
+                        LocaleManager.setAppLocale(language.code)
+                    }
+                }
+            }
+
+            val isDarkTheme = when (appPreferences.theme) {
+                ThemePreference.SYSTEM -> isSystemInDarkTheme()
+                ThemePreference.DARK -> true
+                ThemePreference.LIGHT -> false
+            }
+
             val windowsSizeClass = currentWindowAdaptiveInfo().windowSizeClass
             KarigojobsTheme(
                 windowSizeClass = windowsSizeClass,
+                darkTheme = isDarkTheme
             ) {
                 AppNavigation(
                     modifier = Modifier.fillMaxSize(),

@@ -4,4 +4,9 @@
     <string name="common_btn_save">Save</string>
     <string name="common_btn_delete">Delete</string>
     <string name="common_label_search">Search</string>
+    <string name="common_see_all">See All</string>
+    <string name="common_total">%1$d total</string>
+    <string name="common_btn_ok">OK</string>
+    <string name="common_btn_retry">Retry</string>
+    <string name="common_error_unknown">An unknown error occurred</string>
 </resources>

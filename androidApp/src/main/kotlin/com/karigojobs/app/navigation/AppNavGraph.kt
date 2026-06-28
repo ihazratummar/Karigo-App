@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.jetbrains.compose.resources.stringResource
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -133,12 +134,14 @@ fun BottomBar(
                             painter = if (isSelected) painterResource(screen.fillIcon) else painterResource(
                                 screen.unSelectedIcon
                             ),
-                            contentDescription = screen.name,
+                            contentDescription = screen.titleRes?.let { stringResource(it) },
                             modifier = Modifier.size(dimens.Icon.sm)
                         )
                     },
                     label = {
-                        Text(text = screen.name)
+                        screen.titleRes?.let { title ->
+                            Text(text = stringResource(title))
+                        }
                     },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = MaterialTheme.colorScheme.surfaceTint,

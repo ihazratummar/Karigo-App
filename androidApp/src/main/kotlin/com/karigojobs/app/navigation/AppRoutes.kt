@@ -1,7 +1,16 @@
 package com.karigojobs.app.navigation
 
+import androidx.annotation.StringRes
 import com.karigojobs.app.android.ui.R
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.nav_clients
+import karigojobs.shared.resources.generated.resources.nav_home
+import karigojobs.shared.resources.generated.resources.nav_jobs
+import karigojobs.shared.resources.generated.resources.nav_materials
+import karigojobs.shared.resources.generated.resources.nav_settings
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import org.jetbrains.compose.resources.StringResource
 
 
 /**
@@ -95,14 +104,14 @@ sealed class MainRoute {
 
 @Serializable
 sealed class BottomNavRoute<T>(
-    val name: String,
+    @Transient val titleRes: StringResource? = null,
     val unSelectedIcon: Int = R.drawable.ic_launcher_foreground,
     val fillIcon: Int = R.drawable.ic_launcher_foreground,
     val route: T
 ) {
     @Serializable
     data object Home : BottomNavRoute<MainRoute.HomeRoute>(
-        name = "Home",
+        titleRes = Res.string.nav_home,
         unSelectedIcon = R.drawable.home_line,
         fillIcon = R.drawable.home_fill,
         route = MainRoute.HomeRoute
@@ -111,7 +120,7 @@ sealed class BottomNavRoute<T>(
     @Serializable
     data object Jobs :
         BottomNavRoute<MainRoute.JobsRoute>(
-            name = "Jobs",
+            titleRes = Res.string.nav_jobs,
             unSelectedIcon = R.drawable.job_line,
             fillIcon = R.drawable.job_fill,
             route = MainRoute.JobsRoute
@@ -120,7 +129,7 @@ sealed class BottomNavRoute<T>(
     @Serializable
     data object Client :
         BottomNavRoute<MainRoute.ClientListRoute>(
-            name = "Client",
+            titleRes = Res.string.nav_clients,
             unSelectedIcon = R.drawable.user_line,
             fillIcon = R.drawable.user_fill,
             route = MainRoute.ClientListRoute
@@ -129,7 +138,7 @@ sealed class BottomNavRoute<T>(
     @Serializable
     data object Materials :
         BottomNavRoute<MainRoute.Materials>(
-            name = "Materials",
+            titleRes = Res.string.nav_materials,
             unSelectedIcon = R.drawable.stack,
             fillIcon = R.drawable.stack_fill,
             route = MainRoute.Materials
@@ -138,7 +147,7 @@ sealed class BottomNavRoute<T>(
     @Serializable
     data object Settings :
         BottomNavRoute<SettingsRootRoute.SettingsRoute>(
-            name = "Settings",
+            titleRes = Res.string.nav_settings,
             unSelectedIcon = R.drawable.settings_line,
             fillIcon = R.drawable.settings_fill,
             route = SettingsRootRoute.SettingsRoute

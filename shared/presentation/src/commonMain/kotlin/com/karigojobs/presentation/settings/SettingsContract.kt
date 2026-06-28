@@ -1,5 +1,7 @@
 package com.karigojobs.presentation.settings
 
+import com.karigojobs.share.model.AppLanguage
+import com.karigojobs.share.model.ThemePreference
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.share.model.WorkerProfileModel
 
@@ -15,7 +17,11 @@ data class SettingsState(
     val workerProfileModel: WorkerProfileModel? = null,
     val selectedTrades: Set<TradeType>? = null,
     val isTradeSelectModalOpen: Boolean = false,
-    val editTrades : Set<TradeType> = emptySet()
+    val editTrades : Set<TradeType> = emptySet(),
+    val currentTheme: ThemePreference = ThemePreference.SYSTEM,
+    val currentLanguage: AppLanguage = AppLanguage.ENGLISH,
+    val isThemeModalOpen: Boolean = false,
+    val isLanguageModalOpen: Boolean = false
 ){
     val selectedCount : Int get() = editTrades.count()
 }
@@ -24,8 +30,12 @@ sealed interface SettingsEvent {
     data class EditTrade(val trade: TradeType) : SettingsEvent
     data class ToggleTradeSelectModal(val isOpen  : Boolean) : SettingsEvent
     data object ClearAllTrade : SettingsEvent
-
     data object SaveTrades : SettingsEvent
+
+    data class ToggleThemeModal(val isOpen: Boolean) : SettingsEvent
+    data class ToggleLanguageModal(val isOpen: Boolean) : SettingsEvent
+    data class UpdateTheme(val theme: ThemePreference) : SettingsEvent
+    data class UpdateLanguage(val language: AppLanguage) : SettingsEvent
 }
 
 sealed interface SettingsEffect {

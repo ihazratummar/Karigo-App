@@ -38,6 +38,10 @@ import com.karigojobs.feature.settings.component.SettingsTradeChangeModal
 import com.karigojobs.feature.settings.component.WorkerProfileCard
 import com.karigojobs.presentation.settings.SettingsEvent
 import com.karigojobs.presentation.settings.SettingsState
+import com.karigojobs.share.model.AppLanguage
+import com.karigojobs.share.model.ThemePreference
+import com.karigojobs.feature.settings.component.SettingsSelectionModal
+import com.karigojobs.feature.settings.component.SettingsValueRow
 import com.karigojobs.ui.common.ActionNeedBanner
 import com.karigojobs.ui.common.IconPlaceholder
 import com.karigojobs.ui.common.KarigoTopAppBar
@@ -126,6 +130,32 @@ fun SettingsScreen(
             )
         }
 
+        if (state.isThemeModalOpen) {
+            SettingsSelectionModal(
+                modifier = Modifier.fillMaxWidth(),
+                title = "App Theme",
+                description = "Choose how Karigo looks for you.",
+                items = ThemePreference.entries.toList(),
+                selectedItem = state.currentTheme,
+                itemLabel = { it.displayName },
+                onItemSelected = { event(SettingsEvent.UpdateTheme(it)) },
+                onDismiss = { event(SettingsEvent.ToggleThemeModal(false)) }
+            )
+        }
+
+        if (state.isLanguageModalOpen) {
+            SettingsSelectionModal(
+                modifier = Modifier.fillMaxWidth(),
+                title = "App Language",
+                description = "Choose the language you prefer.",
+                items = AppLanguage.entries.toList(),
+                selectedItem = state.currentLanguage,
+                itemLabel = { it.displayName },
+                onItemSelected = { event(SettingsEvent.UpdateLanguage(it)) },
+                onDismiss = { event(SettingsEvent.ToggleLanguageModal(false)) }
+            )
+        }
+
         LazyColumn(
             modifier = Modifier
                 .padding(paddingValues)
@@ -166,6 +196,27 @@ fun SettingsScreen(
                     onClick = { event(SettingsEvent.ToggleTradeSelectModal(true)) },
                     trades = state.selectedTrades
                 )
+            }
+
+            item {
+                SettingsComponent(
+                    title = "APP SETTINGS"
+                ) {
+                    SettingsValueRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        icon = R.drawable.map_point, // map_point as a fallback for language
+                        label = "App Language",
+                        value = state.currentLanguage.displayName,
+                        onClick = { event(SettingsEvent.ToggleLanguageModal(true)) }
+                    )
+                    SettingsValueRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        icon = R.drawable.settings_line,
+                        label = "App Theme",
+                        value = state.currentTheme.displayName,
+                        onClick = { event(SettingsEvent.ToggleThemeModal(true)) }
+                    )
+                }
             }
             
             item {

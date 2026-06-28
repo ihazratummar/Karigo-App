@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_new_estimate">New Estimate</string>
+    <string name="home_site_estimate">Site Estimate</string>
+    <string name="home_estimate_desctiption">Walk a job site, build a material list, and Whatsapp it to client</string>
+    <string name="home_recent_job">Recent Jobs</string>
+</resources>

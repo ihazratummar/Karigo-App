@@ -27,7 +27,6 @@ kotlin {
     }
 
 
-    iosX64()
     iosArm64()
     iosSimulatorArm64()
 
@@ -36,10 +35,18 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
-                implementation(compose.runtime)
-                implementation(compose.components.resources)
+                api(compose.runtime)
+                api(compose.components.resources)
             }
         }
     }
 
+}
+
+compose.resources {
+    publicResClass = true
+}
+
+tasks.matching { it.name.startsWith("copyAndroid") && it.name.endsWith("ComposeResourcesToAndroidAssets") }.configureEach {
+    enabled = false
 }

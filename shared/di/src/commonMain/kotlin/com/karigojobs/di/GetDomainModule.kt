@@ -35,8 +35,11 @@ import com.karigojobs.domain.usecase.materialCategory.DeleteMaterialCategoryUseC
 import com.karigojobs.domain.usecase.materialCategory.GetMaterialCategoryUseCase
 import com.karigojobs.domain.usecase.materialCategory.InsertMaterialCategoryUseCase
 import com.karigojobs.domain.usecase.materialCategory.UpdateMaterialCategoryUseCase
+import com.karigojobs.domain.usecase.settings.GetAppPreferencesUseCase
 import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
 import com.karigojobs.domain.usecase.settings.SaveWorkerProfileUseCase
+import com.karigojobs.domain.usecase.settings.UpdateAppLanguageUseCase
+import com.karigojobs.domain.usecase.settings.UpdateThemePreferenceUseCase
 import com.karigojobs.domain.usecase.trade.SaveTradesUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -96,4 +99,7 @@ fun getDomainModule(): Module = module {
     single { GetWorkerProfileUseCase(workerRepository = get()) }
     single { SaveWorkerProfileUseCase(workerRepository = get()) }
 
+    single { GetAppPreferencesUseCase(settingsStore = get()) }
+    single { UpdateThemePreferenceUseCase(settingsStore = get()) }
+    single { UpdateAppLanguageUseCase(settingsStore = get()) }
 }

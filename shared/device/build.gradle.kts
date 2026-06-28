@@ -27,11 +27,16 @@ kotlin {
     }
 
 
-    iosX64()
     iosArm64()
     iosSimulatorArm64()
 
     sourceSets {
+        androidMain {
+            dependencies {
+                implementation(libs.androidx.appcompat)
+
+            }
+        }
         commonMain {
             dependencies {
                 implementation(projects.shared.domain)

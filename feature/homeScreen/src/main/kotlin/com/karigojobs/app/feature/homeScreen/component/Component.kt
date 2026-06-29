@@ -38,6 +38,7 @@ import com.karigojobs.ui.theme.dimens
 import karigojobs.shared.resources.generated.resources.Res
 import karigojobs.shared.resources.generated.resources.common_see_all
 import karigojobs.shared.resources.generated.resources.home_estimate_desctiption
+import karigojobs.shared.resources.generated.resources.home_new_estimate
 import karigojobs.shared.resources.generated.resources.home_site_estimate
 import org.jetbrains.compose.resources.stringResource
 
@@ -64,7 +65,7 @@ fun ScrollableTradeView(trades: Set<TradeType> = emptySet()) {
 fun SiteEstimatesCard(
     modifier: Modifier = Modifier,
     onSeeAllClick: () -> Unit = {},
-    onAddEstimateClick : () -> Unit = {}
+    onAddEstimateClick: () -> Unit = {}
 ) {
 
     Card(
@@ -106,7 +107,7 @@ fun SiteEstimatesCard(
             }
 
             Text(
-                text =stringResource(Res.string.home_estimate_desctiption),
+                text = stringResource(Res.string.home_estimate_desctiption),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -132,7 +133,7 @@ fun SiteEstimatesCard(
                 Spacer(Modifier.width(dimens.Space.base))
 
                 Text(
-                    text = "New Estimate",
+                    text = stringResource(Res.string.home_new_estimate),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Bold
                     )

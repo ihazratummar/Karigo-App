@@ -9,4 +9,6 @@
     <string name="common_btn_ok">OK</string>
     <string name="common_btn_retry">Retry</string>
     <string name="common_error_unknown">An unknown error occurred</string>
+    <string name="common_required">REQUIRED</string>
+    <string name="common_btn_continue">Continue</string>
 </resources>

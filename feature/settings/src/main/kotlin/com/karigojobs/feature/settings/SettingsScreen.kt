@@ -198,26 +198,26 @@ fun SettingsScreen(
                 )
             }
 
-            item {
-                SettingsComponent(
-                    title = "APP SETTINGS"
-                ) {
-                    SettingsValueRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        icon = R.drawable.map_point, // map_point as a fallback for language
-                        label = "App Language",
-                        value = state.currentLanguage.displayName,
-                        onClick = { event(SettingsEvent.ToggleLanguageModal(true)) }
-                    )
-                    SettingsValueRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        icon = R.drawable.settings_line,
-                        label = "App Theme",
-                        value = state.currentTheme.displayName,
-                        onClick = { event(SettingsEvent.ToggleThemeModal(true)) }
-                    )
-                }
-            }
+//            item {
+//                SettingsComponent(
+//                    title = "APP SETTINGS"
+//                ) {
+//                    SettingsValueRow(
+//                        modifier = Modifier.fillMaxWidth(),
+//                        icon = R.drawable.map_point, // map_point as a fallback for language
+//                        label = "App Language",
+//                        value = state.currentLanguage.displayName,
+//                        onClick = { event(SettingsEvent.ToggleLanguageModal(true)) }
+//                    )
+//                    SettingsValueRow(
+//                        modifier = Modifier.fillMaxWidth(),
+//                        icon = R.drawable.settings_line,
+//                        label = "App Theme",
+//                        value = state.currentTheme.displayName,
+//                        onClick = { event(SettingsEvent.ToggleThemeModal(true)) }
+//                    )
+//                }
+//            }
             
             item {
                 SettingsComponent(

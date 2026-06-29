@@ -4,7 +4,6 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.karigojobs.data.dto.toClientModel
-import com.karigojobs.data.dto.toJobMaterialModel
 import com.karigojobs.data.dto.toJobLabourModelList
 import com.karigojobs.data.safeCall
 import com.karigojobs.domain.repository.ClientRepository

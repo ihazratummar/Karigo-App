@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="worker_action_needed">পদক্ষেপ প্রয়োজন</string>
+    <string name="worker_action_title">আপনার ব্যবসার প্রোফাইল সম্পূর্ণ করুন</string>
+    <string name="worker_action_description">আপনার এস্টিমেট ও ইনভয়েসকে আরও পেশাদার দেখাতে মালিকের নাম এবং ব্যবসার নাম যোগ করুন।</string>
+    <string name="worker_action_missing">%1$d তথ্য বাকি</string>
+    <string name="worker_owner_question">আপনার নাম কী?</string>
+    <string name="worker_owner_asking_name">আপনার নাম দিয়ে শুরু করি</string>
+    <string name="worker_owner_name_section">মালিকের নাম</string>
+    <string name="worker_owner_name_textfield_placeholder">আপনার পূর্ণ নাম</string>
+    <string name="worker_progress_meter">ধাপ %1$s / %2$s</string>
+    <string name="worker_business">আপনার ব্যবসা</string>
+    <string name="worker_business_tagline">আপনার কাজের নাম কী?</string>
+    <string name="worker_business_name">ব্যবসার নাম</string>
+    <string name="worker_business_textfield_placeholder">আপনার দোকান বা ব্যবসার নাম</string>
+    <string name="worker_contact">যোগাযোগের ঠিকানা</string>
+    <string name="worker_contact_tagline">যাতে ক্লায়েন্ট আপনার সাথে যোগাযোগ করতে পারে</string>
+    <string name="worker_phone_number">ফোন নম্বর</string>
+    <string name="worker_phone_textfield_placeholder">+91 9999901010</string>
+    <string name="worker_email_address">ইমেইল ঠিকানা</string>
+    <string name="worker_email_textfield_placeholder">your@email.com</string>
+    <string name="worker_optional_skip">ঐচ্ছিক — চাইলে এটি বাদ দিতে পারেন।</string>
+    <string name="worker_your_progress">আপনি কতোটা এগিয়েছেন</string>
+    <string name="worker_required_fields">প্রয়োজনীয় তথ্য</string>
+    <string name="worker_optional_details">ঐচ্ছিক বিবরণ</string>
+    <string name="worker_extra_info">অতিরিক্ত তথ্য</string>
+    <string name="worker_extra_info_tagline">ঐচ্ছিক, তবে উপকারী</string>
+    <string name="worker_extra_gst">জিএসটি নম্বর</string>
+    <string name="worker_extra_gst_textfield_placeholder">22AAAAA0000A1Z5</string>
+    <string name="worker_extra_business_address">ব্যবসার ঠিকানা</string>
+    <string name="worker_extra_business_address_textfield_placeholder">ব্যবসার সম্পূর্ণ ঠিকানা</string>
+    <string name="worker_btn_finish">সেটআপ সম্পন্ন করুন</string>
+    <string name="worker_btn_skip_this">এই ধাপটি এড়িয়ে যান</string>
+</resources>

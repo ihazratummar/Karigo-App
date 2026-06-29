@@ -56,7 +56,38 @@ import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_btn_continue
+import karigojobs.shared.resources.generated.resources.common_required
+import karigojobs.shared.resources.generated.resources.worker_btn_finish
+import karigojobs.shared.resources.generated.resources.worker_btn_skip_this
+import karigojobs.shared.resources.generated.resources.worker_business
+import karigojobs.shared.resources.generated.resources.worker_business_name
+import karigojobs.shared.resources.generated.resources.worker_business_tagline
+import karigojobs.shared.resources.generated.resources.worker_business_textfield_placeholder
+import karigojobs.shared.resources.generated.resources.worker_contact
+import karigojobs.shared.resources.generated.resources.worker_contact_tagline
+import karigojobs.shared.resources.generated.resources.worker_email_address
+import karigojobs.shared.resources.generated.resources.worker_email_textfield_placeholder
+import karigojobs.shared.resources.generated.resources.worker_extra_business_address
+import karigojobs.shared.resources.generated.resources.worker_extra_business_address_textfield_placeholder
+import karigojobs.shared.resources.generated.resources.worker_extra_gst
+import karigojobs.shared.resources.generated.resources.worker_extra_gst_textfield_placeholder
+import karigojobs.shared.resources.generated.resources.worker_extra_info
+import karigojobs.shared.resources.generated.resources.worker_extra_info_tagline
+import karigojobs.shared.resources.generated.resources.worker_optional_details
+import karigojobs.shared.resources.generated.resources.worker_optional_skip
+import karigojobs.shared.resources.generated.resources.worker_owner_asking_name
+import karigojobs.shared.resources.generated.resources.worker_owner_name_section
+import karigojobs.shared.resources.generated.resources.worker_owner_name_textfield_placeholder
+import karigojobs.shared.resources.generated.resources.worker_owner_question
+import karigojobs.shared.resources.generated.resources.worker_phone_number
+import karigojobs.shared.resources.generated.resources.worker_phone_textfield_placeholder
+import karigojobs.shared.resources.generated.resources.worker_progress_meter
+import karigojobs.shared.resources.generated.resources.worker_required_fields
+import karigojobs.shared.resources.generated.resources.worker_your_progress
 import kotlinx.coroutines.flow.SharedFlow
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Worker Onboarding wizard screen consisting of 4 steps to set up their profile.
@@ -237,12 +268,12 @@ fun WorkerOnboarding(
                                     modifier = Modifier.size(dimens.Icon.xs)
                                 )
                                 Text(
-                                    text = "Finish Setup",
+                                    text = stringResource(Res.string.worker_btn_finish),
                                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                                 )
                             } else {
                                 Text(
-                                    text = "Continue",
+                                    text = stringResource(Res.string.common_btn_continue),
                                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                                 )
                                 Icon(
@@ -257,7 +288,7 @@ fun WorkerOnboarding(
                 }
 
                 // Skip button for optional steps (Steps 3 & 4)
-                if (state.currentStep == WorkerProfileStep.CONTACT_DETAILS || state.currentStep == WorkerProfileStep.EXTRA_INFO) {
+                if (state.currentStep == WorkerProfileStep.CONTACT_DETAILS || state.currentStep != WorkerProfileStep.EXTRA_INFO) {
                     TextButton(
                         onClick = {
                             when (state.currentStep) {
@@ -268,7 +299,7 @@ fun WorkerOnboarding(
                         }
                     ) {
                         Text(
-                            text = "Skip this step",
+                            text = stringResource(Res.string.worker_btn_skip_this),
                             style = MaterialTheme.typography.labelLarge.copy(color = KarigojobsText2)
                         )
                     }
@@ -286,10 +317,10 @@ private fun OnboardingHeader(
     onBack: () -> Unit
 ) {
     val (stepNumber, progress, percentage) = when (step) {
-        WorkerProfileStep.OWNER_NAME -> Triple("Step 1 of 4", 0.25f, "25%")
-        WorkerProfileStep.BUSINESS_NAME -> Triple("Step 2 of 4", 0.50f, "50%")
-        WorkerProfileStep.CONTACT_DETAILS -> Triple("Step 3 of 4", 0.75f, "75%")
-        WorkerProfileStep.EXTRA_INFO -> Triple("Step 4 of 4", 1.00f, "100%")
+        WorkerProfileStep.OWNER_NAME -> Triple(stringResource(Res.string.worker_progress_meter, 1, 4), 0.25f, "25%")
+        WorkerProfileStep.BUSINESS_NAME -> Triple(stringResource(Res.string.worker_progress_meter, 2, 4), 0.50f, "50%")
+        WorkerProfileStep.CONTACT_DETAILS -> Triple(stringResource(Res.string.worker_progress_meter, 3, 4), 0.75f, "75%")
+        WorkerProfileStep.EXTRA_INFO -> Triple(stringResource(Res.string.worker_progress_meter, 4, 4), 1.00f, "100%")
     }
 
     Row(
@@ -359,14 +390,14 @@ private fun OwnerNameStep(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Who are you?",
+            text = stringResource(Res.string.worker_owner_question),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         )
         Text(
-            text = "Let's start with your name",
+            text = stringResource(Res.string.worker_owner_asking_name),
             style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
         )
 
@@ -377,14 +408,14 @@ private fun OwnerNameStep(
             horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs)
         ) {
             Text(
-                text = "OWNER NAME",
+                text = stringResource(Res.string.worker_owner_name_section),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Bold,
                     color = KarigojobsText2
                 )
             )
             Text(
-                text = "REQUIRED",
+                text = stringResource(Res.string.common_required),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Bold,
                     color = Color.Red
@@ -397,7 +428,7 @@ private fun OwnerNameStep(
         KarigojobsTextField(
             value = name,
             onValueChange = onNameChange,
-            placeholder = "Your full name",
+            placeholder = stringResource(Res.string.worker_owner_name_textfield_placeholder),
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.user_line),
@@ -419,14 +450,14 @@ private fun BusinessNameStep(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Your Business",
+            text = stringResource(Res.string.worker_business),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         )
         Text(
-            text = "What do you call your work?",
+            text = stringResource(Res.string.worker_business_tagline),
             style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
         )
 
@@ -437,14 +468,14 @@ private fun BusinessNameStep(
             horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs)
         ) {
             Text(
-                text = "BUSINESS NAME",
+                text = stringResource(Res.string.worker_business_name),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Bold,
                     color = KarigojobsText2
                 )
             )
             Text(
-                text = "REQUIRED",
+                text = stringResource(Res.string.common_required),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Bold,
                     color = Color.Red
@@ -457,7 +488,7 @@ private fun BusinessNameStep(
         KarigojobsTextField(
             value = businessName,
             onValueChange = onBusinessNameChange,
-            placeholder = "Your shop or business name",
+            placeholder = stringResource(Res.string.worker_business_textfield_placeholder),
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.store),
@@ -481,21 +512,21 @@ private fun ContactDetailsStep(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Contact Details",
+            text = stringResource(Res.string.worker_contact),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         )
         Text(
-            text = "So clients can reach you",
+            text = stringResource(Res.string.worker_contact_tagline),
             style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
         )
 
         Spacer(modifier = Modifier.height(dimens.Space._2xl))
 
         Text(
-            text = "PHONE NUMBER",
+            text = stringResource(Res.string.worker_phone_number),
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.Bold,
                 color = KarigojobsText2
@@ -505,7 +536,7 @@ private fun ContactDetailsStep(
         KarigojobsTextField(
             value = phone,
             onValueChange = onPhoneChange,
-            placeholder = "+91 98765 43210",
+            placeholder = stringResource(Res.string.worker_phone_textfield_placeholder),
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.phone),
@@ -517,14 +548,14 @@ private fun ContactDetailsStep(
         )
         Spacer(modifier = Modifier.height(dimens.Space.xs))
         Text(
-            text = "Optional — you can skip this",
+            text = stringResource(Res.string.worker_optional_skip),
             style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
         )
 
         Spacer(modifier = Modifier.height(dimens.Space.lg))
 
         Text(
-            text = "EMAIL ADDRESS",
+            text = stringResource(Res.string.worker_email_address),
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.Bold,
                 color = KarigojobsText2
@@ -534,7 +565,7 @@ private fun ContactDetailsStep(
         KarigojobsTextField(
             value = email,
             onValueChange = onEmailChange,
-            placeholder = "your@email.com",
+            placeholder = stringResource(Res.string.worker_email_textfield_placeholder),
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.email),
@@ -546,7 +577,7 @@ private fun ContactDetailsStep(
         )
         Spacer(modifier = Modifier.height(dimens.Space.xs))
         Text(
-            text = "Optional — you can skip this",
+            text = stringResource(Res.string.worker_optional_skip),
             style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
         )
     }
@@ -563,21 +594,21 @@ private fun ExtraInfoStep(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Extra Info",
+            text = stringResource(Res.string.worker_extra_info),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
         )
         Text(
-            text = "Optional but helpful",
+            text = stringResource(Res.string.worker_extra_info_tagline),
             style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
         )
 
         Spacer(modifier = Modifier.height(dimens.Space._2xl))
 
         Text(
-            text = "GST NUMBER",
+            text = stringResource(Res.string.worker_extra_gst),
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.Bold,
                 color = KarigojobsText2
@@ -587,7 +618,7 @@ private fun ExtraInfoStep(
         KarigojobsTextField(
             value = gst,
             onValueChange = onGstChange,
-            placeholder = "22AAAAA0000A1Z5",
+            placeholder = stringResource(Res.string.worker_extra_gst_textfield_placeholder),
             leadingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.estimate),
@@ -599,14 +630,14 @@ private fun ExtraInfoStep(
         )
         Spacer(modifier = Modifier.height(dimens.Space.xs))
         Text(
-            text = "Optional — you can skip this",
+            text = stringResource(Res.string.worker_optional_skip),
             style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
         )
 
         Spacer(modifier = Modifier.height(dimens.Space.lg))
 
         Text(
-            text = "BUSINESS ADDRESS",
+            text = stringResource(Res.string.worker_extra_business_address),
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.Bold,
                 color = KarigojobsText2
@@ -616,7 +647,7 @@ private fun ExtraInfoStep(
         KarigojobsTextField(
             value = address,
             onValueChange = onAddressChange,
-            placeholder = "Full business address",
+            placeholder = stringResource(Res.string.worker_extra_business_address_textfield_placeholder),
             singleLine = false,
             minLines = 3,
             maxLines = 3,
@@ -631,7 +662,7 @@ private fun ExtraInfoStep(
         )
         Spacer(modifier = Modifier.height(dimens.Space.xs))
         Text(
-            text = "Optional — you can skip this",
+            text = stringResource(Res.string.worker_optional_skip),
             style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
         )
     }
@@ -662,7 +693,7 @@ private fun ProgressCard(state: WorkerProfileState) {
                     modifier = Modifier.size(dimens.Icon.xs)
                 )
                 Text(
-                    text = "Your Progress",
+                    text = stringResource(Res.string.worker_your_progress),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -677,7 +708,7 @@ private fun ProgressCard(state: WorkerProfileState) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Required fields",
+                    text = stringResource(Res.string.worker_required_fields),
                     style = MaterialTheme.typography.labelMedium,
                     color = KarigojobsText2
                 )
@@ -697,7 +728,7 @@ private fun ProgressCard(state: WorkerProfileState) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Optional details",
+                        text = stringResource(Res.string.worker_optional_details),
                         style = MaterialTheme.typography.labelMedium,
                         color = KarigojobsText2
                     )

@@ -15,8 +15,9 @@ kotlin {
 dependencies {
     implementation(projects.android.ui)
 
-    implementation(projects.shared.model)
     api(projects.shared.presentation)
+    implementation(projects.shared.model)
+    implementation(projects.shared.resources)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.ui)

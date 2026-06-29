@@ -9,10 +9,17 @@ actual class SqlDeriverFactory actual constructor(context: Any?) {
     private val context = context as Context
 
     actual fun getSqlDriver(): SqlDriver {
-        return AndroidSqliteDriver(
+        val driver = AndroidSqliteDriver(
             schema = KarigojobsDatabase.Schema,
             context = context,
             name = "KarigojobsDatabase.db"
         )
+        driver.execute(
+            identifier = null,
+            sql = "PRAGMA foreign_keys = ON;",
+            parameters = 0
+        )
+
+        return driver
     }
 }

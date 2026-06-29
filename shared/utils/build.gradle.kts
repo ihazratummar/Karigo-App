@@ -32,6 +32,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(projects.shared.device)
                 implementation(libs.kotlin.stdlib)
 
                 implementation(libs.kotlinx.datetime)

@@ -18,6 +18,7 @@ dependencies {
     implementation(projects.shared.utils)
     implementation(projects.shared.device)
     implementation(projects.shared.domain)
+    implementation(projects.shared.resources)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.ui)

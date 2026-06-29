@@ -158,7 +158,7 @@ fun ClientDetailsScreen(
                     onCancelClick = { event(ClientDetailsEvent.ToggleDelete(isOpen = false)) },
                     onConfirmClick = { event(ClientDetailsEvent.DeleteClient) },
                     dialogTitle = "Delete Client",
-                    dialogDescription = "This will remove ${state.client?.name} and all associated job history."
+                    dialogDescription = "This will remove ${state.client?.name} and all associated job history & estimate history."
                 )
             }
 

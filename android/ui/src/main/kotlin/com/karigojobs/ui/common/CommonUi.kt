@@ -1,5 +1,4 @@
 package com.karigojobs.ui.common
-
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
@@ -20,7 +19,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -92,13 +90,12 @@ import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.ChartBarInactive
-import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsBorder
 import com.karigojobs.ui.theme.KarigojobsCard
+import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText
 import com.karigojobs.ui.theme.KarigojobsText2
-import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.KarigojobsThemePreview
 import com.karigojobs.ui.theme.KarigojobsWarning
 import com.karigojobs.ui.theme.ModalBackGround
@@ -121,6 +118,12 @@ import com.karigojobs.ui.theme.StatusPendingSurface
 import com.karigojobs.ui.theme.SurfaceOverlay
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.worker_action_description
+import karigojobs.shared.resources.generated.resources.worker_action_missing
+import karigojobs.shared.resources.generated.resources.worker_action_needed
+import karigojobs.shared.resources.generated.resources.worker_action_title
+import org.jetbrains.compose.resources.stringResource
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -1377,28 +1380,28 @@ fun ActionNeedBanner(
                     horizontalArrangement = Arrangement.spacedBy(dimens.Space.base)
                 ) {
                     Text(
-                        text = "ACTION NEEDED",
+                        text = stringResource(Res.string.worker_action_needed),
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = KarigojobsWarning,
                             fontWeight = FontWeight.Bold
                         )
                     )
                     Text(
-                        text = "2 missing",
+                        text = stringResource(Res.string.worker_action_missing, 2),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = KarigojobsWarning,
                         )
                     )
                 }
                 Text(
-                    text = "Complete your business profile",
+                    text = stringResource(Res.string.worker_action_title),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Bold
                     )
                 )
                 Text(
-                    text = "Add Owner Name and Business Name so your estimate and invoices look professional",
+                    text = stringResource(Res.string.worker_action_description),
                     style = MaterialTheme.typography.labelMedium.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

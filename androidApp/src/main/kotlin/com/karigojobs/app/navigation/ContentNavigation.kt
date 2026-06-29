@@ -184,7 +184,13 @@ fun NavGraphBuilder.contentNavigation(
             val state by viewModel.state.collectAsStateWithLifecycle()
             AddEstimateScreen(
                 onBackClick = {
-                    navHostController.popBackStack()
+                    navHostController.navigate(MainRoute.EstimateListRoute){
+                        popUpTo(navHostController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 },
                 state = state,
                 event = viewModel::onEvent,

@@ -9,4 +9,6 @@
     <string name="common_btn_ok">ঠিক আছে</string>
     <string name="common_btn_retry">আবার চেষ্টা করুন</string>
     <string name="common_error_unknown">একটি অজানা ত্রুটি ঘটেছে</string>
+    <string name="common_required">প্রয়োজনীয়</string>
+    <string name="common_btn_continue">এগিয়ে যান</string>
 </resources>

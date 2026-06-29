@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="worker_action_needed">ACTION NEEDED</string>
+    <string name="worker_action_title">Complete your business profile</string>
+    <string name="worker_action_description">Add Owner Name and Business Name so your estimate and invoices look professional</string>
+    <string name="worker_action_missing">%1$d missing</string>
+
+    <string name="worker_owner_question">Who are you?</string>
+    <string name="worker_owner_asking_name">Let's start with your name</string>
+    <string name="worker_owner_name_section">OWNER NAME</string>
+    <string name="worker_owner_name_textfield_placeholder">Your full name</string>
+
+    <string name="worker_progress_meter">Step %1$s of %2$s</string>
+
+    <string name="worker_business">Your Business</string>
+    <string name="worker_business_tagline">What do you call your work?</string>
+    <string name="worker_business_name">BUSINESS NAME</string>
+    <string name="worker_business_textfield_placeholder">Your shop or business name</string>
+
+    <string name="worker_contact">Contact Details</string>
+    <string name="worker_contact_tagline">So client can reach you</string>
+    <string name="worker_phone_number">PHONE NUMBER</string>
+    <string name="worker_phone_textfield_placeholder">+91 9999901010</string>
+    <string name="worker_email_address">EMAIL ADDRESS</string>
+    <string name="worker_email_textfield_placeholder">your@email.com</string>
+
+    <string name="worker_optional_skip">Optional — you can skip this</string>
+
+    <string name="worker_your_progress">Your Progress</string>
+    <string name="worker_required_fields">Required fields</string>
+    <string name="worker_optional_details">Optional details</string>
+
+    <string name="worker_extra_info">Extra info</string>
+    <string name="worker_extra_info_tagline">Optional but helpful</string>
+    <string name="worker_extra_gst">GST NUMBER</string>
+    <string name="worker_extra_gst_textfield_placeholder">22AAAAA0000A1Z5</string>
+    <string name="worker_extra_business_address">BUSINESS ADDRESS</string>
+    <string name="worker_extra_business_address_textfield_placeholder">Full business address</string>
+
+    <string name="worker_btn_finish">Finish Setup</string>
+    <string name="worker_btn_skip_this">Skip this step</string>
+</resources>

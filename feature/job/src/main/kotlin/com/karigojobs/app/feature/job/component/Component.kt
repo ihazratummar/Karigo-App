@@ -67,6 +67,7 @@ import com.karigojobs.ui.common.MinusButton
 import com.karigojobs.ui.common.PlusButton
 import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.common.color
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.common.dashedBorder
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigoSelectedCardColor
@@ -77,6 +78,7 @@ import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.SurfaceOverlay
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 
@@ -317,7 +319,7 @@ fun LabourItemCard(
         modifier = modifier
             .padding(vertical = dimens.Padding.xs)
             .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = KarigojobsCard),
+        colors = CardDefaults.cardColors(containerColor = appColor.cardColors),
         shape = KarigojobsShapes.medium
     ) {
         Row(
@@ -336,7 +338,7 @@ fun LabourItemCard(
                 Text(
                     text = labourItem.itemName,
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground
+                        color =appColor.primaryText
                     ),
                     modifier = Modifier.basicMarquee(
                         iterations = 200,
@@ -348,7 +350,7 @@ fun LabourItemCard(
                 Text(
                     text = "${deviceInfo.currency}${labourItem.rate} / ${labourItem.unit}",
                     style = MaterialTheme.typography.labelMedium.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = appColor.secondaryText
                     )
                 )
             }
@@ -357,7 +359,7 @@ fun LabourItemCard(
             Text(
                 text = labourItem.quantity.toString(),
                 style = MaterialTheme.typography.titleMedium.copy(
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = appColor.primaryText,
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -450,8 +452,9 @@ fun JobMaterialSelectedCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -467,7 +470,7 @@ fun JobMaterialSelectedCard(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = MaterialTheme.colorScheme.primaryContainer,
+                            color = appColor.accentBg,
                             shape = CircleShape
                         )
                         .size(dimens.Icon.base),
@@ -522,7 +525,7 @@ fun JobMaterialSelectedCard(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .background(
-                            color = SurfaceOverlay,
+                            color = appColor.iconBgColor,
                             shape = KarigojobsShapes.medium
                         )
                 ) {
@@ -595,7 +598,7 @@ fun AddItemCard(
                 strokeWidth = DividerDefaults.Thickness
             ),
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
+            containerColor = appColor.cardColors
         )
     ) {
         Row(
@@ -609,13 +612,13 @@ fun AddItemCard(
                 painter = painterResource(R.drawable.add),
                 contentDescription = "Add",
                 modifier = Modifier.size(dimens.Icon.xs),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = appColor.secondaryText
             )
             Spacer(Modifier.width(dimens.Space.md))
             Text(
                 text = text,
                 style = MaterialTheme.typography.labelMedium.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = appColor.secondaryText
                 )
             )
         }
@@ -638,7 +641,7 @@ fun CreateLabourItemModal(
 
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
-        containerColor = ModalBackGround,
+        containerColor = appColor.modalColor,
 
         ) {
         Column(
@@ -741,8 +744,9 @@ fun JobDetailsCard(
         modifier = modifier.fillMaxWidth(),
         shape = KarigojobsShapes.large,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
 
         Row(
@@ -763,7 +767,6 @@ fun JobDetailsCard(
                     KarigoIconWIthBg(
                         icon = job.tradeType.icon(),
                         iconColor = KarigojobsIconColor,
-                        iconBackGroundColor = SurfaceOverlay,
                         size = dimens.Height.minTouch
                     )
                     Column(
@@ -775,7 +778,7 @@ fun JobDetailsCard(
                         Text(
                             text = job.title,
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = appColor.primaryText,
                             ),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
@@ -783,7 +786,7 @@ fun JobDetailsCard(
                         Text(
                             text = job.createdAt.toReadableDate(),
                             style = MaterialTheme.typography.labelMedium.copy(
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = appColor.tertiaryText
                             )
                         )
                     }
@@ -792,11 +795,8 @@ fun JobDetailsCard(
             Box(
                 modifier = Modifier
                     .clip(KarigojobsShapes.medium)
-                    .background(
-                        color = job.status.color().surface
-                    )
                     .border(
-                        width = dimens.Border.thin,
+                        width = dimens.Border.thin / 10f,
                         color = MaterialTheme.colorScheme.onBackground,
                         shape = KarigojobsShapes.medium
                     ),
@@ -828,8 +828,9 @@ fun JobDetailsStatusCard(
         modifier = modifier.fillMaxWidth(),
         shape = KarigojobsShapes.large,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -846,16 +847,15 @@ fun JobDetailsStatusCard(
                     text = "Status",
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = appColor.primaryText
                     )
                 )
 
                 Box(
                     modifier = Modifier
                         .clip(KarigojobsShapes.medium)
-                        .background(color = MaterialTheme.colorScheme.primaryContainer)
                         .border(
-                            width = dimens.Border.thin,
+                            width = dimens.Border.thin / 10f,
                             color = MaterialTheme.colorScheme.onBackground,
                             shape = KarigojobsShapes.medium
                         )
@@ -903,7 +903,7 @@ fun JobDetailsStatusCard(
                         Text(
                             text = status.toString(),
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = KarigojobsText2
+                                color = appColor.secondaryText
                             ),
                             modifier = Modifier
                                 .basicMarquee(
@@ -987,8 +987,9 @@ fun JobDetailsClientInfo(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -1005,7 +1006,7 @@ fun JobDetailsClientInfo(
                 KarigoIconWIthBg(
                     icon = R.drawable.user_line,
                     iconColor = KarigojobsIconColor,
-                    iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer
+                    iconBackGroundColor = appColor.accentBg
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
@@ -1013,13 +1014,13 @@ fun JobDetailsClientInfo(
                     Text(
                         text = clientModel.name,
                         style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = appColor.primaryText
                         )
                     )
                     Text(
                         text = clientModel.phone,
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = appColor.secondaryText
                         )
                     )
                 }
@@ -1034,7 +1035,7 @@ fun JobDetailsClientInfo(
                         painter = painterResource(R.drawable.map_point),
                         contentDescription = null,
                         modifier = Modifier.size(dimens.Icon._2xs),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = appColor.secondaryText
                     )
                     Column(
                         verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
@@ -1042,7 +1043,7 @@ fun JobDetailsClientInfo(
                         Text(
                             text = clientModel.address,
                             style = MaterialTheme.typography.labelMedium.copy(
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = appColor.secondaryText
                             )
                         )
                     }
@@ -1062,8 +1063,9 @@ fun LabourItemList(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -1081,13 +1083,13 @@ fun LabourItemList(
                     icon = R.drawable.labour,
                     size = dimens.Icon.lg,
                     iconColor = KarigojobsIconColor,
-                    iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer.copy(0.4f)
+                    iconBackGroundColor = appColor.accentBg
                 )
 
                 Text(
                     text = "Labour",
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = appColor.primaryText
                     )
                 )
 
@@ -1095,7 +1097,7 @@ fun LabourItemList(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .background(
-                            color = MaterialTheme.colorScheme.primaryContainer.copy(0.4f),
+                            color = appColor.accentBg,
                             shape = KarigojobsShapes.large
                         )
                 ) {
@@ -1138,8 +1140,9 @@ fun MaterialItemList(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -1157,13 +1160,13 @@ fun MaterialItemList(
                     icon = R.drawable.stack,
                     size = dimens.Icon.lg,
                     iconColor = KarigojobsIconColor,
-                    iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer.copy(0.4f)
+                    iconBackGroundColor = appColor.accentBg
                 )
 
                 Text(
                     text = "Materials",
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = appColor.primaryText
                     )
                 )
             }
@@ -1201,13 +1204,14 @@ fun TotalItemCost(
         Text(
             text = title,
             style = MaterialTheme.typography.bodySmall.copy(
-                color = KarigojobsText2
+                color = appColor.secondaryText
             )
         )
         Text(
             text = "$total",
             style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.onBackground
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.Bold
             )
         )
     }
@@ -1236,13 +1240,13 @@ fun ItemList(
             Text(
                 text = itemName,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = KarigojobsText3
+                    color = appColor.tertiaryText
                 )
             )
             Text(
                 text = "$quantity x ${deviceInfo.currency}$itemRate / $unit",
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = KarigojobsText2
+                    color = appColor.secondaryText
                 )
             )
         }
@@ -1250,7 +1254,8 @@ fun ItemList(
         Text(
             text = "${deviceInfo.currency}${total}",
             style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.onBackground
+                color = appColor.primaryText,
+                fontWeight = FontWeight.Bold
             )
         )
     }

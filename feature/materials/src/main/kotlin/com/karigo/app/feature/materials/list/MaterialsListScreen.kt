@@ -48,11 +48,13 @@ import com.karigojobs.ui.common.TopBarTitle
 import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.ui.common.DeleteDialog
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.SurfaceOverlay
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
@@ -171,7 +173,7 @@ fun MaterialsListScreen(
                     }
                 },
                 dialogTitle = "Delete Material",
-                dialogDescription = "This action is permanent. Are you sure you want to delete this material."
+                dialogDescription = "This action is permanent. Are you sure you want to delete this material.",
             )
         }
 
@@ -205,7 +207,7 @@ fun MaterialsListScreen(
             item {
                 Text(
                     text = "${state.materialsList.size} items",
-                    style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText2)
+                    style = MaterialTheme.typography.labelSmall.copy(color = appColor.secondaryText)
                 )
             }
 
@@ -224,10 +226,7 @@ fun MaterialsListScreen(
                         ) {
                             Card(
                                 colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-                                border = BorderStroke(
-                                    dimens.Border.thin,
-                                    KarigojobsIconColor
-                                ),
+                                border = customCardBorder(),
                                 shape = KarigojobsShapes.small
                             ) {
                                 Text(
@@ -244,7 +243,7 @@ fun MaterialsListScreen(
                             }
                             Text(
                                 text = materials.size.toString(),
-                                style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText2)
+                                style = MaterialTheme.typography.labelSmall.copy(color = appColor.secondaryText)
                             )
                             HorizontalDivider(
                                 modifier = Modifier.weight(1f),
@@ -279,8 +278,9 @@ fun MaterialItemRow(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
+            containerColor = appColor.cardColors
         ),
+        border = customCardBorder(),
         shape = KarigojobsShapes.large,
     ) {
         Row(
@@ -294,7 +294,6 @@ fun MaterialItemRow(
             KarigoIconWIthBg(
                 icon = R.drawable.stack,
                 iconColor = KarigojobsIconColor,
-                iconBackGroundColor = SurfaceOverlay,
                 size = dimens.Icon._2xl
             )
 
@@ -319,10 +318,7 @@ fun MaterialItemRow(
                                     alpha = 0.2f
                                 )
                             ),
-                            border = BorderStroke(
-                                dimens.Border.thin,
-                                KarigojobsIconColor
-                            ),
+                            border = customCardBorder(),
                             shape = KarigojobsShapes.small
                         ) {
                             Text(
@@ -333,7 +329,7 @@ fun MaterialItemRow(
                                 ),
                                 modifier = Modifier.padding(
                                     horizontal = dimens.Padding.xs,
-                                    vertical = dimens.Space._2xs
+                                    vertical = dimens.Space.xs
                                 )
                             )
                         }
@@ -341,7 +337,7 @@ fun MaterialItemRow(
                     Text(
                         text = "${material.tradeType.displayName} · ${deviceInfo.currency}${material.price} / ${material.unit}",
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = KarigojobsText2
+                            color = appColor.secondaryText
                         )
                     )
                 }
@@ -412,15 +408,16 @@ fun SearchAndFilter(
                             event(MaterialListEvent.SelectTradeType(tradeType = null))
                         },
                         colors = CardDefaults.cardColors(
-                            containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                            containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                         ),
+                        border = customCardBorder(),
                         shape = KarigojobsShapes.large,
 
                         ) {
                         Text(
                             text = "All",
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
+                                color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                             ),
                             modifier = Modifier.padding(
                                 horizontal = dimens.Padding.base,
@@ -437,11 +434,11 @@ fun SearchAndFilter(
                             event(MaterialListEvent.SelectTradeType(tradeType = trade))
                         },
                         colors = CardDefaults.cardColors(
-                            containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                            containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                         ),
                         shape = KarigojobsShapes.large,
-
-                        ) {
+                        border = customCardBorder()
+                    ) {
                         Text(
                             text = trade.displayName,
                             style = MaterialTheme.typography.labelSmall.copy(
@@ -470,9 +467,10 @@ fun SearchAndFilter(
                             event(MaterialListEvent.SelectCategory(null))
                         },
                         colors = CardDefaults.cardColors(
-                            containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                            containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                         ),
-                        shape = KarigojobsShapes.large
+                        shape = KarigojobsShapes.large,
+                        border = customCardBorder()
                     ) {
                         Text(
                             text = "All",
@@ -502,9 +500,10 @@ fun SearchAndFilter(
                             )
                         },
                         colors = CardDefaults.cardColors(
-                            containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                            containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                         ),
-                        shape = KarigojobsShapes.large
+                        shape = KarigojobsShapes.large,
+                        border = customCardBorder()
                     ) {
                         Text(
                             text = "Uncategorized",
@@ -526,9 +525,10 @@ fun SearchAndFilter(
                             event(MaterialListEvent.SelectCategory(category))
                         },
                         colors = CardDefaults.cardColors(
-                            containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                            containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                         ),
-                        shape = KarigojobsShapes.large
+                        shape = KarigojobsShapes.large,
+                        border = customCardBorder()
                     ) {
                         Text(
                             text = category.name,
@@ -554,10 +554,7 @@ fun SearchAndFilter(
                         colors = CardDefaults.cardColors(
                             containerColor = Color.Transparent
                         ),
-                        border = androidx.compose.foundation.BorderStroke(
-                            dimens.Border.thin,
-                            KarigojobsText2
-                        ),
+                        border = customCardBorder(),
                         shape = KarigojobsShapes.large
                     ) {
                         Row(

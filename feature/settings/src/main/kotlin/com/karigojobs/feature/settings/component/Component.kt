@@ -46,6 +46,7 @@ import com.karigojobs.ui.color
 import com.karigojobs.ui.common.KarigoButtons
 import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.TradeCard
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
@@ -53,6 +54,7 @@ import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.ModalBackGround
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
 
 
@@ -80,9 +82,10 @@ fun SettingsScreenQuickAction(
         onClick = onClick,
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
+            containerColor = appColor.cardColors
         ),
-        shape = KarigojobsShapes.medium
+        shape = KarigojobsShapes.medium,
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -120,8 +123,9 @@ fun SettingsComponent(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier.padding(dimens.Padding.base),
@@ -214,7 +218,7 @@ fun SettingsTradeCard(
         content = {
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(dimens.Space._2xs),
-                verticalArrangement = Arrangement.spacedBy(dimens.Space.md),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space._2xs),
                 maxItemsInEachRow = 5
             ) {
                 trades?.forEach { trades ->
@@ -246,7 +250,7 @@ fun SettingsTradeChangeModal(
         sheetState = sheetState,
         onDismissRequest = onDismiss,
         modifier = modifier,
-        containerColor = ModalBackGround
+        containerColor = appColor.modalColor
     ) {
         Scaffold(
             contentWindowInsets = WindowInsets(),
@@ -272,7 +276,7 @@ fun SettingsTradeChangeModal(
                             KarigoButtons(
                                 modifier = Modifier.weight(1f),
                                 onClick = onDismiss,
-                                buttonColor = KarigojobsCard,
+                                buttonColor = Color.Transparent,
                                 contentColor = MaterialTheme.colorScheme.onBackground,
                                 label = "Cancel"
                             )
@@ -307,14 +311,14 @@ fun SettingsTradeChangeModal(
                         Text(
                             text = "${state.selectedCount} selected",
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = appColor.primaryText,
                                 fontWeight = FontWeight.Bold
                             )
                         )
                         Text(
                             text = "Pick the trades you work in to get relevant starter materials",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = KarigojobsText2
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                color = appColor.secondaryText
                             )
                         )
                     }
@@ -325,7 +329,7 @@ fun SettingsTradeChangeModal(
                         Text(
                             text = "Clear All",
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = KarigojobsText2
+                                color = appColor.secondaryText
                             )
                         )
                     }
@@ -361,12 +365,9 @@ private fun TradeTypeCheckCard(
         onClick = onClick,
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer.copy(0.2f) else KarigojobsCard,
+            containerColor = if (isSelected) appColor.accentBg else appColor.iconBgColor,
         ),
-        border = if (!isSelected) null else BorderStroke(
-            width = dimens.Border.thin,
-            color = MaterialTheme.colorScheme.onBackground
-        )
+        border = if (!isSelected) null else customCardBorder()
     ) {
         Row(
             modifier = Modifier
@@ -377,7 +378,7 @@ private fun TradeTypeCheckCard(
         ) {
             KarigoIconWIthBg(
                 icon = tradeType.icon(),
-                iconColor = if (isSelected) MaterialTheme.colorScheme.onBackground else tradeType.color(),
+                iconColor = if (isSelected) appColor.primaryText else tradeType.color(),
                 iconBackGroundColor = if (isSelected) Color.Transparent else tradeType.color()
                     .copy(0.1f),
                 size = dimens.Height.minTouch / 1.1f
@@ -390,14 +391,14 @@ private fun TradeTypeCheckCard(
                 Text(
                     text = tradeType.displayName,
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = appColor.primaryText,
                         fontWeight = FontWeight.Bold
                     )
                 )
                 Text(
                     text = tradeType.description,
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = KarigojobsText2,
+                        color = appColor.secondaryText,
                     )
                 )
             }

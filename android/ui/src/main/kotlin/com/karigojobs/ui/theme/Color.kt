@@ -90,7 +90,7 @@ val NotifBadge           = Color(0xFFE53935)
 val OnNotifBadge         = Color(0xFFFFFFFF)
 
 // ── Light theme tokens (kept for completeness / preview) ──────────────────
-val LightBackground          = Color(0xFFF5F5F5)
+val LightBackground          = Color(0xFFfafafa)
 val LightSurface             = Color(0xFFFFFFFF)
 val LightSurfaceVariant      = Color(0xFFEEEEEE)
 val LightOnSurfaceVariant    = Color(0xFF424242)

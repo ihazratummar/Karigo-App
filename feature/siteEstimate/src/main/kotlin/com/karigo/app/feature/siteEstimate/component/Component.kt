@@ -58,6 +58,7 @@ import com.karigojobs.ui.common.KarigojobsSearchField
 import com.karigojobs.ui.common.MinusButton
 import com.karigojobs.ui.common.PlusButton
 import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.common.dashedBorder
 import com.karigojobs.ui.theme.ChartBarInactive
 import com.karigojobs.ui.theme.KarigojobsAccent
@@ -68,6 +69,7 @@ import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.SurfaceOverlay
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 
 
@@ -124,9 +126,6 @@ fun AddMaterialCard(
 }
 
 
-
-
-
 @Composable
 fun SelectedMaterialSection(
     modifier: Modifier = Modifier,
@@ -142,8 +141,9 @@ fun SelectedMaterialSection(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors,
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -219,7 +219,7 @@ fun SelectedMaterialSection(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .background(
-                            color = SurfaceOverlay,
+                            color = appColor.iconBgColor,
                             shape = KarigojobsShapes.medium
                         )
                 ) {
@@ -230,7 +230,8 @@ fun SelectedMaterialSection(
                     ) {
                         MinusButton(
                             size = dimens.Icon.lg,
-                            onClick = onMaterialMinusClick
+                            onClick = onMaterialMinusClick,
+                            backGroundColor = appColor.cardColors
                         )
                         BasicTextField(
                             value = selectedMaterial.quantityInput,
@@ -258,14 +259,14 @@ fun SelectedMaterialSection(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .background(
-                            color = SurfaceOverlay,
+                            color = appColor.iconBgColor,
                             shape = KarigojobsShapes.small
                         )
                 ) {
                     Text(
                         text = selectedMaterial.unit,
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = KarigojobsText2
+                            color = appColor.secondaryText
                         ),
                         modifier = Modifier.padding(dimens.Padding.sm)
                     )
@@ -288,9 +289,10 @@ fun EstimateCard(
         onClick = onEstimateClick,
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
+            containerColor = appColor.cardColors
         ),
-        shape = KarigojobsShapes.medium
+        shape = KarigojobsShapes.medium,
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier.padding(dimens.Space.base),
@@ -304,7 +306,7 @@ fun EstimateCard(
                 KarigoIconWIthBg(
                     icon = R.drawable.estimate,
                     iconColor = KarigojobsIconColor,
-                    iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer
+                    iconBackGroundColor = appColor.accentBg
                 )
                 Column(
                     modifier = Modifier.weight(1f)
@@ -320,7 +322,7 @@ fun EstimateCard(
                     Text(
                         text = "${estimate.clientName}· ${estimate.date.toReadableDate()}",
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = KarigojobsText2
+                            color = appColor.secondaryText
                         )
                     )
                 }
@@ -358,7 +360,7 @@ fun EstimateCard(
                         Text(
                             text = "No prices",
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = KarigojobsText2
+                                color = appColor.secondaryText
                             ),
                             modifier = Modifier.padding(
                                 horizontal = dimens.Padding.md,
@@ -381,8 +383,9 @@ fun EstimateDetailsCard(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -394,13 +397,13 @@ fun EstimateDetailsCard(
                 text = state.estimateDetails?.projectTitle ?: "",
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = appColor.primaryText
                 )
             )
             Text(
                 text = "${state.estimateDetails?.clientName}",
                 style = MaterialTheme.typography.labelMedium.copy(
-                    color = KarigojobsText2
+                    color = appColor.secondaryText
                 )
             )
             Spacer(Modifier.height(dimens.Padding.xs))
@@ -412,13 +415,13 @@ fun EstimateDetailsCard(
                     painter = painterResource(R.drawable.calendar1),
                     contentDescription = null,
                     modifier = Modifier.size(dimens.Icon._2xs),
-                    tint = KarigojobsText3
+                    tint = appColor.tertiaryText
                 )
                 Spacer(Modifier.width(dimens.Padding._2xs))
                 Text(
                     text = "${state.estimateDetails?.date?.toReadableDate()}",
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = KarigojobsText3
+                        color = appColor.tertiaryText
                     )
                 )
                 Spacer(Modifier.width(dimens.Padding.md))
@@ -426,13 +429,13 @@ fun EstimateDetailsCard(
                     painter = painterResource(R.drawable.stack),
                     contentDescription = null,
                     modifier = Modifier.size(dimens.Icon._2xs),
-                    tint = KarigojobsText3
+                    tint = appColor.tertiaryText
                 )
                 Spacer(Modifier.width(dimens.Padding._2xs))
                 Text(
                     text = "${state.siteEstimateMaterial.size} items",
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = KarigojobsText3
+                        color = appColor.tertiaryText
                     )
                 )
             }
@@ -451,7 +454,7 @@ fun EstimateDetailsCard(
                     Text(
                         text = text,
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = KarigojobsText2
+                            color = appColor.secondaryText
                         ),
                         modifier = Modifier.padding(dimens.Padding.base)
                     )
@@ -469,8 +472,9 @@ fun EstimateMaterialsList(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -482,7 +486,7 @@ fun EstimateMaterialsList(
                 text = "Materials",
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = appColor.primaryText
                 )
             )
 
@@ -495,7 +499,7 @@ fun EstimateMaterialsList(
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier.background(
-                            color = MaterialTheme.colorScheme.primaryContainer,
+                            color = appColor.accentBg,
                             shape = CircleShape
                         )
                     ) {
@@ -513,13 +517,13 @@ fun EstimateMaterialsList(
                         Text(
                             text = material.materialName,
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                color = MaterialTheme.colorScheme.onBackground
+                                color = appColor.primaryText
                             )
                         )
                         Text(
                             text = "${material.quantity} ${material.unit}",
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = KarigojobsText2
+                                color = appColor.secondaryText
                             )
                         )
                     }
@@ -528,7 +532,7 @@ fun EstimateMaterialsList(
                             Text(
                                 text = "${deviceInfo.currency} ${material.total}",
                                 style = MaterialTheme.typography.bodyMedium.copy(
-                                    color = MaterialTheme.colorScheme.onBackground,
+                                    color = appColor.primaryText,
                                     fontWeight = FontWeight.Bold
                                 )
                             )
@@ -544,21 +548,16 @@ fun EstimateMaterialsList(
 @Composable
 fun EstimateTotalCard(
     modifier: Modifier = Modifier,
-    totalItemSize : Int ,
-    estimateTotal : Double
+    totalItemSize: Int,
+    estimateTotal: Double
 ) {
-
-
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor = appColor.accentBg
         ),
         shape = KarigojobsShapes.medium,
-        border = BorderStroke(
-            width = dimens.Border.thin,
-            color = MaterialTheme.colorScheme.onBackground
-        )
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier

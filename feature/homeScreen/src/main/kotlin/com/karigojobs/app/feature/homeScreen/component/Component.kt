@@ -31,9 +31,11 @@ import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
 import com.karigojobs.ui.common.TradeCard
 import com.karigojobs.ui.common.bounceClickable
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
 import karigojobs.shared.resources.generated.resources.Res
 import karigojobs.shared.resources.generated.resources.common_see_all
@@ -70,8 +72,9 @@ fun SiteEstimatesCard(
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = KarigojobsCard),
-        shape = KarigojobsShapes.medium
+        colors = CardDefaults.cardColors(containerColor = appColor.cardColors),
+        shape = KarigojobsShapes.medium,
+        border = customCardBorder()
     ) {
 
         Column(
@@ -116,14 +119,11 @@ fun SiteEstimatesCard(
                 onClick = onAddEstimateClick,
                 shape = KarigojobsShapes.medium,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = appColor.accentBg,
                     contentColor = MaterialTheme.colorScheme.primary
                 ),
                 modifier = Modifier.fillMaxWidth(),
-                border = BorderStroke(
-                    width = dimens.Border.thin,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+                border = customCardBorder()
             ) {
                 Icon(
                     painter = painterResource(R.drawable.add),

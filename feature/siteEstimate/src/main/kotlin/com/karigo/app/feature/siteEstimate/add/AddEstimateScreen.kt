@@ -44,6 +44,7 @@ import com.karigojobs.ui.common.KarigojobsTextField
 import com.karigojobs.ui.common.SectionWithTitle
 import com.karigojobs.ui.common.SpringToggle
 import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.permission.AppPermission
 import com.karigojobs.ui.permission.PermissionRationaleDialog
 import com.karigojobs.ui.permission.rememberPermissionHandler
@@ -51,6 +52,7 @@ import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
@@ -77,6 +79,10 @@ fun AddEstimateScreen(
             when (effect) {
                 EstimateEffect.NavigationBack -> {
                     onBackClick()
+                    snackbarState.showSnackbar(
+                        message = "Added",
+                        withDismissAction = true
+                    )
                 }
 
                 is EstimateEffect.ShowError -> {
@@ -244,8 +250,9 @@ fun AddEstimateScreen(
                         .heightIn(min = dimens.Space._5xl),
                     shape = KarigojobsShapes.medium,
                     colors = CardDefaults.cardColors(
-                        containerColor = KarigojobsCard
-                    )
+                        containerColor = appColor.cardColors
+                    ),
+                    border = customCardBorder()
                 ) {
                     Row(
                         modifier = Modifier
@@ -268,7 +275,7 @@ fun AddEstimateScreen(
                             Text(
                                 text = labelText,
                                 style = MaterialTheme.typography.labelSmall.copy(
-                                    color = KarigojobsText2
+                                    color = appColor.secondaryText
                                 )
                             )
                         }

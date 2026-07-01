@@ -30,6 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import com.karigojob.share.utils.toInitials
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.client.list.ClientListEffect
@@ -37,6 +39,7 @@ import com.karigojobs.presentation.client.list.ClientListEvent
 import com.karigojobs.presentation.client.list.ClientListState
 import com.karigojobs.ui.common.KarigoTopAppBar
 import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsError
@@ -44,6 +47,7 @@ import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.ModalBackGround
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
@@ -106,9 +110,10 @@ fun ClientListScreen(
                 Card(
                     onClick = { onClientClick(client.id) },
                     colors = CardDefaults.cardColors(
-                        containerColor = KarigojobsCard
+                        containerColor = appColor.cardColors
                     ),
-                    shape = KarigojobsShapes.medium
+                    shape = KarigojobsShapes.medium,
+                    border = customCardBorder()
                 ) {
                     Column(
                         modifier = Modifier
@@ -145,27 +150,30 @@ fun ClientListScreen(
                                 Text(
                                     text = client.name,
                                     style = MaterialTheme.typography.bodyMedium.copy(
-                                        color = MaterialTheme.colorScheme.onBackground
+                                        color = appColor.primaryText,
+                                        fontWeight = FontWeight.Bold
                                     )
                                 )
                                 Text(
                                     text = client.phone,
                                     style = MaterialTheme.typography.bodyMedium.copy(
-                                        color = KarigojobsText2
+                                        color = appColor.secondaryText
                                     )
                                 )
                             }
-                            if (client.outStandingBalance > 0.0){
+                            if (client.outStandingBalance > 0.0) {
                                 Box(
                                     contentAlignment = Alignment.Center,
-                                    modifier = Modifier.background(
-                                        color = ModalBackGround,
-                                        shape = CircleShape
-                                    ).border(
-                                        width = dimens.Border.thin,
-                                        color = MaterialTheme.colorScheme.onBackground,
-                                        shape = CircleShape
-                                    )
+                                    modifier = Modifier
+                                        .background(
+                                            color = ModalBackGround,
+                                            shape = CircleShape
+                                        )
+                                        .border(
+                                            width = dimens.Border.thin,
+                                            color = MaterialTheme.colorScheme.onBackground,
+                                            shape = CircleShape
+                                        )
                                 ) {
                                     Text(
                                         text = "${deviceInfo.currency} ${client.outStandingBalance}",
@@ -187,26 +195,26 @@ fun ClientListScreen(
                             Icon(
                                 painter = painterResource(R.drawable.job_line),
                                 contentDescription = null,
-                                tint = KarigojobsText3,
+                                tint = appColor.tertiaryText,
                                 modifier = Modifier.size(dimens.Icon._2xs)
                             )
                             Text(
                                 text = "${client.totalJob} jobs",
                                 style = MaterialTheme.typography.labelSmall.copy(
-                                    color = KarigojobsText3
+                                    color = appColor.tertiaryText
                                 )
                             )
                             Spacer(Modifier.height(dimens.Space._2xs))
                             Icon(
                                 painter = painterResource(R.drawable.alumuniam),
                                 contentDescription = null,
-                                tint = KarigojobsText3,
+                                tint = appColor.tertiaryText,
                                 modifier = Modifier.size(dimens.Icon._2xs)
                             )
                             Text(
                                 text = "${deviceInfo.currency} ${client.totalRevenue} billed",
                                 style = MaterialTheme.typography.labelSmall.copy(
-                                    color = KarigojobsText3
+                                    color = appColor.tertiaryText
                                 )
                             )
                         }

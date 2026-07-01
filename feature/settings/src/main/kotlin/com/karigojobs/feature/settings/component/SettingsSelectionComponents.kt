@@ -28,8 +28,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.ui.common.KarigoIconWIthBg
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.ModalBackGround
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
 
 @Composable
@@ -93,7 +95,7 @@ fun <T> SettingsSelectionModal(
         sheetState = sheetState,
         onDismissRequest = onDismiss,
         modifier = modifier,
-        containerColor = ModalBackGround
+        containerColor = appColor.modalColor
     ) {
         Scaffold(
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -117,7 +119,7 @@ fun <T> SettingsSelectionModal(
                     Text(
                         text = description,
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                            color = appColor.secondaryText
                         )
                     )
                 }
@@ -152,8 +154,9 @@ private fun SettingsSelectionCard(
         onClick = onClick,
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer.copy(0.2f) else KarigojobsCard
-        )
+            containerColor = if (isSelected) appColor.accentBg else appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Row(
             modifier = Modifier
@@ -165,7 +168,7 @@ private fun SettingsSelectionCard(
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodySmall.copy(
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = appColor.primaryText,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
                 )
             )

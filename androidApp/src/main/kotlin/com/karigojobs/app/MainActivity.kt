@@ -1,6 +1,8 @@
 package com.karigojobs.app
 
+import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -65,6 +67,18 @@ class MainActivity : AppCompatActivity() {
                 ThemePreference.SYSTEM -> isSystemInDarkTheme()
                 ThemePreference.DARK -> true
                 ThemePreference.LIGHT -> false
+            }
+
+            LaunchedEffect(isDarkTheme) {
+                val style = SystemBarStyle.auto(
+                    Color.TRANSPARENT,
+                    Color.TRANSPARENT
+                ) { isDarkTheme }
+                
+                enableEdgeToEdge(
+                    statusBarStyle = style,
+                    navigationBarStyle = style
+                )
             }
 
             val windowsSizeClass = currentWindowAdaptiveInfo().windowSizeClass

@@ -24,6 +24,7 @@ import com.karigojobs.app.android.ui.R
 import com.karigojobs.ui.common.IconPlaceholder
 import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsIconColor
@@ -31,6 +32,7 @@ import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
 
 
@@ -47,10 +49,10 @@ fun WorkerProfileCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
+            containerColor = appColor.cardColors
         ),
         shape = KarigojobsShapes.large,
-        border = BorderStroke(dimens.Border.thin, Color(0xFF2E2E2E))
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier.padding(dimens.Padding.base),
@@ -65,9 +67,7 @@ fun WorkerProfileCard(
                 KarigoIconWIthBg(
                     icon = R.drawable.carpenter,
                     iconColor = KarigojobsAccent,
-                    iconBackGroundColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(
-                        0.1f
-                    )
+                    iconBackGroundColor = appColor.accentBg
                 )
                 Column(
                     modifier = Modifier.weight(1f)
@@ -76,7 +76,7 @@ fun WorkerProfileCard(
                         text = profile.businessName.ifBlank { "No Business Name" },
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     )
                     Text(
@@ -88,7 +88,7 @@ fun WorkerProfileCard(
                 KarigoIconWIthBgCick(
                     icon = R.drawable.edit,
                     iconColor = KarigojobsAccent,
-                    iconBackGroundColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(0.2f),
+                    iconBackGroundColor = appColor.accentBg,
                     isBorder = true,
                     onClick = onEditClick
                 )

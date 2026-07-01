@@ -44,6 +44,7 @@ import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.ModalBackGround
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 
@@ -79,7 +80,7 @@ fun SelectMaterialModal(
         sheetState = modalSheetState,
         modifier = modifier,
         onDismissRequest = onDismiss,
-        containerColor = ModalBackGround
+        containerColor = appColor.modalColor
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
@@ -98,7 +99,7 @@ fun SelectMaterialModal(
                     Text(
                         text = title,
                         style = MaterialTheme.typography.titleMedium.copy(
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = appColor.primaryText,
                             fontWeight = FontWeight.Bold
                         ),
                         modifier = Modifier.contentHorizontalPadding()
@@ -135,14 +136,15 @@ fun SelectMaterialModal(
                                     onCategorySelected(null)
                                 },
                                 colors = CardDefaults.cardColors(
-                                    containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                                    containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                                 ),
                                 shape = KarigojobsShapes.large,
+                                border = customCardBorder()
                             ) {
                                 Text(
                                     text = "All",
                                     style = MaterialTheme.typography.labelSmall.copy(
-                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
+                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                                     ),
                                     modifier = Modifier.padding(
                                         horizontal = dimens.Padding.base,
@@ -160,14 +162,15 @@ fun SelectMaterialModal(
                                     onCategorySelected(null)
                                 },
                                 colors = CardDefaults.cardColors(
-                                    containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                                    containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                                 ),
                                 shape = KarigojobsShapes.large,
+                                border = customCardBorder()
                             ) {
                                 Text(
                                     text = trade.displayName,
                                     style = MaterialTheme.typography.labelSmall.copy(
-                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
+                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                                     ),
                                     modifier = Modifier.padding(
                                         horizontal = dimens.Padding.base,
@@ -192,14 +195,14 @@ fun SelectMaterialModal(
                             Card(
                                 onClick = { onCategorySelected(null) },
                                 colors = CardDefaults.cardColors(
-                                    containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                                    containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                                 ),
                                 shape = KarigojobsShapes.large
                             ) {
                                 Text(
                                     text = "All",
                                     style = MaterialTheme.typography.labelSmall.copy(
-                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
+                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                                     ),
                                     modifier = Modifier.padding(
                                         horizontal = dimens.Padding.base,
@@ -222,14 +225,15 @@ fun SelectMaterialModal(
                                     )
                                 },
                                 colors = CardDefaults.cardColors(
-                                    containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                                    containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                                 ),
-                                shape = KarigojobsShapes.large
+                                shape = KarigojobsShapes.large,
+                                border = customCardBorder()
                             ) {
                                 Text(
                                     text = "Uncategorized",
                                     style = MaterialTheme.typography.labelSmall.copy(
-                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
+                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                                     ),
                                     modifier = Modifier.padding(
                                         horizontal = dimens.Padding.base,
@@ -244,14 +248,15 @@ fun SelectMaterialModal(
                             Card(
                                 onClick = { onCategorySelected(category) },
                                 colors = CardDefaults.cardColors(
-                                    containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                                    containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                                 ),
-                                shape = KarigojobsShapes.large
+                                shape = KarigojobsShapes.large,
+                                border = customCardBorder()
                             ) {
                                 Text(
                                     text = category.name,
                                     style = MaterialTheme.typography.labelSmall.copy(
-                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
+                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                                     ),
                                     modifier = Modifier.padding(
                                         horizontal = dimens.Padding.base,
@@ -274,12 +279,9 @@ fun SelectMaterialModal(
                         Card(
                             modifier = Modifier.fillMaxWidth(),
                             colors = CardDefaults.cardColors(
-                                containerColor = if (!checked) KarigojobsCard else MaterialTheme.colorScheme.primaryContainer
+                                containerColor = if (!checked) appColor.iconBgColor else appColor.accentBg
                             ),
-                            border = if (checked) BorderStroke(
-                                width = dimens.Border.thin,
-                                color = MaterialTheme.colorScheme.onBackground
-                            ) else null,
+                            border = if (checked) customCardBorder() else null,
                             onClick = {
                                 if (checked) {
                                     selectedMaterials.value = selectedMaterials.value - material.id

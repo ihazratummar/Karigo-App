@@ -109,30 +109,13 @@ fun KarigojobsTheme(
     }
 
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
-
-    // ── Edge-to-edge system bars ──────────────────────────────────────────
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        val context = view.context
-        SideEffect {
-            val activity = context as? ComponentActivity
-            activity?.enableEdgeToEdge(
-                statusBarStyle = SystemBarStyle.auto(
-                    android.graphics.Color.TRANSPARENT,
-                    android.graphics.Color.TRANSPARENT,
-                ) { darkTheme },
-                navigationBarStyle = SystemBarStyle.auto(
-                    android.graphics.Color.TRANSPARENT,
-                    android.graphics.Color.TRANSPARENT,
-                ) { darkTheme }
-            )
-        }
-    }
+    val karigoColors = if (darkTheme) KarigoDarkColor else KarigoLightColor
 
     // ── Provide tokens + apply MaterialTheme ──────────────────────────────
     CompositionLocalProvider(
         LocalDimens provides dimens,
         LocalAppTypography provides typography,
+        LocalKarigoColors provides karigoColors,
         LocalDeviceInfo provides getDeviceInfo()
     ) {
         MaterialTheme(
@@ -169,3 +152,7 @@ val dimens
 val deviceInfo
     @Composable
     get() = LocalDeviceInfo.current
+
+val appColor
+    @Composable
+    get() = LocalKarigoColors.current

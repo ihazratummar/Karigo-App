@@ -24,10 +24,12 @@ import com.karigojob.share.utils.toInitials
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.ui.common.CommunicationButton
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigoSelectedCardColor
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import com.karigojobs.ui.theme.whatsAppColor
@@ -58,9 +60,10 @@ fun EarningCard(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
+            containerColor = appColor.cardColors
         ),
-        shape = KarigojobsShapes.medium
+        shape = KarigojobsShapes.medium,
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -71,7 +74,7 @@ fun EarningCard(
             Text(
                 text = title,
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = appColor.secondaryText
                 )
             )
 
@@ -99,9 +102,10 @@ fun ClientCardWithAction(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
+            containerColor = appColor.cardColors
         ),
-        shape = KarigojobsShapes.medium
+        shape = KarigojobsShapes.medium,
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -117,7 +121,7 @@ fun ClientCardWithAction(
                 Box(
                     modifier = Modifier.size(dimens.Height.inputLg)
                         .background(
-                            color = MaterialTheme.colorScheme.primaryContainer.copy(0.5f),
+                            color = appColor.accentBg,
                             shape = KarigojobsShapes.medium
                         ),
                     contentAlignment = Alignment.Center
@@ -136,14 +140,14 @@ fun ClientCardWithAction(
                     Text(
                         text = client.name,
                         style = MaterialTheme.typography.titleMedium.copy(
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = appColor.primaryText,
                             fontWeight = FontWeight.Bold
                         )
                     )
                     Text(
                         text = client.phone,
                         style = MaterialTheme.typography.labelMedium.copy(
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            color = appColor.secondaryText,
                         )
                     )
                 }
@@ -157,7 +161,7 @@ fun ClientCardWithAction(
                 CommunicationButton(
                     modifier = Modifier.weight(1f),
                     onClick = onCallClick,
-                    buttonColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(0.2f),
+                    buttonColor = appColor.accentBg,
                     contentColor = KarigojobsAccent,
                     icon = R.drawable.phone,
                     buttonText = "Call"

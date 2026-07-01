@@ -1,4 +1,5 @@
 package com.karigojobs.ui.common
+
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
@@ -89,14 +90,12 @@ import com.karigojobs.share.model.JobStatus
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
 import com.karigojobs.ui.icon
-import com.karigojobs.ui.theme.ChartBarInactive
 import com.karigojobs.ui.theme.KarigojobsBorder
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText
 import com.karigojobs.ui.theme.KarigojobsText2
-import com.karigojobs.ui.theme.KarigojobsThemePreview
 import com.karigojobs.ui.theme.KarigojobsWarning
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.NavInactive
@@ -116,6 +115,7 @@ import com.karigojobs.ui.theme.StatusPaidSurface
 import com.karigojobs.ui.theme.StatusPending
 import com.karigojobs.ui.theme.StatusPendingSurface
 import com.karigojobs.ui.theme.SurfaceOverlay
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import karigojobs.shared.resources.generated.resources.Res
@@ -142,16 +142,18 @@ fun TradeCard(
     modifier: Modifier = Modifier,
     trade: TradeType
 ) {
-    Box(
+    Card(
         modifier = modifier
-            .padding(vertical = dimens.Padding.xs, horizontal = dimens.Padding.xs)
-            .clip(KarigojobsShapes.medium)
-            .background(color = ChartBarInactive),
-        contentAlignment = Alignment.Center
+            .padding(vertical = dimens.Padding.xs, horizontal = dimens.Padding.xs),
+        shape = KarigojobsShapes.medium,
+        border = customCardBorder(),
+        colors = CardDefaults.cardColors(
+            containerColor = appColor.cardColors
+        )
     ) {
         Row(
             modifier = Modifier.padding(
-                vertical = dimens.Padding.sm,
+                vertical = dimens.Padding.xs,
                 horizontal = dimens.Padding.md
             ),
             verticalAlignment = Alignment.CenterVertically,
@@ -294,12 +296,12 @@ fun KarigojobsSearchField(
             .fillMaxWidth()
             .onFocusChanged { isFocused = it.isFocused }
             .border(
-                width = dimens.Border.thin,
+                width = dimens.Border.thin / 10f,
                 color = if (isFocused) KarigojobsIconColor else KarigojobsBorder,
                 shape = KarigojobsShapes.medium
             )
             .background(
-                color = KarigojobsCard,
+                color = appColor.cardColors,
                 shape = KarigojobsShapes.medium
             )
             .padding(horizontal = dimens.Padding.base, vertical = dimens.Padding.md),
@@ -342,7 +344,8 @@ fun KarigojobsTextField(
     maxLines: Int = 1,
     minLines: Int = 1,
     leadingIcon: (@Composable () -> Unit)? = null,
-    trailingIcon: (@Composable () -> Unit)? = null
+    trailingIcon: (@Composable () -> Unit)? = null,
+    readOnly: Boolean = false
 ) {
 
     var isFocused by remember { mutableStateOf(false) }
@@ -351,22 +354,23 @@ fun KarigojobsTextField(
         value = value,
         onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.titleMedium.copy(
-            color = KarigojobsText
+            color = appColor.primaryText
         ),
         cursorBrush = SolidColor(KarigojobsIconColor),
         singleLine = singleLine,
         maxLines = maxLines,
+        readOnly = readOnly,
         minLines = minLines,
         modifier = modifier
             .fillMaxWidth()
             .onFocusChanged { isFocused = it.isFocused }
             .border(
-                width = dimens.Border.thin,
+                width = dimens.Border.thin / 10f,
                 color = if (isFocused) KarigojobsIconColor else KarigojobsBorder,
                 shape = KarigojobsShapes.medium
             )
             .background(
-                color = KarigojobsCard,
+                color = appColor.cardColors,
                 shape = KarigojobsShapes.medium
             )
             .padding(horizontal = dimens.Padding.base, vertical = dimens.Padding.md),
@@ -382,7 +386,7 @@ fun KarigojobsTextField(
                     if (value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            color = KarigojobsText2,
+                            color = appColor.secondaryText,
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -454,7 +458,15 @@ fun Modifier.dashedBorder(
 fun customCardBorder(): BorderStroke {
     return BorderStroke(
         width = dimens.Border.thin / 10f,
-        color = KarigojobsText2,
+        color = appColor.secondaryText,
+    )
+}
+
+@Composable
+fun Modifier.customBorder(): Modifier = composed {
+    this.border(
+        width = dimens.Border.thin / 10f,
+        color = appColor.secondaryText,
     )
 }
 
@@ -532,14 +544,14 @@ fun CounterControl(
 @Composable
 fun MinusButton(
     onClick: () -> Unit = {},
-    size: Dp = dimens.Height.minTouch
+    size: Dp = dimens.Height.minTouch,
+    backGroundColor: Color = appColor.background
 ) {
     CounterControl(
         icon = R.drawable.substract,
-        iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        iconBackGroundColor = SurfaceOverlay,
         onClick = onClick,
-        size = size
+        size = size,
+        iconBackGroundColor = backGroundColor,
     )
 }
 
@@ -573,9 +585,9 @@ fun CrossButton(onClick: () -> Unit) {
 fun KarigoIconWIthBgCick(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int = R.drawable.arrow_left,
-    iconColor: Color = NavInactive,
+    iconColor: Color = appColor.primaryText,
     size: Dp = dimens.Height.minTouch,
-    iconBackGroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    iconBackGroundColor: Color = appColor.iconBgColor,
     onClick: () -> Unit = {},
     isBorder: Boolean = false
 ) {
@@ -588,7 +600,7 @@ fun KarigoIconWIthBgCick(
             .clip(KarigojobsShapes.medium)
             .let {
                 if (isBorder) it.border(
-                    width = dimens.Border.thin,
+                    width = dimens.Border.thin / 10f,
                     color = MaterialTheme.colorScheme.onBackground,
                     shape = KarigojobsShapes.medium
                 ) else it
@@ -612,7 +624,7 @@ fun KarigoIconWIthBg(
     @DrawableRes icon: Int = R.drawable.arrow_left,
     iconColor: Color = NavInactive,
     size: Dp = dimens.Height.minTouch,
-    iconBackGroundColor: Color = SurfaceOverlay
+    iconBackGroundColor: Color = appColor.iconBgColor
 ) {
     val iconSize = size * 0.6f
 
@@ -696,8 +708,9 @@ fun JobCard(
         modifier = modifier.fillMaxWidth(),
         shape = KarigojobsShapes.large,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier
@@ -712,7 +725,6 @@ fun JobCard(
                 KarigoIconWIthBg(
                     icon = job.tradeType.icon(),
                     iconColor = KarigojobsIconColor,
-                    iconBackGroundColor = SurfaceOverlay,
                     size = dimens.Height.minTouch / 1.1f
                 )
                 Column(
@@ -748,11 +760,8 @@ fun JobCard(
                 Box(
                     modifier = Modifier
                         .clip(KarigojobsShapes.medium)
-                        .background(
-                            color = job.status.color().surface
-                        )
                         .border(
-                            width = dimens.Border.thin,
+                            width = dimens.Border.thin / 10f,
                             color = MaterialTheme.colorScheme.onBackground,
                             shape = KarigojobsShapes.medium
                         ),
@@ -841,61 +850,60 @@ private fun PopUpDialog(
     description: String = ""
 
 ) {
-    KarigojobsThemePreview(darkTheme = true) {
-        Dialog(
-            onDismissRequest = onCancelClick,
+    Dialog(
+        onDismissRequest = onCancelClick,
+    ) {
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = KarigojobsShapes.medium,
+            colors = CardDefaults.cardColors(
+                containerColor = appColor.modalColor
+            )
         ) {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = KarigojobsShapes.medium,
-                colors = CardDefaults.cardColors(
-                    containerColor = ModalBackGround
-                )
+            Column(
+                modifier = Modifier
+                    .padding(dimens.Padding.base)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.base),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(dimens.Padding.base)
-                        .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(dimens.Space.base),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = null,
+                    modifier = Modifier.size(dimens.Icon.md),
+                    tint = confirmButtonColor
+                )
+
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                )
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
                 ) {
-                    Icon(
-                        painter = painterResource(icon),
-                        contentDescription = null,
-                        modifier = Modifier.size(dimens.Icon.md),
-                        tint = confirmButtonColor
+                    DialogButton(
+                        modifier = Modifier.weight(1f),
+                        onClick = onCancelClick,
+                        buttonColor = appColor.cardColors
                     )
-
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            color = MaterialTheme.colorScheme.onBackground
-                        )
+                    DialogButton(
+                        modifier = Modifier.weight(1f),
+                        onClick = onConfirmClick,
+                        buttonText = confirmButtonText,
+                        buttonColor = confirmButtonColor
                     )
-                    Text(
-                        text = description,
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
-                    ) {
-                        DialogButton(
-                            modifier = Modifier.weight(1f),
-                            onClick = onCancelClick
-                        )
-                        DialogButton(
-                            modifier = Modifier.weight(1f),
-                            onClick = onConfirmClick,
-                            buttonText = confirmButtonText,
-                            buttonColor = confirmButtonColor
-                        )
-                    }
                 }
             }
         }
@@ -920,7 +928,8 @@ private fun DialogButton(
         Text(
             text = buttonText,
             style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.onBackground
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.SemiBold
             )
         )
     }
@@ -937,8 +946,9 @@ fun ClientPicker(
         onClick = onCardClick,
         shape = KarigojobsShapes.medium,
         colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        )
+            containerColor = appColor.cardColors
+        ),
+        border = customCardBorder()
     ) {
         if (selectedClient == null) {
             Row(
@@ -961,7 +971,7 @@ fun ClientPicker(
                 Text(
                     text = "Select Client...",
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = appColor.secondaryText
                     )
                 )
             }
@@ -993,7 +1003,7 @@ fun ClientInfo(
         KarigoIconWIthBgCick(
             icon = R.drawable.user_line,
             iconColor = MaterialTheme.colorScheme.primary,
-            iconBackGroundColor = MaterialTheme.colorScheme.primaryContainer
+            iconBackGroundColor = appColor.accentBg
         )
 
         Spacer(Modifier.width(dimens.Space.base))
@@ -1038,7 +1048,7 @@ fun ContactPicker(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         modifier = modifier,
-        containerColor = ModalBackGround
+        containerColor = appColor.modalColor
     ) {
         Column(
             modifier = Modifier.padding(horizontal = dimens.Padding.xl),
@@ -1122,11 +1132,9 @@ fun KarigoDataPicker(
         modifier = modifier.heightIn(min = dimens.Space._5xl),
         onClick = onClick,
         shape = KarigojobsShapes.medium,
-        colors = CardDefaults.cardColors(
-            containerColor = KarigojobsCard
-        ),
-
-        ) {
+        colors = CardDefaults.cardColors(containerColor = appColor.cardColors),
+        border = customCardBorder()
+    ) {
 
         Row(
             modifier = Modifier
@@ -1138,13 +1146,14 @@ fun KarigoDataPicker(
         ) {
             Text(
                 text = formattedDate,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
+                color = appColor.primaryText
             )
 
             Icon(
                 painter = painterResource(R.drawable.calendar1),
                 contentDescription = "Pick date",
-                tint = Color.White.copy(alpha = 0.6f),
+                tint = appColor.secondaryText,
                 modifier = Modifier.size(dimens.Icon.sm)
             )
         }
@@ -1180,7 +1189,7 @@ fun KarigoDatePickerSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        containerColor = KarigojobsCard,
+        containerColor = appColor.cardColors,
         dragHandle = {
             Box(
                 modifier = Modifier
@@ -1196,23 +1205,23 @@ fun KarigoDatePickerSheet(
             state = datePickerState,
             showModeToggle = false,
             colors = DatePickerDefaults.colors(
-                containerColor = KarigojobsCard,
-                titleContentColor = Color.White.copy(alpha = 0.7f),
-                headlineContentColor = Color.White,
-                weekdayContentColor = Color.White.copy(alpha = 0.5f),
-                subheadContentColor = Color.White.copy(alpha = 0.7f),
-                navigationContentColor = Color.White,
-                yearContentColor = Color.White,
-                currentYearContentColor = Color.White,
-                selectedYearContentColor = Color.White,
-                selectedYearContainerColor = Color(0xFF4B9EFF),
-                dayContentColor = Color.White,
-                selectedDayContentColor = Color.White,
-                selectedDayContainerColor = Color(0xFF4B9EFF),
-                todayContentColor = Color(0xFF4B9EFF),
-                todayDateBorderColor = Color(0xFF4B9EFF),
-                dayInSelectionRangeContentColor = Color.White,
-                dayInSelectionRangeContainerColor = Color(0xFF4B9EFF).copy(alpha = 0.2f)
+                containerColor = appColor.iconBgColor,
+                titleContentColor = appColor.secondaryText,
+                headlineContentColor = appColor.primaryText,
+                weekdayContentColor = appColor.secondaryText,
+                subheadContentColor = appColor.secondaryText,
+                navigationContentColor = appColor.primaryText,
+                yearContentColor = appColor.primaryText,
+                currentYearContentColor = appColor.primaryText,
+                selectedYearContentColor = appColor.primaryText,
+                selectedYearContainerColor = appColor.accentBg,
+                dayContentColor = appColor.primaryText,
+                selectedDayContentColor = appColor.primaryText,
+                selectedDayContainerColor = appColor.accentBg,
+                todayContentColor = appColor.primaryText,
+                todayDateBorderColor =appColor.accentBg,
+                dayInSelectionRangeContentColor = appColor.primaryText,
+                dayInSelectionRangeContainerColor = appColor.accentBg.copy(alpha = 0.2f)
             )
         )
 
@@ -1226,10 +1235,8 @@ fun KarigoDatePickerSheet(
                 datePickerState.selectedDateMillis?.let { onDateSelected(it) }
                 onDismiss()
             },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF4B9EFF)
-            ),
-            shape = RoundedCornerShape(dimens.Space.base)
+            shape = RoundedCornerShape(dimens.Space.base),
+            border = customCardBorder()
         ) {
             Text(
                 text = "Confirm",
@@ -1310,10 +1317,7 @@ fun CommunicationButton(
             containerColor = buttonColor,
             contentColor = contentColor
         ),
-        border = BorderStroke(
-            width = dimens.Border.thin,
-            color = MaterialTheme.colorScheme.onBackground
-        ),
+        border = customCardBorder(),
         shape = KarigojobsShapes.medium
     ) {
         Row(
@@ -1347,10 +1351,7 @@ fun ActionNeedBanner(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         shape = KarigojobsShapes.large,
-        border = BorderStroke(
-            width = dimens.Border.thin,
-            color = MaterialTheme.colorScheme.onBackground
-        ),
+        border = customCardBorder(),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
         )
@@ -1418,7 +1419,7 @@ fun KarigoButtons(
     onClick: () -> Unit,
     buttonColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
-    label : String,
+    label: String,
     icon: Int? = null,
     enabled: Boolean = true
 ) {
@@ -1431,7 +1432,8 @@ fun KarigoButtons(
         ),
         shape = KarigojobsShapes.medium,
         modifier = modifier,
-        enabled = enabled
+        enabled = enabled,
+        border = customCardBorder()
     ) {
 
         icon?.let {
@@ -1448,7 +1450,7 @@ fun KarigoButtons(
             text = label,
             style = MaterialTheme.typography.labelMedium.copy(
                 color = contentColor,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.SemiBold
             )
         )
     }

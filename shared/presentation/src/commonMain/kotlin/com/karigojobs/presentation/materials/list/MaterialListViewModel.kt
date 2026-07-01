@@ -100,7 +100,8 @@ class MaterialListViewModel(
                     it.copy(
                         selectedTradeType = event.tradeType,
                         materialFilter = if (event.tradeType == null) MaterialListFilter.All
-                        else MaterialListFilter.SelectedTrade(setOf(event.tradeType))
+                        else MaterialListFilter.SelectedTrade(setOf(event.tradeType)),
+                        selectedCategory = if (event.tradeType != it.selectedTradeType) null else it.selectedCategory
                     )
                 }
             }
@@ -157,9 +158,9 @@ class MaterialListViewModel(
                     )
                 }
             }
-            
+
             is MaterialListEvent.EditMaterialCategoryName -> {
-                _state.update { 
+                _state.update {
                     it.copy(
                         editingMaterial = it.editingMaterial?.copy(categoryName = event.name)
                     )
@@ -182,13 +183,19 @@ class MaterialListViewModel(
                         if (editMaterial != null) {
                             var categoryIdToSave = editMaterial.categoryId
                             val typedCategoryName = editMaterial.categoryName?.trim()
-                            
+
                             // Check if it is a new category
-                            if (!typedCategoryName.isNullOrBlank() && 
-                                _state.value.materialCategory.none { it.id == editMaterial.categoryId && it.name == typedCategoryName }) {
-                                
-                                val existingCategory = _state.value.materialCategory.find { it.name.equals(typedCategoryName, ignoreCase = true) }
-                                
+                            if (!typedCategoryName.isNullOrBlank() &&
+                                _state.value.materialCategory.none { it.id == editMaterial.categoryId && it.name == typedCategoryName }
+                            ) {
+
+                                val existingCategory = _state.value.materialCategory.find {
+                                    it.name.equals(
+                                        typedCategoryName,
+                                        ignoreCase = true
+                                    )
+                                }
+
                                 if (existingCategory != null) {
                                     categoryIdToSave = existingCategory.id
                                 } else {
@@ -257,7 +264,8 @@ class MaterialListViewModel(
                     it.copy(
                         isNewMaterialAddingModalOpen = event.isOpen,
                         newMaterialTradeType = if (event.isOpen) {
-                            it.selectedTradeType ?: it.selectTrades.firstOrNull() ?: TradeType.ELECTRICIAN
+                            it.selectedTradeType ?: it.selectTrades.firstOrNull()
+                            ?: TradeType.ELECTRICIAN
                         } else null,
                         newMaterialName = if (!event.isOpen) "" else it.newMaterialName,
                         newMaterialPrice = if (!event.isOpen) "" else it.newMaterialPrice,
@@ -279,7 +287,12 @@ class MaterialListViewModel(
                     val typedCategoryName = _state.value.newMaterialCategoryName.trim()
 
                     if (typedCategoryName.isNotBlank() && _state.value.selectedCategory?.name != typedCategoryName) {
-                        val existingCategory = _state.value.materialCategory.find { it.name.equals(typedCategoryName, ignoreCase = true) }
+                        val existingCategory = _state.value.materialCategory.find {
+                            it.name.equals(
+                                typedCategoryName,
+                                ignoreCase = true
+                            )
+                        }
                         if (existingCategory != null) {
                             categoryIdToSave = existingCategory.id
                         } else {
@@ -347,13 +360,19 @@ class MaterialListViewModel(
             is MaterialListEvent.NewMaterialUnit -> {
                 _state.update { it.copy(newMaterialUnit = event.unit) }
             }
-            
+
             is MaterialListEvent.NewMaterialCategoryName -> {
-                _state.update { it.copy(newMaterialCategoryName = event.name) }
+                _state.update {
+                    it.copy(newMaterialCategoryName = event.name)
+                }
             }
 
             is MaterialListEvent.SelectCategory -> {
-                _state.update { it.copy(selectedCategory = event.category) }
+                _state.update {
+                    it.copy(
+                        selectedCategory = event.category
+                    )
+                }
             }
         }
     }
@@ -410,21 +429,21 @@ class MaterialListViewModel(
                     else -> selectedTradeType
                 }
             }
-            .distinctUntilChanged()
-            .flatMapLatest { tradeType ->
-                getMaterialCategoryUseCase(tradeType)
-            }
-            .collectLatest { result ->
-                when (result) {
-                    is Result.Error -> {
-                        _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
-                    }
+                .distinctUntilChanged()
+                .flatMapLatest { tradeType ->
+                    getMaterialCategoryUseCase(tradeType)
+                }
+                .collectLatest { result ->
+                    when (result) {
+                        is Result.Error -> {
+                            _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                        }
 
-                    is Result.Success -> {
-                        _state.update { it.copy(materialCategory = result.data) }
+                        is Result.Success -> {
+                            _state.update { it.copy(materialCategory = result.data) }
+                        }
                     }
                 }
-            }
         }
     }
 
@@ -465,7 +484,8 @@ class MaterialListViewModel(
                         is MaterialListFilter.All -> null
                         is MaterialListFilter.SelectedTrade -> filter.selectedTrade
                     }
-                    val queryCategoryId = if (category?.id == "uncategorized") null else category?.id
+                    val queryCategoryId =
+                        if (category?.id == "uncategorized" || filter == MaterialListFilter.All) null else category?.id
                     searchMaterialsUseCase(
                         query = query,
                         tradeTypes = tradeTypes,

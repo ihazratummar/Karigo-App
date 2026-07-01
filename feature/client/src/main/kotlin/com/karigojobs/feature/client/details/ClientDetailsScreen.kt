@@ -51,6 +51,7 @@ import com.karigojob.share.utils.firstName
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.ui.common.DeleteDialog
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsError
 import com.karigojobs.ui.theme.KarigojobsShapes
 
@@ -233,7 +234,8 @@ fun ClientDetailsScreen(
                     Button(
                         onClick = { onNewJobClick(clientModel.id) },
                         shape = KarigojobsShapes.medium,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        border = customCardBorder()
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.add),

@@ -22,6 +22,7 @@ import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.TopBarTitle
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.NavInactive
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
 
 
@@ -47,7 +48,7 @@ fun CanSaveButton(
             .padding(vertical = dimens.Space._2md)
             .clip(KarigojobsShapes.medium)
             .background(
-                color = if (canSave) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant
+                color = if (canSave) MaterialTheme.colorScheme.primaryContainer else appColor.cardColors
             )
             .clickable(enabled = canSave, onClick = onAction),
         contentAlignment = Alignment.Center

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,23 +24,28 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.window.Dialog
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.materials.list.MaterialListEvent
 import com.karigojobs.presentation.materials.list.MaterialListState
 import com.karigojobs.presentation.materials.list.MaterialCategoryEvent
 import com.karigojobs.presentation.materials.list.MaterialCategoryState
 import com.karigojobs.share.model.MaterialsModel
+import com.karigojobs.ui.common.KarigoButtons
 import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.KarigojobsTextField
 import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.ModalBackGround
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 
@@ -65,7 +71,7 @@ fun MaterialManageModal(
 
     val modalSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = {newValue ->
+        confirmValueChange = { newValue ->
             newValue != SheetValue.Hidden
         }
     )
@@ -73,7 +79,7 @@ fun MaterialManageModal(
     ModalBottomSheet(
         modifier = modifier,
         onDismissRequest = onDismiss,
-        containerColor = ModalBackGround,
+        containerColor = appColor.modalColor,
         sheetState = modalSheetState
     ) {
         LazyColumn(
@@ -91,14 +97,14 @@ fun MaterialManageModal(
                     Text(
                         text = title,
                         style = MaterialTheme.typography.titleMedium.copy(
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = appColor.primaryText,
                             fontWeight = FontWeight.Bold
                         )
                     )
                     KarigoIconWIthBgCick(
                         icon = R.drawable.close,
-                        iconBackGroundColor = KarigojobsCard,
-                        iconColor = KarigojobsText2,
+                        iconBackGroundColor = appColor.cardColors,
+                        iconColor = appColor.secondaryText,
                         onClick = onDismiss
                     )
                 }
@@ -109,7 +115,7 @@ fun MaterialManageModal(
             item {
                 Text(
                     text = "MATERIAL NAME",
-                    style = MaterialTheme.typography.bodySmall.copy(color = KarigojobsText2),
+                    style = MaterialTheme.typography.bodySmall.copy(color = appColor.secondaryText),
                     modifier = Modifier.contentHorizontalPadding()
                 )
             }
@@ -160,9 +166,10 @@ fun MaterialManageModal(
                                     else event(MaterialListEvent.NewMaterialCategoryName(""))
                                 },
                                 colors = CardDefaults.cardColors(
-                                    containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                                    containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                                 ),
-                                shape = KarigojobsShapes.large
+                                shape = KarigojobsShapes.large,
+                                border = customCardBorder()
                             ) {
                                 Text(
                                     text = trade.displayName,
@@ -222,9 +229,10 @@ fun MaterialManageModal(
                                         }
                                     },
                                     colors = CardDefaults.cardColors(
-                                        containerColor = if (isSelected) KarigojobsIconColor else KarigojobsCard
+                                        containerColor = if (isSelected) KarigojobsIconColor else appColor.cardColors
                                     ),
-                                    shape = KarigojobsShapes.large
+                                    shape = KarigojobsShapes.large,
+                                    border = customCardBorder()
                                 ) {
                                     Text(
                                         text = category.name,
@@ -336,7 +344,7 @@ fun ManageCategoriesModal(
     ModalBottomSheet(
         modifier = modifier,
         onDismissRequest = { event(MaterialCategoryEvent.ToggleManageCategoriesModal(false)) },
-        containerColor = ModalBackGround
+        containerColor = appColor.modalColor
     ) {
         Column(
             modifier = Modifier
@@ -356,19 +364,19 @@ fun ManageCategoriesModal(
                     Text(
                         text = "Manage Categories",
                         style = MaterialTheme.typography.titleMedium.copy(
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = appColor.primaryText,
                             fontWeight = FontWeight.Bold
                         )
                     )
                     Text(
                         text = "${tradeType.displayName} — ${state.materialCategory.size} categories",
-                        style = MaterialTheme.typography.bodySmall.copy(color = KarigojobsText2)
+                        style = MaterialTheme.typography.bodySmall.copy(color = appColor.secondaryText)
                     )
                 }
                 KarigoIconWIthBgCick(
                     icon = R.drawable.close,
-                    iconBackGroundColor = KarigojobsCard,
-                    iconColor = KarigojobsText2,
+                    iconBackGroundColor = appColor.cardColors,
+                    iconColor = appColor.secondaryText,
                     onClick = { event(MaterialCategoryEvent.ToggleManageCategoriesModal(false)) }
                 )
             }
@@ -391,25 +399,23 @@ fun ManageCategoriesModal(
                 )
                 KarigoIconWIthBgCick(
                     icon = R.drawable.add,
-                    iconBackGroundColor = KarigojobsCard,
-                    iconColor = KarigojobsText2,
                     onClick = { event(MaterialCategoryEvent.CreateNewCategory) }
                 )
             }
 
             // Categories List
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .contentHorizontalPadding(),
                 verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
             ) {
-                state.materialCategory.forEach { category ->
-                    val materialCount = materialsList.count { it.categoryId == category.id }
+                items(state.materialCategory) { category ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(containerColor = KarigojobsCard),
-                        shape = KarigojobsShapes.large
+                        colors = CardDefaults.cardColors(containerColor = appColor.cardColors),
+                        shape = KarigojobsShapes.large,
+                        border = customCardBorder()
                     ) {
                         Row(
                             modifier = Modifier
@@ -421,7 +427,7 @@ fun ManageCategoriesModal(
                             KarigoIconWIthBg(
                                 icon = R.drawable.stack, // Placeholder for tag icon
                                 iconColor = KarigojobsIconColor,
-                                iconBackGroundColor = KarigojobsIconColor.copy(alpha = 0.1f)
+                                iconBackGroundColor = appColor.accentBg
                             )
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
@@ -431,15 +437,9 @@ fun ManageCategoriesModal(
                                         fontWeight = FontWeight.Bold
                                     )
                                 )
-                                Text(
-                                    text = "$materialCount materials",
-                                    style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText2)
-                                )
                             }
                             KarigoIconWIthBgCick(
                                 icon = R.drawable.edit,
-                                iconColor = KarigojobsText2,
-                                iconBackGroundColor = KarigojobsCard,
                                 onClick = {
                                     event(
                                         MaterialCategoryEvent.ToggleRenameCategoryDialog(
@@ -451,11 +451,12 @@ fun ManageCategoriesModal(
                             KarigoIconWIthBgCick(
                                 icon = R.drawable.delete,
                                 iconColor = MaterialTheme.colorScheme.error,
-                                iconBackGroundColor = KarigojobsCard,
+                                iconBackGroundColor = appColor.cardColors,
                                 onClick = { event(MaterialCategoryEvent.DeleteCategory(category.id)) }
                             )
                         }
                     }
+
                 }
             }
             Spacer(Modifier.height(dimens.Space._2xl))
@@ -475,13 +476,14 @@ fun RenameCategoryDialog(
     val category = state.renameCategoryTarget
     val materialCount = materialsList.count { it.categoryId == category?.id }
 
-    androidx.compose.ui.window.Dialog(
+    Dialog(
         onDismissRequest = { event(MaterialCategoryEvent.ToggleRenameCategoryDialog(null)) }
     ) {
         Card(
             modifier = modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = KarigojobsCard),
-            shape = KarigojobsShapes.large
+            colors = CardDefaults.cardColors(containerColor = appColor.cardColors),
+            shape = KarigojobsShapes.large,
+            border = customCardBorder()
         ) {
             Column(
                 modifier = Modifier
@@ -493,20 +495,20 @@ fun RenameCategoryDialog(
                 KarigoIconWIthBg(
                     icon = R.drawable.stack, // Placeholder for tag icon
                     iconColor = KarigojobsIconColor,
-                    iconBackGroundColor = KarigojobsIconColor.copy(alpha = 0.1f),
+                    iconBackGroundColor = appColor.accentBg,
                     size = dimens.Icon._2xl
                 )
 
                 Text(
                     text = "Rename Category",
                     style = MaterialTheme.typography.titleMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = appColor.primaryText,
                         fontWeight = FontWeight.Bold
                     )
                 )
                 Text(
                     text = "This will update all $materialCount materials in “${category?.name}”",
-                    style = MaterialTheme.typography.bodySmall.copy(color = KarigojobsText2)
+                    style = MaterialTheme.typography.bodySmall.copy(color = appColor.secondaryText)
                 )
 
                 Spacer(modifier = Modifier.height(dimens.Space.sm))
@@ -517,12 +519,13 @@ fun RenameCategoryDialog(
                 ) {
                     Text(
                         text = "CURRENT NAME",
-                        style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText2)
+                        style = MaterialTheme.typography.labelSmall.copy(color = appColor.secondaryText)
                     )
                     KarigojobsTextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = category?.name ?: "",
                         onValueChange = {},
+                        readOnly = true
                     )
                 }
 
@@ -532,7 +535,7 @@ fun RenameCategoryDialog(
                 ) {
                     Text(
                         text = "NEW NAME",
-                        style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText2)
+                        style = MaterialTheme.typography.labelSmall.copy(color = appColor.secondaryText)
                     )
                     KarigojobsTextField(
                         modifier = Modifier.fillMaxWidth(),
@@ -547,28 +550,18 @@ fun RenameCategoryDialog(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
                 ) {
-                    Button(
+                    KarigoButtons(
                         modifier = Modifier.weight(1f),
                         onClick = { event(MaterialCategoryEvent.ToggleRenameCategoryDialog(null)) },
-                        colors = androidx.compose.material3.ButtonDefaults.buttonColors(
-                            containerColor = ModalBackGround,
-                            contentColor = MaterialTheme.colorScheme.onBackground
-                        ),
-                        shape = KarigojobsShapes.medium
-                    ) {
-                        Text("Cancel")
-                    }
-                    Button(
+                        label = "Cancel",
+                        buttonColor = Color.Transparent
+                    )
+                    KarigoButtons(
                         modifier = Modifier.weight(1f),
                         onClick = { event(MaterialCategoryEvent.ConfirmRenameCategory) },
-                        colors = androidx.compose.material3.ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1f),
-                            contentColor = KarigojobsText2
-                        ),
-                        shape = KarigojobsShapes.medium
-                    ) {
-                        Text("Rename")
-                    }
+                        label = "Rename",
+                        buttonColor = appColor.accentBg
+                    )
                 }
             }
         }

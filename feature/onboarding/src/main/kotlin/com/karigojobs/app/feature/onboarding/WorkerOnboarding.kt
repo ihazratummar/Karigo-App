@@ -51,10 +51,12 @@ import com.karigojobs.presentation.onboarding.WorkerProfileStep
 import com.karigojobs.ui.common.IconPlaceholder
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.KarigojobsTextField
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
 import karigojobs.shared.resources.generated.resources.Res
 import karigojobs.shared.resources.generated.resources.common_btn_continue
@@ -330,7 +332,7 @@ private fun OnboardingHeader(
         // Squared back button inside dark card background
         KarigoIconWIthBgCick(
             icon =R.drawable.arrow_left,
-            iconColor = MaterialTheme.colorScheme.onBackground,
+            iconColor = appColor.primaryText,
             onClick = onBack
         )
         Spacer(modifier = Modifier.width(dimens.Space.base))
@@ -344,7 +346,7 @@ private fun OnboardingHeader(
             ) {
                 Text(
                     text = "$stepNumber ",
-                    style = MaterialTheme.typography.bodySmall.copy(color = KarigojobsText2)
+                    style = MaterialTheme.typography.bodySmall.copy(color = appColor.secondaryText)
                 )
                 Text(
                     text = percentage,
@@ -393,12 +395,12 @@ private fun OwnerNameStep(
             text = stringResource(Res.string.worker_owner_question),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = appColor.primaryText
             )
         )
         Text(
             text = stringResource(Res.string.worker_owner_asking_name),
-            style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
+            style = MaterialTheme.typography.bodyLarge.copy(color = appColor.secondaryText)
         )
 
         Spacer(modifier = Modifier.height(dimens.Space._2xl))
@@ -411,7 +413,7 @@ private fun OwnerNameStep(
                 text = stringResource(Res.string.worker_owner_name_section),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Bold,
-                    color = KarigojobsText2
+                    color = appColor.secondaryText
                 )
             )
             Text(
@@ -433,7 +435,7 @@ private fun OwnerNameStep(
                 Icon(
                     painter = painterResource(R.drawable.user_line),
                     contentDescription = null,
-                    tint = KarigojobsText2,
+                    tint = appColor.secondaryText,
                     modifier = Modifier.size(dimens.Icon.sm)
                 )
             }
@@ -453,12 +455,12 @@ private fun BusinessNameStep(
             text = stringResource(Res.string.worker_business),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = appColor.primaryText
             )
         )
         Text(
             text = stringResource(Res.string.worker_business_tagline),
-            style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
+            style = MaterialTheme.typography.bodyLarge.copy(color = appColor.secondaryText)
         )
 
         Spacer(modifier = Modifier.height(dimens.Space._2xl))
@@ -471,7 +473,7 @@ private fun BusinessNameStep(
                 text = stringResource(Res.string.worker_business_name),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Bold,
-                    color = KarigojobsText2
+                    color = appColor.secondaryText
                 )
             )
             Text(
@@ -493,7 +495,7 @@ private fun BusinessNameStep(
                 Icon(
                     painter = painterResource(R.drawable.store),
                     contentDescription = null,
-                    tint = KarigojobsText2,
+                    tint = appColor.secondaryText,
                     modifier = Modifier.size(dimens.Icon.sm)
                 )
             }
@@ -515,7 +517,7 @@ private fun ContactDetailsStep(
             text = stringResource(Res.string.worker_contact),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = appColor.primaryText
             )
         )
         Text(
@@ -529,7 +531,7 @@ private fun ContactDetailsStep(
             text = stringResource(Res.string.worker_phone_number),
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.Bold,
-                color = KarigojobsText2
+                color = appColor.secondaryText
             )
         )
         Spacer(modifier = Modifier.height(dimens.Space.sm))
@@ -541,7 +543,7 @@ private fun ContactDetailsStep(
                 Icon(
                     painter = painterResource(R.drawable.phone),
                     contentDescription = null,
-                    tint = KarigojobsText2,
+                    tint = appColor.secondaryText,
                     modifier = Modifier.size(dimens.Icon.sm)
                 )
             }
@@ -549,7 +551,7 @@ private fun ContactDetailsStep(
         Spacer(modifier = Modifier.height(dimens.Space.xs))
         Text(
             text = stringResource(Res.string.worker_optional_skip),
-            style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
+            style = MaterialTheme.typography.labelSmall.copy(color = appColor.tertiaryText)
         )
 
         Spacer(modifier = Modifier.height(dimens.Space.lg))
@@ -558,7 +560,7 @@ private fun ContactDetailsStep(
             text = stringResource(Res.string.worker_email_address),
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.Bold,
-                color = KarigojobsText2
+                color = appColor.secondaryText
             )
         )
         Spacer(modifier = Modifier.height(dimens.Space.sm))
@@ -570,7 +572,7 @@ private fun ContactDetailsStep(
                 Icon(
                     painter = painterResource(R.drawable.email),
                     contentDescription = null,
-                    tint = KarigojobsText2,
+                    tint = appColor.secondaryText,
                     modifier = Modifier.size(dimens.Icon.sm)
                 )
             }
@@ -578,7 +580,7 @@ private fun ContactDetailsStep(
         Spacer(modifier = Modifier.height(dimens.Space.xs))
         Text(
             text = stringResource(Res.string.worker_optional_skip),
-            style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
+            style = MaterialTheme.typography.labelSmall.copy(color = appColor.tertiaryText)
         )
     }
 }
@@ -597,12 +599,12 @@ private fun ExtraInfoStep(
             text = stringResource(Res.string.worker_extra_info),
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = appColor.primaryText
             )
         )
         Text(
             text = stringResource(Res.string.worker_extra_info_tagline),
-            style = MaterialTheme.typography.bodyLarge.copy(color = KarigojobsText2)
+            style = MaterialTheme.typography.bodyLarge.copy(color = appColor.secondaryText)
         )
 
         Spacer(modifier = Modifier.height(dimens.Space._2xl))
@@ -611,7 +613,7 @@ private fun ExtraInfoStep(
             text = stringResource(Res.string.worker_extra_gst),
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.Bold,
-                color = KarigojobsText2
+                color = appColor.secondaryText
             )
         )
         Spacer(modifier = Modifier.height(dimens.Space.sm))
@@ -623,7 +625,7 @@ private fun ExtraInfoStep(
                 Icon(
                     painter = painterResource(R.drawable.estimate),
                     contentDescription = null,
-                    tint = KarigojobsText2,
+                    tint = appColor.secondaryText,
                     modifier = Modifier.size(dimens.Icon.sm)
                 )
             }
@@ -631,7 +633,7 @@ private fun ExtraInfoStep(
         Spacer(modifier = Modifier.height(dimens.Space.xs))
         Text(
             text = stringResource(Res.string.worker_optional_skip),
-            style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
+            style = MaterialTheme.typography.labelSmall.copy(color = appColor.tertiaryText)
         )
 
         Spacer(modifier = Modifier.height(dimens.Space.lg))
@@ -640,7 +642,7 @@ private fun ExtraInfoStep(
             text = stringResource(Res.string.worker_extra_business_address),
             style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.Bold,
-                color = KarigojobsText2
+                color = appColor.secondaryText
             )
         )
         Spacer(modifier = Modifier.height(dimens.Space.sm))
@@ -655,7 +657,7 @@ private fun ExtraInfoStep(
                 Icon(
                     painter = painterResource(R.drawable.map_point),
                     contentDescription = null,
-                    tint = KarigojobsText2,
+                    tint = appColor.secondaryText,
                     modifier = Modifier.size(dimens.Icon.sm)
                 )
             }
@@ -663,7 +665,7 @@ private fun ExtraInfoStep(
         Spacer(modifier = Modifier.height(dimens.Space.xs))
         Text(
             text = stringResource(Res.string.worker_optional_skip),
-            style = MaterialTheme.typography.labelSmall.copy(color = KarigojobsText3)
+            style = MaterialTheme.typography.labelSmall.copy(color = appColor.tertiaryText)
         )
     }
 }
@@ -673,10 +675,10 @@ private fun ProgressCard(state: WorkerProfileState) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF161616)
+            containerColor = appColor.cardColors
         ),
         shape = KarigojobsShapes.medium,
-        border = BorderStroke(dimens.Border.thin, Color(0xFF2E2E2E))
+        border = customCardBorder()
     ) {
         Column(
             modifier = Modifier.padding(dimens.Padding.base),
@@ -696,7 +698,7 @@ private fun ProgressCard(state: WorkerProfileState) {
                     text = stringResource(Res.string.worker_your_progress),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = appColor.primaryText
                     )
                 )
             }
@@ -710,7 +712,7 @@ private fun ProgressCard(state: WorkerProfileState) {
                 Text(
                     text = stringResource(Res.string.worker_required_fields),
                     style = MaterialTheme.typography.labelMedium,
-                    color = KarigojobsText2
+                    color = appColor.secondaryText
                 )
                 val requiredCount = (if (state.ownerName.isNotBlank()) 1 else 0) + (if (state.businessName.isNotBlank()) 1 else 0)
                 Text(
@@ -718,7 +720,7 @@ private fun ProgressCard(state: WorkerProfileState) {
                     style = MaterialTheme.typography.labelMedium.copy(
                         fontWeight = FontWeight.Bold
                     ),
-                    color = if (requiredCount == 2) Color(0xFF00E6C3) else Color.White
+                    color = if (requiredCount == 2) Color(0xFF00E6C3) else appColor.primaryText
                 )
             }
 
@@ -730,7 +732,7 @@ private fun ProgressCard(state: WorkerProfileState) {
                     Text(
                         text = stringResource(Res.string.worker_optional_details),
                         style = MaterialTheme.typography.labelMedium,
-                        color = KarigojobsText2
+                        color = appColor.secondaryText
                     )
                     val optionalCount = (if (state.phoneNumber.isNotBlank()) 1 else 0) +
                             (if (state.email.isNotBlank()) 1 else 0) +
@@ -741,7 +743,7 @@ private fun ProgressCard(state: WorkerProfileState) {
                         style = MaterialTheme.typography.labelMedium.copy(
                             fontWeight = FontWeight.Bold
                         ),
-                        color = if (optionalCount == 4) Color(0xFF00E6C3) else Color.White
+                        color = if (optionalCount == 4) Color(0xFF00E6C3) else appColor.primaryText
                     )
                 }
             }

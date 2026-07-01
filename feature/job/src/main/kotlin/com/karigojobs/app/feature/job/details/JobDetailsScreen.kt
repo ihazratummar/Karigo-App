@@ -35,9 +35,11 @@ import com.karigojobs.presentation.job.details.JobDetailsState
 import com.karigojobs.ui.common.DeleteDialog
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.KarigoMiddleTextTopAppBar
+import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText3
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
@@ -184,13 +186,10 @@ fun JobDetailsScreen(
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                            containerColor = appColor.accentBg
                         ),
                         shape = KarigojobsShapes.medium,
-                        border = BorderStroke(
-                            width = dimens.Border.thin,
-                            color = MaterialTheme.colorScheme.onBackground
-                        )
+                        border = customCardBorder()
                     ) {
                         Column(
                             modifier = Modifier
@@ -206,13 +205,13 @@ fun JobDetailsScreen(
                                 Text(
                                     text = "Grand Total",
                                     style = MaterialTheme.typography.bodyMedium.copy(
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        color = appColor.secondaryText
                                     )
                                 )
                                 Text(
                                     text = "Inc. labour & materials",
                                     style = MaterialTheme.typography.labelSmall.copy(
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        color = appColor.secondaryText
                                     )
                                 )
                             }

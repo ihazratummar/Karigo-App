@@ -47,7 +47,6 @@ class WorkerProfileViewModel(
                                 businessName = profile.businessName,
                                 phoneNumber = profile.phone,
                                 email = profile.email,
-                                gstNumber = profile.gstNumber,
                                 address = profile.address
                             )
                         }
@@ -75,9 +74,6 @@ class WorkerProfileViewModel(
                 _state.update { it.copy(email = event.email) }
             }
 
-            is WorkerProfileEvent.GstNumberField -> {
-                _state.update { it.copy(gstNumber = event.gstNumber) }
-            }
 
             is WorkerProfileEvent.AddressField -> {
                 _state.update { it.copy(address = event.address) }
@@ -126,7 +122,6 @@ class WorkerProfileViewModel(
                 businessName = _state.value.businessName,
                 phone = _state.value.phoneNumber,
                 email = _state.value.email,
-                gstNumber = _state.value.gstNumber,
                 address = _state.value.address,
                 logoPath = ""
             )

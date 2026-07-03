@@ -35,6 +35,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -58,6 +59,7 @@ import com.karigojobs.ui.common.KarigojobsSearchField
 import com.karigojobs.ui.common.MinusButton
 import com.karigojobs.ui.common.PlusButton
 import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.common.customBorder
 import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.common.dashedBorder
 import com.karigojobs.ui.theme.ChartBarInactive
@@ -442,22 +444,24 @@ fun EstimateDetailsCard(
             Spacer(Modifier.height(dimens.Padding.xs))
 
             state.estimateDetails?.siteNote?.let { text ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = ChartBarInactive,
-                            shape = KarigojobsShapes.medium
-                        ),
-                    contentAlignment = Alignment.CenterStart
-                ) {
-                    Text(
-                        text = text,
-                        style = MaterialTheme.typography.labelSmall.copy(
-                            color = appColor.secondaryText
-                        ),
-                        modifier = Modifier.padding(dimens.Padding.base)
-                    )
+                if (!text.isBlank()){
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = appColor.modalColor,
+                                shape = KarigojobsShapes.medium
+                            ).customBorder(KarigojobsShapes.medium),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Text(
+                            text = text,
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = appColor.secondaryText
+                            ),
+                            modifier = Modifier.padding(dimens.Padding.base)
+                        )
+                    }
                 }
             }
         }
@@ -491,51 +495,53 @@ fun EstimateMaterialsList(
             )
 
             state.siteEstimateMaterial.forEachIndexed { index, material ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
-                ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.background(
-                            color = appColor.accentBg,
-                            shape = CircleShape
-                        )
+                key(material.id) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
                     ) {
-                        Text(
-                            text = "${index + 1}",
-                            style = MaterialTheme.typography.labelMedium.copy(
-                                color = KarigojobsAccent
-                            ),
-                            modifier = Modifier.padding(dimens.Padding.sm)
-                        )
-                    }
-                    Column(
-                        modifier = Modifier.weight(1f),
-                    ) {
-                        Text(
-                            text = material.materialName,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                color = appColor.primaryText
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.background(
+                                color = appColor.accentBg,
+                                shape = CircleShape
                             )
-                        )
-                        Text(
-                            text = "${material.quantity} ${material.unit}",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = appColor.secondaryText
-                            )
-                        )
-                    }
-                    state.estimateDetails?.showRate?.let {
-                        if (it) {
+                        ) {
                             Text(
-                                text = "${deviceInfo.currency} ${material.total}",
+                                text = "${index + 1}",
+                                style = MaterialTheme.typography.labelMedium.copy(
+                                    color = KarigojobsAccent
+                                ),
+                                modifier = Modifier.padding(dimens.Padding.sm)
+                            )
+                        }
+                        Column(
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(
+                                text = material.materialName,
                                 style = MaterialTheme.typography.bodyMedium.copy(
-                                    color = appColor.primaryText,
-                                    fontWeight = FontWeight.Bold
+                                    color = appColor.primaryText
                                 )
                             )
+                            Text(
+                                text = "${material.quantity} ${material.unit}",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = appColor.secondaryText
+                                )
+                            )
+                        }
+                        state.estimateDetails?.showRate?.let {
+                            if (it) {
+                                Text(
+                                    text = "${deviceInfo.currency} ${material.total}",
+                                    style = MaterialTheme.typography.bodyMedium.copy(
+                                        color = appColor.primaryText,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                )
+                            }
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 package com.karigojobs.feature.settings
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -7,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,7 +68,7 @@ fun AboutScreen(
                     Box(
                         modifier = Modifier
                             .size(dimens.Icon._7xl)
-                            .background(Color(0xFF13221E), shape = CircleShape),
+                            .background(appColor.accentBg, shape = CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -104,7 +106,10 @@ fun AboutScreen(
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs),
-                            modifier = Modifier.padding(horizontal = dimens.Padding.sm, vertical = dimens.Padding._2xs)
+                            modifier = Modifier.padding(
+                                horizontal = dimens.Padding.sm,
+                                vertical = dimens.Padding._2xs
+                            )
                         ) {
                             Box(
                                 modifier = Modifier
@@ -129,7 +134,7 @@ fun AboutScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = KarigojobsShapes.large,
                     border = customCardBorder(),
-                    colors = CardDefaults.cardColors(containerColor = KarigojobsCard)
+                    colors = CardDefaults.cardColors(containerColor = appColor.cardColors)
                 ) {
                     Column(
                         modifier = Modifier.padding(dimens.Padding.base),
@@ -148,7 +153,7 @@ fun AboutScreen(
                             Text(
                                 text = "What Karigo Does",
                                 style = MaterialTheme.typography.titleMedium.copy(
-                                    color = Color.White,
+                                    color = appColor.primaryText,
                                     fontWeight = FontWeight.Bold
                                 )
                             )
@@ -157,7 +162,7 @@ fun AboutScreen(
                         Text(
                             text = "Karigo helps you run your contracting or service business from your phone — no paperwork, no spreadsheets. Manage jobs, track clients, build material price lists, create professional site estimates, monitor earnings, and share everything via WhatsApp. Built specifically for the way tradespeople work.",
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                color = KarigojobsText2,
+                                color = appColor.secondaryText,
                                 lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.25f
                             )
                         )
@@ -171,7 +176,7 @@ fun AboutScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = KarigojobsShapes.large,
                     border = customCardBorder(),
-                    colors = CardDefaults.cardColors(containerColor = KarigojobsCard)
+                    colors = CardDefaults.cardColors(containerColor = appColor.cardColors)
                 ) {
                     Column(
                         modifier = Modifier.padding(dimens.Padding.base),
@@ -240,7 +245,7 @@ fun AboutScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = KarigojobsShapes.large,
                     border = customCardBorder(),
-                    colors = CardDefaults.cardColors(containerColor = KarigojobsCard)
+                    colors = CardDefaults.cardColors(containerColor = appColor.cardColors)
                 ) {
                     Column(
                         modifier = Modifier.padding(dimens.Padding.base),
@@ -259,7 +264,7 @@ fun AboutScreen(
                             Text(
                                 text = "Who Is It For",
                                 style = MaterialTheme.typography.titleMedium.copy(
-                                    color = Color.White,
+                                    color = appColor.primaryText,
                                     fontWeight = FontWeight.Bold
                                 )
                             )
@@ -267,7 +272,7 @@ fun AboutScreen(
 
                         Text(
                             text = "Karigo is built for the hardworking professionals who build, fix, and maintain our world:",
-                            style = MaterialTheme.typography.bodyMedium.copy(color = KarigojobsText2)
+                            style = MaterialTheme.typography.bodyMedium.copy(color = appColor.secondaryText)
                         )
 
                         FlowRow(
@@ -276,19 +281,24 @@ fun AboutScreen(
                             verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
                         ) {
                             TradeType.entries.forEach { trade ->
-                                Surface(
-                                    color = Color.White.copy(alpha = 0.05f),
-                                    shape = KarigojobsShapes.small,
-                                    border = customCardBorder()
-                                ) {
-                                    Text(
-                                        text = trade.displayName,
-                                        style = MaterialTheme.typography.bodySmall.copy(
-                                            color = KarigojobsText2,
-                                            fontWeight = FontWeight.Medium
-                                        ),
-                                        modifier = Modifier.padding(horizontal = dimens.Padding.sm, vertical = dimens.Padding.xs)
-                                    )
+                                key(trade.name) {
+                                    Surface(
+                                        color = appColor.primaryText.copy(alpha = 0.05f),
+                                        shape = KarigojobsShapes.small,
+                                        border = customCardBorder()
+                                    ) {
+                                        Text(
+                                            text = trade.displayName,
+                                            style = MaterialTheme.typography.bodySmall.copy(
+                                                color = appColor.secondaryText,
+                                                fontWeight = FontWeight.Medium
+                                            ),
+                                            modifier = Modifier.padding(
+                                                horizontal = dimens.Padding.sm,
+                                                vertical = dimens.Padding.xs
+                                            )
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -301,8 +311,11 @@ fun AboutScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = KarigojobsShapes.large,
-                    border = androidx.compose.foundation.BorderStroke(dimens.Border.thin, KarigojobsIconColor.copy(alpha = 0.4f)),
-                    colors = CardDefaults.cardColors(containerColor = KarigojobsCard)
+                    border = BorderStroke(
+                        dimens.Border.thin,
+                        KarigojobsIconColor.copy(alpha = 0.4f)
+                    ),
+                    colors = CardDefaults.cardColors(containerColor = appColor.cardColors)
                 ) {
                     Column(
                         modifier = Modifier
@@ -321,7 +334,7 @@ fun AboutScreen(
                         Text(
                             text = "Made with pride",
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = Color.White,
+                                color = appColor.primaryText,
                                 fontWeight = FontWeight.Bold
                             ),
                             textAlign = TextAlign.Center
@@ -330,7 +343,7 @@ fun AboutScreen(
                         Text(
                             text = "Built for the way contractors work — with multi-currency pricing, WhatsApp sharing, tax invoice support, and an interface simple enough for anyone to use.",
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                color = KarigojobsText2,
+                                color = appColor.secondaryText,
                                 lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.2f
                             ),
                             textAlign = TextAlign.Center
@@ -344,7 +357,7 @@ fun AboutScreen(
                 Text(
                     text = "Karigo v$versionName · Made for the world · All rights reserved",
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = KarigojobsText3,
+                        color = appColor.tertiaryText,
                         fontWeight = FontWeight.Medium
                     ),
                     textAlign = TextAlign.Center,
@@ -393,13 +406,13 @@ private fun FeatureRow(
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = Color.White,
+                    color = appColor.primaryText,
                     fontWeight = FontWeight.Bold
                 )
             )
             Text(
                 text = description,
-                style = MaterialTheme.typography.bodySmall.copy(color = KarigojobsText2)
+                style = MaterialTheme.typography.bodySmall.copy(color = appColor.secondaryText)
             )
         }
     }

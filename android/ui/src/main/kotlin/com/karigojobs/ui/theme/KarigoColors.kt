@@ -13,7 +13,8 @@ data class KarigoColors(
     val accentBg : Color,
     val primaryText: Color,
     val secondaryText: Color,
-    val tertiaryText : Color
+    val tertiaryText : Color,
+    val divider : Color
 )
 
 
@@ -26,6 +27,7 @@ val KarigoDarkColor = KarigoColors(
     primaryText = Color(0xFFFFFFFF),
     secondaryText = Color(0xFFA1A1AA),
     tertiaryText = Color(0xFF71717A),
+    divider = Color(0xFF27272A),
 )
 
 val KarigoLightColor = KarigoColors(
@@ -37,6 +39,7 @@ val KarigoLightColor = KarigoColors(
     primaryText = Color(0xFF111111),
     secondaryText = Color(0xFF555555),
     tertiaryText = Color(0xFF999999),
+    divider = Color(0xFFE5E7EB),
 )
 
 

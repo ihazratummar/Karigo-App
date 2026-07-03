@@ -29,6 +29,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +40,7 @@ import com.karigojobs.presentation.client.list.ClientListEvent
 import com.karigojobs.presentation.client.list.ClientListState
 import com.karigojobs.ui.common.KarigoTopAppBar
 import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.common.customBorder
 import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
@@ -106,7 +108,7 @@ fun ClientListScreen(
                 .contentHorizontalPadding(),
             verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
         ) {
-            items(state.clients) { client ->
+            items(state.clients, key = {it.id}) { client ->
                 Card(
                     onClick = { onClientClick(client.id) },
                     colors = CardDefaults.cardColors(
@@ -165,15 +167,7 @@ fun ClientListScreen(
                                 Box(
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier
-                                        .background(
-                                            color = ModalBackGround,
-                                            shape = CircleShape
-                                        )
-                                        .border(
-                                            width = dimens.Border.thin,
-                                            color = MaterialTheme.colorScheme.onBackground,
-                                            shape = CircleShape
-                                        )
+                                        .customBorder(shape = CircleShape)
                                 ) {
                                     Text(
                                         text = "${deviceInfo.currency} ${client.outStandingBalance}",

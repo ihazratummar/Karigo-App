@@ -33,6 +33,7 @@ kotlinx-datetime = "0.8.0"
 # ===========================
 appUpdateKtx = "2.1.0"
 appcompat = "1.7.1"
+leakcanary = "1.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -78,6 +79,7 @@ kotlinx-datetime             = { module = "org.jetbrains.kotlinx:kotlinx-datetim
 app-update = { module = "com.google.android.play:app-update", version.ref = "appUpdateKtx" }
 app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdateKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+leakcanary = { group = "com.android.tools.studio.leakcanary", name = "leakcanary", version.ref = "leakcanary" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

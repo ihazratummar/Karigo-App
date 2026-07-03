@@ -170,9 +170,7 @@ fun WorkerOnboarding(
                         }
                         WorkerProfileStep.EXTRA_INFO -> {
                             ExtraInfoStep(
-                                gst = state.gstNumber,
                                 address = state.address,
-                                onGstChange = { event(WorkerProfileEvent.GstNumberField(it)) },
                                 onAddressChange = { event(WorkerProfileEvent.AddressField(it)) }
                             )
                         }
@@ -587,9 +585,7 @@ private fun ContactDetailsStep(
 
 @Composable
 private fun ExtraInfoStep(
-    gst: String,
     address: String,
-    onGstChange: (String) -> Unit,
     onAddressChange: (String) -> Unit
 ) {
     Column(
@@ -608,35 +604,6 @@ private fun ExtraInfoStep(
         )
 
         Spacer(modifier = Modifier.height(dimens.Space._2xl))
-
-        Text(
-            text = stringResource(Res.string.worker_extra_gst),
-            style = MaterialTheme.typography.bodySmall.copy(
-                fontWeight = FontWeight.Bold,
-                color = appColor.secondaryText
-            )
-        )
-        Spacer(modifier = Modifier.height(dimens.Space.sm))
-        KarigojobsTextField(
-            value = gst,
-            onValueChange = onGstChange,
-            placeholder = stringResource(Res.string.worker_extra_gst_textfield_placeholder),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.estimate),
-                    contentDescription = null,
-                    tint = appColor.secondaryText,
-                    modifier = Modifier.size(dimens.Icon.sm)
-                )
-            }
-        )
-        Spacer(modifier = Modifier.height(dimens.Space.xs))
-        Text(
-            text = stringResource(Res.string.worker_optional_skip),
-            style = MaterialTheme.typography.labelSmall.copy(color = appColor.tertiaryText)
-        )
-
-        Spacer(modifier = Modifier.height(dimens.Space.lg))
 
         Text(
             text = stringResource(Res.string.worker_extra_business_address),
@@ -736,14 +703,13 @@ private fun ProgressCard(state: WorkerProfileState) {
                     )
                     val optionalCount = (if (state.phoneNumber.isNotBlank()) 1 else 0) +
                             (if (state.email.isNotBlank()) 1 else 0) +
-                            (if (state.gstNumber.isNotBlank()) 1 else 0) +
                             (if (state.address.isNotBlank()) 1 else 0)
                     Text(
-                        text = "$optionalCount/4",
+                        text = "$optionalCount/3",
                         style = MaterialTheme.typography.labelMedium.copy(
                             fontWeight = FontWeight.Bold
                         ),
-                        color = if (optionalCount == 4) Color(0xFF00E6C3) else appColor.primaryText
+                        color = if (optionalCount == 3) Color(0xFF00E6C3) else appColor.primaryText
                     )
                 }
             }

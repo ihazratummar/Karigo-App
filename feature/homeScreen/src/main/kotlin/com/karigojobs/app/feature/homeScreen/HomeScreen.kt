@@ -147,7 +147,7 @@ fun HomeScreen(
             }
 
             homeState.jobs?.let { jobs ->
-                items(jobs) { job ->
+                items(jobs, key = {job -> job.id}) { job ->
                     JobCard(
                         job = job,
                         onClick = {onJobClick(job.id)}

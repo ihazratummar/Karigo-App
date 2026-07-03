@@ -11,7 +11,6 @@ data class WorkerProfileState(
     val phoneNumber: String = "",
     val email: String = "",
 
-    val gstNumber : String = "",
     val address : String = ""
 )
 
@@ -33,7 +32,6 @@ sealed interface WorkerProfileEvent {
     data class BusinessNameField(val name : String) : WorkerProfileEvent
     data class PhoneNumberField(val phone : String) : WorkerProfileEvent
     data class EmailField(val email : String) : WorkerProfileEvent
-    data class GstNumberField(val gstNumber : String) : WorkerProfileEvent
     data class AddressField(val address : String) : WorkerProfileEvent
 
 }

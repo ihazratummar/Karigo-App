@@ -66,6 +66,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
@@ -97,7 +98,6 @@ import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsWarning
-import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.NavInactive
 import com.karigojobs.ui.theme.OnStatusDone
 import com.karigojobs.ui.theme.OnStatusInProgress
@@ -114,7 +114,6 @@ import com.karigojobs.ui.theme.StatusPaid
 import com.karigojobs.ui.theme.StatusPaidSurface
 import com.karigojobs.ui.theme.StatusPending
 import com.karigojobs.ui.theme.StatusPendingSurface
-import com.karigojobs.ui.theme.SurfaceOverlay
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
@@ -194,7 +193,7 @@ fun KarigoTopAppBar(
 ) {
     Column {
         TopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+            colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
             title = {
                 TopBarTitle(title = title)
             },
@@ -463,11 +462,22 @@ fun customCardBorder(): BorderStroke {
 }
 
 @Composable
-fun Modifier.customBorder(): Modifier = composed {
-    this.border(
-        width = dimens.Border.thin / 10f,
-        color = appColor.secondaryText,
-    )
+fun Modifier.customBorder(shape: Shape? = null): Modifier = composed {
+    this
+        .let {
+            if (shape != null) {
+                it.border(
+                    width = dimens.Border.thin / 10f,
+                    color = appColor.secondaryText,
+                    shape = shape
+                )
+            } else {
+                it.border(
+                    width = dimens.Border.thin / 10f,
+                    color = appColor.secondaryText
+                )
+            }
+        }
 }
 
 
@@ -1097,7 +1107,7 @@ fun ContactPicker(
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
                 ) {
-                    items(filteredContacts) { contact ->
+                    items(filteredContacts, key = { it.id }) { contact ->
                         ClientInfo(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -1219,7 +1229,7 @@ fun KarigoDatePickerSheet(
                 selectedDayContentColor = appColor.primaryText,
                 selectedDayContainerColor = appColor.accentBg,
                 todayContentColor = appColor.primaryText,
-                todayDateBorderColor =appColor.accentBg,
+                todayDateBorderColor = appColor.accentBg,
                 dayInSelectionRangeContentColor = appColor.primaryText,
                 dayInSelectionRangeContainerColor = appColor.accentBg.copy(alpha = 0.2f)
             )

@@ -63,7 +63,7 @@ class AddEstimateViewModel(
 ) : ViewModel() {
 
     @OptIn(ExperimentalUuidApi::class)
-    private val draftEstimateId = estimateId ?: Uuid.random().toString()
+    val draftEstimateId = estimateId ?: Uuid.random().toString()
 
     /**
      * State Declaration

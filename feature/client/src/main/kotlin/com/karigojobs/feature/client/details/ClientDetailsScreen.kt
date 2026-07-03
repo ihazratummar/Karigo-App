@@ -222,7 +222,7 @@ fun ClientDetailsScreen(
                             )
                         }
                     }
-                    items(state.jobHistory) { job ->
+                    items(state.jobHistory, key = {it.id}) { job ->
                         JobCard(
                             job = job,
                             onClick = { onJobClick(job.id) },

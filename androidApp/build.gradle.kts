@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    debugImplementation(libs.leakcanary)
 }
 
 android {
@@ -53,8 +54,8 @@ android {
         applicationId = "com.karigojobs.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 13
-        versionName = "0.12.0"
+        versionCode = 15
+        versionName = "0.14.0"
     }
     packaging {
         resources {

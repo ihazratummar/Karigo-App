@@ -75,26 +75,8 @@ class MaterialListViewModel(
 
     fun onEvent(event: MaterialListEvent) {
         when (event) {
-            is MaterialListEvent.DeleteMaterial -> {
-                viewModelScope.launch {
-                    val result = deleteMaterialUseCase.invoke(materialId = event.materialId)
-                    when (result) {
-                        is Result.Error -> {
-                            _state.update { it.copy(isDeleting = false) }
-                            _effect.emit(ShowError(result.error.asString()))
-                        }
-
-                        is Result.Success -> {
-                            _state.update { it.copy(isDeleting = false) }
-                        }
-                    }
-                }
-            }
-
-            is MaterialListEvent.SearchMaterial -> {
-                _state.update { it.copy(materialQuery = event.query) }
-            }
-
+            is MaterialListEvent.DeleteMaterial -> deleteMaterial(event.materialId)
+            is MaterialListEvent.SearchMaterial -> _state.update { it.copy(materialQuery = event.query) }
             is MaterialListEvent.SelectTradeType -> {
                 _state.update {
                     it.copy(
@@ -105,11 +87,6 @@ class MaterialListViewModel(
                     )
                 }
             }
-
-            is MaterialListEvent.EditMaterial -> {
-
-            }
-
             is MaterialListEvent.ToggleDeleteMaterialClick -> {
                 _state.update {
                     it.copy(
@@ -118,7 +95,6 @@ class MaterialListViewModel(
                     )
                 }
             }
-
             is MaterialListEvent.ToggleEditMaterialModal -> {
                 _state.update {
                     it.copy(
@@ -127,145 +103,33 @@ class MaterialListViewModel(
                         editingMaterial = if (!event.isEditing) null else it.editingMaterial
                     )
                 }
-
-                if (event.materialId != null) {
-                    editingMaterialId.value = event.materialId
-                } else {
-                    editingMaterialId.value = null
-                }
+                editingMaterialId.value = event.materialId
             }
-
             is MaterialListEvent.EditMaterialName -> {
-                _state.update {
-                    it.copy(
-                        editingMaterial = it.editingMaterial?.copy(name = event.name)
-                    )
-                }
+                _state.update { it.copy(editingMaterial = it.editingMaterial?.copy(name = event.name)) }
             }
-
             is MaterialListEvent.EditMaterialPrice -> {
-                _state.update {
-                    it.copy(
-                        editingMaterial = it.editingMaterial?.copy(price = event.price.toDouble())
-                    )
-                }
+                _state.update { it.copy(editingMaterial = it.editingMaterial?.copy(price = event.price.toDoubleOrNull() ?: 0.0)) }
             }
-
             is MaterialListEvent.EditMaterialUnit -> {
-                _state.update {
-                    it.copy(
-                        editingMaterial = it.editingMaterial?.copy(unit = event.unit)
-                    )
-                }
+                _state.update { it.copy(editingMaterial = it.editingMaterial?.copy(unit = event.unit)) }
             }
-
             is MaterialListEvent.EditMaterialCategoryName -> {
-                _state.update {
-                    it.copy(
-                        editingMaterial = it.editingMaterial?.copy(categoryName = event.name)
-                    )
-                }
+                _state.update { it.copy(editingMaterial = it.editingMaterial?.copy(categoryName = event.name)) }
             }
-
             is MaterialListEvent.EditMaterialTradeType -> {
-                _state.update {
-                    it.copy(
-                        editingMaterial = it.editingMaterial?.copy(tradeType = event.tradeType)
-                    )
-                }
+                _state.update { it.copy(editingMaterial = it.editingMaterial?.copy(tradeType = event.tradeType)) }
             }
-
-            is MaterialListEvent.UpdateMaterials -> {
-                viewModelScope.launch {
-                    if (editingMaterialId.value != null) {
-
-                        val editMaterial = _state.value.editingMaterial
-                        if (editMaterial != null) {
-                            var categoryIdToSave = editMaterial.categoryId
-                            val typedCategoryName = editMaterial.categoryName?.trim()
-
-                            // Check if it is a new category
-                            if (!typedCategoryName.isNullOrBlank() &&
-                                _state.value.materialCategory.none { it.id == editMaterial.categoryId && it.name == typedCategoryName }
-                            ) {
-
-                                val existingCategory = _state.value.materialCategory.find {
-                                    it.name.equals(
-                                        typedCategoryName,
-                                        ignoreCase = true
-                                    )
-                                }
-
-                                if (existingCategory != null) {
-                                    categoryIdToSave = existingCategory.id
-                                } else {
-                                    val newCategoryId = Uuid.random().toString()
-                                    val newCategory = MaterialCategoryModel(
-                                        id = newCategoryId,
-                                        name = typedCategoryName,
-                                        tradeType = editMaterial.tradeType
-                                    )
-                                    val insertResult = insertMaterialCategoryUseCase(newCategory)
-                                    if (insertResult is Result.Success) {
-                                        categoryIdToSave = newCategoryId
-                                    } else if (insertResult is Result.Error) {
-                                        _effect.emit(ShowError(insertResult.error.asString()))
-                                        return@launch
-                                    }
-                                }
-                            }
-
-                            val result = updateMaterialUseCase(
-                                material = MaterialsModel(
-                                    name = editMaterial.name,
-                                    unit = editMaterial.unit,
-                                    price = editMaterial.price,
-                                    tradeType = editMaterial.tradeType,
-                                    id = editMaterial.id,
-                                    categoryId = categoryIdToSave
-                                )
-                            )
-
-                            when (result) {
-                                is Result.Error -> {
-                                    _state.update {
-                                        it.copy(
-                                            isLoading = false,
-                                            isEditMaterialModalOpen = false
-                                        )
-                                    }
-                                    _effect.emit(ShowError(result.error.asString()))
-                                }
-
-                                is Result.Success -> {
-                                    _state.update {
-                                        it.copy(
-                                            isLoading = false,
-                                            isEditMaterialModalOpen = false
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
+            is MaterialListEvent.UpdateMaterials -> updateMaterial()
             is MaterialListEvent.NewMaterialTradeType -> {
-                _state.update {
-                    it.copy(
-                        newMaterialTradeType = event.tradeType
-                    )
-                }
+                _state.update { it.copy(newMaterialTradeType = event.tradeType) }
             }
-
             is MaterialListEvent.ToggleAddMaterialModal -> {
                 _state.update {
                     it.copy(
                         isNewMaterialAddingModalOpen = event.isOpen,
                         newMaterialTradeType = if (event.isOpen) {
-                            it.selectedTradeType ?: it.selectTrades.firstOrNull()
-                            ?: TradeType.ELECTRICIAN
+                            it.selectedTradeType ?: it.selectTrades.firstOrNull() ?: TradeType.ELECTRICIAN
                         } else null,
                         newMaterialName = if (!event.isOpen) "" else it.newMaterialName,
                         newMaterialPrice = if (!event.isOpen) "" else it.newMaterialPrice,
@@ -274,104 +138,135 @@ class MaterialListViewModel(
                     )
                 }
             }
-
-            MaterialListEvent.AddMaterial -> {
-                _state.update {
-                    it.copy(
-                        isAdding = true
-                    )
-                }
-                viewModelScope.launch {
-                    val tradeTypeToSave = _state.value.newMaterialTradeType ?: TradeType.ELECTRICIAN
-                    var categoryIdToSave = _state.value.selectedCategory?.id
-                    val typedCategoryName = _state.value.newMaterialCategoryName.trim()
-
-                    if (typedCategoryName.isNotBlank() && _state.value.selectedCategory?.name != typedCategoryName) {
-                        val existingCategory = _state.value.materialCategory.find {
-                            it.name.equals(
-                                typedCategoryName,
-                                ignoreCase = true
-                            )
-                        }
-                        if (existingCategory != null) {
-                            categoryIdToSave = existingCategory.id
-                        } else {
-                            val newCategoryId = Uuid.random().toString()
-                            val newCategory = MaterialCategoryModel(
-                                id = newCategoryId,
-                                name = typedCategoryName,
-                                tradeType = tradeTypeToSave
-                            )
-                            val insertResult = insertMaterialCategoryUseCase(newCategory)
-                            if (insertResult is Result.Success) {
-                                categoryIdToSave = newCategoryId
-                            } else if (insertResult is Result.Error) {
-                                _state.update { it.copy(isAdding = false) }
-                                _effect.emit(ShowError(insertResult.error.asString()))
-                                return@launch
-                            }
-                        }
-                    }
-
-                    val result = addMaterialUseCase(
-                        material = MaterialsModel(
-                            name = _state.value.newMaterialName,
-                            unit = _state.value.newMaterialUnit,
-                            price = _state.value.newMaterialPrice.toDouble(),
-                            tradeType = tradeTypeToSave,
-                            categoryId = categoryIdToSave
-                        )
-                    )
-
-                    when (result) {
-                        is Result.Error -> {
-                            _state.update {
-                                it.copy(
-                                    isNewMaterialAddingModalOpen = false,
-                                    isAdding = false
-                                )
-                            }
-                            _effect.emit(ShowError(result.error.asString()))
-                        }
-
-                        is Result.Success -> {
-                            _state.update {
-                                it.copy(
-                                    isNewMaterialAddingModalOpen = false,
-                                    isAdding = false,
-                                    newMaterialUnit = "",
-                                    newMaterialPrice = "",
-                                    newMaterialName = ""
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
+            is MaterialListEvent.AddMaterial -> addMaterial()
             is MaterialListEvent.NewMaterialName -> {
                 _state.update { it.copy(newMaterialName = event.name) }
             }
-
             is MaterialListEvent.NewMaterialRate -> {
                 _state.update { it.copy(newMaterialPrice = event.rate) }
             }
-
             is MaterialListEvent.NewMaterialUnit -> {
                 _state.update { it.copy(newMaterialUnit = event.unit) }
             }
-
             is MaterialListEvent.NewMaterialCategoryName -> {
-                _state.update {
-                    it.copy(newMaterialCategoryName = event.name)
-                }
+                _state.update { it.copy(newMaterialCategoryName = event.name) }
+            }
+            is MaterialListEvent.SelectCategory -> {
+                _state.update { it.copy(selectedCategory = event.category) }
+            }
+        }
+    }
+
+    private suspend fun resolveCategoryId(tradeType: TradeType?, typedCategoryName: String?): Pair<Boolean, String?> {
+        val trimmedName = typedCategoryName?.trim()
+        if (trimmedName.isNullOrBlank()) return Pair(true, null)
+
+        val existingCategory = _state.value.materialCategory.find {
+            it.name.equals(trimmedName, ignoreCase = true)
+        }
+        if (existingCategory != null) return Pair(true, existingCategory.id)
+
+        val newCategoryId = Uuid.random().toString()
+        val newCategory = MaterialCategoryModel(
+            id = newCategoryId,
+            name = trimmedName,
+            tradeType = tradeType ?: TradeType.ELECTRICIAN
+        )
+        
+        val insertResult = insertMaterialCategoryUseCase(newCategory)
+        if (insertResult is Result.Error) {
+            _effect.emit(ShowError(insertResult.error.asString()))
+            return Pair(false, null)
+        }
+        return Pair(true, newCategoryId)
+    }
+
+    private fun addMaterial() {
+        _state.update { it.copy(isAdding = true) }
+        viewModelScope.launch {
+            val tradeTypeToSave = _state.value.newMaterialTradeType ?: TradeType.ELECTRICIAN
+            val typedCategoryName = _state.value.newMaterialCategoryName
+
+            val (isCategorySuccess, categoryIdToSave) = resolveCategoryId(tradeTypeToSave, typedCategoryName)
+            if (!isCategorySuccess) {
+                _state.update { it.copy(isAdding = false) }
+                return@launch
             }
 
-            is MaterialListEvent.SelectCategory -> {
-                _state.update {
-                    it.copy(
-                        selectedCategory = event.category
-                    )
+            val result = addMaterialUseCase(
+                material = MaterialsModel(
+                    name = _state.value.newMaterialName,
+                    unit = _state.value.newMaterialUnit,
+                    price = _state.value.newMaterialPrice.toDoubleOrNull() ?: 0.0,
+                    tradeType = tradeTypeToSave,
+                    categoryId = categoryIdToSave
+                )
+            )
+
+            when (result) {
+                is Result.Error -> {
+                    _state.update { it.copy(isNewMaterialAddingModalOpen = false, isAdding = false) }
+                    _effect.emit(ShowError(result.error.asString()))
+                }
+                is Result.Success -> {
+                    _state.update {
+                        it.copy(
+                            isNewMaterialAddingModalOpen = false,
+                            isAdding = false,
+                            newMaterialUnit = "",
+                            newMaterialPrice = "",
+                            newMaterialName = ""
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateMaterial() {
+        viewModelScope.launch {
+            val editMaterial = _state.value.editingMaterial ?: return@launch
+            if (editingMaterialId.value == null) return@launch
+
+            val (isCategorySuccess, categoryIdToSave) = resolveCategoryId(editMaterial.tradeType, editMaterial.categoryName)
+            if (!isCategorySuccess) {
+                _state.update { it.copy(isLoading = false, isEditMaterialModalOpen = false) }
+                return@launch
+            }
+
+            val result = updateMaterialUseCase(
+                material = MaterialsModel(
+                    name = editMaterial.name,
+                    unit = editMaterial.unit,
+                    price = editMaterial.price,
+                    tradeType = editMaterial.tradeType,
+                    id = editMaterial.id,
+                    categoryId = categoryIdToSave
+                )
+            )
+
+            when (result) {
+                is Result.Error -> {
+                    _state.update { it.copy(isLoading = false, isEditMaterialModalOpen = false) }
+                    _effect.emit(ShowError(result.error.asString()))
+                }
+                is Result.Success -> {
+                    _state.update { it.copy(isLoading = false, isEditMaterialModalOpen = false) }
+                }
+            }
+        }
+    }
+
+    private fun deleteMaterial(materialId: String) {
+        viewModelScope.launch {
+            val result = deleteMaterialUseCase.invoke(materialId = materialId)
+            when (result) {
+                is Result.Error -> {
+                    _state.update { it.copy(isDeleting = false) }
+                    _effect.emit(ShowError(result.error.asString()))
+                }
+                is Result.Success -> {
+                    _state.update { it.copy(isDeleting = false) }
                 }
             }
         }
@@ -397,8 +292,7 @@ class MaterialListViewModel(
                                 isLoading = false
                             )
                         }
-                        _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
-
+                        _effect.emit(ShowError(result.error.asString()))
                     }
 
                     is Result.Success -> {
@@ -436,7 +330,7 @@ class MaterialListViewModel(
                 .collectLatest { result ->
                     when (result) {
                         is Result.Error -> {
-                            _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                            _effect.emit(ShowError(result.error.asString()))
                         }
 
                         is Result.Success -> {
@@ -453,7 +347,7 @@ class MaterialListViewModel(
                 when (result) {
                     is Result.Error -> {
 
-                        _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                        _effect.emit(ShowError(result.error.asString()))
 
                     }
 
@@ -501,7 +395,7 @@ class MaterialListViewModel(
                     _state.update { it.copy(isLoading = false) }
                     when (result) {
                         is Result.Error -> {
-                            _effect.emit(MaterialScreenEffect.ShowError(result.error.asString()))
+                            _effect.emit(ShowError(result.error.asString()))
                         }
 
                         is Result.Success -> {

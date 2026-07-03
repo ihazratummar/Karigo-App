@@ -51,7 +51,6 @@ sealed interface MaterialListFilter {
 sealed interface MaterialListEvent {
     data class ToggleDeleteMaterialClick(val isDeleting: Boolean, val materialId: String ? = null) : MaterialListEvent
     data class ToggleEditMaterialModal(val materialId: String? , val isEditing: Boolean) : MaterialListEvent
-    data class EditMaterial(val materialId: String) : MaterialListEvent
     data class SearchMaterial(val query: String) : MaterialListEvent
 
     data class SelectTradeType(val tradeType: TradeType?) : MaterialListEvent

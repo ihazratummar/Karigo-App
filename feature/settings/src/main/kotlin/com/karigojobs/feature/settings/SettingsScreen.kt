@@ -233,6 +233,10 @@ fun SettingsScreen(
                     }
                 }
             }
+
+            item {
+                Spacer(Modifier.height(dimens.Space._8xl))
+            }
         }
     }
 }

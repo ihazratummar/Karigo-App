@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -296,26 +297,28 @@ fun AddEstimateScreen(
                 ) {
 
                     state.selectedMaterials.forEachIndexed { index, material ->
-                        SelectedMaterialSection(
-                            selectedMaterial = material,
-                            isRateVisible = state.isRateVisible,
-                            number = index + 1,
-                            onMaterialQuantityChange = { quantity ->
-                                event(
-                                    SiteEstimateEvent.ChangeMaterialQuantity(
-                                        id = material.id,
-                                        quantity = quantity
+                        key(material.id) {
+                            SelectedMaterialSection(
+                                selectedMaterial = material,
+                                isRateVisible = state.isRateVisible,
+                                number = index + 1,
+                                onMaterialQuantityChange = { quantity ->
+                                    event(
+                                        SiteEstimateEvent.ChangeMaterialQuantity(
+                                            id = material.id,
+                                            quantity = quantity
+                                        )
                                     )
-                                )
-                            },
-                            onMaterialMinusClick = {  event(SiteEstimateEvent.DecreaseMaterialQuantity(id = material.id)) },
-                            onMaterialPlusClick = {
-                                event(SiteEstimateEvent.IncreaseMaterialQuantity(id = material.id))
-                            },
-                            onMaterialRemoveClick = {
-                                event(SiteEstimateEvent.DeleteMaterial(id = material.id))
-                            },
-                        )
+                                },
+                                onMaterialMinusClick = {  event(SiteEstimateEvent.DecreaseMaterialQuantity(id = material.id)) },
+                                onMaterialPlusClick = {
+                                    event(SiteEstimateEvent.IncreaseMaterialQuantity(id = material.id))
+                                },
+                                onMaterialRemoveClick = {
+                                    event(SiteEstimateEvent.DeleteMaterial(id = material.id))
+                                },
+                            )
+                        }
                     }
 
                     AddMaterialCard(

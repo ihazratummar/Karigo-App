@@ -163,7 +163,7 @@ fun EstimateListScreen(
                     }
                 }
 
-                items(state.estimates) { estimate ->
+                items(state.estimates, key = {it.id}) { estimate ->
                     EstimateCard(
                         estimate = estimate,
                         onDeleteClick = {

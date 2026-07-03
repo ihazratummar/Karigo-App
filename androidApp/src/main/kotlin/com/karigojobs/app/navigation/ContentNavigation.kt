@@ -182,9 +182,10 @@ fun NavGraphBuilder.contentNavigation(
                 parameters = { parametersOf(route.estimateId) }
             )
             val state by viewModel.state.collectAsStateWithLifecycle()
+            val estimateId = viewModel.draftEstimateId
             AddEstimateScreen(
                 onBackClick = {
-                    navHostController.navigate(MainRoute.EstimateListRoute) {
+                    navHostController.navigate(MainRoute.EstimateDetailsRoute(estimateId = estimateId)) {
                         popUpTo(MainRoute.AddEstimateRoute::class) {
                             inclusive = true
                         }

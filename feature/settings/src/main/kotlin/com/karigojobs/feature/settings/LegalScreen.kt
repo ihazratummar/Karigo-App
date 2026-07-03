@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.karigojobs.ui.common.KarigoTopAppBar
 import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.common.customBorder
 import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.*
 
@@ -44,7 +45,7 @@ fun LegalScreen(
             ) {
                 Text(
                     text = "Document not found",
-                    style = MaterialTheme.typography.bodyMedium.copy(color = KarigojobsText2)
+                    style = MaterialTheme.typography.bodyMedium.copy(color = appColor.secondaryText)
                 )
             }
         } else {
@@ -76,14 +77,14 @@ fun LegalScreen(
                 // Footer
                 item {
                     HorizontalDivider(
-                        color = Color(0xFF2E2E2E),
+                        color = appColor.divider,
                         thickness = dimens.Divider.thickness,
                         modifier = Modifier.padding(vertical = dimens.Padding.lg)
                     )
                     Text(
                         text = "${document.title} • Karigo • Effective June 30, 2026",
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = KarigojobsText3,
+                            color = appColor.tertiaryText,
                             fontWeight = FontWeight.Medium
                         ),
                         modifier = Modifier
@@ -105,14 +106,14 @@ private fun DocumentHeader(document: LegalDocument) {
         verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
     ) {
         Surface(
-            color = Color.White.copy(alpha = 0.05f),
+            color = appColor.primaryText.copy(alpha = 0.05f),
             shape = KarigojobsShapes.small,
             border = customCardBorder()
         ) {
             Text(
                 text = document.badge,
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = KarigojobsText2,
+                    color = appColor.secondaryText,
                     fontWeight = FontWeight.Bold
                 ),
                 modifier = Modifier.padding(horizontal = dimens.Padding.sm, vertical = dimens.Padding._2xs)
@@ -122,7 +123,7 @@ private fun DocumentHeader(document: LegalDocument) {
         Text(
             text = document.title,
             style = MaterialTheme.typography.headlineMedium.copy(
-                color = Color.White,
+                color = appColor.primaryText,
                 fontWeight = FontWeight.Bold
             )
         )
@@ -133,11 +134,11 @@ private fun DocumentHeader(document: LegalDocument) {
         ) {
             Text(
                 text = "App: Karigo",
-                style = MaterialTheme.typography.bodySmall.copy(color = KarigojobsText3)
+                style = MaterialTheme.typography.bodySmall.copy(color = appColor.tertiaryText)
             )
             Text(
                 text = "Effective: June 30, 2026",
-                style = MaterialTheme.typography.bodySmall.copy(color = KarigojobsText3)
+                style = MaterialTheme.typography.bodySmall.copy(color = appColor.tertiaryText)
             )
         }
     }
@@ -158,15 +159,15 @@ private fun SectionItem(section: LegalSection) {
         ) {
             Box(
                 modifier = Modifier
-                    .background(Color.White.copy(alpha = 0.05f), shape = KarigojobsShapes.small)
-                    .border(dimens.Border.thin, Color(0xFF2E2E2E), KarigojobsShapes.small)
+                    .background(appColor.primaryText.copy(alpha = 0.05f), shape = KarigojobsShapes.small)
+                    .customBorder(KarigojobsShapes.small)
                     .padding(horizontal = dimens.Padding.xs, vertical = dimens.Padding._2xs),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = section.number,
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = KarigojobsText2,
+                        color = appColor.secondaryText,
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -175,7 +176,7 @@ private fun SectionItem(section: LegalSection) {
             Text(
                 text = section.title,
                 style = MaterialTheme.typography.titleMedium.copy(
-                    color = Color.White,
+                    color = appColor.primaryText,
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -187,7 +188,7 @@ private fun SectionItem(section: LegalSection) {
                     Text(
                         text = item.text,
                         style = MaterialTheme.typography.bodyMedium.copy(
-                            color = KarigojobsText2,
+                            color = appColor.secondaryText,
                             lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.25f
                         )
                     )
@@ -205,7 +206,7 @@ private fun SectionItem(section: LegalSection) {
                     Text(
                         text = item.text,
                         style = MaterialTheme.typography.titleSmall.copy(
-                            color = Color.White,
+                            color = appColor.primaryText,
                             fontWeight = FontWeight.Bold
                         ),
                         modifier = Modifier.padding(top = dimens.Padding.xs)
@@ -239,7 +240,7 @@ private fun BulletListLayout(items: List<String>) {
                 )
                 Text(
                     text = bulletText,
-                    style = MaterialTheme.typography.bodyMedium.copy(color = KarigojobsText2)
+                    style = MaterialTheme.typography.bodyMedium.copy(color = appColor.secondaryText)
                 )
             }
         }
@@ -263,14 +264,14 @@ private fun TableLayout(
             .padding(vertical = dimens.Padding.xs),
         shape = KarigojobsShapes.medium,
         border = customCardBorder(),
-        colors = CardDefaults.cardColors(containerColor = KarigojobsCard)
+        colors = CardDefaults.cardColors(containerColor = appColor.cardColors)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             // Header Row
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.White.copy(alpha = 0.05f))
+                    .background(appColor.primaryText.copy(alpha = 0.05f))
                     .padding(dimens.Padding.sm),
                 horizontalArrangement = Arrangement.spacedBy(dimens.Space.xs),
                 verticalAlignment = Alignment.CenterVertically
@@ -280,7 +281,7 @@ private fun TableLayout(
                     Text(
                         text = headerTitle.uppercase(),
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = KarigojobsText3,
+                            color = appColor.tertiaryText,
                             fontWeight = FontWeight.Bold
                         ),
                         modifier = Modifier.weight(weight)
@@ -291,7 +292,7 @@ private fun TableLayout(
             // Data Rows
             rows.forEachIndexed { rowIndex, rowCells ->
                 if (rowIndex > 0) {
-                    HorizontalDivider(color = Color(0xFF2E2E2E), thickness = dimens.Divider.thickness)
+                    HorizontalDivider(color = appColor.divider, thickness = dimens.Divider.thickness)
                 }
                 Row(
                     modifier = Modifier
@@ -311,7 +312,7 @@ private fun TableLayout(
                                     Text(
                                         text = cell.text,
                                         style = MaterialTheme.typography.bodySmall.copy(
-                                            color = KarigojobsText2,
+                                            color = appColor.secondaryText,
                                             fontWeight = FontWeight.Medium
                                         )
                                     )
@@ -384,7 +385,7 @@ private fun CalloutBox(
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = KarigojobsText2,
+                    color = appColor.secondaryText,
                     lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.2f
                 )
             )
@@ -400,7 +401,7 @@ private fun ContactBlockLayout(block: LegalContentItem.ContactBlock) {
             .padding(vertical = dimens.Padding.xs),
         shape = KarigojobsShapes.large,
         border = customCardBorder(),
-        colors = CardDefaults.cardColors(containerColor = KarigojobsCard)
+        colors = CardDefaults.cardColors(containerColor = appColor.cardColors)
     ) {
         Column(
             modifier = Modifier.padding(dimens.Padding.base),
@@ -429,7 +430,7 @@ private fun ContactInfoRow(
         Text(
             text = "$label: ",
             style = MaterialTheme.typography.bodyMedium.copy(
-                color = KarigojobsText3,
+                color = appColor.tertiaryText,
                 fontWeight = FontWeight.Bold
             ),
             modifier = Modifier.width(dimens.Size.chartBarMaxH) // Fixed label width using layout token
@@ -437,7 +438,7 @@ private fun ContactInfoRow(
         Text(
             text = value,
             style = MaterialTheme.typography.bodyMedium.copy(
-                color = if (isEmail) KarigojobsIconColor else Color.White,
+                color = if (isEmail) KarigojobsIconColor else appColor.primaryText,
                 fontWeight = FontWeight.Medium
             ),
             modifier = Modifier.weight(1f)

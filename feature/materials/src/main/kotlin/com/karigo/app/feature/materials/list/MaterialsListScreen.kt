@@ -252,12 +252,12 @@ fun MaterialsListScreen(
                         }
                     }
 
-                    items(materials) { material ->
+                    items(materials, key = {material -> material.id} ) { material ->
                         MaterialItemRow(material = material, event = event)
                     }
                 }
             } else {
-                items(state.materialsList) { material ->
+                items(state.materialsList , key = {material -> material.id}) { material ->
                     MaterialItemRow(material = material, event = event)
                 }
             }
@@ -427,7 +427,7 @@ fun SearchAndFilter(
                     }
                 }
 
-                items(state.selectTrades.toList()) { trade ->
+                items(state.selectTrades.toList(), key = { it.name }) { trade ->
                     val isSelected = trade == state.selectedTradeType
                     Card(
                         onClick = {
@@ -518,7 +518,7 @@ fun SearchAndFilter(
                     }
                 }
 
-                items(state.materialCategory) { category ->
+                items(state.materialCategory, key = { it.id }) { category ->
                     val isSelected = category.id == state.selectedCategory?.id
                     Card(
                         onClick = {

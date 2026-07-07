@@ -13,7 +13,7 @@ class GetOnboardingStatusUseCase(
     private val onboardingStore: OnboardingStore
 ) {
 
-    operator fun invoke() : Flow<Boolean> {
+    operator fun invoke() : Flow<Boolean?> {
         return onboardingStore.isComplete
     }
 

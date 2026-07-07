@@ -20,4 +20,7 @@ class GetWorkerProfileUseCase(
         return workerRepository.getWorkerProfile()
     }
 
+    fun invokeSync(): WorkerProfileModel? {
+        return workerRepository.getWorkerProfileSync()
+    }
 }

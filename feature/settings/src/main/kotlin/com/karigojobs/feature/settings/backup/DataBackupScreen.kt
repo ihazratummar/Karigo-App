@@ -305,7 +305,7 @@ fun DataBackupScreen(
                             )
                         )
                         Text(
-                            text = if (state.isAutoBackupEnabled) "Scheduled nightly over Wi-Fi" else "Turn on to keep data safe", 
+                            text = if (state.isAutoBackupEnabled) "Backup in every 24 hours" else "Turn on to keep data safe",
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = appColor.secondaryText
                             )

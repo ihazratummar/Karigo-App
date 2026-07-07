@@ -6,8 +6,14 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.karigojobs.share.model.TradeType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 
 /**
@@ -18,6 +24,7 @@ import kotlinx.coroutines.flow.map
 class OnboardingStore(
     private val dataStore: DataStore<Preferences>
 ) {
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     companion object Keys {
         val IS_COMPLETE = booleanPreferencesKey("is_complete")
@@ -26,19 +33,19 @@ class OnboardingStore(
 
     // observe as Flow - reacts to changes
 
-    val isComplete : Flow<Boolean> =
+    val isComplete : StateFlow<Boolean?> =
         dataStore.data.map { pref ->
             pref[IS_COMPLETE] ?: false
-        }
+        }.stateIn(scope, SharingStarted.Eagerly, null)
 
-    val selectedTrades : Flow<Set<TradeType>> =
+    val selectedTrades : StateFlow<Set<TradeType>> =
         dataStore.data.map { pref ->
             pref[SELECTED_TRADES]
                 ?.split(",")
                 ?.mapNotNull { runCatching { TradeType.valueOf(it) }.getOrNull() }
                 ?.toSet()
                 ?: emptySet()
-        }
+        }.stateIn(scope, SharingStarted.Eagerly, emptySet())
 
     suspend fun markComplete(trades : Set<TradeType>) {
         dataStore.edit { pref ->

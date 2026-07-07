@@ -22,4 +22,11 @@ class GetAppPreferencesUseCase(
             AppPreferences(theme, language)
         }
     }
+
+    fun getSync(): AppPreferences {
+        return AppPreferences(
+            theme = settingsStore.themePreference.value,
+            language = settingsStore.appLanguage.value
+        )
+    }
 }

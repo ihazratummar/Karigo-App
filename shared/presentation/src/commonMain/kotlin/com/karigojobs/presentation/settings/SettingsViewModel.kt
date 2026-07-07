@@ -33,10 +33,16 @@ class SettingsViewModel (
 ): ViewModel() {
 
 
-    private val _state = MutableStateFlow(SettingsState())
+    private val _state = MutableStateFlow(
+        SettingsState(
+            workerProfileModel = getWorkerProfileUseCase.invokeSync(),
+            selectedTrades = getSelectedTradeTypeUseCase.getSync(),
+            editTrades = getSelectedTradeTypeUseCase.getSync(),
+            currentTheme = getAppPreferencesUseCase.getSync().theme,
+            currentLanguage = getAppPreferencesUseCase.getSync().language
+        )
+    )
     val state : StateFlow<SettingsState> = _state.asStateFlow()
-
-
 
     init {
         loadWorker()

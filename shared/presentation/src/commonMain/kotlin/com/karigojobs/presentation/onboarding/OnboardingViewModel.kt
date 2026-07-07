@@ -42,7 +42,8 @@ class OnboardingViewModel(
 
     val completedState: StateFlow<OnboardingCompleteState> = getOnboardingStatusUseCase()
         .map { completed ->
-            if (completed) OnboardingCompleteState.Completed
+            if (completed == null) OnboardingCompleteState.Loading
+            else if (completed) OnboardingCompleteState.Completed
             else OnboardingCompleteState.NotCompleted
         }
         .stateIn(

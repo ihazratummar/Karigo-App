@@ -61,12 +61,18 @@ kotlin {
 
                 api(libs.koin.core)
                 api(libs.koin.compose.viewmodel)
+
+                api(libs.ktor.client.core)
+                api(libs.ktor.client.content.negotiation)
+                api(libs.ktor.serialization.kotlinx.json)
+
             }
         }
 
         androidMain {
             dependencies {
                 implementation(libs.koin.android)
+                implementation(libs.ktor.client.android)
             }
         }
 
@@ -74,6 +80,7 @@ kotlin {
         iosMain {
             dependencies {
                 implementation(libs.koin.core)
+                implementation(libs.ktor.client.darwin)
             }
         }
     }

@@ -37,6 +37,14 @@ class WorkerRepositoryImpl(
             }
     }
 
+    override fun getWorkerProfileSync(): WorkerProfileModel? {
+        return try {
+            database.workerProfileQueries.getProfile().executeAsOneOrNull()?.toWorkerModel()
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     override suspend fun insertOrUpdateWorkerProfile(workerProfileModel: WorkerProfileModel): Result<Unit, WorkerProfileError> {
         return safeCall(WorkerProfileError.FailedToInsert){
             database.workerProfileQueries

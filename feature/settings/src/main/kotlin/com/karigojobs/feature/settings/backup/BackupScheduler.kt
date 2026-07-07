@@ -16,13 +16,14 @@ object BackupScheduler {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-        val backupRequest = PeriodicWorkRequestBuilder<BackupWorker>(15, TimeUnit.MINUTES)
+        val backupRequest = PeriodicWorkRequestBuilder<BackupWorker>(24, TimeUnit.HOURS)
             .setConstraints(constraints)
+            .setInitialDelay(24, TimeUnit.HOURS)
             .build()
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             BACKUP_WORK_NAME,
-            ExistingPeriodicWorkPolicy.UPDATE,
+            ExistingPeriodicWorkPolicy.KEEP,
             backupRequest
         )
     }

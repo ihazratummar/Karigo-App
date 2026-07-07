@@ -44,8 +44,10 @@ class MainActivity : AppCompatActivity() {
 
         onboardingViewModel = getViewModel()
 
+        var isPreferencesLoaded = false
+
         splashscreen.setKeepOnScreenCondition {
-            onboardingViewModel.completedState.value == OnboardingCompleteState.Loading
+            onboardingViewModel.completedState.value == OnboardingCompleteState.Loading || !isPreferencesLoaded
         }
 
         setContent {
@@ -56,6 +58,12 @@ class MainActivity : AppCompatActivity() {
             val autoBackupState = getAutoBackupStatusUseCase().collectAsStateWithLifecycle(
                 initialValue = false
             )
+
+            LaunchedEffect(appPreferencesState.value) {
+                if (appPreferencesState.value != null) {
+                    isPreferencesLoaded = true
+                }
+            }
 
             LaunchedEffect(autoBackupState.value) {
                 if (autoBackupState.value) {

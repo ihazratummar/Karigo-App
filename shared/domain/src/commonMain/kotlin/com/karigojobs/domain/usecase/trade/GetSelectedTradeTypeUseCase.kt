@@ -30,4 +30,7 @@ class GetSelectedTradeTypeUseCase(
             }.flowOn(ioDispatcher)
     }
 
+    fun getSync(): Set<TradeType> {
+        return onboardingStore.selectedTrades.value
+    }
 }

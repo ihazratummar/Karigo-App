@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 interface WorkerRepository {
 
     fun getWorkerProfile() : Flow<Result<WorkerProfileModel?, WorkerProfileError>>
+    fun getWorkerProfileSync(): WorkerProfileModel?
 
     suspend fun insertOrUpdateWorkerProfile(workerProfileModel: WorkerProfileModel) : Result<Unit, WorkerProfileError>
     suspend fun updateBusinessName(newName : String) : Result<Unit, WorkerProfileError>

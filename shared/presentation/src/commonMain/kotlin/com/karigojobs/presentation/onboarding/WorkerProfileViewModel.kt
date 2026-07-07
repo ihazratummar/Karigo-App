@@ -25,7 +25,17 @@ class WorkerProfileViewModel(
     private val saveWorkerProfileUseCase: SaveWorkerProfileUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(WorkerProfileState())
+    private val initialProfile = getWorkerProfileUseCase.invokeSync()
+
+    private val _state = MutableStateFlow(
+        WorkerProfileState(
+            ownerName = initialProfile?.ownerName ?: "",
+            businessName = initialProfile?.businessName ?: "",
+            phoneNumber = initialProfile?.phone ?: "",
+            email = initialProfile?.email ?: "",
+            address = initialProfile?.address ?: ""
+        )
+    )
     val state: StateFlow<WorkerProfileState> = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<WorkerProfileEffect>(replay = 0)

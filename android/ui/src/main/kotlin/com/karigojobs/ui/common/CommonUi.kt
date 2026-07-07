@@ -82,6 +82,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.karigojob.share.utils.DateUtils.toReadableDate
+import com.karigojob.share.utils.formatNumber
 import com.karigojob.share.utils.formatToLocalizeDate
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.domain.repository.DeviceContact
@@ -818,7 +819,7 @@ fun JobCard(
                 }
                 Spacer(Modifier.weight(1f))
                 Text(
-                    text = "${deviceInfo.currency}${job.total}",
+                    text = "${deviceInfo.currency}${job.total.formatNumber()}",
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground
                     )

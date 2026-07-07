@@ -29,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.karigojobs.app.feature.onboarding.OnboardingScreen
 import com.karigojobs.presentation.onboarding.OnboardingCompleteState
 import com.karigojobs.presentation.onboarding.OnboardingViewModel
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
 
 
@@ -147,8 +148,8 @@ fun BottomBar(
                         selectedIconColor = MaterialTheme.colorScheme.surfaceTint,
                         selectedTextColor = MaterialTheme.colorScheme.surfaceTint,
                         indicatorColor = Color.Transparent,
-                        unselectedIconColor = MaterialTheme.colorScheme.outline,
-                        unselectedTextColor = MaterialTheme.colorScheme.outline
+                        unselectedIconColor = appColor.secondaryText,
+                        unselectedTextColor = appColor.secondaryText
                     )
                 )
             }

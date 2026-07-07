@@ -133,7 +133,8 @@ fun MaterialsListScreen(
                 windowInsets = WindowInsets(),
                 scrollBehavior = scrollBehavior,
             )
-        }
+        },
+        contentWindowInsets = WindowInsets()
     ) { paddingValues ->
 
 

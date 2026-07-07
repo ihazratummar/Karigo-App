@@ -16,6 +16,7 @@ class SettingsStore(
     companion object Keys {
         val APP_THEME = stringPreferencesKey("app_theme")
         val APP_LANGUAGE = stringPreferencesKey("app_language")
+        val AUTO_BACKUP_ENABLED = androidx.datastore.preferences.core.booleanPreferencesKey("auto_backup_enabled")
     }
 
     val themePreference: Flow<ThemePreference> =
@@ -29,6 +30,11 @@ class SettingsStore(
             val langString = pref[APP_LANGUAGE]
             runCatching { AppLanguage.valueOf(langString!!) }.getOrDefault(AppLanguage.ENGLISH)
         }
+        
+    val autoBackupEnabled: Flow<Boolean> = 
+        dataStore.data.map { pref ->
+            pref[AUTO_BACKUP_ENABLED] ?: false
+        }
 
     suspend fun setThemePreference(theme: ThemePreference) {
         dataStore.edit { pref ->
@@ -39,6 +45,12 @@ class SettingsStore(
     suspend fun setAppLanguage(language: AppLanguage) {
         dataStore.edit { pref ->
             pref[APP_LANGUAGE] = language.name
+        }
+    }
+    
+    suspend fun setAutoBackupEnabled(enabled: Boolean) {
+        dataStore.edit { pref ->
+            pref[AUTO_BACKUP_ENABLED] = enabled
         }
     }
 }

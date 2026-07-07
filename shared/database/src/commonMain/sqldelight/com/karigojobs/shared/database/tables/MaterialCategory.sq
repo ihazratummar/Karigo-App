@@ -18,7 +18,7 @@ deleteCategory:
 DELETE FROM MaterialCategory WHERE id = ?;
 
 getCategoryByTrade:
-SELECT * FROM MaterialCategory WHERE (trade_type = :tradeType OR :tradeType IS NULL) ORDER BY name ASC;
+SELECT * FROM MaterialCategory WHERE (trade_type = :tradeType OR :tradeType IS NULL) AND id IN (SELECT category_id FROM materials) ORDER BY name ASC;
 
 getCategoryById:
 SELECT * FROM MaterialCategory WHERE id = ?;

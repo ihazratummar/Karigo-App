@@ -46,6 +46,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import com.karigojob.share.utils.DateUtils.toReadableDate
+import com.karigojob.share.utils.formatNumber
 import com.karigojobs.ui.theme.dimens
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.estimate.add.SiteEstimateEvent
@@ -345,7 +346,7 @@ fun EstimateCard(
             ) {
                 if (estimate.showRate) {
                     Text(
-                        text = "${deviceInfo.currency}${estimate.total}",
+                        text = "${deviceInfo.currency}${estimate.total?.formatNumber()}",
                         style = MaterialTheme.typography.titleMedium.copy(
                             color = KarigojobsIconColor,
                             fontWeight = FontWeight.W700
@@ -526,7 +527,7 @@ fun EstimateMaterialsList(
                                 )
                             )
                             Text(
-                                text = "${material.quantity} ${material.unit}",
+                                text = "${material.quantity.formatNumber()} ${material.unit}",
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = appColor.secondaryText
                                 )
@@ -535,7 +536,7 @@ fun EstimateMaterialsList(
                         state.estimateDetails?.showRate?.let {
                             if (it) {
                                 Text(
-                                    text = "${deviceInfo.currency} ${material.total}",
+                                    text = "${deviceInfo.currency} ${material.total.formatNumber()}",
                                     style = MaterialTheme.typography.bodyMedium.copy(
                                         color = appColor.primaryText,
                                         fontWeight = FontWeight.Bold
@@ -591,7 +592,7 @@ fun EstimateTotalCard(
             }
 
             Text(
-                text = "${deviceInfo.currency}${estimateTotal}",
+                text = "${deviceInfo.currency}${estimateTotal.formatNumber()}",
                 style = MaterialTheme.typography.headlineLarge.copy(
                     color = KarigojobsIconColor
                 )

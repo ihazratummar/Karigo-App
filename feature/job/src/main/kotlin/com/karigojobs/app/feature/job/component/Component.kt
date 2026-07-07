@@ -48,6 +48,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.karigojob.share.utils.DateUtils.toReadableDate
+import com.karigojob.share.utils.formatNumber
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.job.create.AddJobIntent
 import com.karigojobs.presentation.job.create.AddJobState
@@ -1208,7 +1209,7 @@ fun TotalItemCost(
             )
         )
         Text(
-            text = "$total",
+            text = total.formatNumber(),
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold
@@ -1244,7 +1245,7 @@ fun ItemList(
                 )
             )
             Text(
-                text = "$quantity x ${deviceInfo.currency}$itemRate / $unit",
+                text = "$quantity x ${deviceInfo.currency}${itemRate.formatNumber()} / $unit",
                 style = MaterialTheme.typography.labelSmall.copy(
                     color = appColor.secondaryText
                 )
@@ -1252,7 +1253,7 @@ fun ItemList(
         }
 
         Text(
-            text = "${deviceInfo.currency}${total}",
+            text = "${deviceInfo.currency}${total.formatNumber()}",
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = appColor.primaryText,
                 fontWeight = FontWeight.Bold

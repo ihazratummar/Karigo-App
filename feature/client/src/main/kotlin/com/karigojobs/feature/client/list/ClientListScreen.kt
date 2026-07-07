@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import com.karigojob.share.utils.formatNumber
 import com.karigojob.share.utils.toInitials
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.client.list.ClientListEffect
@@ -170,7 +171,7 @@ fun ClientListScreen(
                                         .customBorder(shape = CircleShape)
                                 ) {
                                     Text(
-                                        text = "${deviceInfo.currency} ${client.outStandingBalance}",
+                                        text = "${deviceInfo.currency} ${client.outStandingBalance.formatNumber()}",
                                         style = MaterialTheme.typography.bodyMedium.copy(
                                             color = KarigojobsError
                                         ),
@@ -206,7 +207,7 @@ fun ClientListScreen(
                                 modifier = Modifier.size(dimens.Icon._2xs)
                             )
                             Text(
-                                text = "${deviceInfo.currency} ${client.totalRevenue} billed",
+                                text = "${deviceInfo.currency} ${client.totalRevenue.formatNumber()} billed",
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = appColor.tertiaryText
                                 )

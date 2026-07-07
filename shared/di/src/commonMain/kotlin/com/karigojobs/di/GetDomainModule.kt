@@ -41,6 +41,11 @@ import com.karigojobs.domain.usecase.settings.SaveWorkerProfileUseCase
 import com.karigojobs.domain.usecase.settings.UpdateAppLanguageUseCase
 import com.karigojobs.domain.usecase.settings.UpdateThemePreferenceUseCase
 import com.karigojobs.domain.usecase.trade.SaveTradesUseCase
+import com.karigojobs.domain.usecase.backup.UploadBackupUseCase
+import com.karigojobs.domain.usecase.backup.RestoreBackupUseCase
+import com.karigojobs.domain.usecase.backup.GetAutoBackupStatusUseCase
+import com.karigojobs.domain.usecase.backup.SetAutoBackupStatusUseCase
+import com.karigojobs.domain.usecase.backup.GetLastBackupTimestampUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -102,4 +107,10 @@ fun getDomainModule(): Module = module {
     single { GetAppPreferencesUseCase(settingsStore = get()) }
     single { UpdateThemePreferenceUseCase(settingsStore = get()) }
     single { UpdateAppLanguageUseCase(settingsStore = get()) }
+
+    single { UploadBackupUseCase(repository = get()) }
+    single { RestoreBackupUseCase(repository = get()) }
+    single { GetAutoBackupStatusUseCase(settingsStore = get()) }
+    single { SetAutoBackupStatusUseCase(settingsStore = get()) }
+    single { GetLastBackupTimestampUseCase(repository = get()) }
 }

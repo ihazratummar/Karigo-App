@@ -16,8 +16,10 @@ dependencies {
     implementation(projects.android.ui)
 
     implementation(projects.shared.model)
+    implementation(projects.shared.domain)
     api(projects.shared.presentation)
 
+    implementation(libs.koin.core)
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.ui)
     implementation(libs.androidx.foundation)
@@ -27,7 +29,8 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.compose.uiTooling)
 
-
+    implementation(libs.play.services.auth)
+    implementation(libs.androidx.work.runtime.ktx)
 
 }
 

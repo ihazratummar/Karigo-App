@@ -161,6 +161,7 @@ fun SettingsOptionRow(
     modifier: Modifier = Modifier,
     icon: Int,
     tabName: String,
+    description: String? = null,
     onClick: () -> Unit
 ) {
     Row(
@@ -176,14 +177,25 @@ fun SettingsOptionRow(
             icon = icon,
             size = dimens.Height.minTouch / 1.3f,
         )
-        Text(
-            text = tabName,
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontWeight = FontWeight.SemiBold
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
+            Text(
+                text = tabName,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontWeight = FontWeight.SemiBold
+                )
             )
-        )
-        Spacer(Modifier.weight(1f))
+            description?.let { text ->
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+                    )
+                )
+            }
+        }
         KarigoIconWIthBg(
             icon = R.drawable.arrow_right,
             iconBackGroundColor = Color.Transparent,

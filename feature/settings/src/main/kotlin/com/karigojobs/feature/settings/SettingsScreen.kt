@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -72,7 +73,8 @@ fun SettingsScreen(
                 isNavBack = false,
                 isDivider = false
             )
-        }
+        },
+        contentWindowInsets = WindowInsets()
     ) { paddingValues ->
 
         val quickAccessData = listOf(
@@ -196,6 +198,20 @@ fun SettingsScreen(
                     onClick = { event(SettingsEvent.ToggleTradeSelectModal(true)) },
                     trades = state.selectedTrades
                 )
+            }
+
+            item {
+                SettingsComponent (
+                    title = "DATA & SUPPORT"
+                ){
+                    SettingsOptionRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        icon = R.drawable.server,
+                        tabName = "Data Backup",
+                        description = "Google Drive sync",
+                        onClick = settingsNavigation.navigateToDataBackUp,
+                    )
+                }
             }
 
             item {

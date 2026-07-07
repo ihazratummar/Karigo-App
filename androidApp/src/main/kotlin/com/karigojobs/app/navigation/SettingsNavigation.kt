@@ -10,6 +10,9 @@ import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.karigojobs.feature.settings.SettingsNavigation
 import com.karigojobs.feature.settings.SettingsScreen
+import com.karigojobs.feature.settings.backup.DataBackupScreen
+import com.karigojobs.presentation.backup.DataBackupViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.karigojobs.feature.settings.LegalScreen
 import com.karigojobs.feature.settings.AboutScreen
 import com.karigojobs.presentation.settings.SettingsViewModel
@@ -71,7 +74,11 @@ fun NavGraphBuilder.settingsNav(
         }
 
         composable<SettingsRootRoute.DataBackUpRoute> {
-            PlaceholderSettingsScreen(title = "Data Backup", onBack = { navHostController.popBackStack() })
+            val viewModel = koinViewModel<DataBackupViewModel>()
+            DataBackupScreen(
+                viewModel = viewModel,
+                onBack = { navHostController.popBackStack() }
+            )
         }
 
         composable<SettingsRootRoute.HelpAndSupportRoute> {

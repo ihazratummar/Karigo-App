@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karigojob.share.utils.DateFormat
 import com.karigojob.share.utils.DateUtils.toReadableDate
+import com.karigojob.share.utils.formatNumber
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.result.SiteEstimateError
 import com.karigojobs.domain.usecase.estimate.DeleteEstimateUseCase
@@ -77,14 +78,14 @@ class EstimateDetailsViewModel(
                     }
                     append("\n\n*Materials Required:*")
                     materials.forEachIndexed { index, material ->
-                        append("\n${index + 1}. ${material.materialName} — ${material.quantity} ${material.unit}")
+                        append("\n${index + 1}. ${material.materialName} — ${material.quantity.formatNumber()} ${material.unit}")
                         if (estimate.showRate) {
-                            append(" — ₹${material.total}")
+                            append(" — ₹${material.total.formatNumber()}")
                         }
                     }
                     
                     if (estimate.showRate) {
-                        append("\n\n*Estimated Total: ₹${estimate.total}*")
+                        append("\n\n*Estimated Total: ₹${estimate.total?.formatNumber()}*")
                     }
                     append("\n\n_Sent from Karigo_")
                 }

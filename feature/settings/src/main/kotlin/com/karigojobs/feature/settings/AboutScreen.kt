@@ -82,7 +82,7 @@ fun AboutScreen(
                     Text(
                         text = "Karigo",
                         style = MaterialTheme.typography.headlineMedium.copy(
-                            color = Color.White,
+                            color = appColor.primaryText,
                             fontWeight = FontWeight.Bold
                         )
                     )
@@ -99,7 +99,7 @@ fun AboutScreen(
 
                     // Version Badge
                     Surface(
-                        color = Color.White.copy(alpha = 0.05f),
+                        color = appColor.primaryText.copy(alpha = 0.05f),
                         shape = CircleShape,
                         border = customCardBorder()
                     ) {
@@ -195,7 +195,7 @@ fun AboutScreen(
                             Text(
                                 text = "Key Features",
                                 style = MaterialTheme.typography.titleMedium.copy(
-                                    color = Color.White,
+                                    color = appColor.primaryText,
                                     fontWeight = FontWeight.Bold
                                 )
                             )
@@ -382,7 +382,7 @@ private fun FeatureRow(
         verticalAlignment = Alignment.Top
     ) {
         Surface(
-            color = Color.White.copy(alpha = 0.05f),
+            color = appColor.primaryText.copy(alpha = 0.05f),
             shape = KarigojobsShapes.small,
             border = customCardBorder(),
             modifier = Modifier.size(dimens.Icon.lg)

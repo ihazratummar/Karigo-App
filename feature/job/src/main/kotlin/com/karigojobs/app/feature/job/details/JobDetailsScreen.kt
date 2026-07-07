@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.karigojob.share.utils.formatNumber
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.app.feature.job.component.JobDetailsCard
 import com.karigojobs.app.feature.job.component.JobDetailsClientInfo
@@ -217,7 +218,7 @@ fun JobDetailsScreen(
                             }
 
                             Text(
-                                text = "${deviceInfo.currency}${jobDetailsState.jobModel?.total}",
+                                text = "${deviceInfo.currency}${jobDetailsState.jobModel?.total?.formatNumber()}",
                                 style = MaterialTheme.typography.headlineLarge.copy(
                                     color = KarigojobsIconColor
                                 )

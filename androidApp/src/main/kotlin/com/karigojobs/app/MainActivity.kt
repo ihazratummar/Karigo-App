@@ -17,6 +17,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.karigojobs.app.android.services.UpdateManager
 import com.karigojobs.app.navigation.AppNavigation
 import com.karigojobs.domain.usecase.settings.GetAppPreferencesUseCase
+import com.karigojobs.domain.usecase.backup.GetAutoBackupStatusUseCase
+import com.karigojobs.feature.settings.backup.BackupScheduler
 import com.karigojobs.presentation.onboarding.OnboardingCompleteState
 import com.karigojobs.presentation.onboarding.OnboardingViewModel
 import com.karigojobs.share.model.AppLanguage
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var onboardingViewModel: OnboardingViewModel
     private val updateManager : UpdateManager by inject ()
     private val getAppPreferencesUseCase: GetAppPreferencesUseCase by inject()
+    private val getAutoBackupStatusUseCase: GetAutoBackupStatusUseCase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashscreen = installSplashScreen()
@@ -50,6 +53,17 @@ class MainActivity : AppCompatActivity() {
                 initialValue = null
             )
             
+            val autoBackupState = getAutoBackupStatusUseCase().collectAsStateWithLifecycle(
+                initialValue = false
+            )
+
+            LaunchedEffect(autoBackupState.value) {
+                if (autoBackupState.value) {
+                    BackupScheduler.scheduleNightlyBackup(this@MainActivity)
+                } else {
+                    BackupScheduler.cancelNightlyBackup(this@MainActivity)
+                }
+            }
             val appPreferences = appPreferencesState.value ?: GetAppPreferencesUseCase.AppPreferences(
                 theme = ThemePreference.SYSTEM,
                 language = AppLanguage.ENGLISH

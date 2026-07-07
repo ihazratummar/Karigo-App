@@ -17,6 +17,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 
 
 /**
@@ -40,4 +44,14 @@ fun getRepositoryModule(): Module = module {
     }
     single<WorkerRepository> { WorkerRepositoryImpl(database = get(), ioDispatcher = get()) }
     single<MaterialCategoryRepository> { MaterialCategoryRepositoryImpl(database = get(), ioDispatcher = get()) }
+    single<com.karigojobs.domain.repository.GoogleDriveRepository> { 
+        com.karigojobs.data.repository.GoogleDriveRepositoryImpl(
+            HttpClient() { 
+                install(ContentNegotiation) { 
+                    json(Json { ignoreUnknownKeys = true }) 
+                } 
+            }, 
+            get()
+        ) 
+    }
 }

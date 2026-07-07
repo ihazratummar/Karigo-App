@@ -22,7 +22,7 @@ ORDER BY site_estimate.create_at DESC;
 
 getEstimateById:
 SELECT site_estimate.*, client.name AS client_name FROM site_estimate INNER JOIN client ON site_estimate.client_id = client.id
-WHERE site_estimate.id = :id;
+WHERE site_estimate.id = :id ORDER BY created_at DESC;
 
 insertEstimate:
 INSERT INTO site_estimate(id, client_id, project_title, date, site_notes, show_rate, total_items,  total, create_at, updated_at)

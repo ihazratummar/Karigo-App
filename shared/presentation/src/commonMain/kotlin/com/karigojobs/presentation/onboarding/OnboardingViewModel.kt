@@ -8,6 +8,8 @@ import com.karigojobs.domain.usecase.onboarding.GetOnboardingStatusUseCase
 import com.karigojobs.domain.usecase.material.SeedStarterMaterialsUseCase
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.share.model.TradeType
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -28,8 +30,13 @@ import kotlinx.coroutines.launch
 class OnboardingViewModel(
     private val completeOnboardingUseCase: CompleteOnboardingUseCase,
     private val getOnboardingStatusUseCase: GetOnboardingStatusUseCase,
-    private val seedStarterMaterialsUseCase: SeedStarterMaterialsUseCase
+    private val seedStarterMaterialsUseCase: SeedStarterMaterialsUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
+
+    init {
+        analytics.logScreenView(AnalyticsEvent.Screen.ONBOARDING)
+    }
 
     // ── STATE ─────────────────────────────────────────────────────────────────
     private val _state = MutableStateFlow(OnboardingState())
@@ -67,6 +74,7 @@ class OnboardingViewModel(
     // ── HANDLERS ──────────────────────────────────────────────────────────────
 
     private fun handleGeStarted() {
+        analytics.logEvent(AnalyticsEvent.Event.ONBOARDING_STARTED)
         _state.update { it.copy(currentStep = OnboardingStep.TRADE_SELECT) }
     }
 
@@ -112,6 +120,7 @@ class OnboardingViewModel(
                     // 4. fire navigation effect - clear back stack on Android,
                     // switches AppFeature.State on IOS
 
+                    analytics.logEvent(AnalyticsEvent.Event.ONBOARDING_COMPLETED)
                     _effects.emit(OnboardingEffect.NavigationToDashboard)
                 }
                 is Result.Error -> {

@@ -11,6 +11,8 @@ import com.karigojobs.domain.usecase.estimate.DeleteEstimateUseCase
 import com.karigojobs.domain.usecase.estimate.GetEstimateByIdUseCase
 import com.karigojobs.domain.usecase.estimate.GetEstimateMaterialsUseCase
 import com.karigojobs.presentation.erroMap.asString
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -31,7 +33,8 @@ class EstimateDetailsViewModel(
     private val estimateId: String,
     private val getEstimateByIdUseCase: GetEstimateByIdUseCase,
     private val getEstimateMaterialsUseCase: GetEstimateMaterialsUseCase,
-    private val deleteEstimateUseCase: DeleteEstimateUseCase
+    private val deleteEstimateUseCase: DeleteEstimateUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
 
@@ -43,6 +46,7 @@ class EstimateDetailsViewModel(
 
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.ESTIMATE_DETAILS)
         loadEstimate()
         loadEstimateMaterial()
     }

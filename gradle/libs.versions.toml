@@ -38,6 +38,15 @@ appUpdateKtx = "2.1.0"
 appcompat = "1.7.1"
 leakcanary = "1.0.0"
 
+# ===========================
+# Firebase
+# ===========================
+google_services = "4.4.2"
+firebase_crashlytics_plugin = "3.0.2"
+firebase_bom = "33.1.2"
+gitlive_firebase = "2.1.0"
+okio = "3.9.0"
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -93,6 +102,15 @@ app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.re
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 leakcanary = { group = "com.android.tools.studio.leakcanary", name = "leakcanary", version.ref = "leakcanary" }
 
+# ===========================
+# Firebase
+# ===========================
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase_bom" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+gitlive-firebase-analytics = { module = "dev.gitlive:firebase-analytics", version.ref = "gitlive_firebase" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -103,3 +121,5 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 androidLint = { id = "com.android.lint", version.ref = "agp" }
 kotlin-serialization = {id = "org.jetbrains.kotlin.plugin.serialization", version.ref= "kotlin"}
 sql-delight = {id = "app.cash.sqldelight", version.ref = "sqldelight"}
+google-services = { id = "com.google.gms.google-services", version.ref = "google_services" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase_crashlytics_plugin" }

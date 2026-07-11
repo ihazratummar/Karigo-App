@@ -7,6 +7,8 @@ import com.karigojobs.domain.usecase.job.GetAllJobUseCase
 import com.karigojobs.domain.usecase.job.SearchJobUseCase
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.presentation.erroMap.asString
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,7 +34,8 @@ import kotlin.time.Duration.Companion.milliseconds
 
 class JobListViewModel (
     private val getAllJobUseCase: GetAllJobUseCase,
-    private val searchJobUseCase: SearchJobUseCase
+    private val searchJobUseCase: SearchJobUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(JobListState())
@@ -43,6 +46,7 @@ class JobListViewModel (
 
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.JOB_LIST)
         observeSearchText()
     }
 

@@ -9,6 +9,8 @@ import com.karigojobs.domain.usecase.client.GetClientUseCase
 import com.karigojobs.domain.usecase.job.GetJobByClientUseCase
 import com.karigojobs.presentation.client.details.ClientDetailsEffect.*
 import com.karigojobs.presentation.erroMap.asString
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -29,7 +31,8 @@ class ClientDetailsViewModel(
     private val clientId: String,
     private val getClientUseCase: GetClientFlowUseCase,
     private val getJobByClientUseCase: GetJobByClientUseCase,
-    private val deleteClientUseCase: DeleteClientUseCase
+    private val deleteClientUseCase: DeleteClientUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
 
@@ -40,6 +43,7 @@ class ClientDetailsViewModel(
     val effect: SharedFlow<ClientDetailsEffect> = _effect.asSharedFlow()
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.CLIENT_DETAILS)
         loadClient()
         loadJobByClient()
     }

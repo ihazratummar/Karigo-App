@@ -6,10 +6,17 @@ import com.karigojobs.domain.usecase.settings.GetAppPreferencesUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 
 class MainViewModel(
-    getAppPreferencesUseCase: GetAppPreferencesUseCase
+    getAppPreferencesUseCase: GetAppPreferencesUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
+
+    init {
+        analytics.logEvent(AnalyticsEvent.Event.APP_LAUNCHED)
+    }
 
     val appPreferences: StateFlow<GetAppPreferencesUseCase.AppPreferences> = getAppPreferencesUseCase()
         .stateIn(

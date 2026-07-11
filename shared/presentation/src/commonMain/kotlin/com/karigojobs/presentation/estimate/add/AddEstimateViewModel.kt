@@ -21,6 +21,8 @@ import com.karigojobs.presentation.materials.list.MaterialListFilter.SelectedTra
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.SiteEstimateMaterial
 import com.karigojobs.share.model.SiteEstimateModel
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -59,7 +61,8 @@ class AddEstimateViewModel(
     private val getEstimateByIdUseCase: GetEstimateByIdUseCase,
     private val getEstimateMaterialsUseCase: GetEstimateMaterialsUseCase,
     private val updateSiteEstimateUseCase: UpdateSiteEstimateUseCase,
-    private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase
+    private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
     @OptIn(ExperimentalUuidApi::class)
@@ -76,6 +79,7 @@ class AddEstimateViewModel(
 
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.ADD_ESTIMATE)
         loadMaterials()
         loadSelectedTrades()
         observeCategories()
@@ -397,6 +401,7 @@ class AddEstimateViewModel(
                             _effect.emit(ShowError(result.error.toString()))
                         }
                         is Result.Success -> {
+                            analytics.logEvent(AnalyticsEvent.Event.ESTIMATE_CREATED)
                             _effect.emit(NavigationBack)
                         }
                     }

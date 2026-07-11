@@ -38,3 +38,12 @@
 # Karigo specific rules (keep model classes if needed for serialization/reflection)
 -keep class com.karigojobs.share.model.** { *; }
 -keep class com.karigojobs.data.dto.** { *; }
+
+# WorkManager & Room
+-keep class androidx.work.impl.** { *; }
+-keep class androidx.room.** { *; }
+
+# Firebase Analytics & Crashlytics
+-keep class com.google.firebase.analytics.** { *; }
+-keep class com.google.android.gms.measurement.** { *; }
+-keep class com.google.firebase.crashlytics.** { *; }

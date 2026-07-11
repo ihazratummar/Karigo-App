@@ -16,6 +16,8 @@ import com.karigojobs.presentation.materials.list.MaterialScreenEffect.*
 import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -53,7 +55,8 @@ class MaterialListViewModel(
     private val updateMaterialUseCase: UpdateMaterialUseCase,
     private val addMaterialUseCase: AddMaterialUseCase,
     private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase,
-    private val insertMaterialCategoryUseCase: InsertMaterialCategoryUseCase
+    private val insertMaterialCategoryUseCase: InsertMaterialCategoryUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
 
@@ -67,6 +70,7 @@ class MaterialListViewModel(
 
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.MATERIAL_LIST)
         loadSelectedTrades()
         observeEditingMaterial()
         observeActiveCategoryLoading()

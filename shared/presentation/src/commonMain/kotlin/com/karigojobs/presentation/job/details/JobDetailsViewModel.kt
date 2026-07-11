@@ -11,6 +11,8 @@ import com.karigojobs.domain.usecase.job.GetJobLabourItemUseCase
 import com.karigojobs.domain.usecase.job.GetJobMaterialItemsUseCase
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.job.details.JobDetailsEffect.*
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -34,7 +36,8 @@ class JobDetailsViewModel(
     private val deleteJobUseCase: DeleteJobUseCase,
     private val getClientUseCase: GetClientUseCase,
     private val getJobLabourItemUseCase: GetJobLabourItemUseCase,
-    private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase
+    private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(JobDetailsState())
@@ -45,6 +48,7 @@ class JobDetailsViewModel(
 
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.JOB_DETAILS)
         loadJob()
         loadJobLabourItem()
         loadJobMaterialItem()

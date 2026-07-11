@@ -10,6 +10,8 @@ import com.karigojobs.domain.usecase.settings.UpdateThemePreferenceUseCase
 import com.karigojobs.domain.usecase.trade.GetSelectedTradeTypeUseCase
 import com.karigojobs.domain.usecase.trade.SaveTradesUseCase
 import com.karigojobs.share.model.TradeType
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,7 +31,8 @@ class SettingsViewModel (
     private val saveTradesUseCase: SaveTradesUseCase,
     private val getAppPreferencesUseCase: GetAppPreferencesUseCase,
     private val updateThemePreferenceUseCase: UpdateThemePreferenceUseCase,
-    private val updateAppLanguageUseCase: UpdateAppLanguageUseCase
+    private val updateAppLanguageUseCase: UpdateAppLanguageUseCase,
+    private val analytics: AnalyticsLogger
 ): ViewModel() {
 
 
@@ -45,6 +48,7 @@ class SettingsViewModel (
     val state : StateFlow<SettingsState> = _state.asStateFlow()
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.SETTINGS)
         loadWorker()
         loadSelectedTradeTypes()
         loadAppPreferences()

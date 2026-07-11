@@ -10,6 +10,8 @@ import com.karigojobs.domain.usecase.backup.SetAutoBackupStatusUseCase
 import com.karigojobs.domain.usecase.backup.UploadBackupUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import com.karigojob.share.utils.formatToLocalizeDate
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,7 +26,8 @@ class DataBackupViewModel(
     private val restoreBackupUseCase: RestoreBackupUseCase,
     private val getAutoBackupStatusUseCase: GetAutoBackupStatusUseCase,
     private val setAutoBackupStatusUseCase: SetAutoBackupStatusUseCase,
-    private val getLastBackupTimestampUseCase: GetLastBackupTimestampUseCase
+    private val getLastBackupTimestampUseCase: GetLastBackupTimestampUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DataBackupState())
@@ -34,6 +37,7 @@ class DataBackupViewModel(
     val effect: SharedFlow<DataBackupEffect> = _effect.asSharedFlow()
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.DATA_BACKUP)
         viewModelScope.launch {
             getAutoBackupStatusUseCase().collectLatest { enabled ->
                 _state.update { it.copy(isAutoBackupEnabled = enabled) }

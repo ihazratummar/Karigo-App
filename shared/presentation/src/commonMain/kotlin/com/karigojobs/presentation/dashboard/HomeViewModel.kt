@@ -8,6 +8,8 @@ import com.karigojobs.domain.usecase.job.GetAllJobUseCase
 import com.karigojobs.domain.usecase.trade.GetSelectedTradeTypeUseCase
 import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
 import com.karigojobs.presentation.erroMap.asString
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -27,7 +29,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase,
     private val getAllJobUseCase: GetAllJobUseCase,
-    private val getWorkerProfileUseCase: GetWorkerProfileUseCase
+    private val getWorkerProfileUseCase: GetWorkerProfileUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
 
@@ -39,6 +42,7 @@ class HomeViewModel(
 
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.HOME)
         loadSelectedTrade()
         loadAllJob()
         loadWorker()

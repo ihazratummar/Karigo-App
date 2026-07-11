@@ -54,4 +54,6 @@ fun getRepositoryModule(): Module = module {
             get()
         ) 
     }
+    single<com.karigojobs.domain.repository.BackupFileHandler> { com.karigojobs.data.repository.BackupFileHandlerImpl(pathProvider = get()) }
+    single<com.karigojobs.domain.analytics.AnalyticsLogger> { getAnalyticsLogger() }
 }

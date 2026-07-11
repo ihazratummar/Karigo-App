@@ -32,12 +32,22 @@ kotlin {
     iosArm64 {
         binaries.framework {
             baseName = xcfName
+            isStatic = true
+            export(projects.shared.domain)
+            export(projects.shared.presentation)
+            export(projects.shared.data)
+            export(projects.shared.model)
         }
     }
 
     iosSimulatorArm64 {
         binaries.framework {
             baseName = xcfName
+            isStatic = true
+            export(projects.shared.domain)
+            export(projects.shared.presentation)
+            export(projects.shared.data)
+            export(projects.shared.model)
         }
     }
 
@@ -50,13 +60,14 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.shared.datastore)
-                implementation(projects.shared.database)
-                implementation(projects.shared.device)
-                implementation(projects.shared.domain)
-                implementation(projects.shared.data)
-                implementation(projects.shared.presentation)
-
+                api(projects.shared.datastore)
+                api(projects.shared.database)
+                api(projects.shared.device)
+                api(projects.shared.domain)
+                api(projects.shared.data)
+                api(projects.shared.presentation)
+                api(projects.shared.model)
+                
                 implementation(libs.kotlin.stdlib)
 
                 api(libs.koin.core)

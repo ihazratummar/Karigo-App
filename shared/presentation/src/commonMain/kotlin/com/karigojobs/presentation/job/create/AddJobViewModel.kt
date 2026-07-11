@@ -21,6 +21,8 @@ import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.TradeType
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -63,7 +65,8 @@ class AddJobViewModel(
     private val getJobDetailsUseCase: GetJobDetailsUseCase,
     private val getJobLabourItemUseCase: GetJobLabourItemUseCase,
     private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase,
-    private val getClientUseCase: GetClientUseCase
+    private val getClientUseCase: GetClientUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
     /** Unique draft or existing job ID. */
@@ -83,6 +86,7 @@ class AddJobViewModel(
 
     /** Initializes data required for the job form. */
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.ADD_JOB)
         loadSelectedTradeType()
         observeMaterialsSearch()
         observeCategoriesLoading()
@@ -542,6 +546,7 @@ class AddJobViewModel(
 
                     when (result) {
                         is Result.Success -> {
+                            analytics.logEvent(AnalyticsEvent.Event.JOB_CREATED)
                             _effect.emit(AddJobEffect.NavigateBack)
                             _state.update { it.copy(isLoading = false) }
                         }

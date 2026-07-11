@@ -10,6 +10,8 @@ import com.karigojobs.domain.usecase.materialCategory.UpdateMaterialCategoryUseC
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.share.model.MaterialCategoryModel
 import com.karigojobs.share.model.TradeType
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -25,7 +27,8 @@ class MaterialCategoryViewModel(
     private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase,
     private val insertMaterialCategoryUseCase: InsertMaterialCategoryUseCase,
     private val updateMaterialCategoryUseCase: UpdateMaterialCategoryUseCase,
-    private val deleteMaterialCategoryUseCase: DeleteMaterialCategoryUseCase
+    private val deleteMaterialCategoryUseCase: DeleteMaterialCategoryUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(MaterialCategoryState())

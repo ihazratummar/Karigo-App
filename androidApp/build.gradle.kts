@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 kotlin {
@@ -44,6 +46,11 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
     debugImplementation(libs.leakcanary)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 }
 
 android {
@@ -54,8 +61,8 @@ android {
         applicationId = "com.karigojobs.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 18
-        versionName = "0.17.0"
+        versionCode = 19
+        versionName = "0.18.0"
     }
     packaging {
         resources {

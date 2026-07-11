@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.client.GetClientListUseCase
 import com.karigojobs.presentation.erroMap.asString
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -29,7 +31,8 @@ import kotlin.time.Duration.Companion.milliseconds
  */
 
 class ClientListViewModel(
-    private val getAllClientListUseCase: GetClientListUseCase
+    private val getAllClientListUseCase: GetClientListUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
 
@@ -41,6 +44,7 @@ class ClientListViewModel(
 
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.CLIENT_LIST)
         observeClient()
     }
 

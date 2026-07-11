@@ -43,12 +43,15 @@ kotlin {
                 api(libs.ktor.client.content.negotiation)
                 api(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.gitlive.firebase.analytics)
+                implementation(libs.okio)
             }
         }
 
         androidMain {
             dependencies {
                 implementation(libs.ktor.client.android)
+                api(project.dependencies.platform(libs.firebase.bom))
             }
         }
 

@@ -22,7 +22,7 @@ class KarigojobsApp : Application() {
             androidContext(this@KarigojobsApp)
             modules(
                 module {
-                    single <String>{ applicationContext.filesDir.absolutePath }
+                    single<String> { applicationContext.filesDir.absolutePath }
                 },
                 getUpdateModule()
             )

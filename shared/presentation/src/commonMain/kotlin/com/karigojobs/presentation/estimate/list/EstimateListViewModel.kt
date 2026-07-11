@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.estimate.DeleteEstimateUseCase
 import com.karigojobs.domain.usecase.estimate.GetAllEstimateUseCase
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,7 +32,8 @@ import kotlin.time.Duration.Companion.milliseconds
 
 class EstimateListViewModel (
     private val getAllEstimateUseCase: GetAllEstimateUseCase,
-    private val deleteEstimateUseCase: DeleteEstimateUseCase
+    private val deleteEstimateUseCase: DeleteEstimateUseCase,
+    private val analytics: AnalyticsLogger
 ): ViewModel() {
 
     private val _state = MutableStateFlow(EstimateListState())
@@ -41,6 +44,7 @@ class EstimateListViewModel (
 
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.ESTIMATE_LIST)
         loadEstimate()
     }
 

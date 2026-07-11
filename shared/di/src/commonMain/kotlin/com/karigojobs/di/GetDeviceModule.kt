@@ -10,3 +10,4 @@ import org.koin.dsl.module
  */
 
 expect fun getDeviceModule(): Module
+expect fun getAnalyticsLogger(): com.karigojobs.domain.analytics.AnalyticsLogger

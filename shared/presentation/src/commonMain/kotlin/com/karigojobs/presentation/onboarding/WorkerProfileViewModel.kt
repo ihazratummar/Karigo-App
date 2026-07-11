@@ -7,6 +7,8 @@ import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
 import com.karigojobs.domain.usecase.settings.SaveWorkerProfileUseCase
 import com.karigojobs.share.model.WorkerProfileModel
 import com.karigojobs.presentation.erroMap.asString
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.analytics.AnalyticsEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -22,7 +24,8 @@ import kotlinx.coroutines.launch
  */
 class WorkerProfileViewModel(
     private val getWorkerProfileUseCase: GetWorkerProfileUseCase,
-    private val saveWorkerProfileUseCase: SaveWorkerProfileUseCase
+    private val saveWorkerProfileUseCase: SaveWorkerProfileUseCase,
+    private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
     private val initialProfile = getWorkerProfileUseCase.invokeSync()
@@ -42,6 +45,7 @@ class WorkerProfileViewModel(
     val effect: SharedFlow<WorkerProfileEffect> = _effect.asSharedFlow()
 
     init {
+        analytics.logScreenView(AnalyticsEvent.Screen.WORKER_PROFILE)
         loadExistingProfile()
     }
 
@@ -139,6 +143,7 @@ class WorkerProfileViewModel(
             _state.update { it.copy(isLoading = false) }
             when (result) {
                 is Result.Success -> {
+                    analytics.logEvent(AnalyticsEvent.Event.WORKER_PROFILE_SAVED)
                     _effect.emit(WorkerProfileEffect.NavBack)
                 }
                 is Result.Error -> {

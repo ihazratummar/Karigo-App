@@ -1,37 +1,67 @@
 package com.karigo.app.feature.siteEstimate.details
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.print.PrintAttributes
+import android.print.PrintManager
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.core.net.toUri
 import com.karigo.app.feature.siteEstimate.component.EstimateDetailsCard
 import com.karigo.app.feature.siteEstimate.component.EstimateMaterialsList
 import com.karigo.app.feature.siteEstimate.component.EstimateTotalCard
+import com.karigojob.share.utils.formatNumber
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.estimate.details.EstimateDetailsEffect
 import com.karigojobs.presentation.estimate.details.EstimateDetailsEvent
 import com.karigojobs.presentation.estimate.details.EstimateDetailsState
 import com.karigojobs.ui.common.DeleteDialog
+import com.karigojobs.ui.common.DocumentPreviewCard
+import com.karigojobs.ui.common.KarigoButtons
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.KarigoTopAppBar
+import com.karigojobs.ui.common.PreviewItem
 import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.common.customCardBorder
+import com.karigojobs.ui.common.ShareChoiceDialog
+import com.karigojobs.ui.ShareType
+import com.karigojobs.ui.formatEpochMs
+import com.karigojobs.ui.sharePdfFile
+import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.appColor
+import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
 
@@ -54,6 +84,8 @@ fun EstimateDetailsScreen(
 
     val context = LocalContext.current
     val snackBarState = remember { SnackbarHostState() }
+    var showShareDialog by remember { mutableStateOf(false) }
+    var shareType by remember { mutableStateOf<ShareType?>(null) }
 
     LaunchedEffect(Unit) {
         effect?.collect { effect ->
@@ -71,6 +103,50 @@ fun EstimateDetailsScreen(
                             "https://api.whatsapp.com/send?text=${Uri.encode(effect.message)}".toUri()
                     }
                     context.startActivity(intent)
+                }
+
+                is EstimateDetailsEffect.ShareTextOnWhatsapp -> {
+                    try {
+                        val whatsappIntent = Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse("https://api.whatsapp.com/send?text=" + Uri.encode(effect.text))
+                        }
+                        context.startActivity(whatsappIntent)
+                    } catch (e: Exception) {
+                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, effect.text)
+                        }
+                        context.startActivity(Intent.createChooser(shareIntent, "Share text"))
+                    }
+                }
+
+                is EstimateDetailsEffect.ShareEstimatePdf -> {
+                    if (shareType == ShareType.SHARE_PDF) {
+                        sharePdfFile(context, effect.html, effect.estimateTitle)
+                    } else {
+                        try {
+                            val printManager = context.getSystemService(Context.PRINT_SERVICE) as? PrintManager
+                            if (printManager == null) {
+                                android.widget.Toast.makeText(context, "Print service is not available on this device", android.widget.Toast.LENGTH_LONG).show()
+                                return@collect
+                            }
+                            val webView = WebView(context).apply {
+                                webViewClient = object : WebViewClient() {
+                                    override fun onPageFinished(view: WebView?, url: String?) {
+                                        try {
+                                            val printAdapter = createPrintDocumentAdapter(effect.estimateTitle)
+                                            printManager.print(effect.estimateTitle, printAdapter, PrintAttributes.Builder().build())
+                                        } catch (e: Exception) {
+                                            android.widget.Toast.makeText(context, "Failed to open printer: ${e.localizedMessage}", android.widget.Toast.LENGTH_LONG).show()
+                                        }
+                                    }
+                                }
+                            }
+                            webView.loadDataWithBaseURL(null, effect.html, "text/HTML", "UTF-8", null)
+                        } catch (e: Exception) {
+                            android.widget.Toast.makeText(context, "Failed to print: ${e.localizedMessage}", android.widget.Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
 
                 EstimateDetailsEffect.NavigationBack -> {
@@ -101,9 +177,7 @@ fun EstimateDetailsScreen(
                             iconBackGroundColor = Color.Transparent,
                             size = dimens.Height.minTouch / 1f,
                             onClick = {
-                                event(
-                                    EstimateDetailsEvent.WhatsAppShare
-                                )
+                                showShareDialog = true
                             },
                             isBorder = true
                         )
@@ -176,8 +250,95 @@ fun EstimateDetailsScreen(
             }
 
             item {
+                Spacer(modifier = Modifier.height(dimens.Space.sm))
+                Text(
+                    text = "Estimate Preview",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = appColor.secondaryText,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+
+            item {
+                val currency = deviceInfo.currency
+                val showRate = state.estimateDetails?.showRate ?: true
+                val businessName = state.workerProfileModel?.businessName?.ifBlank { null }
+                    ?: state.workerProfileModel?.ownerName?.ifBlank { null }
+                    ?: "Karigo Provider"
+
+                val previewItems = state.siteEstimateMaterial.map { item ->
+                    val quantityText = "${item.quantity.formatNumber()} ${item.unit}"
+                    PreviewItem(
+                        name = item.materialName,
+                        quantityText = quantityText,
+                        totalText = if (showRate) "$currency${item.total.formatNumber()}" else null
+                    )
+                }
+
+                DocumentPreviewCard(
+                    businessName = businessName,
+                    documentId = "Estimate #EST-${state.estimateDetails?.id?.takeLast(6)?.uppercase() ?: ""}",
+                    dateText = state.estimateDetails?.date?.let { formatEpochMs(it) } ?: "N/A",
+                    clientName = state.clientModel?.name ?: state.estimateDetails?.clientName ?: "",
+                    clientAddress = state.clientModel?.address?.ifBlank { null },
+                    items = previewItems,
+                    totalText = if (showRate) "$currency${state.estimateDetails?.total?.formatNumber() ?: "0"}" else null
+                )
+            }
+
+            item {
+                val currency = deviceInfo.currency
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.base)
+                ) {
+                    // Export PDF Button
+                    KarigoButtons(
+                        modifier = Modifier.weight(1f),
+                        onClick = {
+                            shareType = ShareType.PRINT
+                            event(EstimateDetailsEvent.GenerateEstimatePdf(currencySymbol = currency))
+                        },
+                        buttonColor = appColor.cardColors,
+                        contentColor = Color(0xFFEF5350),
+                        label = "Export PDF",
+                        icon = R.drawable.ic_pdf
+                    )
+
+                    // WhatsApp Button
+                    KarigoButtons(
+                        modifier = Modifier.weight(1f),
+                        onClick = {
+                            showShareDialog = true
+                        },
+                        buttonColor = appColor.cardColors,
+                        contentColor = Color(0xFF4CAF50),
+                        label = "WhatsApp",
+                        icon = R.drawable.whatsapp
+                    )
+                }
+            }
+
+            item {
                 Spacer(Modifier.height(dimens.Space._8xl))
             }
         }
+    }
+
+    if (showShareDialog) {
+        val currency = deviceInfo.currency
+        ShareChoiceDialog(
+            onDismiss = { showShareDialog = false },
+            onSharePdf = {
+                shareType = ShareType.SHARE_PDF
+                event(EstimateDetailsEvent.GenerateEstimatePdf(currencySymbol = currency))
+            },
+            onShareText = {
+                event(EstimateDetailsEvent.ShareEstimateOnWhatsapp(currencySymbol = currency))
+            },
+            title = "Share Estimate",
+            description = "Select how you would like to share this estimate with your client."
+        )
     }
 }

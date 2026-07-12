@@ -88,11 +88,11 @@ fun SettingsScreen(
                 label = "Estimates",
                 onClick = settingsNavigation.navigateToEstimate,
             ),
-            QuickAccessData(
-                icon = R.drawable.earning,
-                label = "Earnings",
-                onClick = settingsNavigation.navigateToEarnings,
-            ),
+//            QuickAccessData(
+//                icon = R.drawable.earning,
+//                label = "Earnings",
+//                onClick = settingsNavigation.navigateToEarnings,
+//            ),
         )
 
         val legalAndInfoTabs = listOf(

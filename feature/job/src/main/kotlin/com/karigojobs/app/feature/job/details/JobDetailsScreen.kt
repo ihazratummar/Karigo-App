@@ -16,12 +16,39 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
+import android.print.PrintManager
+import android.print.PrintAttributes
+import android.print.PrintDocumentInfo
+import android.print.PrintDocumentAdapter
+import android.print.PageRange
+import android.os.ParcelFileDescriptor
+import java.io.File
+import android.content.Context
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.font.FontWeight
 import com.karigojob.share.utils.formatNumber
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.app.feature.job.component.JobDetailsCard
@@ -37,6 +64,13 @@ import com.karigojobs.ui.common.DeleteDialog
 import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.KarigoMiddleTextTopAppBar
 import com.karigojobs.ui.common.customCardBorder
+import com.karigojobs.ui.common.KarigoButtons
+import com.karigojobs.ui.common.DocumentPreviewCard
+import com.karigojobs.ui.common.PreviewItem
+import com.karigojobs.ui.common.ShareChoiceDialog
+import com.karigojobs.ui.ShareType
+import com.karigojobs.ui.formatEpochMs
+import com.karigojobs.ui.sharePdfFile
 import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText3
@@ -61,7 +95,10 @@ fun JobDetailsScreen(
     event: (JobDetailsIntent) -> Unit
 ) {
 
+    val context = LocalContext.current
     val snackbarState = remember { SnackbarHostState() }
+    var showShareDialog by remember { mutableStateOf(false) }
+    var shareType by remember { mutableStateOf<ShareType?>(null) }
 
     LaunchedEffect(Unit) {
         jobDetailsEffect?.collect { effect ->
@@ -75,6 +112,50 @@ fun JobDetailsScreen(
 
                 JobDetailsEffect.NavigationBack -> {
                     onBackClick()
+                }
+
+                is JobDetailsEffect.ShareInvoicePdf -> {
+                    if (shareType == ShareType.SHARE_PDF) {
+                        sharePdfFile(context, effect.html, effect.jobTitle)
+                    } else {
+                        try {
+                            val printManager = context.getSystemService(Context.PRINT_SERVICE) as? PrintManager
+                            if (printManager == null) {
+                                android.widget.Toast.makeText(context, "Print service is not available on this device", android.widget.Toast.LENGTH_LONG).show()
+                                return@collect
+                            }
+                            val webView = WebView(context).apply {
+                                webViewClient = object : WebViewClient() {
+                                    override fun onPageFinished(view: WebView?, url: String?) {
+                                        try {
+                                            val printAdapter = createPrintDocumentAdapter(effect.jobTitle)
+                                            printManager.print(effect.jobTitle, printAdapter, PrintAttributes.Builder().build())
+                                        } catch (e: Exception) {
+                                            android.widget.Toast.makeText(context, "Failed to open printer: ${e.localizedMessage}", android.widget.Toast.LENGTH_LONG).show()
+                                        }
+                                    }
+                                }
+                            }
+                            webView.loadDataWithBaseURL(null, effect.html, "text/HTML", "UTF-8", null)
+                        } catch (e: Exception) {
+                            android.widget.Toast.makeText(context, "Failed to print: ${e.localizedMessage}", android.widget.Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+
+                is JobDetailsEffect.ShareTextOnWhatsapp -> {
+                    try {
+                        val whatsappIntent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
+                            data = android.net.Uri.parse("https://api.whatsapp.com/send?text=" + android.net.Uri.encode(effect.text))
+                        }
+                        context.startActivity(whatsappIntent)
+                    } catch (e: Exception) {
+                        val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(android.content.Intent.EXTRA_TEXT, effect.text)
+                        }
+                        context.startActivity(android.content.Intent.createChooser(shareIntent, "Share Invoice"))
+                    }
                 }
             }
         }
@@ -227,9 +308,106 @@ fun JobDetailsScreen(
                     }
                 }
                 item {
+                    Spacer(modifier = Modifier.height(dimens.Space.sm))
+                    Text(
+                        text = "Invoice Preview",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = appColor.secondaryText,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
+
+            item {
+                val currency = deviceInfo.currency
+                val businessName = jobDetailsState.workerProfileModel?.businessName?.ifBlank { null }
+                    ?: jobDetailsState.workerProfileModel?.ownerName?.ifBlank { null }
+                    ?: "Karigo Provider"
+
+                val previewItems = mutableListOf<PreviewItem>()
+                jobDetailsState.jobLabourItems.forEach { item ->
+                    previewItems.add(
+                        PreviewItem(
+                            name = item.itemName,
+                            subtitle = "Labour",
+                            quantityText = item.quantity.toString(),
+                            totalText = "$currency${item.mainTotal.formatNumber()}"
+                        )
+                    )
+                }
+                jobDetailsState.jobMaterialItems.forEach { item ->
+                    previewItems.add(
+                        PreviewItem(
+                            name = item.name,
+                            subtitle = "Material",
+                            quantityText = item.quantity.toString(),
+                            totalText = "$currency${item.mainTotal.formatNumber()}"
+                        )
+                    )
+                }
+
+                DocumentPreviewCard(
+                    businessName = businessName,
+                    documentId = "Invoice #INV-${jobDetailsState.jobModel?.id?.takeLast(6)?.uppercase()}",
+                    dateText = jobDetailsState.jobModel?.createdAt?.let { formatEpochMs(it) } ?: "N/A",
+                    clientName = jobDetailsState.clientModel?.name ?: jobDetailsState.jobModel?.clientName ?: "",
+                    clientAddress = jobDetailsState.clientModel?.address?.ifBlank { null },
+                    items = previewItems,
+                    totalText = "$currency${jobDetailsState.jobModel?.total?.formatNumber()}"
+                )
+            }
+
+                item {
+                    val currency = deviceInfo.currency
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(dimens.Space.base)
+                    ) {
+                        // Export PDF Button
+                        KarigoButtons(
+                            modifier = Modifier.weight(1f),
+                            onClick = {
+                                shareType = ShareType.PRINT
+                                event(JobDetailsIntent.GenerateInvoicePdf(currencySymbol = currency))
+                            },
+                            buttonColor = appColor.cardColors,
+                            contentColor = Color(0xFFEF5350),
+                            label = "Export PDF",
+                            icon = R.drawable.ic_pdf
+                        )
+
+                        // WhatsApp Button
+                        KarigoButtons(
+                            modifier = Modifier.weight(1f),
+                            onClick = {
+                                showShareDialog = true
+                            },
+                            buttonColor = appColor.cardColors,
+                            contentColor = Color(0xFF4CAF50),
+                            label = "WhatsApp",
+                            icon = R.drawable.whatsapp
+                        )
+                    }
+                }
+                item {
                     Spacer(Modifier.height(dimens.Space._8xl))
                 }
             }
         }
     }
+
+    if (showShareDialog) {
+        val currency = deviceInfo.currency
+        ShareChoiceDialog(
+            onDismiss = { showShareDialog = false },
+            onSharePdf = {
+                shareType = ShareType.SHARE_PDF
+                event(JobDetailsIntent.GenerateInvoicePdf(currencySymbol = currency))
+            },
+            onShareText = {
+                event(JobDetailsIntent.ShareInvoiceOnWhatsapp(currencySymbol = currency))
+            }
+        )
+    }
 }
+

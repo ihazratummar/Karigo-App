@@ -9,6 +9,7 @@ import com.karigojobs.domain.usecase.job.DeleteJobUseCase
 import com.karigojobs.domain.usecase.job.GetJobDetailsUseCase
 import com.karigojobs.domain.usecase.job.GetJobLabourItemUseCase
 import com.karigojobs.domain.usecase.job.GetJobMaterialItemsUseCase
+import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.job.details.JobDetailsEffect.*
 import com.karigojobs.domain.analytics.AnalyticsLogger
@@ -37,6 +38,7 @@ class JobDetailsViewModel(
     private val getClientUseCase: GetClientUseCase,
     private val getJobLabourItemUseCase: GetJobLabourItemUseCase,
     private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase,
+    private val getWorkerProfileUseCase: GetWorkerProfileUseCase,
     private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
@@ -52,6 +54,7 @@ class JobDetailsViewModel(
         loadJob()
         loadJobLabourItem()
         loadJobMaterialItem()
+        loadWorkerProfile()
     }
 
 
@@ -103,6 +106,45 @@ class JobDetailsViewModel(
 
             is JobDetailsIntent.DeletePopUpOpen -> {
                 _state.update { it.copy(isDeletePopUpOpen = event.isOpen) }
+            }
+
+            is JobDetailsIntent.GenerateInvoicePdf -> {
+                val job = _state.value.jobModel ?: return
+                val client = _state.value.clientModel
+                val worker = _state.value.workerProfileModel
+                val labour = _state.value.jobLabourItems
+                val materials = _state.value.jobMaterialItems
+                val html = InvoiceHtmlBuilder.buildInvoiceHtml(
+                    job = job,
+                    client = client,
+                    workerProfile = worker,
+                    labourItems = labour,
+                    materialItems = materials,
+                    currencySymbol = event.currencySymbol
+                )
+                val jobTitle = "Invoice_${job.title.replace(" ", "_")}"
+                viewModelScope.launch {
+                    _effect.emit(JobDetailsEffect.ShareInvoicePdf(html, jobTitle))
+                }
+            }
+
+            is JobDetailsIntent.ShareInvoiceOnWhatsapp -> {
+                val job = _state.value.jobModel ?: return
+                val client = _state.value.clientModel
+                val worker = _state.value.workerProfileModel
+                val labour = _state.value.jobLabourItems
+                val materials = _state.value.jobMaterialItems
+                val whatsappText = InvoiceHtmlBuilder.buildWhatsappText(
+                    job = job,
+                    client = client,
+                    workerProfile = worker,
+                    labourItems = labour,
+                    materialItems = materials,
+                    currencySymbol = event.currencySymbol
+                )
+                viewModelScope.launch {
+                    _effect.emit(JobDetailsEffect.ShareTextOnWhatsapp(whatsappText))
+                }
             }
         }
     }
@@ -163,6 +205,21 @@ class JobDetailsViewModel(
                 when(result) {
                     is Result.Error -> {_effect.emit(JobDetailsEffect.ShowError(result.error.asString()))}
                     is Result.Success -> {_state.update { it.copy(jobMaterialItems = result.data) }}
+                }
+            }
+        }
+    }
+
+    private fun loadWorkerProfile() {
+        viewModelScope.launch {
+            getWorkerProfileUseCase().collectLatest { result ->
+                when (result) {
+                    is Result.Success -> {
+                        _state.update { it.copy(workerProfileModel = result.data) }
+                    }
+                    is Result.Error -> {
+                        // Suppress profile load error for job details
+                    }
                 }
             }
         }

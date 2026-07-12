@@ -47,3 +47,9 @@
 -keep class com.google.firebase.analytics.** { *; }
 -keep class com.google.android.gms.measurement.** { *; }
 -keep class com.google.firebase.crashlytics.** { *; }
+
+# Reusable AOSP printing bypass bridge
+-keep class android.print.PdfPrint {
+    *;
+}
+

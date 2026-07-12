@@ -1,8 +1,19 @@
 package com.karigojobs.ui
 
+import android.content.Context
+import android.content.Intent
+import android.print.PrintAttributes
+import android.print.PrintManager
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.compose.ui.graphics.Color
+import androidx.core.content.FileProvider
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.share.model.TradeType
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 /**
@@ -57,4 +68,80 @@ fun TradeType.color() : Color {
         TradeType.GAS_LPG_FITTER -> Color(0xFFdc2626)
         TradeType.NETWORK_SUPPORT -> Color(0xFF234ba7)
     }
+}
+
+enum class ShareType {
+    PRINT, SHARE_PDF
+}
+
+fun formatEpochMs(epochMs: Long): String {
+    if (epochMs == 0L) return "N/A"
+    return try {
+        val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        sdf.format(Date(epochMs))
+    } catch (e: Exception) {
+        "N/A"
+    }
+}
+
+fun sharePdfFile(context: Context, html: String, documentTitle: String) {
+    val printManager = context.getSystemService(Context.PRINT_SERVICE) as? PrintManager
+    if (printManager == null) {
+        Toast.makeText(context, "Print service is not available on this device", Toast.LENGTH_LONG).show()
+        return
+    }
+    
+    val webView = WebView(context).apply {
+        webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                try {
+                    val printAdapter = view?.createPrintDocumentAdapter(documentTitle) ?: return
+                    val printAttributes = PrintAttributes.Builder()
+                        .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+                        .setResolution(PrintAttributes.Resolution("pdf", "pdf", 300, 300))
+                        .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
+                        .build()
+
+                    val pdfPrint = android.print.PdfPrint(printAttributes)
+                    pdfPrint.print(printAdapter, context.cacheDir, "$documentTitle.pdf") { file ->
+                        if (file != null) {
+                            try {
+                                val authority = "${context.packageName}.fileprovider"
+                                val uri = FileProvider.getUriForFile(context, authority, file)
+                                
+                                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                                    type = "application/pdf"
+                                    putExtra(Intent.EXTRA_STREAM, uri)
+                                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                    `package` = "com.whatsapp"
+                                }
+                                context.startActivity(shareIntent)
+                            } catch (e: Exception) {
+                                try {
+                                    val authority = "${context.packageName}.fileprovider"
+                                    val uri = FileProvider.getUriForFile(context, authority, file)
+                                    val chooserIntent = Intent.createChooser(
+                                        Intent(Intent.ACTION_SEND).apply {
+                                            type = "application/pdf"
+                                            putExtra(Intent.EXTRA_STREAM, uri)
+                                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                        }, 
+                                        "Share PDF"
+                                    )
+                                    context.startActivity(chooserIntent)
+                                } catch (ex: Exception) {
+                                    Toast.makeText(context, "Sharing failed: ${ex.localizedMessage}", Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        } else {
+                            Toast.makeText(context, "Failed to render PDF document", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(context, "PDF layout error: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+    webView.loadDataWithBaseURL(null, html, "text/HTML", "UTF-8", null)
 }

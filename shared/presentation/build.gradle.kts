@@ -36,9 +36,11 @@ kotlin {
                 implementation(projects.shared.model)
                 implementation(projects.shared.utils)
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlinx.datetime)
                 // Add KMP dependencies here
 
                 implementation(libs.lifecycle.viewmodel)
+                implementation(libs.kotlinx.datetime)
             }
         }
 

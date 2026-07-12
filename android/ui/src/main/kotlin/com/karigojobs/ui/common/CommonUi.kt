@@ -9,6 +9,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -64,6 +65,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.Shape
@@ -1466,4 +1468,263 @@ fun KarigoButtons(
         )
     }
 
+}
+
+data class PreviewItem(
+    val name: String,
+    val subtitle: String? = null,
+    val quantityText: String,
+    val totalText: String? = null
+)
+
+@Composable
+fun DocumentPreviewCard(
+    modifier: Modifier = Modifier,
+    businessName: String,
+    documentId: String,
+    dateText: String,
+    clientName: String,
+    clientAddress: String?,
+    items: List<PreviewItem>,
+    totalText: String?
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = appColor.cardColors
+        ),
+        shape = KarigojobsShapes.medium,
+        border = customCardBorder()
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(dimens.Padding.base)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
+        ) {
+            // Business Profile Header
+            Text(
+                text = businessName,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    color = appColor.primaryText,
+                    fontWeight = FontWeight.Bold
+                ),
+                textAlign = TextAlign.Center
+            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+            ) {
+                Text(
+                    text = documentId,
+                    style = MaterialTheme.typography.labelMedium.copy(color = appColor.secondaryText),
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = dateText,
+                    style = MaterialTheme.typography.labelMedium.copy(color = appColor.secondaryText),
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            Spacer(modifier = Modifier.height(dimens.Space.xs))
+
+            // BILL TO info
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+            ) {
+                Text(
+                    text = "BILL TO",
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        color = appColor.secondaryText,
+                    )
+                )
+                Text(
+                    text = clientName,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = appColor.primaryText,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                if (!clientAddress.isNullOrBlank()) {
+                    Text(
+                        text = clientAddress,
+                        style = MaterialTheme.typography.labelMedium.copy(color = appColor.secondaryText)
+                    )
+                }
+            }
+
+            // Dotted divider
+            val dividerColor = appColor.secondaryText.copy(alpha = 0.3f)
+            Canvas(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(dimens.Padding.xs)
+            ) {
+                drawLine(
+                    color = dividerColor,
+                    start = Offset(0f, 0f),
+                    end = Offset(size.width, 0f),
+                    pathEffect = PathEffect.dashPathEffect(floatArrayOf(15f, 15f), 0f),
+                    strokeWidth = 3f
+                )
+            }
+
+            // Items List
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+            ) {
+                items.forEach { item ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (item.totalText != null) {
+                            Text(
+                                text = "${item.name} x${item.quantityText}",
+                                style = MaterialTheme.typography.bodyMedium.copy(color = appColor.primaryText),
+                                modifier = Modifier.weight(1f)
+                            )
+                            Text(
+                                text = item.totalText,
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = appColor.primaryText,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            )
+                        } else {
+                            Text(
+                                text = item.name,
+                                style = MaterialTheme.typography.bodyMedium.copy(color = appColor.primaryText),
+                                modifier = Modifier.weight(1f)
+                            )
+                            Text(
+                                text = item.quantityText,
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = appColor.primaryText,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+
+            // Dotted divider and TOTAL (only if totalText is not null)
+            if (totalText != null) {
+                Canvas(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(dimens.Padding.xs)
+                ) {
+                    drawLine(
+                        color = dividerColor,
+                        start = Offset(0f, 0f),
+                        end = Offset(size.width, 0f),
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(15f, 15f), 0f),
+                        strokeWidth = 3f
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "TOTAL",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = appColor.primaryText,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    )
+                    Text(
+                        text = totalText,
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            color = appColor.primaryText,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ShareChoiceDialog(
+    onDismiss: () -> Unit,
+    onSharePdf: () -> Unit,
+    onShareText: () -> Unit,
+    title: String = "Share Invoice",
+    description: String = "Select how you would like to share this invoice with your client."
+) {
+    Dialog(
+        onDismissRequest = onDismiss
+    ) {
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = KarigojobsShapes.medium,
+            colors = CardDefaults.cardColors(
+                containerColor = appColor.cardColors
+            ),
+            border = customCardBorder()
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(dimens.Padding.base)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.base),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = appColor.primaryText,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = appColor.secondaryText,
+                        textAlign = TextAlign.Center
+                    )
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
+                ) {
+                    KarigoButtons(
+                        modifier = Modifier.weight(1f),
+                        onClick = {
+                            onSharePdf()
+                            onDismiss()
+                        },
+                        buttonColor = appColor.cardColors,
+                        contentColor = appColor.primaryText,
+                        label = "PDF Document",
+                        icon = R.drawable.ic_pdf
+                    )
+                    KarigoButtons(
+                        modifier = Modifier.weight(1f),
+                        onClick = {
+                            onShareText()
+                            onDismiss()
+                        },
+                        buttonColor = appColor.cardColors,
+                        contentColor = appColor.primaryText,
+                        label = "Text Message",
+                        icon = R.drawable.whatsapp
+                    )
+                }
+            }
+        }
+    }
 }

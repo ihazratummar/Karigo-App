@@ -61,8 +61,8 @@ android {
         applicationId = "com.karigojobs.app"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 19
-        versionName = "0.18.0"
+        versionCode = 21
+        versionName = "0.20.0"
     }
     packaging {
         resources {

@@ -12,7 +12,7 @@
     <string name="common_btn_change">পরিবর্তন</string>
     <string name="common_btn_add_item">আইটেম যোগ করুন</string>
     <string name="common_manage_library">লাইব্রেরি পরিচালনা করুন</string>
-    <string name="common_btn_rename">Rename</string>
+    <string name="common_btn_rename">পুনঃনামকরণ</string>
     <string name="common_uncategorized">বিভাগহীন</string>
     <string name="common_tab_title_client">গ্রাহক</string>
     <string name="common_tab_job_title">কাজের শিরোনাম</string>

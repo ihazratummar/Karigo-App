@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    -- >  Buttons --
     <string name="common_btn_cancel">Cancel</string>
     <string name="common_btn_save">Save</string>
+    <string name="common_btn_update">Update</string>
     <string name="common_btn_delete">Delete</string>
-    <string name="common_label_search">Search</string>
-    <string name="common_see_all">See All</string>
-    <string name="common_total">%1$d total</string>
     <string name="common_btn_ok">OK</string>
     <string name="common_btn_retry">Retry</string>
+    <string name="common_btn_continue">Continue</string>
+    <string name="common_btn_get_started">Get Started</string>
+    <string name="common_btn_lets_go">Let's Go</string>
+    <string name="common_btn_change">Change</string>
+    <string name="common_btn_add_item">Add Item</string>
+    <string name="common_manage_library">Manage Library</string>
+    <string name="common_btn_rename">Rename</string>
+
+    <string name="common_uncategorized">Uncategorized</string>
+
+    -- Tabs Title
+    <string name="common_tab_title_client">CLIENT</string>
+    <string name="common_tab_job_title">JOB TITLE</string>
+
+    <string name="common_tab_title_client_placeholder">Select Client...</string>
+    <string name="common_tab_job_title_placeholder">e.g. Kitchen faucet repair</string>
+
+
+    <string name="common_rate">Rate</string>
+    <string name="common_unit">Unit</string>
+    <string name="common_price">Price</string>
+
+    <string name="common_unit_text_field_placeholder">ea, mtr, kg</string>
+
+    <string name="common_tab_select_trade">SELECT TRADE</string>
+
+    <string name="common_add_labour_item">Add Labour Item</string>
+    <string name="common_add_material_item">Add Materials</string>
+    <string name="common_select_client">Select Client</string>
+    <string name="common_select_client_search_field_placeolder">Search Client..</string>
+
+    <string name="common_label_search">Search</string>
+
+    <string name="common_total">Total</string>
+    <string name="common_all">All</string>
+    <string name="common_optional">Optional</string>
+
+    --- Count
+    <string name="common_total_count">%1$d total</string>
+    <string name="common_item_count">%1$d items</string>
+    <string name="common_add_selected_count">Add Selected (%1$d)</string>
+    <string name="common_clients_count">%1$d clients</string>
+    <string name="common_jobs_count">%1$d jobs</string>
+    <string name="common_billed_amount">%1$d billed</string>
+
+    <string name="common_see_all">See All</string>
     <string name="common_error_unknown">An unknown error occurred</string>
     <string name="common_required">REQUIRED</string>
-    <string name="common_btn_continue">Continue</string>
+    <string name="common_contractor">Contractor</string>
+
+    <string name="common_job_history">Job History</string>
+
+    <string name="common_greeting_morning">Good Morning</string>
+    <string name="common_greeting_afternoon">Good Afternoon</string>
+    <string name="common_greeting_evening">Good Evening</string>
+    <string name="common_greeting_night">Good Night</string>
+
+    --- Job Status
+    <string name="common_status">Status</string>
+    <string name="common_labour">Labour</string>
+    <string name="common_materials">Materials</string>
+    <string name="common_grand_total">Grand Total</string>
+    <string name="common_invoice_preview">Invoice Preview</string>
+    <string name="common_export">Export PDF</string>
 </resources>

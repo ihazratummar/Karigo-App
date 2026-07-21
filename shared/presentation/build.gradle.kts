@@ -43,20 +43,6 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
             }
         }
-
-
-        androidMain {
-            dependencies {
-
-            }
-        }
-
-
-        iosMain {
-            dependencies {
-
-            }
-        }
     }
 
 }

@@ -44,6 +44,9 @@ import kotlinx.coroutines.flow.SharedFlow
  */
 
 
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.*
+
 @Composable
 fun EstimateListScreen(
     state: EstimateListState,
@@ -77,7 +80,7 @@ fun EstimateListScreen(
         topBar = {
             KarigoMiddleTextTopAppBar(
                 onNavigationClick = { onBackClick() },
-                title = "Site Estimate",
+                title = stringResource(Res.string.estimate_list_title),
                 action = {
                     KarigoIconWIthBgCick(
                         icon = R.drawable.add,
@@ -122,14 +125,14 @@ fun EstimateListScreen(
 
                 Spacer(Modifier.height(dimens.Space.base))
                 Text(
-                    text = "No estimate yet",
+                    text = stringResource(Res.string.estimate_list_empty_title),
                     style = MaterialTheme.typography.labelMedium.copy(
                         color = KarigojobsText2
                     )
                 )
                 Spacer(Modifier.height(dimens.Space.sm))
                 Text(
-                    text = "Walk a sire, tap materials, send to client",
+                    text = stringResource(Res.string.estimate_list_empty_desc),
                     style = MaterialTheme.typography.labelSmall.copy(
                         color = KarigojobsText3
                     )
@@ -140,7 +143,7 @@ fun EstimateListScreen(
                     shape = KarigojobsShapes.medium
                 ) {
                     Text(
-                        text = "Create First Estimate",
+                        text = stringResource(Res.string.estimate_list_btn_create_first),
                     )
                 }
             }

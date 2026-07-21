@@ -1,5 +1,8 @@
 package com.karigojobs.feature.settings
 
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.*
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,12 +38,12 @@ fun AboutScreen(
     }
     val versionName = packageInfo?.versionName ?: "0.11.0"
     val versionCode = packageInfo?.let { PackageInfoCompat.getLongVersionCode(it) } ?: 1L
-    val versionText = "Version $versionName ($versionCode)"
+    val versionText = stringResource(Res.string.about_version, versionName, versionCode.toInt())
 
     Scaffold(
         topBar = {
             KarigoTopAppBar(
-                title = "About Karigo",
+                title = stringResource(Res.string.about_title),
                 isNavBack = true,
                 onNavigationClick = onBack,
                 isDivider = false
@@ -73,7 +76,7 @@ fun AboutScreen(
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.electrician),
-                            contentDescription = "Karigo Logo",
+                            contentDescription = stringResource(Res.string.about_logo_description),
                             tint = KarigojobsIconColor,
                             modifier = Modifier.size(dimens.Icon._4xl)
                         )
@@ -88,7 +91,7 @@ fun AboutScreen(
                     )
 
                     Text(
-                        text = "The all-in-one business companion for contractors, service professionals, and tradespeople.",
+                        text = stringResource(Res.string.about_tagline),
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = KarigojobsText2,
                             lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.2f
@@ -146,12 +149,12 @@ fun AboutScreen(
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.electrician),
-                                contentDescription = "What Karigo Does Icon",
+                                contentDescription = stringResource(Res.string.about_section_what_does),
                                 tint = KarigojobsIconColor,
                                 modifier = Modifier.size(dimens.Icon.sm)
                             )
                             Text(
-                                text = "What Karigo Does",
+                                text = stringResource(Res.string.about_section_what_does),
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     color = appColor.primaryText,
                                     fontWeight = FontWeight.Bold
@@ -160,7 +163,7 @@ fun AboutScreen(
                         }
 
                         Text(
-                            text = "Karigo helps you run your contracting or service business from your phone — no paperwork, no spreadsheets. Manage jobs, track clients, build material price lists, create professional site estimates, monitor earnings, and share everything via WhatsApp. Built specifically for the way tradespeople work.",
+                            text = stringResource(Res.string.about_what_does_desc),
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 color = appColor.secondaryText,
                                 lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.25f
@@ -188,12 +191,12 @@ fun AboutScreen(
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.alert),
-                                contentDescription = "Key Features Icon",
+                                contentDescription = stringResource(Res.string.about_section_features),
                                 tint = KarigojobsIconColor,
                                 modifier = Modifier.size(dimens.Icon.sm)
                             )
                             Text(
-                                text = "Key Features",
+                                text = stringResource(Res.string.about_section_features),
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     color = appColor.primaryText,
                                     fontWeight = FontWeight.Bold
@@ -206,33 +209,33 @@ fun AboutScreen(
                         ) {
                             FeatureRow(
                                 iconRes = R.drawable.job_line,
-                                title = "Job Management",
-                                description = "Track jobs from start to payment"
+                                title = stringResource(Res.string.about_feature_job_title),
+                                description = stringResource(Res.string.about_feature_job_desc)
                             )
                             FeatureRow(
                                 iconRes = R.drawable.user_line,
-                                title = "Client Records",
-                                description = "Keep client details and history"
+                                title = stringResource(Res.string.about_feature_client_title),
+                                description = stringResource(Res.string.about_feature_client_desc)
                             )
                             FeatureRow(
                                 iconRes = R.drawable.stack,
-                                title = "Material Library",
-                                description = "Build your price list once, reuse forever"
+                                title = stringResource(Res.string.about_feature_material_title),
+                                description = stringResource(Res.string.about_feature_material_desc)
                             )
                             FeatureRow(
                                 iconRes = R.drawable.estimate,
-                                title = "Site Estimates",
-                                description = "Create estimates on-site, share via WhatsApp"
+                                title = stringResource(Res.string.about_feature_estimate_title),
+                                description = stringResource(Res.string.about_feature_estimate_desc)
                             )
                             FeatureRow(
                                 iconRes = R.drawable.chart_line,
-                                title = "Earnings Tracking",
-                                description = "See your revenue at a glance"
+                                title = stringResource(Res.string.about_feature_earning_title),
+                                description = stringResource(Res.string.about_feature_earning_desc)
                             )
                             FeatureRow(
                                 iconRes = R.drawable.stack,
-                                title = "Data Backup",
-                                description = "Back up to Google Drive, restore anytime"
+                                title = stringResource(Res.string.settings_option_backup),
+                                description = stringResource(Res.string.about_feature_backup_desc)
                             )
                         }
                     }
@@ -257,12 +260,12 @@ fun AboutScreen(
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.user_action),
-                                contentDescription = "Who Is It For Icon",
+                                contentDescription = stringResource(Res.string.about_section_who_for),
                                 tint = KarigojobsIconColor,
                                 modifier = Modifier.size(dimens.Icon.sm)
                             )
                             Text(
-                                text = "Who Is It For",
+                                text = stringResource(Res.string.about_section_who_for),
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     color = appColor.primaryText,
                                     fontWeight = FontWeight.Bold
@@ -271,7 +274,7 @@ fun AboutScreen(
                         }
 
                         Text(
-                            text = "Karigo is built for the hardworking professionals who build, fix, and maintain our world:",
+                            text = stringResource(Res.string.about_who_for_desc),
                             style = MaterialTheme.typography.bodyMedium.copy(color = appColor.secondaryText)
                         )
 
@@ -288,7 +291,7 @@ fun AboutScreen(
                                         border = customCardBorder()
                                     ) {
                                         Text(
-                                            text = trade.displayName,
+                                            text = stringResource(trade.displayNameRes),
                                             style = MaterialTheme.typography.bodySmall.copy(
                                                 color = appColor.secondaryText,
                                                 fontWeight = FontWeight.Medium
@@ -326,13 +329,13 @@ fun AboutScreen(
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.love), // Similar icon for pride/heart
-                            contentDescription = "Made with Pride Icon",
+                            contentDescription = stringResource(Res.string.about_section_made_pride),
                             tint = KarigojobsIconColor,
                             modifier = Modifier.size(dimens.Icon.base)
                         )
 
                         Text(
-                            text = "Made with pride",
+                            text = stringResource(Res.string.about_section_made_pride),
                             style = MaterialTheme.typography.titleMedium.copy(
                                 color = appColor.primaryText,
                                 fontWeight = FontWeight.Bold
@@ -341,7 +344,7 @@ fun AboutScreen(
                         )
 
                         Text(
-                            text = "Built for the way contractors work — with multi-currency pricing, WhatsApp sharing, tax invoice support, and an interface simple enough for anyone to use.",
+                            text = stringResource(Res.string.about_made_pride_desc),
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 color = appColor.secondaryText,
                                 lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.2f
@@ -355,7 +358,7 @@ fun AboutScreen(
             // Footer Section
             item {
                 Text(
-                    text = "Karigo v$versionName · Made for the world · All rights reserved",
+                    text = stringResource(Res.string.about_copyright, versionName),
                     style = MaterialTheme.typography.bodySmall.copy(
                         color = appColor.tertiaryText,
                         fontWeight = FontWeight.Medium

@@ -57,6 +57,8 @@ import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.*
 
 
 /**
@@ -80,8 +82,9 @@ fun AddEstimateScreen(
             when (effect) {
                 EstimateEffect.NavigationBack -> {
                     onBackClick()
+                    val msg = org.jetbrains.compose.resources.getString(Res.string.estimate_add_toast_added)
                     snackbarState.showSnackbar(
-                        message = "Added",
+                        message = msg,
                         withDismissAction = true
                     )
                 }
@@ -120,7 +123,7 @@ fun AddEstimateScreen(
         topBar = {
             KarigoMiddleTextTopAppBar(
                 onNavigationClick = onBackClick,
-                title = if (state.estimateId == null) "New Estimate" else "Edit Estimate",
+                title = if (state.estimateId == null) stringResource(Res.string.estimate_add_title_new) else stringResource(Res.string.estimate_add_title_edit),
                 action = {
 
                 }
@@ -176,12 +179,12 @@ fun AddEstimateScreen(
         ) {
             item {
                 SectionWithTitle(
-                    title = "PROJECT TITLE"
+                    title = stringResource(Res.string.estimate_add_section_title)
                 ) {
                     KarigojobsTextField(
                         value = state.projectTitle,
                         onValueChange = { event(SiteEstimateEvent.ProjectTitleChange(it)) },
-                        placeholder = "e.g. Bathroom Renovation"
+                        placeholder = stringResource(Res.string.estimate_add_placeholder_title)
                     )
                 }
             }
@@ -197,7 +200,7 @@ fun AddEstimateScreen(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight(),
-                        title = "CLIENT"
+                        title = stringResource(Res.string.estimate_add_section_client)
                     ) {
                         ClientPicker(
                             modifier = Modifier.fillMaxHeight(),
@@ -215,7 +218,7 @@ fun AddEstimateScreen(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight(),
-                        title = "DATE"
+                        title = stringResource(Res.string.estimate_add_section_date)
                     ) {
                         KarigoDataPicker(
                             modifier = Modifier.fillMaxHeight(),
@@ -230,13 +233,13 @@ fun AddEstimateScreen(
                 SectionWithTitle(
                     modifier = Modifier
                         .fillMaxHeight(),
-                    title = "SITE NOTES"
+                    title = stringResource(Res.string.estimate_add_section_notes)
                 ) {
 
                     KarigojobsTextField(
                         value = state.siteNotes,
                         onValueChange = { event(SiteEstimateEvent.SiteNoteChange(it)) },
-                        placeholder = "Any special instructions...",
+                        placeholder = stringResource(Res.string.estimate_add_placeholder_notes),
                         singleLine = false,
                         maxLines = 3
                     )
@@ -266,12 +269,12 @@ fun AddEstimateScreen(
                             modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "Show Rate",
+                                text = stringResource(Res.string.estimate_add_label_show_rate),
                                 style = MaterialTheme.typography.bodyMedium
                             )
 
                             val labelText =
-                                if (state.isRateVisible) "Client Sees rate & total" else "Material list only, no prices"
+                                if (state.isRateVisible) stringResource(Res.string.estimate_add_desc_rate_visible) else stringResource(Res.string.estimate_add_desc_rate_hidden)
 
                             Text(
                                 text = labelText,
@@ -293,7 +296,7 @@ fun AddEstimateScreen(
                 SectionWithTitle(
                     modifier = Modifier
                         .fillMaxHeight(),
-                    title = "MATERIALS"
+                    title = stringResource(Res.string.estimate_add_section_materials)
                 ) {
 
                     state.selectedMaterials.forEachIndexed { index, material ->
@@ -348,7 +351,7 @@ fun AddEstimateScreen(
                     shape = KarigojobsShapes.medium
                 ) {
                     Text(
-                        text = if (state.estimateId == null) "Save Estimate" else "Update Estimate"
+                        text = if (state.estimateId == null) stringResource(Res.string.estimate_add_btn_save) else stringResource(Res.string.estimate_add_btn_update)
                     )
                 }
             }

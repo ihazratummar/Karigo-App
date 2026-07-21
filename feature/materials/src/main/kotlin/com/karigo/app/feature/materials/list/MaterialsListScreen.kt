@@ -1,5 +1,8 @@
 package com.karigo.app.feature.materials.list
 
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.*
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -173,8 +176,8 @@ fun MaterialsListScreen(
                         event(MaterialListEvent.DeleteMaterial(materialId = it))
                     }
                 },
-                dialogTitle = "Delete Material",
-                dialogDescription = "This action is permanent. Are you sure you want to delete this material.",
+                dialogTitle = stringResource(Res.string.dialog_delete_title_material),
+                dialogDescription = stringResource(Res.string.dialog_delete_desc_material),
             )
         }
 
@@ -336,7 +339,7 @@ fun MaterialItemRow(
                         }
                     }
                     Text(
-                        text = "${material.tradeType.displayName} · ${deviceInfo.currency}${material.price} / ${material.unit}",
+                        text = "${stringResource(material.tradeType.displayNameRes)} · ${deviceInfo.currency}${material.price} / ${material.unit}",
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = appColor.secondaryText
                         )
@@ -441,7 +444,7 @@ fun SearchAndFilter(
                         border = customCardBorder()
                     ) {
                         Text(
-                            text = trade.displayName,
+                            text = stringResource(trade.displayNameRes),
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
                             ),

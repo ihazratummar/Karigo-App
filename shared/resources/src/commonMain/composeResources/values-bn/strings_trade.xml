@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trade_plumber">প্লাম্বার</string>
+    <string name="trade_plumber_description">পাইপ, ফিটিংস, কল ও মেরামত</string>
+    <string name="trade_electrician">ইলেকট্রিশিয়ান</string>
+    <string name="trade_electrician_description">তারের সংযোগ, প্যানেল ও ফিক্সচার</string>
+    <string name="trade_carpenter">কাঠমিস্ত্রি</string>
+    <string name="trade_carpenter_description">কাঠের কাজ, দরজা ও আসবাবপত্র</string>
+    <string name="trade_painter">চিত্রশিল্পী</string>
+    <string name="trade_painter_description">অভ্যন্তরীণ ও বাহ্যিক রং করা</string>
+    <string name="trade_mason">রাজমিস্ত্রি ও ঠিকাদার</string>
+    <string name="trade_mason_description">ইটের গাঁথুনি, টাইলস ও কংক্রিট</string>
+    <string name="trade_grill">গ্রিল ও ফেব্রিকেটর</string>
+    <string name="trade_grill_description">ইস্পাত, গ্রিল ও গেট</string>
+    <string name="trade_ac_technician">এসি টেকনিশিয়ান</string>
+    <string name="trade_ac_technician_description">এসি সার্ভিসিং, মেরামত ও ইনস্টলেশন</string>
+    <string name="trade_appliance_repair">গৃহস্থালি যন্ত্রপাতি মেরামত</string>
+    <string name="trade_appliance_repair_description">ওয়াশার, ফ্রিজ ও গৃহস্থালি যন্ত্রপাতি</string>
+    <string name="trade_waterproofing">জলরোধী করা</string>
+    <string name="trade_waterproofing_description">ফাঁস ও স্যাঁতসেঁতে ভাব প্রতিরোধ</string>
+    <string name="trade_pest_control">কীটপতঙ্গ দমন</string>
+    <string name="trade_pest_control_description">উইপোকা, কীটপতঙ্গ ও ইঁদুর দমন</string>
+    <string name="trade_car_bike_mechanic">গাড়ি ও বাইক মেকানিক</string>
+    <string name="trade_car_bike_mechanic_description">যানবাহন মেরামত ও রক্ষণাবেক্ষণ</string>
+    <string name="trade_cctv_security">সিসিটিভি ও নিরাপত্তা</string>
+    <string name="trade_cctv_security_description">ক্যামেরা, সেন্সর ও অ্যালার্ম</string>
+    <string name="trade_solar_installer">সোলার ইনস্টলার</string>
+    <string name="trade_solar_installer_description">প্যানেল, ইনভার্টার ও ব্যাটারি</string>
+    <string name="trade_aluminium_upvc">অ্যালুমিনিয়াম ও ইউপিভিসি</string>
+    <string name="trade_aluminium_upvc_description">জানালা, দরজা ও পার্টিশন</string>
+    <string name="trade_civil_contractor">সিভিল ঠিকাদার</string>
+    <string name="trade_civil_contractor_description">ছোট নির্মাণ প্রকল্প</string>
+    <string name="trade_bore_well">বোরওয়েল ও পানির ট্যাঙ্ক</string>
+    <string name="trade_bore_well_description">ড্রিলিং, পাম্প ও রক্ষণাবেক্ষণ</string>
+    <string name="trade_gas_lpg_fitter">গ্যাস ও এলপিজি ফিটার</string>
+    <string name="trade_gas_lpg_fitter_description">পাইপলাইন, স্টোভ ও মেরামত</string>
+    <string name="trade_network_support">নেটওয়ার্ক ও আইটি সহায়তা</string>
+    <string name="trade_network_support_description">ক্যাবলিং, রাউটার ও ওয়াই-ফাই</string>
+</resources>

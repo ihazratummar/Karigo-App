@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="onboarding_started_description">The simplest way to manage jobs, clients, and earnings - built for contractors, plumbers, electricians &amp; more.</string>
+    <string name="onboarding_started_track_job">Track every job</string>
+    <string name="onboarding_started_track_description">Labour, materials &amp; invoices in one place</string>
+    <string name="onboarding_started_whatsapp">Share via WhatsApp</string>
+    <string name="onboarding_started_whatsapp_description">Send invoices to clients instantly</string>
+    <string name="onboarding_started_earnings">Know your earnings</string>
+    <string name="onboarding_started_earnings_description">Weekly reports &amp; payment tracker</string>
+
+    <string name="onboarding_progress">Step %1$s of %2$s</string>
+
+    <string name="onboarding_what_do_you_trade">What do you trade?</string>
+    <string name="onboarding_what_do_you_trade_description">Select your primary profession to help us personalize your experience.</string>
+    <string name="onboarding_btn_trade_not_selected">Select at least one trade</string>
+    <string name="onboarding_btn_continue">Continue (%1$s selected)</string>
+
+    <string name="onboarding_last_title">You're all set</string>
+    <string name="onboarding_last_description">We've loaded starter materials for your works.</string>
+    <string name="onboarding_starter_material">%1$s starter items loaded</string>
+    <string name="onboarding_materials_ready">%1$s materials ready</string>
+    <string name="onboarding_materials_ready_description">edit prices anytime in Material Library</string>
+
+    <string name="onboarding_back_to_trade">Back to trade selection</string>
+
+</resources>

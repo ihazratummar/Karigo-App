@@ -19,11 +19,6 @@ data class OnboardingState(
     val totalMaterialCount: Int = 0
 ){
     val canContinue: Boolean get() = selectedTrades.isNotEmpty()
-    val continueLabel: String get() = when {
-        selectedTrades.isEmpty() -> "Select at least one trade"
-        selectedTrades.size == 1 -> "Continue (1 selected)"
-        else -> "Continue (${selectedTrades.size} selected)"
-    }
 }
 
 // ── STEP ──────────────────────────────────────────────────────────────────────

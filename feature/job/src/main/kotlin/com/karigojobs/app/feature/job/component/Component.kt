@@ -17,9 +17,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,8 +39,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -49,8 +47,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.karigojob.share.utils.DateUtils.toReadableDate
 import com.karigojob.share.utils.formatNumber
+import com.karigojob.share.utils.formatToLocalizeDate
 import com.karigojobs.app.android.ui.R
-import com.karigojobs.presentation.job.create.AddJobIntent
 import com.karigojobs.presentation.job.create.AddJobState
 import com.karigojobs.presentation.job.create.LabourItem
 import com.karigojobs.share.model.ClientModel
@@ -58,7 +56,6 @@ import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobStatus
-import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.color
 import com.karigojobs.ui.common.CrossButton
@@ -70,18 +67,39 @@ import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.common.color
 import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.common.dashedBorder
+import com.karigojobs.ui.common.toDisplayName
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigoSelectedCardColor
-import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsCard
+import com.karigojobs.ui.theme.KarigojobsIconColor
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
-import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.SurfaceOverlay
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.toLocaleString
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_add_labour_item
+import karigojobs.shared.resources.generated.resources.common_add_material_item
+import karigojobs.shared.resources.generated.resources.common_btn_add_item
+import karigojobs.shared.resources.generated.resources.common_btn_change
+import karigojobs.shared.resources.generated.resources.common_item_count
+import karigojobs.shared.resources.generated.resources.common_labour
+import karigojobs.shared.resources.generated.resources.common_manage_library
+import karigojobs.shared.resources.generated.resources.common_materials
+import karigojobs.shared.resources.generated.resources.common_rate
+import karigojobs.shared.resources.generated.resources.common_status
+import karigojobs.shared.resources.generated.resources.common_tab_job_title
+import karigojobs.shared.resources.generated.resources.common_tab_job_title_placeholder
+import karigojobs.shared.resources.generated.resources.common_tab_select_trade
+import karigojobs.shared.resources.generated.resources.common_total
+import karigojobs.shared.resources.generated.resources.common_unit
+import karigojobs.shared.resources.generated.resources.job_details_labour_total
+import karigojobs.shared.resources.generated.resources.job_details_materials_total
+import karigojobs.shared.resources.generated.resources.job_labour_item_name_field_placeholder
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * @author hazratummar
@@ -112,13 +130,13 @@ fun TotalScreenCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Material",
+                    text = stringResource(Res.string.common_materials),
                     style = MaterialTheme.typography.labelSmall.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
                 Text(
-                    text = "${deviceInfo.currency}${addJobState.materialTotal}",
+                    text = "${deviceInfo.currency}${addJobState.materialTotal.toLocaleString()}",
                     style = MaterialTheme.typography.labelMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -131,13 +149,18 @@ fun TotalScreenCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Labour (${addJobState.labourItems.size} items)",
+                    text = "${stringResource(Res.string.common_labour)} ${
+                        stringResource(
+                            Res.string.common_item_count,
+                            addJobState.labourItems.size.toLocaleString()
+                        )
+                    }",
                     style = MaterialTheme.typography.labelSmall.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
                 Text(
-                    text = "${deviceInfo.currency}${addJobState.labourTotal}",
+                    text = "${deviceInfo.currency}${addJobState.labourTotal.toLocaleString()}",
                     style = MaterialTheme.typography.labelMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -152,14 +175,14 @@ fun TotalScreenCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Total",
+                    text = stringResource(Res.string.common_total),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Bold
                     )
                 )
                 Text(
-                    text = "${deviceInfo.currency}${addJobState.grandTotal}",
+                    text = "${deviceInfo.currency}${addJobState.grandTotal.toLocaleString()}",
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -180,7 +203,7 @@ fun JobTitleSection(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "JOB TITLE",
+            text = stringResource(Res.string.common_tab_job_title).uppercase(),
             style = MaterialTheme.typography.labelMedium.copy(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -195,7 +218,7 @@ fun JobTitleSection(
             KarigojobsTextField(
                 value = title,
                 onValueChange = onTitleChange,
-                placeholder = "e.g. Kitchen faucet repair"
+                placeholder = stringResource(Res.string.common_tab_job_title_placeholder)
             )
         }
     }
@@ -214,7 +237,7 @@ fun SelectTradeSection(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "SELECT TRADE",
+            text = stringResource(Res.string.common_tab_select_trade),
             style = MaterialTheme.typography.labelMedium.copy(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -257,7 +280,7 @@ fun SelectTradeSection(
                             tint = tradeType.color()
                         )
                         Text(
-                            text = tradeType.displayName,
+                            text = stringResource(tradeType.displayNameRes),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = if (isSelected) MaterialTheme.colorScheme.onBackground
                                 else MaterialTheme.colorScheme.onSurfaceVariant
@@ -285,7 +308,7 @@ fun AddJobLabourItemSection(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "LABOUR",
+            text = stringResource(Res.string.common_labour).uppercase(),
             style = MaterialTheme.typography.labelMedium.copy(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -302,7 +325,10 @@ fun AddJobLabourItemSection(
             Spacer(modifier = Modifier.height(dimens.Space.xs))
         }
 
-        AddItemCard(onClick = onClick)
+        AddItemCard(
+            text = stringResource(Res.string.common_add_labour_item),
+            onClick = onClick
+        )
     }
 }
 
@@ -339,7 +365,7 @@ fun LabourItemCard(
                 Text(
                     text = labourItem.itemName,
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color =appColor.primaryText
+                        color = appColor.primaryText
                     ),
                     modifier = Modifier.basicMarquee(
                         iterations = 200,
@@ -349,7 +375,7 @@ fun LabourItemCard(
                     overflow = TextOverflow.Visible
                 )
                 Text(
-                    text = "${deviceInfo.currency}${labourItem.rate} / ${labourItem.unit}",
+                    text = "${deviceInfo.currency}${labourItem.rate.toLocaleString()} / ${labourItem.unit}",
                     style = MaterialTheme.typography.labelMedium.copy(
                         color = appColor.secondaryText
                     )
@@ -358,7 +384,7 @@ fun LabourItemCard(
 
             MinusButton(onClick = onMinusClick)
             Text(
-                text = labourItem.quantity.toString(),
+                text = labourItem.quantity.toLocaleString(),
                 style = MaterialTheme.typography.titleMedium.copy(
                     color = appColor.primaryText,
                     fontWeight = FontWeight.Bold
@@ -395,7 +421,7 @@ fun AddMaterialItemSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "MATERIALS",
+                text = stringResource(Res.string.common_materials).uppercase(),
                 style = MaterialTheme.typography.labelMedium.copy(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -405,7 +431,7 @@ fun AddMaterialItemSection(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Manage Library >",
+                    text = "${stringResource(Res.string.common_manage_library)} >",
                     style = MaterialTheme.typography.labelMedium.copy(
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -423,10 +449,21 @@ fun AddMaterialItemSection(
                     JobMaterialSelectedCard(
                         selectedMaterial = item,
                         number = index + 1,
-                        onMaterialQuantityChange = { onMaterialQuantityChange(item.materialId ?: "", it) },
+                        onMaterialQuantityChange = {
+                            onMaterialQuantityChange(
+                                item.materialId ?: "",
+                                it
+                            )
+                        },
                         onMaterialMinusClick = { onMaterialMinusClick(item.materialId ?: "") },
                         onMaterialPlusClick = { onMaterialPlusClick(item.materialId ?: "") },
-                        onRemoveMaterialItemClick = { item.materialId?.let { onRemoveMaterialItemClick(it) } }
+                        onRemoveMaterialItemClick = {
+                            item.materialId?.let {
+                                onRemoveMaterialItemClick(
+                                    it
+                                )
+                            }
+                        }
                     )
                 }
             }
@@ -434,7 +471,7 @@ fun AddMaterialItemSection(
         }
 
         AddItemCard(
-            text = "Add Materials",
+            text = stringResource(Res.string.common_add_material_item),
             onClick = onClick
         )
     }
@@ -478,7 +515,7 @@ fun JobMaterialSelectedCard(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "$number",
+                        text = number.toLocaleString(),
                         style = MaterialTheme.typography.labelMedium.copy(
                             color = KarigojobsIconColor
                         )
@@ -496,7 +533,7 @@ fun JobMaterialSelectedCard(
                         )
                     )
                     Text(
-                        text = "${deviceInfo.currency}${selectedMaterial.unitPrice} / ${selectedMaterial.unit}",
+                        text = "${deviceInfo.currency}${selectedMaterial.unitPrice.toLocaleString()} / ${selectedMaterial.unit}",
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = KarigojobsText2
                         )
@@ -568,7 +605,7 @@ fun JobMaterialSelectedCard(
                         )
                 ) {
                     Text(
-                        text = "${deviceInfo.currency}${selectedMaterial.mainTotal}",
+                        text = "${deviceInfo.currency}${selectedMaterial.mainTotal.toLocaleString()}",
                         style = MaterialTheme.typography.labelMedium.copy(
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold
@@ -652,7 +689,7 @@ fun CreateLabourItemModal(
             verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
         ) {
             Text(
-                text = "Add Labour Item",
+                text = stringResource(Res.string.common_add_labour_item),
                 style = MaterialTheme.typography.titleMedium.copy(
                     color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold
@@ -661,7 +698,7 @@ fun CreateLabourItemModal(
             KarigojobsTextField(
                 value = itemName,
                 onValueChange = { itemName = it },
-                placeholder = "Work name, e.g. Wiring per point"
+                placeholder = stringResource(Res.string.job_labour_item_name_field_placeholder)
             )
 
             Row(
@@ -675,7 +712,7 @@ fun CreateLabourItemModal(
                     verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
                 ) {
                     Text(
-                        text = "RATE (${deviceInfo.currency})",
+                        text = "${stringResource(Res.string.common_rate).uppercase()} (${deviceInfo.currency})",
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -694,7 +731,7 @@ fun CreateLabourItemModal(
                     verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
                 ) {
                     Text(
-                        text = "UNIT",
+                        text = stringResource(Res.string.common_unit).uppercase(),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -725,15 +762,12 @@ fun CreateLabourItemModal(
                 enabled = itemName.isNotEmpty()
             ) {
                 Text(
-                    text = "Add Item"
+                    text = stringResource(Res.string.common_btn_add_item)
                 )
             }
         }
     }
 }
-
-
-
 
 
 @Composable
@@ -785,7 +819,7 @@ fun JobDetailsCard(
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = job.createdAt.toReadableDate(),
+                            text = job.createdAt.formatToLocalizeDate(),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = appColor.tertiaryText
                             )
@@ -804,7 +838,7 @@ fun JobDetailsCard(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = job.status.toString(),
+                    text = stringResource(job.status.toDisplayName()),
                     modifier = Modifier.padding(
                         horizontal = dimens.Padding.sm,
                         vertical = dimens.Padding.xs
@@ -845,7 +879,7 @@ fun JobDetailsStatusCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Status",
+                    text = stringResource(Res.string.common_status),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.Bold,
                         color = appColor.primaryText
@@ -866,7 +900,7 @@ fun JobDetailsStatusCard(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Change",
+                        text = stringResource(Res.string.common_btn_change),
                         modifier = Modifier.padding(
                             horizontal = dimens.Padding.sm,
                             vertical = dimens.Padding.xs
@@ -902,7 +936,7 @@ fun JobDetailsStatusCard(
                                 )
                         )
                         Text(
-                            text = status.toString(),
+                            text = stringResource(status.toDisplayName()),
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = appColor.secondaryText
                             ),
@@ -1088,31 +1122,11 @@ fun LabourItemList(
                 )
 
                 Text(
-                    text = "Labour",
+                    text = stringResource(Res.string.common_labour),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = appColor.primaryText
                     )
                 )
-
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .background(
-                            color = appColor.accentBg,
-                            shape = KarigojobsShapes.large
-                        )
-                ) {
-                    Text(
-                        text = "Per Item",
-                        style = MaterialTheme.typography.labelSmall.copy(
-                            color = KarigojobsIconColor
-                        ),
-                        modifier = Modifier.padding(
-                            horizontal = dimens.Padding.sm,
-                            vertical = dimens.Padding._2xs
-                        )
-                    )
-                }
             }
             labourItems.forEach { item ->
                 ItemList(
@@ -1126,7 +1140,7 @@ fun LabourItemList(
             HorizontalDivider()
             TotalItemCost(
                 total = total,
-                title = "LABOUR TOTAL"
+                title = stringResource(Res.string.job_details_labour_total)
             )
         }
     }
@@ -1165,7 +1179,7 @@ fun MaterialItemList(
                 )
 
                 Text(
-                    text = "Materials",
+                    text = stringResource(Res.string.common_materials),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = appColor.primaryText
                     )
@@ -1183,7 +1197,7 @@ fun MaterialItemList(
             HorizontalDivider()
             TotalItemCost(
                 total = total,
-                title = "MATERIAL TOTAL"
+                title = stringResource(Res.string.job_details_materials_total)
             )
         }
     }
@@ -1209,7 +1223,7 @@ fun TotalItemCost(
             )
         )
         Text(
-            text = total.formatNumber(),
+            text = total.toLocaleString(),
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold
@@ -1230,7 +1244,9 @@ fun ItemList(
 ) {
 
     Row(
-        modifier = modifier.padding(vertical = dimens.Padding.sm).fillMaxWidth(),
+        modifier = modifier
+            .padding(vertical = dimens.Padding.sm)
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -1245,7 +1261,7 @@ fun ItemList(
                 )
             )
             Text(
-                text = "$quantity x ${deviceInfo.currency}${itemRate.formatNumber()} / $unit",
+                text = "${quantity.toLocaleString()} x ${deviceInfo.currency}${itemRate.toLocaleString()} / $unit",
                 style = MaterialTheme.typography.labelSmall.copy(
                     color = appColor.secondaryText
                 )
@@ -1253,7 +1269,7 @@ fun ItemList(
         }
 
         Text(
-            text = "${deviceInfo.currency}${total.formatNumber()}",
+            text = "${deviceInfo.currency}${total.toLocaleString()}",
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = appColor.primaryText,
                 fontWeight = FontWeight.Bold

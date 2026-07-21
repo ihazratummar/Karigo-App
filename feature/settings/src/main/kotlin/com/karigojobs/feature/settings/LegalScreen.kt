@@ -18,6 +18,8 @@ import com.karigojobs.ui.common.contentHorizontalPadding
 import com.karigojobs.ui.common.customBorder
 import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.*
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.*
 
 @Composable
 fun LegalScreen(
@@ -29,7 +31,7 @@ fun LegalScreen(
     Scaffold(
         topBar = {
             KarigoTopAppBar(
-                title = document?.title ?: "Legal Page",
+                title = document?.title ?: stringResource(Res.string.legal_default_title),
                 isNavBack = true,
                 onNavigationClick = onBack,
                 isDivider = false
@@ -44,7 +46,7 @@ fun LegalScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Document not found",
+                    text = stringResource(Res.string.legal_doc_not_found),
                     style = MaterialTheme.typography.bodyMedium.copy(color = appColor.secondaryText)
                 )
             }
@@ -82,7 +84,7 @@ fun LegalScreen(
                         modifier = Modifier.padding(vertical = dimens.Padding.lg)
                     )
                     Text(
-                        text = "${document.title} • Karigo • Effective June 30, 2026",
+                        text = stringResource(Res.string.legal_doc_footer, document.title),
                         style = MaterialTheme.typography.bodySmall.copy(
                             color = appColor.tertiaryText,
                             fontWeight = FontWeight.Medium
@@ -133,11 +135,11 @@ private fun DocumentHeader(document: LegalDocument) {
             horizontalArrangement = Arrangement.spacedBy(dimens.Space.md)
         ) {
             Text(
-                text = "App: Karigo",
+                text = stringResource(Res.string.legal_info_app) + ": Karigo",
                 style = MaterialTheme.typography.bodySmall.copy(color = appColor.tertiaryText)
             )
             Text(
-                text = "Effective: June 30, 2026",
+                text = stringResource(Res.string.legal_effective_date),
                 style = MaterialTheme.typography.bodySmall.copy(color = appColor.tertiaryText)
             )
         }
@@ -182,11 +184,11 @@ private fun SectionItem(section: LegalSection) {
             )
         }
 
-        section.content.forEach { item ->
-            when (item) {
+        section.content.forEach { contentItem ->
+            when (contentItem) {
                 is LegalContentItem.Paragraph -> {
                     Text(
-                        text = item.text,
+                        text = contentItem.text,
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = appColor.secondaryText,
                             lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.25f
@@ -194,26 +196,46 @@ private fun SectionItem(section: LegalSection) {
                     )
                 }
                 is LegalContentItem.BulletList -> {
-                    BulletListLayout(items = item.items)
-                }
-                is LegalContentItem.Table -> {
-                    TableLayout(headers = item.headers, rows = item.rows)
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(dimens.Space.xs),
+                        modifier = Modifier.padding(start = dimens.Padding.base)
+                    ) {
+                        contentItem.items.forEach { bullet ->
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "•",
+                                    style = MaterialTheme.typography.bodyMedium.copy(color = appColor.secondaryText)
+                                )
+                                Text(
+                                    text = bullet,
+                                    style = MaterialTheme.typography.bodyMedium.copy(color = appColor.secondaryText),
+                                    modifier = Modifier.weight(1f)
+                                )
+                            }
+                        }
+                    }
                 }
                 is LegalContentItem.Callout -> {
-                    CalloutBox(text = item.text, type = item.type)
+                    CalloutBox(text = contentItem.text, type = contentItem.type)
                 }
                 is LegalContentItem.Subheading -> {
                     Text(
-                        text = item.text,
+                        text = contentItem.text,
                         style = MaterialTheme.typography.titleSmall.copy(
                             color = appColor.primaryText,
                             fontWeight = FontWeight.Bold
                         ),
-                        modifier = Modifier.padding(top = dimens.Padding.xs)
+                        modifier = Modifier.padding(top = dimens.Padding.sm)
                     )
                 }
+                is LegalContentItem.Table -> {
+                    TableLayout(headers = contentItem.headers, rows = contentItem.rows)
+                }
                 is LegalContentItem.ContactBlock -> {
-                    ContactBlockLayout(item)
+                    ContactBlockLayout(contentItem)
                 }
             }
         }

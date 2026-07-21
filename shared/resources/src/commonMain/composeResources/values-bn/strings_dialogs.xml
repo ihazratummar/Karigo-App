@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Delete Dialog -->
+    <string name="dialog_delete_title_job">Delete Job</string>
+    <string name="dialog_delete_desc_job">This will permanently remove this job and its invoice history.</string>
+    <string name="dialog_delete_title_client">Delete Client</string>
+    <string name="dialog_delete_desc_client">This will remove %1$s and all associated job history &amp; estimate history.</string>
+    <string name="dialog_delete_title_material">Delete Material</string>
+    <string name="dialog_delete_desc_material">This will permanently remove this item from your library.</string>
+    <string name="dialog_delete_title_estimate">Delete Estimate</string>
+    <string name="dialog_delete_desc_estimate">This will permanently remove this site estimate.</string>
+    <!-- Permission Rationale Dialog -->
+    <string name="dialog_permission_btn_deny">Not Now</string>
+    <string name="dialog_permission_btn_allow">Allow</string>
+    <string name="dialog_permission_btn_settings">Open Settings</string>
+    <string name="dialog_permission_title_notification">Enable Notification</string>
+    <string name="dialog_permission_desc_notification">Get Remainder for unpaid invoices and upcoming jobs.</string>
+    <string name="dialog_permission_permanently_denied_notification">Notification permission was denied. Enable it in the settings</string>
+    <string name="dialog_permission_title_contact">Access Contact</string>
+    <string name="dialog_permission_desc_contact">Quickly add clients from your phone contacts.</string>
+    <string name="dialog_permission_permanently_denied_contact">Contacts permission was denied. Enable it from app settings</string>
+    <!-- Share Choice Dialog -->
+    <string name="dialog_share_title">Share Estimate</string>
+    <string name="dialog_share_title_job">Share Invoice</string>
+    <string name="dialog_share_desc_estimate">Select how you would like to share this estimate with your client.</string>
+    <string name="dialog_share_desc_job">Select how you would like to share this job invoice with your client.</string>
+    <string name="dialog_share_option_pdf">Share PDF</string>
+    <string name="dialog_share_option_text">Plain Text</string>
+    <!-- Rename Category Dialog -->
+    <string name="dialog_rename_category_title">Rename Category</string>
+    <string name="dialog_rename_category_placeholder">e.g. Copper pipes, Fittings</string>
+    <!-- Settings Dialog Modals -->
+    <string name="dialog_theme_desc">Choose how Karigo looks for you.</string>
+    <string name="dialog_language_desc">Choose the language you prefer.</string>
+    <!-- Backup Confirmation Dialogs -->
+    <string name="dialog_confirm_backup_title">Confirm Backup</string>
+    <string name="dialog_confirm_backup_desc">This will securely upload your current device data and settings to Google Drive, overwriting any previous backup. Proceed?</string>
+    <string name="dialog_confirm_restore_title">Confirm Restore</string>
+    <string name="dialog_confirm_restore_desc">Warning: Restoring will overwrite ALL current device data and settings with the data from your Google Drive backup. This action cannot be undone. Are you sure you want to proceed?</string>
+</resources>

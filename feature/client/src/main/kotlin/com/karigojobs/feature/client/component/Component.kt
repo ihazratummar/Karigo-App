@@ -33,6 +33,7 @@ import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import com.karigojobs.ui.theme.whatsAppColor
+import com.karigojobs.ui.toLocaleString
 
 
 /**
@@ -79,7 +80,7 @@ fun EarningCard(
             )
 
             Text(
-                text = if (isCount) number.formatNumber() else "${deviceInfo.currency} ${number.formatNumber()}",
+                text = if (isCount) number.toLocaleString() else "${deviceInfo.currency} ${number.toLocaleString()}",
                 style = MaterialTheme.typography.titleMedium.copy(
                     color = color,
                     fontWeight = FontWeight.Bold

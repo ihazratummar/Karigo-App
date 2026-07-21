@@ -1,14 +1,10 @@
 package com.karigojobs.app.feature.onboarding.component
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.MarqueeAnimationMode
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,16 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.karigojobs.presentation.onboarding.OnboardingIntent
@@ -51,6 +41,14 @@ import com.karigojobs.ui.common.bounceClickable
 import com.karigojobs.ui.icon
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.toLocaleString
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.onboarding_btn_continue
+import karigojobs.shared.resources.generated.resources.onboarding_btn_trade_not_selected
+import karigojobs.shared.resources.generated.resources.onboarding_progress
+import karigojobs.shared.resources.generated.resources.onboarding_what_do_you_trade
+import karigojobs.shared.resources.generated.resources.onboarding_what_do_you_trade_description
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -79,8 +77,14 @@ fun TradeSelectContent(
                     contentColor = MaterialTheme.colorScheme.onBackground
                 )
             ) {
+
+                val continueLabel = when {
+                    onboardingState.selectedTrades.isEmpty() -> stringResource(Res.string.onboarding_btn_trade_not_selected)
+                    else -> stringResource(Res.string.onboarding_btn_continue, onboardingState.selectedTrades.size.toLocaleString())
+                }
+
                 Text(
-                    text = onboardingState.continueLabel,
+                    text = continueLabel,
                     modifier = Modifier.padding(dimens.Space.md),
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = if (onboardingState.canContinue) MaterialTheme.colorScheme.onBackground else
@@ -98,19 +102,19 @@ fun TradeSelectContent(
         ) {
             item {
                 Text(
-                    text = "Step 1 of 2",
+                    text = stringResource(Res.string.onboarding_progress, 1.toLocaleString(), 2.toLocaleString()),
                     style = MaterialTheme.typography.labelMedium.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
                 Text(
-                    text = "What do you trade?",
+                    text = stringResource(Res.string.onboarding_what_do_you_trade),
                     style = MaterialTheme.typography.headlineMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground
                     )
                 )
                 Text(
-                    text = "Select your primary profession to help us personalize your experience.",
+                    text = stringResource(Res.string.onboarding_what_do_you_trade_description),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -183,13 +187,13 @@ private fun FlowRowScope.TradeItem(
             }
 
             Text(
-                text = tradeType.displayName,
+                text = stringResource(tradeType.displayNameRes),
                 style = MaterialTheme.typography.titleSmall.copy(
                     color = MaterialTheme.colorScheme.onBackground
                 )
             )
             Text(
-                text = tradeType.description,
+                text = stringResource(tradeType.descriptionRes),
                 style = MaterialTheme.typography.labelMedium.copy(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 ),

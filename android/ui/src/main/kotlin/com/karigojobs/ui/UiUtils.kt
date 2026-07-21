@@ -11,7 +11,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.content.FileProvider
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.share.model.TradeType
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_greeting_afternoon
+import karigojobs.shared.resources.generated.resources.common_greeting_evening
+import karigojobs.shared.resources.generated.resources.common_greeting_morning
+import karigojobs.shared.resources.generated.resources.common_greeting_night
+import org.jetbrains.compose.resources.StringResource
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.LocalTime
 import java.util.Date
 import java.util.Locale
 
@@ -145,3 +153,37 @@ fun sharePdfFile(context: Context, html: String, documentTitle: String) {
     }
     webView.loadDataWithBaseURL(null, html, "text/HTML", "UTF-8", null)
 }
+
+
+
+fun getGreeting() : StringResource {
+    val hour = LocalTime.now().hour
+
+    return when(hour){
+        in 5..11 -> Res.string.common_greeting_morning
+        in 12..16 -> Res.string.common_greeting_afternoon
+        in 17..20 -> Res.string.common_greeting_evening
+        else -> Res.string.common_greeting_night
+    }
+}
+
+
+object NumberUtils {
+    private val formatter : NumberFormat
+        get() = NumberFormat.getNumberInstance(Locale.getDefault())
+
+    fun format(
+        number: Number,
+        maxFractionDigits: Int = 2,
+        minFractionDigit: Int = 0
+    ) : String{
+        return formatter.apply {
+            maximumFractionDigits = maxFractionDigits
+            minimumFractionDigits = minFractionDigit
+            isGroupingUsed = true
+        }.format(number)
+    }
+}
+
+fun Number.toLocaleString(): String =
+    NumberFormat.getNumberInstance(Locale.getDefault()).format(this)

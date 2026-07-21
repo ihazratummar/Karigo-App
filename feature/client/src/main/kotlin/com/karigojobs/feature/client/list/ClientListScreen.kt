@@ -53,7 +53,14 @@ import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.toLocaleString
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_billed_amount
+import karigojobs.shared.resources.generated.resources.common_clients_count
+import karigojobs.shared.resources.generated.resources.common_jobs_count
+import karigojobs.shared.resources.generated.resources.nav_clients
 import kotlinx.coroutines.flow.SharedFlow
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -89,10 +96,10 @@ fun ClientListScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHost) },
         topBar = {
             KarigoTopAppBar(
-                title = "Clients",
+                title = stringResource(Res.string.nav_clients),
                 action = {
                     Text(
-                        text = "${state.clients.size} clients",
+                        text = stringResource(Res.string.common_clients_count, state.clients.size),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = KarigojobsText3
                         )
@@ -171,7 +178,7 @@ fun ClientListScreen(
                                         .customBorder(shape = CircleShape)
                                 ) {
                                     Text(
-                                        text = "${deviceInfo.currency} ${client.outStandingBalance.formatNumber()}",
+                                        text = "${deviceInfo.currency} ${client.outStandingBalance.toLocaleString()}",
                                         style = MaterialTheme.typography.bodyMedium.copy(
                                             color = KarigojobsError
                                         ),
@@ -194,7 +201,7 @@ fun ClientListScreen(
                                 modifier = Modifier.size(dimens.Icon._2xs)
                             )
                             Text(
-                                text = "${client.totalJob} jobs",
+                                text = stringResource(Res.string.common_jobs_count, client.totalJob),
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = appColor.tertiaryText
                                 )
@@ -207,7 +214,7 @@ fun ClientListScreen(
                                 modifier = Modifier.size(dimens.Icon._2xs)
                             )
                             Text(
-                                text = "${deviceInfo.currency} ${client.totalRevenue.formatNumber()} billed",
+                                text = "${deviceInfo.currency} ${stringResource(Res.string.common_billed_amount, client.totalRevenue.toLocaleString())}",
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = appColor.tertiaryText
                                 )

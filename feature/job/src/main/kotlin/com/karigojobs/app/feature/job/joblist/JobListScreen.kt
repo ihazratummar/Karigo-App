@@ -23,6 +23,13 @@ import com.karigojobs.ui.common.JobCard
 import com.karigojobs.ui.common.KarigojobsSearchField
 import com.karigojobs.ui.common.TopBarTitle
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_label_search
+import karigojobs.shared.resources.generated.resources.common_total
+import karigojobs.shared.resources.generated.resources.common_total_count
+import karigojobs.shared.resources.generated.resources.job_list_search_field
+import karigojobs.shared.resources.generated.resources.nav_jobs
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -53,9 +60,9 @@ fun JobListScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    TopBarTitle(title = "All Jobs")
+                    TopBarTitle(title = stringResource(Res.string.nav_jobs))
                     Text(
-                        text = "${jobListState.jobs.size} total",
+                        text = stringResource(Res.string.common_total_count, jobListState.jobs.size),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -64,7 +71,7 @@ fun JobListScreen(
                 KarigojobsSearchField(
                     query = jobListState.searchJobText,
                     onQueryChange = { event(JobListIntent.SearchTextChanged(it)) },
-                    placeholder = "Search jobs or client"
+                    placeholder = stringResource(Res.string.job_list_search_field)
                 )
             }
         }

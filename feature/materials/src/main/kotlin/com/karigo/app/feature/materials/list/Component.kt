@@ -1,5 +1,7 @@
 package com.karigo.app.feature.materials.list
 
+import org.jetbrains.compose.resources.stringResource
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -172,7 +174,7 @@ fun MaterialManageModal(
                                 border = customCardBorder()
                             ) {
                                 Text(
-                                    text = trade.displayName,
+                                    text = stringResource(trade.displayNameRes),
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
                                     ),
@@ -369,7 +371,7 @@ fun ManageCategoriesModal(
                         )
                     )
                     Text(
-                        text = "${tradeType.displayName} — ${state.materialCategory.size} categories",
+                        text = "${stringResource(tradeType.displayNameRes)} — ${state.materialCategory.size} categories",
                         style = MaterialTheme.typography.bodySmall.copy(color = appColor.secondaryText)
                     )
                 }
@@ -554,13 +556,15 @@ fun RenameCategoryDialog(
                         modifier = Modifier.weight(1f),
                         onClick = { event(MaterialCategoryEvent.ToggleRenameCategoryDialog(null)) },
                         label = "Cancel",
-                        buttonColor = Color.Transparent
+                        buttonColor = Color.Transparent,
+                        contentColor = appColor.primaryText
                     )
                     KarigoButtons(
                         modifier = Modifier.weight(1f),
                         onClick = { event(MaterialCategoryEvent.ConfirmRenameCategory) },
                         label = "Rename",
-                        buttonColor = appColor.accentBg
+                        buttonColor = appColor.accentBg,
+                        contentColor = appColor.primaryText
                     )
                 }
             }

@@ -35,6 +35,9 @@ import com.karigojobs.ui.theme.Error
 import com.karigojobs.ui.theme.OnPrimary
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.getString
+import karigojobs.shared.resources.generated.resources.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,22 +79,35 @@ fun DataBackupScreen(
                     if (token != null) {
                         viewModel.onEvent(DataBackupEvent.OnAccountConnected(account.email!!, token))
                     } else {
-                        Toast.makeText(context, "Sign-in failed: Unable to get access token", Toast.LENGTH_LONG).show()
+                        val msg = getString(Res.string.backup_toast_signin_failed_token)
+                        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
                     }
                 }
             } else {
-                Toast.makeText(context, "Sign-in failed: Account info missing", Toast.LENGTH_LONG).show()
+                coroutineScope.launch {
+                    val msg = getString(Res.string.backup_toast_signin_failed_info)
+                    Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+                }
             }
         } else {
             try {
                 GoogleSignIn.getSignedInAccountFromIntent(result.data).getResult(ApiException::class.java)
-                Toast.makeText(context, "Sign-in cancelled", Toast.LENGTH_SHORT).show()
+                coroutineScope.launch {
+                    val msg = getString(Res.string.backup_toast_signin_cancelled)
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                }
             } catch (e: ApiException) {
                 val errorCode = e.statusCode
                 val errorMessage = com.google.android.gms.common.api.CommonStatusCodes.getStatusCodeString(errorCode)
-                Toast.makeText(context, "Google Sign-In Error: $errorMessage ($errorCode)", Toast.LENGTH_LONG).show()
+                coroutineScope.launch {
+                    val msg = getString(Res.string.backup_toast_signin_error, errorMessage, errorCode)
+                    Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+                }
             } catch (e: Exception) {
-                Toast.makeText(context, "Sign-in failed/cancelled", Toast.LENGTH_SHORT).show()
+                coroutineScope.launch {
+                    val msg = getString(Res.string.backup_toast_signin_generic)
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -99,8 +115,8 @@ fun DataBackupScreen(
     if (showBackupDialog) {
         AlertDialog(
             onDismissRequest = { showBackupDialog = false },
-            title = { Text("Confirm Backup", fontWeight = FontWeight.Bold, color = appColor.primaryText) },
-            text = { Text("This will securely upload your current device data and settings to Google Drive, overwriting any previous backup. Proceed?", color = appColor.secondaryText) },
+            title = { Text(stringResource(Res.string.dialog_confirm_backup_title), fontWeight = FontWeight.Bold, color = appColor.primaryText) },
+            text = { Text(stringResource(Res.string.dialog_confirm_backup_desc), color = appColor.secondaryText) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -111,18 +127,19 @@ fun DataBackupScreen(
                             if (token != null) {
                                 viewModel.onEvent(DataBackupEvent.BackUpNow(token))
                             } else {
-                                Toast.makeText(context, "Authentication error. Try reconnecting.", Toast.LENGTH_SHORT).show()
+                                val msg = getString(Res.string.backup_toast_auth_error)
+                                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                             }
                         }
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Primary)
                 ) {
-                    Text("Back Up", color = OnPrimary)
+                    Text(stringResource(Res.string.backup_btn_backup_now), color = OnPrimary)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showBackupDialog = false }) {
-                    Text("Cancel", color = appColor.secondaryText)
+                    Text(stringResource(Res.string.common_btn_cancel), color = appColor.secondaryText)
                 }
             },
             containerColor = appColor.background
@@ -132,8 +149,8 @@ fun DataBackupScreen(
     if (showRestoreDialog) {
         AlertDialog(
             onDismissRequest = { showRestoreDialog = false },
-            title = { Text("Confirm Restore", fontWeight = FontWeight.Bold, color = Error) },
-            text = { Text("Warning: Restoring will overwrite ALL current device data and settings with the data from your Google Drive backup. This action cannot be undone. Are you sure you want to proceed?", color = appColor.secondaryText) },
+            title = { Text(stringResource(Res.string.dialog_confirm_restore_title), fontWeight = FontWeight.Bold, color = Error) },
+            text = { Text(stringResource(Res.string.dialog_confirm_restore_desc), color = appColor.secondaryText) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -144,18 +161,19 @@ fun DataBackupScreen(
                             if (token != null) {
                                 viewModel.onEvent(DataBackupEvent.RestoreBackup(token))
                             } else {
-                                Toast.makeText(context, "Authentication error. Try reconnecting.", Toast.LENGTH_SHORT).show()
+                                val msg = getString(Res.string.backup_toast_auth_error)
+                                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                             }
                         }
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Error)
                 ) {
-                    Text("Restore Data", color = OnPrimary)
+                    Text(stringResource(Res.string.backup_btn_restore_confirm), color = OnPrimary)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showRestoreDialog = false }) {
-                    Text("Cancel", color = appColor.secondaryText)
+                    Text(stringResource(Res.string.common_btn_cancel), color = appColor.secondaryText)
                 }
             },
             containerColor = appColor.background
@@ -166,7 +184,7 @@ fun DataBackupScreen(
         topBar = {
             KarigoTopAppBar(
                 onNavigationClick = onBack,
-                title = "Cloud Sync & Backup"
+                title = stringResource(Res.string.backup_title)
             )
         },
         containerColor = appColor.background
@@ -193,7 +211,7 @@ fun DataBackupScreen(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.server),
-                        contentDescription = "Cloud Backup",
+                        contentDescription = stringResource(Res.string.backup_title),
                         tint = Primary,
                         modifier = Modifier.size(dimens.Icon.xl)
                     )
@@ -220,7 +238,7 @@ fun DataBackupScreen(
                         Spacer(modifier = Modifier.width(dimens.Space.base))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = if (state.isConnected) "Google Drive Connected" else "Not Connected",
+                                text = if (state.isConnected) stringResource(Res.string.backup_status_connected) else stringResource(Res.string.backup_status_disconnected),
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = FontWeight.Bold,
                                     color = appColor.primaryText
@@ -252,7 +270,7 @@ fun DataBackupScreen(
                         )
                         Spacer(modifier = Modifier.height(dimens.Space.base))
                         Text(
-                            text = if (state.lastBackupTime != null) "Latest Backup: ${state.lastBackupTime}" else "No backup found on Drive",
+                            text = if (state.lastBackupTime != null) stringResource(Res.string.backup_latest_time, state.lastBackupTime!!) else stringResource(Res.string.backup_no_backup),
                             style = MaterialTheme.typography.labelMedium.copy(color = appColor.secondaryText)
                         )
                     }
@@ -269,7 +287,7 @@ fun DataBackupScreen(
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Disconnect", color = Error, fontWeight = FontWeight.SemiBold)
+                            Text(stringResource(Res.string.backup_btn_disconnect), color = Error, fontWeight = FontWeight.SemiBold)
                         }
                     } else {
                         Button(
@@ -281,7 +299,7 @@ fun DataBackupScreen(
                             ),
                             shape = KarigojobsShapes.medium
                         ) {
-                            Text("Connect Google Drive", fontWeight = FontWeight.SemiBold)
+                            Text(stringResource(Res.string.backup_btn_connect), fontWeight = FontWeight.SemiBold)
                         }
                     }
                 }
@@ -298,14 +316,14 @@ fun DataBackupScreen(
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "Automated Backups", 
+                            text = stringResource(Res.string.backup_label_auto), 
                             style = MaterialTheme.typography.bodyLarge.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = appColor.primaryText
                             )
                         )
                         Text(
-                            text = if (state.isAutoBackupEnabled) "Backup in every 24 hours" else "Turn on to keep data safe",
+                            text = if (state.isAutoBackupEnabled) stringResource(Res.string.backup_desc_auto_on) else stringResource(Res.string.backup_desc_auto_off),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = appColor.secondaryText
                             )
@@ -348,9 +366,9 @@ fun DataBackupScreen(
                                 strokeWidth = dimens.Border.thick
                             )
                             Spacer(modifier = Modifier.width(dimens.Space.sm))
-                            Text("Uploading securely...", color = OnPrimary, fontWeight = FontWeight.SemiBold)
+                            Text(stringResource(Res.string.backup_status_uploading), color = OnPrimary, fontWeight = FontWeight.SemiBold)
                         } else {
-                            Text("Back Up Now", fontWeight = FontWeight.Bold, color = OnPrimary)
+                            Text(stringResource(Res.string.backup_btn_backup_now), fontWeight = FontWeight.Bold, color = OnPrimary)
                         }
                     }
 
@@ -371,9 +389,9 @@ fun DataBackupScreen(
                                 color = Primary
                             )
                             Spacer(modifier = Modifier.width(dimens.Space.sm))
-                            Text("Restoring Data...")
+                            Text(stringResource(Res.string.backup_status_restoring))
                         } else {
-                            Text("Restore from Drive", fontWeight = FontWeight.SemiBold)
+                            Text(stringResource(Res.string.backup_btn_restore), fontWeight = FontWeight.SemiBold)
                         }
                     }
                 }
@@ -390,7 +408,7 @@ fun DataBackupScreen(
                 verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
             ) {
                 Text(
-                    text = "Peace of Mind", 
+                    text = stringResource(Res.string.backup_info_title), 
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
                         color = Primary
@@ -398,7 +416,7 @@ fun DataBackupScreen(
                 )
                 
                 Text(
-                    text = "Your business data including jobs, clients, materials, and app preferences are securely encrypted and stored in a private, hidden folder on your Google Drive. We cannot see your other files.",
+                    text = stringResource(Res.string.backup_info_desc),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = appColor.secondaryText,
                         lineHeight = dimens.Text.lg

@@ -1,5 +1,7 @@
 package com.karigojobs.feature.client.details
 
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.*
 import android.content.Intent
 import android.net.Uri
 import android.widget.Space
@@ -54,6 +56,14 @@ import com.karigojobs.ui.common.KarigoIconWIthBgCick
 import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsError
 import com.karigojobs.ui.theme.KarigojobsShapes
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.client_btn_new_job
+import karigojobs.shared.resources.generated.resources.client_details_total_jobs
+import karigojobs.shared.resources.generated.resources.client_details_unpaid
+import karigojobs.shared.resources.generated.resources.common_jobs_count
+import karigojobs.shared.resources.generated.resources.job_detail_status_paid
+import karigojobs.shared.resources.generated.resources.job_detail_status_pending
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -131,23 +141,23 @@ fun ClientDetailsScreen(
 
             val stats = listOf(
                 EarningState(
-                    title = "TOTAL JOBS",
+                    title = stringResource(Res.string.client_details_total_jobs).uppercase(),
                     number = state.client?.totalJob?.toDouble() ?: 0.0,
                     color = MaterialTheme.colorScheme.onBackground,
                     isCount = true
                 ),
                 EarningState(
-                    title = "PENDING",
+                    title = stringResource(Res.string.job_detail_status_pending).uppercase(),
                     number = clientModel.pendingAmount,
                     color = StatusPending
                 ),
                 EarningState(
-                    title = "PAID",
+                    title = stringResource(Res.string.job_detail_status_paid).uppercase(),
                     number = clientModel.totalPaid,
                     color = AmountDone
                 ),
                 EarningState(
-                    title = "UNPAID",
+                    title = stringResource(Res.string.client_details_unpaid).uppercase(),
                     number = clientModel.outStandingBalance,
                     color = AmountUnpaid
                 )
@@ -158,8 +168,8 @@ fun ClientDetailsScreen(
                 DeleteDialog(
                     onCancelClick = { event(ClientDetailsEvent.ToggleDelete(isOpen = false)) },
                     onConfirmClick = { event(ClientDetailsEvent.DeleteClient) },
-                    dialogTitle = "Delete Client",
-                    dialogDescription = "This will remove ${state.client?.name} and all associated job history & estimate history."
+                    dialogTitle = stringResource(Res.string.dialog_delete_title_client),
+                    dialogDescription = stringResource(Res.string.dialog_delete_desc_client, state.client?.name ?: "")
                 )
             }
 
@@ -215,7 +225,7 @@ fun ClientDetailsScreen(
                                 )
                             )
                             Text(
-                                text = "${state.jobHistory.size} jobs",
+                                text = stringResource(Res.string.common_jobs_count, state.jobHistory.size),
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -244,7 +254,7 @@ fun ClientDetailsScreen(
                         )
                         Spacer(Modifier.width(dimens.Space.sm))
                         Text(
-                            text = "New Job for ${clientModel.name.firstName()}",
+                            text = stringResource(Res.string.client_btn_new_job, clientModel.name.firstName()),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 fontWeight = FontWeight.Bold
                             )
@@ -255,7 +265,6 @@ fun ClientDetailsScreen(
                 item {
                     Spacer(Modifier.height(dimens.Padding.screenV))
                 }
-
             }
         }
     }

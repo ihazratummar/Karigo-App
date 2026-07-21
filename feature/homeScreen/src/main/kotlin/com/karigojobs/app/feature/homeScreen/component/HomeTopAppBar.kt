@@ -9,11 +9,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.karigojobs.share.model.WorkerProfileModel
+import com.karigojobs.ui.getGreeting
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_contractor
+import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Duration.Companion.milliseconds
 
 
 /**
@@ -27,6 +38,15 @@ fun HomeTopAppBar(
     modifier: Modifier = Modifier,
     profile : WorkerProfileModel?
 ) {
+
+    var greeting by remember { mutableStateOf(getGreeting()) }
+    LaunchedEffect(Unit) {
+        while (true){
+            greeting = getGreeting()
+            delay((60000 * 5).milliseconds)
+        }
+    }
+
     TopAppBar(
         title = {
             Column(
@@ -34,7 +54,7 @@ fun HomeTopAppBar(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
-                    text = "Good Morning, ${profile?.ownerName?:"Contractor"}",
+                    text = "${stringResource(greeting)}, ${profile?.ownerName ?: stringResource(Res.string.common_contractor)}",
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

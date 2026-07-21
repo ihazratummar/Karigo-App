@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_started_description">কাজ, ক্লায়েন্ট এবং আয় ব্যবস্থাপনার সবচেয়ে সহজ উপায়—যা ঠিকাদার, প্লাম্বার, ইলেকট্রিশিয়ান ও অন্যান্য পেশাজীবীদের জন্য তৈরি।</string>
+    <string name="onboarding_started_track_job">প্রতিটি কাজ ট্র্যাক করুন</string>
+    <string name="onboarding_started_track_description">শ্রম, উপকরণ ও ইনভয়েস—সবই এক জায়গায়</string>
+    <string name="onboarding_started_whatsapp">WhatsApp-এর মাধ্যমে শেয়ার করুন</string>
+    <string name="onboarding_started_whatsapp_description">ক্লায়েন্টদের তাৎক্ষণিকভাবে ইনভয়েস পাঠান।</string>
+    <string name="onboarding_started_earnings">আপনার আয় সম্পর্কে জানুন</string>
+    <string name="onboarding_started_earnings_description">সাপ্তাহিক প্রতিবেদন ও পেমেন্ট ট্র্যাকার</string>
+    <string name="onboarding_progress">ধাপ %1$s / %2$s</string>
+    <string name="onboarding_what_do_you_trade">আপনি কীসের ব্যবসা করেন?</string>
+    <string name="onboarding_what_do_you_trade_description">আপনার অভিজ্ঞতাকে ব্যক্তিগতকৃত করতে আমাদের সহায়তা করার জন্য আপনার প্রধান পেশাটি নির্বাচন করুন।</string>
+    <string name="onboarding_btn_trade_not_selected">অন্তত একটি ট্রেড নির্বাচন করুন</string>
+    <string name="onboarding_btn_continue">চালিয়ে যান (%1$s নির্বাচিত)</string>
+    <string name="onboarding_last_title">আপনার সমস্ত সেট করা আছে!</string>
+    <string name="onboarding_last_description">আমরা আপনার কাজের জন্য প্রয়োজনীয় প্রাথমিক উপকরণগুলো লোড করেছি।</string>
+    <string name="onboarding_starter_material">%1$sটি শুরুর আইটেম লোড করা হয়েছে</string>
+    <string name="onboarding_materials_ready">%1$s উপকরণ প্রস্তুত</string>
+    <string name="onboarding_materials_ready_description">মেটেরিয়াল লাইব্রেরিতে যেকোনো সময় দাম পরিবর্তন করুন</string>
+    <string name="onboarding_back_to_trade">ট্রেড নির্বাচনের ক্ষেত্রে ফিরে যান</string>
+</resources>

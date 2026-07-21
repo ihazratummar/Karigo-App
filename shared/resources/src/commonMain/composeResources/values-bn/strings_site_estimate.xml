@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List Screen -->
+    <string name="estimate_list_title">Estimates</string>
+    <string name="estimate_list_search_placeholder">Search estimates or client</string>
+    <string name="estimate_list_btn_new">New Estimate</string>
+    <string name="estimate_list_empty_title">No estimate yet</string>
+    <string name="estimate_list_empty_desc">Walk a site, tap materials, send to client</string>
+    <string name="estimate_list_btn_create_first">Create First Estimate</string>
+    <!-- Add/Edit Screen -->
+    <string name="estimate_add_toast_added">Added</string>
+    <string name="estimate_add_title_new">New Estimate</string>
+    <string name="estimate_add_title_edit">Edit Estimate</string>
+    <string name="estimate_add_section_title">PROJECT TITLE</string>
+    <string name="estimate_add_placeholder_title">e.g. Bathroom Renovation</string>
+    <string name="estimate_add_section_client">CLIENT</string>
+    <string name="estimate_add_section_date">DATE</string>
+    <string name="estimate_add_section_notes">SITE NOTES</string>
+    <string name="estimate_add_placeholder_notes">Any special instructions...</string>
+    <string name="estimate_add_label_show_rate">Show Rate</string>
+    <string name="estimate_add_desc_rate_visible">Client Sees rate &amp; total</string>
+    <string name="estimate_add_desc_rate_hidden">Material list only, no prices</string>
+    <string name="estimate_add_section_materials">MATERIALS</string>
+    <string name="estimate_add_btn_save">Save Estimate</string>
+    <string name="estimate_add_btn_update">Update Estimate</string>
+    <!-- Components -->
+    <string name="estimate_comp_section_materials">Materials</string>
+    <string name="estimate_comp_section_total">Estimate Total</string>
+    <string name="estimate_comp_status_no_prices">No prices</string>
+    <!-- Details Screen -->
+    <string name="estimate_detail_title">Estimate</string>
+    <string name="estimate_detail_preview_title">Estimate Preview</string>
+    <string name="estimate_detail_default_provider">Karigo Provider</string>
+    <string name="estimate_detail_btn_whatsapp">WhatsApp</string>
+    <string name="estimate_detail_toast_print_unavailable">Print service is not available on this device</string>
+    <string name="estimate_detail_toast_print_failed">Failed to open printer: %1$s</string>
+    <string name="estimate_detail_toast_generic_failed">Failed to print: %1$s</string>
+</resources>

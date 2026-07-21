@@ -31,6 +31,12 @@ import com.karigojobs.ui.theme.dimens
 
 
 
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.dialog_permission_btn_deny
+import karigojobs.shared.resources.generated.resources.dialog_permission_btn_allow
+import karigojobs.shared.resources.generated.resources.dialog_permission_btn_settings
+
 @Composable
 fun PermissionRationaleDialog(
     handlerState: PermissionHandlerState,
@@ -50,7 +56,7 @@ fun PermissionRationaleDialog(
                     verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
                 ) {
                     Text(
-                        text = handlerState.permission.title,
+                        text = stringResource(handlerState.permission.title),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFE8E6E0)
@@ -58,9 +64,9 @@ fun PermissionRationaleDialog(
 
                     Text(
                         text = if (handlerState.isPermanentlyDenied)
-                            handlerState.permission.isPermanentlyDeniedMessage
+                            stringResource(handlerState.permission.isPermanentlyDeniedMessage)
                         else
-                            handlerState.permission.description,
+                            stringResource(handlerState.permission.description),
                         fontSize = 14.sp,
                         color = Color(0xFF8A8880),
                         lineHeight = 22.sp
@@ -79,7 +85,7 @@ fun PermissionRationaleDialog(
                                 contentColor = Color(0xFF8A8880)
                             )
                         ) {
-                            Text("Not Now")
+                            Text(stringResource(Res.string.dialog_permission_btn_deny))
                         }
 
                         // Grant / Settings
@@ -101,9 +107,9 @@ fun PermissionRationaleDialog(
                         ) {
                             Text(
                                 text = if (handlerState.isPermanentlyDenied)
-                                    "Open Settings"
+                                    stringResource(Res.string.dialog_permission_btn_settings)
                                 else
-                                    "Allow",
+                                    stringResource(Res.string.dialog_permission_btn_allow),
                                 fontWeight = FontWeight.SemiBold,
                                 color = Color(0xFF000000)
                             )

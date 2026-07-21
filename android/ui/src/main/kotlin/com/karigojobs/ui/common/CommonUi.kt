@@ -1,6 +1,7 @@
 package com.karigojobs.ui.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import org.jetbrains.compose.resources.stringResource
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -120,11 +121,24 @@ import com.karigojobs.ui.theme.StatusPendingSurface
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.toLocaleString
 import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_item_count
+import karigojobs.shared.resources.generated.resources.common_tab_title_client_placeholder
+import karigojobs.shared.resources.generated.resources.dialog_delete_title_job
+import karigojobs.shared.resources.generated.resources.dialog_delete_desc_job
+import karigojobs.shared.resources.generated.resources.common_btn_delete
+import karigojobs.shared.resources.generated.resources.job_detail_status_complete
+import karigojobs.shared.resources.generated.resources.job_detail_status_in_progress
+import karigojobs.shared.resources.generated.resources.job_detail_status_invoiced
+import karigojobs.shared.resources.generated.resources.job_detail_status_paid
+import karigojobs.shared.resources.generated.resources.job_detail_status_pending
+import karigojobs.shared.resources.generated.resources.job_list_search_field
 import karigojobs.shared.resources.generated.resources.worker_action_description
 import karigojobs.shared.resources.generated.resources.worker_action_missing
 import karigojobs.shared.resources.generated.resources.worker_action_needed
 import karigojobs.shared.resources.generated.resources.worker_action_title
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -178,7 +192,7 @@ fun TradeCard(
                 )
             }
             Text(
-                text = trade.displayName,
+                text = stringResource(trade.displayNameRes),
                 style = MaterialTheme.typography.labelSmall
             )
         }
@@ -756,7 +770,7 @@ fun JobCard(
                     )
                     if (isClientJob) {
                         Text(
-                            text = job.createdAt.toReadableDate(),
+                            text = job.createdAt.formatToLocalizeDate(),
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -781,7 +795,7 @@ fun JobCard(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = job.status.toString(),
+                        text = stringResource(job.status.toDisplayName()),
                         modifier = Modifier.padding(
                             horizontal = dimens.Padding.sm,
                             vertical = dimens.Padding.xs
@@ -806,7 +820,7 @@ fun JobCard(
                         modifier = Modifier.size(dimens.Icon._2xs)
                     )
                     Text(
-                        text = "${job.totalItems} items",
+                        text = stringResource(Res.string.common_item_count, job.totalItems.toLocaleString()),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -821,7 +835,7 @@ fun JobCard(
                 }
                 Spacer(Modifier.weight(1f))
                 Text(
-                    text = "${deviceInfo.currency}${job.total.formatNumber()}",
+                    text = "${deviceInfo.currency}${job.total.toLocaleString()}",
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -830,20 +844,18 @@ fun JobCard(
         }
     }
 }
-
-
 @Composable
 fun DeleteDialog(
     onCancelClick: () -> Unit,
     onConfirmClick: () -> Unit,
-    dialogTitle: String = "Delete Job",
-    dialogDescription: String = "This will permanently remove this job and its invoice history."
+    dialogTitle: String = stringResource(Res.string.dialog_delete_title_job),
+    dialogDescription: String = stringResource(Res.string.dialog_delete_desc_job)
 ) {
     PopUpDialog(
         onCancelClick = onCancelClick,
         onConfirmClick = onConfirmClick,
         icon = R.drawable.delete,
-        confirmButtonText = "Delete",
+        confirmButtonText = stringResource(Res.string.common_btn_delete),
         confirmButtonColor = MaterialTheme.colorScheme.error,
         title = dialogTitle,
         description = dialogDescription
@@ -982,7 +994,7 @@ fun ClientPicker(
 
 
                 Text(
-                    text = "Select Client...",
+                    text = stringResource(Res.string.common_tab_title_client_placeholder),
                     style = MaterialTheme.typography.bodySmall.copy(
                         color = appColor.secondaryText
                     )
@@ -1726,5 +1738,16 @@ fun ShareChoiceDialog(
                 }
             }
         }
+    }
+}
+
+
+fun JobStatus.toDisplayName(): StringResource {
+    return when (this) {
+        JobStatus.PENDING -> Res.string.job_detail_status_pending
+        JobStatus.IN_PROGRESS -> Res.string.job_detail_status_in_progress
+        JobStatus.COMPLETED -> Res.string.job_detail_status_complete
+        JobStatus.INVOICED -> Res.string.job_detail_status_invoiced
+        JobStatus.PAID -> Res.string.job_detail_status_paid
     }
 }

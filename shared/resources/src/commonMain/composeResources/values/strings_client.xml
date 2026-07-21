@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+    <string name="client_details_total_jobs">Total Jobs</string>
+    <string name="client_details_unpaid">Unpaid</string>
+
+    -- Buttons
+    <string name="client_btn_new_job">New Job for %1$s</string>
+</resources>

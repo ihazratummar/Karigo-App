@@ -1,5 +1,7 @@
 package com.karigojobs.ui.common
 
+import org.jetbrains.compose.resources.stringResource
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,13 +41,20 @@ import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.toLocaleString
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_add_selected_count
+import karigojobs.shared.resources.generated.resources.common_all
+import karigojobs.shared.resources.generated.resources.common_uncategorized
+import karigojobs.shared.resources.generated.resources.materials_search_materials
+import karigojobs.shared.resources.generated.resources.materials_select_materials
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectMaterialModal(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
-    title: String = "Select Materials",
+    title: String = stringResource(Res.string.materials_select_materials),
     availableMaterials: List<MaterialsModel>,
     tradeTypes: List<TradeType>?,
     selectedTradeType: TradeType?,
@@ -63,7 +72,7 @@ fun SelectMaterialModal(
     }
     val modalSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
-        confirmValueChange = {newValue ->
+        confirmValueChange = { newValue ->
             newValue != SheetValue.Hidden
         }
     )
@@ -110,7 +119,7 @@ fun SelectMaterialModal(
                     modifier = Modifier.contentHorizontalPadding(),
                     query = searchQuery,
                     onQueryChange = onSearchQueryChanged,
-                    placeholder = "Search Materials"
+                    placeholder = stringResource(Res.string.materials_search_materials)
                 )
 
                 LazyRow(
@@ -134,7 +143,7 @@ fun SelectMaterialModal(
                                 border = customCardBorder()
                             ) {
                                 Text(
-                                    text = "All",
+                                    text = stringResource(Res.string.common_all),
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                                     ),
@@ -146,7 +155,7 @@ fun SelectMaterialModal(
                             }
                         }
 
-                        items(tradeTypes.toList(), key = {it.name}) { trade ->
+                        items(tradeTypes.toList(), key = { it.name }) { trade ->
                             val isSelected = trade == selectedTradeType
                             Card(
                                 onClick = {
@@ -160,7 +169,7 @@ fun SelectMaterialModal(
                                 border = customCardBorder()
                             ) {
                                 Text(
-                                    text = trade.displayName,
+                                    text = stringResource(trade.displayNameRes),
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                                     ),
@@ -192,7 +201,7 @@ fun SelectMaterialModal(
                                 shape = KarigojobsShapes.large
                             ) {
                                 Text(
-                                    text = "All",
+                                    text = stringResource(Res.string.common_all),
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                                     ),
@@ -223,7 +232,7 @@ fun SelectMaterialModal(
                                 border = customCardBorder()
                             ) {
                                 Text(
-                                    text = "Uncategorized",
+                                    text = stringResource(Res.string.common_uncategorized),
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                                     ),
@@ -235,7 +244,7 @@ fun SelectMaterialModal(
                             }
                         }
 
-                        items(materialCategories , key = {it.id}) { category ->
+                        items(materialCategories, key = { it.id }) { category ->
                             val isSelected = category.id == selectedCategory?.id
                             Card(
                                 onClick = { onCategorySelected(category) },
@@ -293,9 +302,11 @@ fun SelectMaterialModal(
                                     checked = checked,
                                     onCheckedChange = { isChecked ->
                                         if (isChecked) {
-                                            selectedMaterials.value = selectedMaterials.value + material.id
+                                            selectedMaterials.value =
+                                                selectedMaterials.value + material.id
                                         } else {
-                                            selectedMaterials.value = selectedMaterials.value - material.id
+                                            selectedMaterials.value =
+                                                selectedMaterials.value - material.id
                                         }
                                     }
                                 )
@@ -310,7 +321,7 @@ fun SelectMaterialModal(
                                         )
                                     )
                                     Text(
-                                        text = "${material.tradeType.displayName} · ${deviceInfo.currency}${material.price} / ${material.unit}",
+                                        text = "${stringResource(material.tradeType.displayNameRes)} · ${deviceInfo.currency}${material.price.toLocaleString()} / ${material.unit}",
                                         style = MaterialTheme.typography.labelSmall.copy(
                                             color = KarigojobsText2
                                         )
@@ -338,7 +349,12 @@ fun SelectMaterialModal(
                     shape = KarigojobsShapes.medium
                 ) {
                     Text(
-                        text = "Add Selected (${selectedMaterials.value.size})"
+                        text = "${
+                            stringResource(
+                                Res.string.common_add_selected_count,
+                                selectedMaterials.value.size.toLocaleString()
+                            )
+                        },"
                     )
                 }
             }

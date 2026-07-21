@@ -1,5 +1,7 @@
 package com.karigojobs.feature.settings.component
 
+import org.jetbrains.compose.resources.stringResource
+
 import androidx.annotation.UiContext
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -401,14 +403,14 @@ private fun TradeTypeCheckCard(
                 modifier = Modifier.weight(1f),
             ) {
                 Text(
-                    text = tradeType.displayName,
+                    text = stringResource(tradeType.displayNameRes),
                     style = MaterialTheme.typography.bodySmall.copy(
                         color = appColor.primaryText,
                         fontWeight = FontWeight.Bold
                     )
                 )
                 Text(
-                    text = tradeType.description,
+                    text = stringResource(tradeType.descriptionRes),
                     style = MaterialTheme.typography.labelSmall.copy(
                         color = appColor.secondaryText,
                     )

@@ -64,13 +64,8 @@ import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
-
-
-/**
- * @author hazratummar
- * Created on 15/06/26
- */
-
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.*
 
 @Composable
 fun EstimateDetailsScreen(
@@ -124,10 +119,13 @@ fun EstimateDetailsScreen(
                     if (shareType == ShareType.SHARE_PDF) {
                         sharePdfFile(context, effect.html, effect.estimateTitle)
                     } else {
+                        val printUnavailableMsg = org.jetbrains.compose.resources.getString(Res.string.estimate_detail_toast_print_unavailable)
+                        val printFailedTemplate = org.jetbrains.compose.resources.getString(Res.string.estimate_detail_toast_print_failed)
+                        val genericFailedTemplate = org.jetbrains.compose.resources.getString(Res.string.estimate_detail_toast_generic_failed)
                         try {
                             val printManager = context.getSystemService(Context.PRINT_SERVICE) as? PrintManager
                             if (printManager == null) {
-                                android.widget.Toast.makeText(context, "Print service is not available on this device", android.widget.Toast.LENGTH_LONG).show()
+                                android.widget.Toast.makeText(context, printUnavailableMsg, android.widget.Toast.LENGTH_LONG).show()
                                 return@collect
                             }
                             val webView = WebView(context).apply {
@@ -137,14 +135,16 @@ fun EstimateDetailsScreen(
                                             val printAdapter = createPrintDocumentAdapter(effect.estimateTitle)
                                             printManager.print(effect.estimateTitle, printAdapter, PrintAttributes.Builder().build())
                                         } catch (e: Exception) {
-                                            android.widget.Toast.makeText(context, "Failed to open printer: ${e.localizedMessage}", android.widget.Toast.LENGTH_LONG).show()
+                                            val msg = printFailedTemplate.format(e.localizedMessage ?: "")
+                                            android.widget.Toast.makeText(context, msg, android.widget.Toast.LENGTH_LONG).show()
                                         }
                                     }
                                 }
                             }
                             webView.loadDataWithBaseURL(null, effect.html, "text/HTML", "UTF-8", null)
                         } catch (e: Exception) {
-                            android.widget.Toast.makeText(context, "Failed to print: ${e.localizedMessage}", android.widget.Toast.LENGTH_LONG).show()
+                            val msg = genericFailedTemplate.format(e.localizedMessage ?: "")
+                            android.widget.Toast.makeText(context, msg, android.widget.Toast.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -164,7 +164,7 @@ fun EstimateDetailsScreen(
         topBar = {
             KarigoTopAppBar(
                 onNavigationClick = { onBackClick() },
-                title = "Estimate",
+                title = stringResource(Res.string.estimate_detail_title),
                 action = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -252,7 +252,7 @@ fun EstimateDetailsScreen(
             item {
                 Spacer(modifier = Modifier.height(dimens.Space.sm))
                 Text(
-                    text = "Estimate Preview",
+                    text = stringResource(Res.string.estimate_detail_preview_title),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = appColor.secondaryText,
                         fontWeight = FontWeight.Bold
@@ -263,9 +263,10 @@ fun EstimateDetailsScreen(
             item {
                 val currency = deviceInfo.currency
                 val showRate = state.estimateDetails?.showRate ?: true
+                val defaultProvider = stringResource(Res.string.estimate_detail_default_provider)
                 val businessName = state.workerProfileModel?.businessName?.ifBlank { null }
                     ?: state.workerProfileModel?.ownerName?.ifBlank { null }
-                    ?: "Karigo Provider"
+                    ?: defaultProvider
 
                 val previewItems = state.siteEstimateMaterial.map { item ->
                     val quantityText = "${item.quantity.formatNumber()} ${item.unit}"
@@ -302,7 +303,7 @@ fun EstimateDetailsScreen(
                         },
                         buttonColor = appColor.cardColors,
                         contentColor = Color(0xFFEF5350),
-                        label = "Export PDF",
+                        label = stringResource(Res.string.common_export),
                         icon = R.drawable.ic_pdf
                     )
 
@@ -314,7 +315,7 @@ fun EstimateDetailsScreen(
                         },
                         buttonColor = appColor.cardColors,
                         contentColor = Color(0xFF4CAF50),
-                        label = "WhatsApp",
+                        label = stringResource(Res.string.estimate_detail_btn_whatsapp),
                         icon = R.drawable.whatsapp
                     )
                 }
@@ -337,8 +338,8 @@ fun EstimateDetailsScreen(
             onShareText = {
                 event(EstimateDetailsEvent.ShareEstimateOnWhatsapp(currencySymbol = currency))
             },
-            title = "Share Estimate",
-            description = "Select how you would like to share this estimate with your client."
+            title = stringResource(Res.string.dialog_share_title),
+            description = stringResource(Res.string.dialog_share_desc_estimate)
         )
     }
 }

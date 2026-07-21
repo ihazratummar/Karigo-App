@@ -27,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.*
 
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.feature.settings.component.QuickAccessData
@@ -69,7 +71,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             KarigoTopAppBar(
-                title = "Settings",
+                title = stringResource(Res.string.nav_settings),
                 isNavBack = false,
                 isDivider = false
             )
@@ -80,45 +82,45 @@ fun SettingsScreen(
         val quickAccessData = listOf(
             QuickAccessData(
                 icon = R.drawable.stack,
-                label = "Materials",
+                label = stringResource(Res.string.nav_materials),
                 onClick = settingsNavigation.navigateToMaterial,
             ),
             QuickAccessData(
                 icon = R.drawable.estimate,
-                label = "Estimates",
+                label = stringResource(Res.string.estimate_list_title),
                 onClick = settingsNavigation.navigateToEstimate,
             ),
 //            QuickAccessData(
 //                icon = R.drawable.earning,
 //                label = "Earnings",
 //                onClick = settingsNavigation.navigateToEarnings,
-//            ),
+//            )
         )
 
         val legalAndInfoTabs = listOf(
             SettingsTabData(
                 icon = R.drawable.about,
-                name = "About Karigo",
+                name = stringResource(Res.string.about_title),
                 onClick = settingsNavigation.navigateToAbout
             ),
             SettingsTabData(
                 icon = R.drawable.privacy_policy,
-                name = "Privacy Policy",
+                name = stringResource(Res.string.settings_tab_privacy),
                 onClick = { settingsNavigation.navigateToLegalPage("privacy") }
             ),
             SettingsTabData(
                 icon = R.drawable.terms_of_service,
-                name = "Terms of Service",
+                name = stringResource(Res.string.settings_tab_tos),
                 onClick = { settingsNavigation.navigateToLegalPage("tos") }
             ),
             SettingsTabData(
                 icon = R.drawable.terms_of_condition,
-                name = "Terms of Condition",
+                name = stringResource(Res.string.settings_tab_toc),
                 onClick = { settingsNavigation.navigateToLegalPage("toc") }
             ),
             SettingsTabData(
                 icon = R.drawable.alert,
-                name = "Disclaimer",
+                name = stringResource(Res.string.settings_tab_disclaimer),
                 onClick = { settingsNavigation.navigateToLegalPage("disclaimer") }
             ),
         )
@@ -135,8 +137,8 @@ fun SettingsScreen(
         if (state.isThemeModalOpen) {
             SettingsSelectionModal(
                 modifier = Modifier.fillMaxWidth(),
-                title = "App Theme",
-                description = "Choose how Karigo looks for you.",
+                title = stringResource(Res.string.settings_option_theme),
+                description = stringResource(Res.string.dialog_theme_desc),
                 items = ThemePreference.entries.toList(),
                 selectedItem = state.currentTheme,
                 itemLabel = { it.displayName },
@@ -148,8 +150,8 @@ fun SettingsScreen(
         if (state.isLanguageModalOpen) {
             SettingsSelectionModal(
                 modifier = Modifier.fillMaxWidth(),
-                title = "App Language",
-                description = "Choose the language you prefer.",
+                title = stringResource(Res.string.settings_option_language),
+                description = stringResource(Res.string.dialog_language_desc),
                 items = AppLanguage.entries.toList(),
                 selectedItem = state.currentLanguage,
                 itemLabel = { it.displayName },
@@ -202,13 +204,13 @@ fun SettingsScreen(
 
             item {
                 SettingsComponent (
-                    title = "DATA & SUPPORT"
+                    title = stringResource(Res.string.settings_section_data_support)
                 ){
                     SettingsOptionRow(
                         modifier = Modifier.fillMaxWidth(),
                         icon = R.drawable.server,
-                        tabName = "Data Backup",
-                        description = "Google Drive sync",
+                        tabName = stringResource(Res.string.settings_option_backup),
+                        description = stringResource(Res.string.settings_option_backup_desc),
                         onClick = settingsNavigation.navigateToDataBackUp,
                     )
                 }
@@ -216,19 +218,19 @@ fun SettingsScreen(
 
             item {
                 SettingsComponent(
-                    title = "APP SETTINGS"
+                    title = stringResource(Res.string.settings_section_app_settings)
                 ) {
-//                    SettingsValueRow(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        icon = R.drawable.map_point, // map_point as a fallback for language
-//                        label = "App Language",
-//                        value = state.currentLanguage.displayName,
-//                        onClick = { event(SettingsEvent.ToggleLanguageModal(true)) }
-//                    )
+                    SettingsValueRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        icon = R.drawable.map_point, // map_point as a fallback for language
+                        label = stringResource(Res.string.settings_option_language),
+                        value = state.currentLanguage.displayName,
+                        onClick = { event(SettingsEvent.ToggleLanguageModal(true)) }
+                    )
                     SettingsValueRow(
                         modifier = Modifier.fillMaxWidth(),
                         icon = R.drawable.settings_line,
-                        label = "App Theme",
+                        label = stringResource(Res.string.settings_option_theme),
                         value = state.currentTheme.displayName,
                         onClick = { event(SettingsEvent.ToggleThemeModal(true)) }
                     )
@@ -237,7 +239,7 @@ fun SettingsScreen(
             
             item {
                 SettingsComponent(
-                    title = "LEGAL & INFO"
+                    title = stringResource(Res.string.settings_section_legal_info)
                 ){
                     legalAndInfoTabs.forEach {legal ->
                         SettingsOptionRow(

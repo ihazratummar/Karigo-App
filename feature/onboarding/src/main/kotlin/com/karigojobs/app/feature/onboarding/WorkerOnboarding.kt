@@ -85,7 +85,7 @@ import karigojobs.shared.resources.generated.resources.worker_owner_name_textfie
 import karigojobs.shared.resources.generated.resources.worker_owner_question
 import karigojobs.shared.resources.generated.resources.worker_phone_number
 import karigojobs.shared.resources.generated.resources.worker_phone_textfield_placeholder
-import karigojobs.shared.resources.generated.resources.worker_progress_meter
+import karigojobs.shared.resources.generated.resources.onboarding_progress
 import karigojobs.shared.resources.generated.resources.worker_required_fields
 import karigojobs.shared.resources.generated.resources.worker_your_progress
 import kotlinx.coroutines.flow.SharedFlow
@@ -317,10 +317,10 @@ private fun OnboardingHeader(
     onBack: () -> Unit
 ) {
     val (stepNumber, progress, percentage) = when (step) {
-        WorkerProfileStep.OWNER_NAME -> Triple(stringResource(Res.string.worker_progress_meter, 1, 4), 0.25f, "25%")
-        WorkerProfileStep.BUSINESS_NAME -> Triple(stringResource(Res.string.worker_progress_meter, 2, 4), 0.50f, "50%")
-        WorkerProfileStep.CONTACT_DETAILS -> Triple(stringResource(Res.string.worker_progress_meter, 3, 4), 0.75f, "75%")
-        WorkerProfileStep.EXTRA_INFO -> Triple(stringResource(Res.string.worker_progress_meter, 4, 4), 1.00f, "100%")
+        WorkerProfileStep.OWNER_NAME -> Triple(stringResource(Res.string.onboarding_progress, 1, 4), 0.25f, "25%")
+        WorkerProfileStep.BUSINESS_NAME -> Triple(stringResource(Res.string.onboarding_progress, 2, 4), 0.50f, "50%")
+        WorkerProfileStep.CONTACT_DETAILS -> Triple(stringResource(Res.string.onboarding_progress, 3, 4), 0.75f, "75%")
+        WorkerProfileStep.EXTRA_INFO -> Triple(stringResource(Res.string.onboarding_progress, 4, 4), 1.00f, "100%")
     }
 
     Row(

@@ -1,117 +1,156 @@
 package com.karigojobs.share.model
 
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.trade_ac_technician
+import karigojobs.shared.resources.generated.resources.trade_ac_technician_description
+import karigojobs.shared.resources.generated.resources.trade_aluminium_upvc
+import karigojobs.shared.resources.generated.resources.trade_aluminium_upvc_description
+import karigojobs.shared.resources.generated.resources.trade_appliance_repair
+import karigojobs.shared.resources.generated.resources.trade_appliance_repair_description
+import karigojobs.shared.resources.generated.resources.trade_bore_well
+import karigojobs.shared.resources.generated.resources.trade_bore_well_description
+import karigojobs.shared.resources.generated.resources.trade_car_bike_mechanic
+import karigojobs.shared.resources.generated.resources.trade_car_bike_mechanic_description
+import karigojobs.shared.resources.generated.resources.trade_carpenter
+import karigojobs.shared.resources.generated.resources.trade_carpenter_description
+import karigojobs.shared.resources.generated.resources.trade_cctv_security
+import karigojobs.shared.resources.generated.resources.trade_cctv_security_description
+import karigojobs.shared.resources.generated.resources.trade_civil_contractor
+import karigojobs.shared.resources.generated.resources.trade_civil_contractor_description
+import karigojobs.shared.resources.generated.resources.trade_electrician
+import karigojobs.shared.resources.generated.resources.trade_electrician_description
+import karigojobs.shared.resources.generated.resources.trade_gas_lpg_fitter
+import karigojobs.shared.resources.generated.resources.trade_gas_lpg_fitter_description
+import karigojobs.shared.resources.generated.resources.trade_grill
+import karigojobs.shared.resources.generated.resources.trade_grill_description
+import karigojobs.shared.resources.generated.resources.trade_mason
+import karigojobs.shared.resources.generated.resources.trade_mason_description
+import karigojobs.shared.resources.generated.resources.trade_network_support
+import karigojobs.shared.resources.generated.resources.trade_network_support_description
+import karigojobs.shared.resources.generated.resources.trade_painter
+import karigojobs.shared.resources.generated.resources.trade_painter_description
+import karigojobs.shared.resources.generated.resources.trade_pest_control
+import karigojobs.shared.resources.generated.resources.trade_pest_control_description
+import karigojobs.shared.resources.generated.resources.trade_plumber
+import karigojobs.shared.resources.generated.resources.trade_plumber_description
+import karigojobs.shared.resources.generated.resources.trade_solar_installer
+import karigojobs.shared.resources.generated.resources.trade_solar_installer_description
+import karigojobs.shared.resources.generated.resources.trade_waterproofing
+import karigojobs.shared.resources.generated.resources.trade_waterproofing_description
+import org.jetbrains.compose.resources.StringResource
+
 
 enum class TradeType(
-    val displayName: String,
-    val description: String,
+    val displayNameRes: StringResource,
+    val descriptionRes: StringResource,
     val defaultLabourRate: Double = 0.0
 
 ) {
     PLUMBER(
-        displayName = "Plumber",
-        description = "Pipes, fittings, taps & repairs",
+        displayNameRes = Res.string.trade_plumber,
+        descriptionRes = Res.string.trade_plumber_description,
         defaultLabourRate = 150.0
     ),
 
     ELECTRICIAN(
-        displayName = "Electrician",
-        description = "Wiring, panels & fixtures",
+        displayNameRes = Res.string.trade_electrician,
+        descriptionRes = Res.string.trade_electrician_description,
         defaultLabourRate = 180.0
     ),
 
     CARPENTER(
-        displayName = "Carpenter",
-        description = "Woodwork, doors & furniture",
+        displayNameRes = Res.string.trade_carpenter,
+        descriptionRes = Res.string.trade_carpenter_description,
         defaultLabourRate = 220.0
     ),
 
     PAINTER(
-        displayName = "Painter",
-        description = "Interior & exterior painting",
+        displayNameRes = Res.string.trade_painter,
+        descriptionRes = Res.string.trade_painter_description,
         defaultLabourRate = 140.0
     ),
 
     MASON(
-        displayName = "Mason & Contractor",
-        description = "Brickwork, tiles & concrete",
+        displayNameRes = Res.string.trade_mason,
+        descriptionRes = Res.string.trade_mason_description,
         defaultLabourRate = 200.0
     ),
 
     GRILL(
-        displayName = "Grill & Fabricator",
-        description = "Steel, grills & gates",
+        displayNameRes = Res.string.trade_grill,
+        descriptionRes = Res.string.trade_grill_description,
         defaultLabourRate = 250.0
     ),
 
     AC_TECHNICIAN(
-        displayName = "AC Technician",
-        description = "AC service, repair & installation",
+        displayNameRes = Res.string.trade_ac_technician,
+        descriptionRes = Res.string.trade_ac_technician_description,
         defaultLabourRate = 350.0
     ),
 
     APPLIANCE_REPAIR(
-        displayName = "Appliance Repair",
-        description = "Washers, fridges & home appliances",
+        displayNameRes = Res.string.trade_appliance_repair,
+        descriptionRes = Res.string.trade_appliance_repair_description,
         defaultLabourRate = 300.0
     ),
 
     WATERPROOFING(
-        displayName = "Waterproofing",
-        description = "Leakage & dampness prevention",
+        displayNameRes = Res.string.trade_waterproofing,
+        descriptionRes = Res.string.trade_waterproofing_description,
         defaultLabourRate = 280.0
     ),
 
     PEST_CONTROL(
-        displayName = "Pest Control",
-        description = "Termite, insect & rodent treatment",
+        displayNameRes = Res.string.trade_pest_control,
+        descriptionRes = Res.string.trade_pest_control_description,
         defaultLabourRate = 250.0
     ),
 
     CAR_BIKE_MECHANIC(
-        displayName = "Car & Bike Mechanic",
-        description = "Vehicle repair & maintenance",
+        displayNameRes = Res.string.trade_car_bike_mechanic,
+        descriptionRes = Res.string.trade_car_bike_mechanic_description,
         defaultLabourRate = 300.0
     ),
 
     CCTV_SECURITY(
-        displayName = "CCTV & Security",
-        description = "Cameras, sensors & alarms",
+        displayNameRes = Res.string.trade_cctv_security,
+        descriptionRes = Res.string.trade_cctv_security_description,
         defaultLabourRate = 350.0
     ),
 
     SOLAR_INSTALLER(
-        displayName = "Solar Installer",
-        description = "Panels, inverters & batteries",
+        displayNameRes = Res.string.trade_solar_installer,
+        descriptionRes = Res.string.trade_solar_installer_description,
         defaultLabourRate = 500.0
     ),
 
     ALUMINIUM_UPVC(
-        displayName = "Aluminium & UPVC",
-        description = "Windows, doors & partitions",
+        displayNameRes = Res.string.trade_aluminium_upvc,
+        descriptionRes = Res.string.trade_aluminium_upvc_description,
         defaultLabourRate = 260.0
     ),
 
     CIVIL_CONTRACTOR(
-        displayName = "Civil Contractor",
-        description = "Small construction projects",
+        displayNameRes = Res.string.trade_civil_contractor,
+        descriptionRes = Res.string.trade_civil_contractor_description,
         defaultLabourRate = 400.0
     ),
 
     BORE_WELL(
-        displayName = "Bore Well & Water Tank",
-        description = "Drilling, pumps & maintenance",
+        displayNameRes = Res.string.trade_bore_well,
+        descriptionRes = Res.string.trade_bore_well_description,
         defaultLabourRate = 450.0
     ),
 
     GAS_LPG_FITTER(
-        displayName = "Gas & LPG Fitter",
-        description = "Pipelines, stoves & repairs",
+        displayNameRes = Res.string.trade_gas_lpg_fitter,
+        descriptionRes = Res.string.trade_gas_lpg_fitter_description,
         defaultLabourRate = 300.0
     ),
 
     NETWORK_SUPPORT(
-        displayName = "Network & IT Support",
-        description = "Cabling, routers & WiFi",
+        displayNameRes = Res.string.trade_network_support,
+        descriptionRes = Res.string.trade_network_support_description,
         defaultLabourRate = 350.0
     );
 

@@ -32,8 +32,9 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                api(projects.shared.resources)
+
                 implementation(libs.kotlin.stdlib)
-                // Add KMP dependencies here
             }
         }
 
@@ -43,23 +44,11 @@ kotlin {
             }
         }
 
-        androidMain {
-            dependencies {
-
-            }
-        }
-
         getByName("androidDeviceTest") {
             dependencies {
                 implementation(libs.androidx.core)
                 implementation(libs.androidx.runner)
                 implementation(libs.androidx.testExt.junit)
-            }
-        }
-
-        iosMain {
-            dependencies {
-
             }
         }
     }

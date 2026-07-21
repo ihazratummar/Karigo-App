@@ -8,7 +8,6 @@
     <string name="worker_owner_asking_name">আপনার নাম দিয়ে শুরু করি</string>
     <string name="worker_owner_name_section">মালিকের নাম</string>
     <string name="worker_owner_name_textfield_placeholder">আপনার পূর্ণ নাম</string>
-    <string name="worker_progress_meter">ধাপ %1$s / %2$s</string>
     <string name="worker_business">আপনার ব্যবসা</string>
     <string name="worker_business_tagline">আপনার কাজের নাম কী?</string>
     <string name="worker_business_name">ব্যবসার নাম</string>

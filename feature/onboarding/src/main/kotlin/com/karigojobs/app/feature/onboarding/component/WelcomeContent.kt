@@ -33,6 +33,16 @@ import com.karigojobs.app.android.ui.R
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsThemePreview
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_btn_get_started
+import karigojobs.shared.resources.generated.resources.onboarding_started_description
+import karigojobs.shared.resources.generated.resources.onboarding_started_earnings
+import karigojobs.shared.resources.generated.resources.onboarding_started_earnings_description
+import karigojobs.shared.resources.generated.resources.onboarding_started_track_description
+import karigojobs.shared.resources.generated.resources.onboarding_started_track_job
+import karigojobs.shared.resources.generated.resources.onboarding_started_whatsapp
+import karigojobs.shared.resources.generated.resources.onboarding_started_whatsapp_description
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -84,11 +94,7 @@ fun WelcomeContent(
         )
         Spacer(Modifier.height(dimens.Space.base))
         Text(
-            text = """
-                    The simplest way to manage jobs, clients, and 
-                    earnings — built for Indian contractors, 
-                    plumbers, electricians & more.
-                """.trimIndent(),
+            text = stringResource(Res.string.onboarding_started_description),
             style = MaterialTheme.typography.labelMedium.copy(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
@@ -98,23 +104,23 @@ fun WelcomeContent(
 
         Spacer(Modifier.height(dimens.Space.xl))
 
-        val welcomeInfoData = listOf<WelcomeScreenCardData>(
+        val welcomeInfoData = listOf(
             WelcomeScreenCardData(
                 icon = R.drawable.job_line,
-                title = "Track every job",
-                description = "Labour, materials & invoices in one place",
+                title = stringResource(Res.string.onboarding_started_track_job),
+                description = stringResource(Res.string.onboarding_started_track_description),
                 iconColor = Color(0xFF5CFAFF)
             ),
             WelcomeScreenCardData(
                 icon = R.drawable.whatsapp,
-                title = "Share via WhatsApp",
-                description = "Send invoices to clients instantly",
+                title = stringResource(Res.string.onboarding_started_whatsapp),
+                description = stringResource(Res.string.onboarding_started_whatsapp_description),
                 iconColor = Color(0xFF25D366)
             ),
             WelcomeScreenCardData(
                 icon = R.drawable.chart_line,
-                title = "Know your earnings",
-                description = "Weekly reports & payment trcaking",
+                title = stringResource(Res.string.onboarding_started_earnings),
+                description = stringResource(Res.string.onboarding_started_earnings_description),
                 iconColor = Color(0xFFA089FF)
             )
         )
@@ -182,7 +188,7 @@ fun WelcomeContent(
             shape = KarigojobsShapes.medium
         ) {
             Text(
-                text = "Get Started",
+                text = stringResource(Res.string.common_btn_get_started),
                 style = MaterialTheme.typography.titleMedium.copy(
                     color = MaterialTheme.colorScheme.onPrimary
                 ),

@@ -1,6 +1,5 @@
 package com.karigojobs.app.feature.job.details
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,18 +15,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.LocalContext
 import android.print.PrintManager
 import android.print.PrintAttributes
-import android.print.PrintDocumentInfo
-import android.print.PrintDocumentAdapter
-import android.print.PageRange
-import android.os.ParcelFileDescriptor
-import java.io.File
 import android.content.Context
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -40,14 +30,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.Canvas
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.font.FontWeight
 import com.karigojob.share.utils.formatNumber
 import com.karigojobs.app.android.ui.R
@@ -78,6 +60,17 @@ import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
+import androidx.core.net.toUri
+import com.karigojobs.ui.toLocaleString
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_export
+import karigojobs.shared.resources.generated.resources.common_grand_total
+import karigojobs.shared.resources.generated.resources.common_invoice_preview
+import karigojobs.shared.resources.generated.resources.common_labour
+import karigojobs.shared.resources.generated.resources.common_materials
+import karigojobs.shared.resources.generated.resources.job_detail_title
+import karigojobs.shared.resources.generated.resources.job_details_labour_and_materials
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -146,10 +139,12 @@ fun JobDetailsScreen(
                 is JobDetailsEffect.ShareTextOnWhatsapp -> {
                     try {
                         val whatsappIntent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
-                            data = android.net.Uri.parse("https://api.whatsapp.com/send?text=" + android.net.Uri.encode(effect.text))
+                            data = ("https://api.whatsapp.com/send?text=" + android.net.Uri.encode(
+                                effect.text
+                            )).toUri()
                         }
                         context.startActivity(whatsappIntent)
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(android.content.Intent.EXTRA_TEXT, effect.text)
@@ -168,7 +163,7 @@ fun JobDetailsScreen(
         topBar = {
             KarigoMiddleTextTopAppBar(
                 onNavigationClick = { onBackClick() },
-                title = "Job Details",
+                title = stringResource(Res.string.job_detail_title),
                 action = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -285,13 +280,13 @@ fun JobDetailsScreen(
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(
-                                    text = "Grand Total",
+                                    text = stringResource(Res.string.common_grand_total),
                                     style = MaterialTheme.typography.bodyMedium.copy(
                                         color = appColor.secondaryText
                                     )
                                 )
                                 Text(
-                                    text = "Inc. labour & materials",
+                                    text = stringResource(Res.string.job_details_labour_and_materials),
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         color = appColor.secondaryText
                                     )
@@ -299,7 +294,7 @@ fun JobDetailsScreen(
                             }
 
                             Text(
-                                text = "${deviceInfo.currency}${jobDetailsState.jobModel?.total?.formatNumber()}",
+                                text = "${deviceInfo.currency}${jobDetailsState.jobModel?.total?.toLocaleString()}",
                                 style = MaterialTheme.typography.headlineLarge.copy(
                                     color = KarigojobsIconColor
                                 )
@@ -310,7 +305,7 @@ fun JobDetailsScreen(
                 item {
                     Spacer(modifier = Modifier.height(dimens.Space.sm))
                     Text(
-                        text = "Invoice Preview",
+                        text = stringResource(Res.string.common_invoice_preview),
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = appColor.secondaryText,
                             fontWeight = FontWeight.Bold
@@ -329,9 +324,9 @@ fun JobDetailsScreen(
                     previewItems.add(
                         PreviewItem(
                             name = item.itemName,
-                            subtitle = "Labour",
-                            quantityText = item.quantity.toString(),
-                            totalText = "$currency${item.mainTotal.formatNumber()}"
+                            subtitle = stringResource(Res.string.common_labour),
+                            quantityText = item.quantity.toLocaleString(),
+                            totalText = "$currency${item.mainTotal.toLocaleString()}"
                         )
                     )
                 }
@@ -339,9 +334,9 @@ fun JobDetailsScreen(
                     previewItems.add(
                         PreviewItem(
                             name = item.name,
-                            subtitle = "Material",
-                            quantityText = item.quantity.toString(),
-                            totalText = "$currency${item.mainTotal.formatNumber()}"
+                            subtitle = stringResource(Res.string.common_materials),
+                            quantityText = item.quantity.toLocaleString(),
+                            totalText = "$currency${item.mainTotal.toLocaleString()}"
                         )
                     )
                 }
@@ -353,7 +348,7 @@ fun JobDetailsScreen(
                     clientName = jobDetailsState.clientModel?.name ?: jobDetailsState.jobModel?.clientName ?: "",
                     clientAddress = jobDetailsState.clientModel?.address?.ifBlank { null },
                     items = previewItems,
-                    totalText = "$currency${jobDetailsState.jobModel?.total?.formatNumber()}"
+                    totalText = "$currency${jobDetailsState.jobModel?.total?.toLocaleString()}"
                 )
             }
 
@@ -372,7 +367,7 @@ fun JobDetailsScreen(
                             },
                             buttonColor = appColor.cardColors,
                             contentColor = Color(0xFFEF5350),
-                            label = "Export PDF",
+                            label = stringResource(Res.string.common_export),
                             icon = R.drawable.ic_pdf
                         )
 

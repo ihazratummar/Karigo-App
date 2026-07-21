@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trade_plumber">Plumber</string>
+    <string name="trade_plumber_description">Pipes, fittings, taps &amp; repairs</string>
+
+    <string name="trade_electrician">Electrician</string>
+    <string name="trade_electrician_description">Wiring, panels &amp; fixtures</string>
+
+    <string name="trade_carpenter">Carpenter</string>
+    <string name="trade_carpenter_description">Woodwork, doors &amp; furniture</string>
+
+    <string name="trade_painter">Painter</string>
+    <string name="trade_painter_description">Interior &amp; exterior painting</string>
+
+    <string name="trade_mason">Mason &amp; Contractor</string>
+    <string name="trade_mason_description">Brickwork, tiles &amp; concrete</string>
+
+    <string name="trade_grill">Grill &amp; Fabricator</string>
+    <string name="trade_grill_description">Steel, grills &amp; gates</string>
+
+    <string name="trade_ac_technician">AC Technician</string>
+    <string name="trade_ac_technician_description">AC service, repair &amp; installation</string>
+
+    <string name="trade_appliance_repair">Appliance Repair</string>
+    <string name="trade_appliance_repair_description">Washers, fridges &amp; home appliances</string>
+
+    <string name="trade_waterproofing">Waterproofing</string>
+    <string name="trade_waterproofing_description">Leakage &amp; dampness prevention</string>
+
+    <string name="trade_pest_control">Pest Control</string>
+    <string name="trade_pest_control_description">Termite, insect &amp; rodent treatment</string>
+
+    <string name="trade_car_bike_mechanic">Car &amp; Bike Mechanic</string>
+    <string name="trade_car_bike_mechanic_description">Vehicle repair &amp; maintenance</string>
+
+    <string name="trade_cctv_security">CCTV &amp; Security</string>
+    <string name="trade_cctv_security_description">Cameras, sensors &amp; alarms</string>
+
+    <string name="trade_solar_installer">Solar Installer</string>
+    <string name="trade_solar_installer_description">Panels, inverters &amp; batteries</string>
+
+    <string name="trade_aluminium_upvc">Aluminium &amp; UPVC</string>
+    <string name="trade_aluminium_upvc_description">Windows, doors &amp; partitions</string>
+
+    <string name="trade_civil_contractor">Civil Contractor</string>
+    <string name="trade_civil_contractor_description">Small construction projects</string>
+
+    <string name="trade_bore_well">Bore Well &amp; Water Tank</string>
+    <string name="trade_bore_well_description">Drilling, pumps &amp; maintenance</string>
+
+    <string name="trade_gas_lpg_fitter">Gas &amp; LPG Fitter</string>
+    <string name="trade_gas_lpg_fitter_description">Pipelines, stoves &amp; repairs</string>
+
+    <string name="trade_network_support">Network &amp; IT Support</string>
+    <string name="trade_network_support_description">Cabling, routers &amp; WiFi</string>
+</resources>

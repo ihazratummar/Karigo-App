@@ -76,6 +76,9 @@ import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 
 
+import org.jetbrains.compose.resources.stringResource
+import karigojobs.shared.resources.generated.resources.*
+
 /**
  * @author hazratummar
  * Created on 06/06/26
@@ -112,13 +115,13 @@ fun AddMaterialCard(
         ) {
             Icon(
                 painter = painterResource(R.drawable.add),
-                contentDescription = "Add Materials",
+                contentDescription = stringResource(Res.string.materials_add_materials),
                 modifier = Modifier.size(dimens.Icon.xs),
                 tint = KarigojobsText2
             )
             Spacer(modifier = Modifier.size(dimens.Padding.md))
             Text(
-                text = "Add Material",
+                text = stringResource(Res.string.materials_add_materials),
                 style = MaterialTheme.typography.labelLarge.copy(
                     color = KarigojobsText2
                 )
@@ -361,7 +364,7 @@ fun EstimateCard(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "No prices",
+                            text = stringResource(Res.string.estimate_comp_status_no_prices),
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = appColor.secondaryText
                             ),
@@ -436,7 +439,7 @@ fun EstimateDetailsCard(
                 )
                 Spacer(Modifier.width(dimens.Padding._2xs))
                 Text(
-                    text = "${state.siteEstimateMaterial.size} items",
+                    text = stringResource(Res.string.common_item_count, state.siteEstimateMaterial.size),
                     style = MaterialTheme.typography.labelSmall.copy(
                         color = appColor.tertiaryText
                     )
@@ -488,7 +491,7 @@ fun EstimateMaterialsList(
             verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
         ) {
             Text(
-                text = "Materials",
+                text = stringResource(Res.string.estimate_comp_section_materials),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Bold,
                     color = appColor.primaryText
@@ -578,13 +581,13 @@ fun EstimateTotalCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Estimate Total",
+                    text = stringResource(Res.string.estimate_comp_section_total),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
                 Text(
-                    text = "$totalItemSize items",
+                    text = stringResource(Res.string.common_item_count, totalItemSize),
                     style = MaterialTheme.typography.labelSmall.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

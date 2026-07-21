@@ -45,6 +45,19 @@ import com.karigojobs.ui.permission.rememberPermissionHandler
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsThemePreview
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.toLocaleString
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_btn_lets_go
+import karigojobs.shared.resources.generated.resources.onboarding_back_to_trade
+import karigojobs.shared.resources.generated.resources.onboarding_btn_trade_not_selected
+import karigojobs.shared.resources.generated.resources.onboarding_last_description
+import karigojobs.shared.resources.generated.resources.onboarding_last_title
+import karigojobs.shared.resources.generated.resources.onboarding_materials_ready
+import karigojobs.shared.resources.generated.resources.onboarding_materials_ready_description
+import karigojobs.shared.resources.generated.resources.onboarding_progress
+import karigojobs.shared.resources.generated.resources.onboarding_starter_material
+import karigojobs.shared.resources.generated.resources.worker_action_title
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -61,24 +74,6 @@ fun ReadyContent(
     event: (OnboardingIntent) -> Unit = {}
 ) {
 
-    val notificationPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        rememberPermissionHandler(
-            permission = AppPermission.Notification,
-            onGranted = { event(OnboardingIntent.LetsGo) },
-            onDenied = { event(OnboardingIntent.LetsGo) },
-            onPermanentlyDenied = { event(OnboardingIntent.LetsGo) }
-        )
-    } else null
-
-    var showDialog by remember { mutableStateOf(false) }
-
-    if (showDialog && notificationPermission != null) {
-        PermissionRationaleDialog(
-            handlerState = notificationPermission,
-            onDismiss = { showDialog = false }
-        )
-    }
-
     LazyColumn(
         modifier = modifier
             .fillMaxSize(),
@@ -87,19 +82,19 @@ fun ReadyContent(
     ) {
         item {
             Text(
-                text = "Step 2 of 2",
+                text = stringResource(Res.string.onboarding_progress, 2.toLocaleString(), 2.toLocaleString()),
                 style = MaterialTheme.typography.labelMedium.copy(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             )
             Text(
-                text = "You're all set",
+                text = stringResource(Res.string.onboarding_last_title),
                 style = MaterialTheme.typography.headlineMedium.copy(
                     color = MaterialTheme.colorScheme.onBackground
                 )
             )
             Text(
-                text = "We've loaded starter materials for your works.",
+                text = stringResource(Res.string.onboarding_last_description),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -144,13 +139,13 @@ fun ReadyContent(
                     ) {
 
                         Text(
-                            text = trade.name,
+                            text = stringResource(trade.displayNameRes),
                             style = MaterialTheme.typography.titleMedium.copy(
                                 color = MaterialTheme.colorScheme.onBackground
                             )
                         )
                         Text(
-                            text = "10 starter items loaded",
+                            text = stringResource(Res.string.onboarding_starter_material, 10.toLocaleString()),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -198,13 +193,13 @@ fun ReadyContent(
                         verticalArrangement = Arrangement.spacedBy(dimens.Space.md)
                     ) {
                         Text(
-                            text = "${onboardingState.selectedTrades.size * 10} materials ready",
+                            text = stringResource(Res.string.onboarding_materials_ready,( onboardingState.selectedTrades.size * 10).toLocaleString()),
                             style = MaterialTheme.typography.titleMedium.copy(
                                 color = MaterialTheme.colorScheme.onBackground
                             )
                         )
                         Text(
-                            text = "Edit prices anytime in Material Library",
+                            text = stringResource(Res.string.onboarding_materials_ready_description),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -217,21 +212,13 @@ fun ReadyContent(
         item {
             Button(
                 onClick = {
-                    when {
-                        Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU -> {
-                            event(OnboardingIntent.LetsGo)
-                        }
-                        notificationPermission?.isGranted == true -> {
-                            event(OnboardingIntent.LetsGo)
-                        }
-                        else -> showDialog = true
-                    }
+                    event(OnboardingIntent.LetsGo)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = KarigojobsShapes.medium
             ) {
                 Text(
-                    text = "Let's Go",
+                    text = stringResource(Res.string.common_btn_lets_go),
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -244,7 +231,7 @@ fun ReadyContent(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Back to trade selection",
+                    text = stringResource(Res.string.onboarding_back_to_trade),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     ),

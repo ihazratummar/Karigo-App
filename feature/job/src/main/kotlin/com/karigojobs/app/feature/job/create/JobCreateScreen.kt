@@ -38,7 +38,14 @@ import com.karigojobs.ui.permission.AppPermission
 import com.karigojobs.ui.permission.PermissionRationaleDialog
 import com.karigojobs.ui.permission.rememberPermissionHandler
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_btn_save
+import karigojobs.shared.resources.generated.resources.common_btn_update
+import karigojobs.shared.resources.generated.resources.job_edit_job
+import karigojobs.shared.resources.generated.resources.job_new_job
+import karigojobs.shared.resources.generated.resources.nav_clients
 import kotlinx.coroutines.flow.SharedFlow
+import org.jetbrains.compose.resources.stringResource
 
 
 /**
@@ -97,14 +104,14 @@ fun JobCreateScreen(
         topBar = {
             KarigoMiddleTextTopAppBar(
                 onNavigationClick = onBackClick,
-                title = if (addJobState.jobId == null) "New Job" else "Edit Job",
+                title = if (addJobState.jobId == null) stringResource(Res.string.job_new_job) else stringResource(Res.string.job_edit_job),
                 action = {
                     CanSaveButton(
                         onAction = {
                             onIntent(AddJobIntent.SaveJob)
                         },
                         canSave = addJobState.canContinue,
-                        text = if (addJobState.jobId == null) "Save" else "Update"
+                        text = if (addJobState.jobId == null) stringResource(Res.string.common_btn_save) else stringResource(Res.string.common_btn_update)
                     )
                 }
             )
@@ -169,7 +176,7 @@ fun JobCreateScreen(
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = "CLIENT",
+                        text = stringResource(Res.string.nav_clients).uppercase(),
                         style = MaterialTheme.typography.labelMedium.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

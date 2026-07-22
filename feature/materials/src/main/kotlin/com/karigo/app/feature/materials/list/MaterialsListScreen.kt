@@ -60,6 +60,7 @@ import com.karigojobs.ui.theme.SurfaceOverlay
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.toLocaleString
 import kotlinx.coroutines.flow.SharedFlow
 
 
@@ -84,6 +85,7 @@ fun MaterialsListScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     val snackbarState = remember { SnackbarHostState() }
+    val uncategorizedLabel = stringResource(Res.string.common_uncategorized).uppercase()
 
     LaunchedEffect(Unit) {
         effect?.collect { effect ->
@@ -122,7 +124,7 @@ fun MaterialsListScreen(
                     containerColor = Color.Transparent
                 ),
                 title = {
-                    TopBarTitle(title = "Materials")
+                    TopBarTitle(title = stringResource(Res.string.nav_materials))
                 },
                 actions = {
                     KarigoIconWIthBgCick(
@@ -210,14 +212,14 @@ fun MaterialsListScreen(
 
             item {
                 Text(
-                    text = "${state.materialsList.size} items",
+                    text = stringResource(Res.string.common_item_count, state.materialsList.size.toLocaleString()),
                     style = MaterialTheme.typography.labelSmall.copy(color = appColor.secondaryText)
                 )
             }
 
             if (state.selectedTradeType != null) {
                 val groupedMaterials =
-                    state.materialsList.groupBy { it.categoryName?.uppercase() ?: "UNCATEGORIZED" }
+                    state.materialsList.groupBy { it.categoryName?.uppercase() ?: uncategorizedLabel }
 
                 groupedMaterials.forEach { (groupName, materials) ->
                     item {
@@ -246,7 +248,7 @@ fun MaterialsListScreen(
                                 )
                             }
                             Text(
-                                text = materials.size.toString(),
+                                text = materials.size.toLocaleString(),
                                 style = MaterialTheme.typography.labelSmall.copy(color = appColor.secondaryText)
                             )
                             HorizontalDivider(
@@ -339,7 +341,7 @@ fun MaterialItemRow(
                         }
                     }
                     Text(
-                        text = "${stringResource(material.tradeType.displayNameRes)} · ${deviceInfo.currency}${material.price} / ${material.unit}",
+                        text = "${stringResource(material.tradeType.displayNameRes)} · ${deviceInfo.currency}${material.price.toLocaleString()} / ${material.unit}",
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = appColor.secondaryText
                         )
@@ -389,6 +391,10 @@ fun SearchAndFilter(
     event: (MaterialListEvent) -> Unit,
     categoryEvent: (MaterialCategoryEvent) -> Unit
 ) {
+    val allLabel = stringResource(Res.string.common_all)
+    val uncategorizedName = stringResource(Res.string.common_uncategorized)
+    val manageLabel = stringResource(Res.string.materials_btn_manage)
+
     Column(
         modifier = modifier
             .fillMaxWidth(),
@@ -398,7 +404,7 @@ fun SearchAndFilter(
             modifier = Modifier,
             query = state.materialQuery,
             onQueryChange = { event(MaterialListEvent.SearchMaterial(it)) },
-            placeholder = "Search Materials"
+            placeholder = stringResource(Res.string.materials_search_materials)
         )
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
@@ -419,7 +425,7 @@ fun SearchAndFilter(
 
                         ) {
                         Text(
-                            text = "All",
+                            text = allLabel,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = if (isSelected) MaterialTheme.colorScheme.onPrimary else appColor.secondaryText
                             ),
@@ -477,7 +483,7 @@ fun SearchAndFilter(
                         border = customCardBorder()
                     ) {
                         Text(
-                            text = "All",
+                            text = allLabel,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
                             ),
@@ -497,7 +503,7 @@ fun SearchAndFilter(
                                 MaterialListEvent.SelectCategory(
                                     MaterialCategoryModel(
                                         id = "uncategorized",
-                                        name = "Uncategorized",
+                                        name = uncategorizedName,
                                         tradeType = state.selectedTradeType!!
                                     )
                                 )
@@ -510,7 +516,7 @@ fun SearchAndFilter(
                         border = customCardBorder()
                     ) {
                         Text(
-                            text = "Uncategorized",
+                            text = uncategorizedName,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = if (isSelected) MaterialTheme.colorScheme.onPrimary else KarigojobsText2
                             ),
@@ -571,14 +577,14 @@ fun SearchAndFilter(
                         ) {
                             Icon(
                                 painter = androidx.compose.ui.res.painterResource(id = R.drawable.settings_line), // Replace with settings icon
-                                contentDescription = "Manage",
+                                contentDescription = manageLabel,
                                 modifier = Modifier.size(
                                     dimens.Icon._2xs
                                 ),
                                 tint = MaterialTheme.colorScheme.onBackground
                             )
                             Text(
-                                text = "Manage",
+                                text = manageLabel,
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = MaterialTheme.colorScheme.onBackground
                                 )

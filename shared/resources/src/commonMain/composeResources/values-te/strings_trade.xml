@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trade_plumber">ప్లంబర్</string>
+    <string name="trade_plumber_description">పైపులు, అమరికలు, కుళాయిలు &amp; మరమ్మతులు</string>
+    <string name="trade_electrician">ఎలక్ట్రీషియన్</string>
+    <string name="trade_electrician_description">వైరింగ్, ప్యానెల్లు &amp; అమరికలు</string>
+    <string name="trade_carpenter">వడ్రంగి</string>
+    <string name="trade_carpenter_description">చెక్కపని, తలుపులు &amp; ఫర్నిచర్</string>
+    <string name="trade_painter">పెయింటర్</string>
+    <string name="trade_painter_description">లోపల &amp; బయట పెయింటింగ్</string>
+    <string name="trade_mason">తాపీమేస్త్రీ &amp; సివిల్ వర్కర్</string>
+    <string name="trade_mason_description">ఇటుకలు, టైలింగ్ &amp; కాంక్రీట్ పనులు</string>
+    <string name="trade_grill">గ్రిల్ &amp; మెటల్ వర్కర్</string>
+    <string name="trade_grill_description">ఇనుప పని, వెల్డింగ్ &amp; గేటు మరమ్మతులు</string>
+    <string name="trade_ac_technician">ఏసీ టెక్నీషియన్</string>
+    <string name="trade_ac_technician_description">ఏసీ సర్వీసింగ్, మరమ్మతులు &amp; ఇన్‌స్టాలేషన్</string>
+    <string name="trade_appliance_repair">ఉపకరణాల మరమ్మతులు</string>
+    <string name="trade_appliance_repair_description">వాషింగ్ మెషీన్లు, ఫ్రిడ్జ్‌లు &amp; మరిన్ని</string>
+    <string name="trade_waterproofing">వాటర్‌ప్రూఫింగ్ స్పెషలిస్ట్</string>
+    <string name="trade_waterproofing_description">లీకేజీ నియంత్రణ &amp; తేమ నివారణ</string>
+    <string name="trade_pest_control">పెస్ట్ కంట్రోల్ స్పెషలిస్ట్</string>
+    <string name="trade_pest_control_description">చెదలు, కీటకాలు &amp; ఎలుకల నివారణ</string>
+    <string name="trade_car_bike_mechanic">కార్ &amp; బైక్ మెకానిక్</string>
+    <string name="trade_car_bike_mechanic_description">వాహనాల సర్వీసింగ్ &amp; మరమ్మతులు</string>
+    <string name="trade_cctv_security">సీసీటీవీ &amp; సెక్యూరిటీ ఇన్‌స్టాలర్</string>
+    <string name="trade_cctv_security_description">కెమెరాలు, అలారాలు &amp; సెన్సార్లు</string>
+    <string name="trade_solar_installer">సోలార్ ఎనర్జీ ఇన్‌స్టాలర్</string>
+    <string name="trade_solar_installer_description">ప్యానెల్లు, ఇన్వర్టర్లు &amp; బ్యాటరీ సెటప్</string>
+    <string name="trade_aluminium_upvc">అల్యూమినియం &amp; యూపీవీసీ ఫ్యాబ్రికేటర్</string>
+    <string name="trade_aluminium_upvc_description">కిటికీలు, తలుపులు &amp; విభజనలు</string>
+    <string name="trade_civil_contractor">సివిల్ కాంట్రాక్టర్</string>
+    <string name="trade_civil_contractor_description">చిన్న నిర్మాణ ప్రాజెక్టులు</string>
+    <string name="trade_bore_well">బోరు బావి &amp; వాటర్ ట్యాంక్</string>
+    <string name="trade_bore_well_description">డ్రిల్లింగ్, పంపులు &amp; నిర్వహణ</string>
+    <string name="trade_gas_lpg_fitter">గ్యాస్ &amp; ఎల్పీజీ ఫిట్టర్</string>
+    <string name="trade_gas_lpg_fitter_description">పైప్‌లైన్లు, స్టవ్‌లు &amp; మరమ్మతులు</string>
+    <string name="trade_network_support">నెట్‌వర్క్ &amp; ఐటీ సపోర్ట్</string>
+    <string name="trade_network_support_description">కేబులింగ్, రౌటర్లు &amp; వైఫై</string>
+</resources>

@@ -12,6 +12,10 @@
     <string name="settings_option_backup_desc">Google Drive sync</string>
     <string name="settings_option_language">App Language</string>
     <string name="settings_option_theme">App Theme</string>
+    <string name="settings_theme_system">System Default</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_my_trade">My Trade</string>
 
     <!-- About Screen -->
     <string name="about_title">About Karigo</string>

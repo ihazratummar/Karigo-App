@@ -58,6 +58,9 @@ import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_btn_change
+import karigojobs.shared.resources.generated.resources.settings_my_trade
 
 
 /**
@@ -214,14 +217,14 @@ fun SettingsTradeCard(
 ) {
     SettingsComponent(
         modifier = modifier,
-        title = "MY TRADE",
+        title = stringResource(Res.string.settings_my_trade),
         action = {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.clickable(onClick = onClick)
             ) {
                 Text(
-                    text = "Change",
+                    text = stringResource(Res.string.common_btn_change),
                     style = MaterialTheme.typography.labelSmall.copy(
                         color = KarigojobsAccent
                     ),

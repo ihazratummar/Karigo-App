@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Delete Dialog -->
-    <string name="dialog_delete_title_job">Delete Job</string>
-    <string name="dialog_delete_desc_job">This will permanently remove this job and its invoice history.</string>
-    <string name="dialog_delete_title_client">Delete Client</string>
-    <string name="dialog_delete_desc_client">This will remove %1$s and all associated job history &amp; estimate history.</string>
-    <string name="dialog_delete_title_material">Delete Material</string>
-    <string name="dialog_delete_desc_material">This will permanently remove this item from your library.</string>
-    <string name="dialog_delete_title_estimate">Delete Estimate</string>
-    <string name="dialog_delete_desc_estimate">This will permanently remove this site estimate.</string>
+    <string name="dialog_delete_title_job">কাজের রেকর্ড মুছুন</string>
+    <string name="dialog_delete_desc_job">এটি আপনার ডিভাইস থেকে এই কাজের সমস্ত বিবরণ স্থায়ীভাবে মুছে ফেলবে।</string>
+    <string name="dialog_delete_title_client">গ্রাহক মুছুন</string>
+    <string name="dialog_delete_desc_client">এটি %1$s এবং তার সাথে সম্পর্কিত সমস্ত কাজের রেকর্ড ও এস্টিমেটের ইতিহাস মুছে ফেলবে।</string>
+    <string name="dialog_delete_title_material">মালামাল মুছুন</string>
+    <string name="dialog_delete_desc_material">এটি আপনার তালিকা থেকে এই মালামালটি স্থায়ীভাবে মুছে ফেলবে।</string>
+    <string name="dialog_delete_title_estimate">এস্টিমেট মুছুন</string>
+    <string name="dialog_delete_desc_estimate">এটি আপনার তালিকা থেকে এই সাইট এস্টিমেটটি স্থায়ীভাবে মুছে ফেলবে।</string>
     <!-- Permission Rationale Dialog -->
-    <string name="dialog_permission_btn_deny">Not Now</string>
-    <string name="dialog_permission_btn_allow">Allow</string>
-    <string name="dialog_permission_btn_settings">Open Settings</string>
-    <string name="dialog_permission_title_notification">Enable Notification</string>
-    <string name="dialog_permission_desc_notification">Get Remainder for unpaid invoices and upcoming jobs.</string>
-    <string name="dialog_permission_permanently_denied_notification">Notification permission was denied. Enable it in the settings</string>
-    <string name="dialog_permission_title_contact">Access Contact</string>
-    <string name="dialog_permission_desc_contact">Quickly add clients from your phone contacts.</string>
-    <string name="dialog_permission_permanently_denied_contact">Contacts permission was denied. Enable it from app settings</string>
+    <string name="dialog_permission_btn_deny">এখন নয়</string>
+    <string name="dialog_permission_btn_allow">অনুমতি দিন</string>
+    <string name="dialog_permission_btn_settings">সেটিংসে যান</string>
+    <string name="dialog_permission_title_notification">নোটিফিকেশন অনুমতি</string>
+    <string name="dialog_permission_desc_notification">বকেয়া ইনভয়েস এবং কাজের আপডেট সম্পর্কে নোটিফিকেশন পেতে অনুমতি দিন।</string>
+    <string name="dialog_permission_permanently_denied_notification">নোটিফিকেশন অনুমতি বন্ধ রয়েছে। সেটিংসে গিয়ে চালু করুন।</string>
+    <string name="dialog_permission_title_contact">ফোনবুক ব্যবহারের অনুমতি</string>
+    <string name="dialog_permission_desc_contact">ফোনবুক থেকে দ্রুত গ্রাহকের বিবরণ যোগ করুন।</string>
+    <string name="dialog_permission_permanently_denied_contact">ফোনবুক অনুমতি বন্ধ রয়েছে। সেটিংসে গিয়ে চালু করুন।</string>
     <!-- Share Choice Dialog -->
-    <string name="dialog_share_title">Share Estimate</string>
-    <string name="dialog_share_title_job">Share Invoice</string>
-    <string name="dialog_share_desc_estimate">Select how you would like to share this estimate with your client.</string>
-    <string name="dialog_share_desc_job">Select how you would like to share this job invoice with your client.</string>
-    <string name="dialog_share_option_pdf">Share PDF</string>
-    <string name="dialog_share_option_text">Plain Text</string>
+    <string name="dialog_share_title">এস্টিমেট শেয়ার করুন</string>
+    <string name="dialog_share_title_job">ইনভয়েস শেয়ার করুন</string>
+    <string name="dialog_share_desc_estimate">আপনি কীভাবে গ্রাহকের সাথে এস্টিমেট শেয়ার করতে চান তা নির্বাচন করুন।</string>
+    <string name="dialog_share_desc_job">আপনি কীভাবে গ্রাহকের সাথে ইনভয়েস শেয়ার করতে চান তা নির্বাচন করুন।</string>
+    <string name="dialog_share_option_pdf">পিডিএফ শেয়ার করুন</string>
+    <string name="dialog_share_option_text">সাধারণ টেক্সট</string>
     <!-- Rename Category Dialog -->
-    <string name="dialog_rename_category_title">Rename Category</string>
-    <string name="dialog_rename_category_placeholder">e.g. Copper pipes, Fittings</string>
+    <string name="dialog_rename_category_title">ক্যাটাগরির নাম পরিবর্তন</string>
+    <string name="dialog_rename_category_placeholder">যেমন: পাইপ, ওয়্যারিং</string>
     <!-- Settings Dialog Modals -->
-    <string name="dialog_theme_desc">Choose how Karigo looks for you.</string>
-    <string name="dialog_language_desc">Choose the language you prefer.</string>
+    <string name="dialog_theme_desc">অ্যাপের থিম নির্বাচন করুন।</string>
+    <string name="dialog_language_desc">আপনার পছন্দসই ভাষা নির্বাচন করুন।</string>
     <!-- Backup Confirmation Dialogs -->
-    <string name="dialog_confirm_backup_title">Confirm Backup</string>
-    <string name="dialog_confirm_backup_desc">This will securely upload your current device data and settings to Google Drive, overwriting any previous backup. Proceed?</string>
-    <string name="dialog_confirm_restore_title">Confirm Restore</string>
-    <string name="dialog_confirm_restore_desc">Warning: Restoring will overwrite ALL current device data and settings with the data from your Google Drive backup. This action cannot be undone. Are you sure you want to proceed?</string>
+    <string name="dialog_confirm_backup_title">ব্যাকআপ নিশ্চিতকরণ</string>
+    <string name="dialog_confirm_backup_desc">আপনার বর্তমান অ্যাপ ডেটা গুগল ড্রাইভের ব্যাকআপ ফোল্ডারে আপলোড করা হবে।</string>
+    <string name="dialog_confirm_restore_title">রিস্টোর নিশ্চিতকরণ</string>
+    <string name="dialog_confirm_restore_desc">সতর্কতা: গুগল ড্রাইভ থেকে ডেটা রিস্টোর করলে বর্তমান ডিভাইসের সমস্ত ডেটা পরিবর্তিত হবে।</string>
 </resources>

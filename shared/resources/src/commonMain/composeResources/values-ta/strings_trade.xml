@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trade_plumber">பிளம்பர்</string>
+    <string name="trade_plumber_description">குழாய்கள், பொருத்துதல்கள், குழாய்கள் &amp; பழுது பார்த்தல்</string>
+    <string name="trade_electrician">எலக்ட்ரீஷியன்</string>
+    <string name="trade_electrician_description">வயரிங், பேனல்கள் &amp; சாதனங்கள்</string>
+    <string name="trade_carpenter">தச்சன்</string>
+    <string name="trade_carpenter_description">மரவேலைகள், கதவுகள் &amp; மரச்சாமான்கள்</string>
+    <string name="trade_painter">பெயிண்டர்</string>
+    <string name="trade_painter_description">உள்துறை &amp; வெளிப்புற பெயிண்டிங்</string>
+    <string name="trade_mason">கொத்தனார் &amp; சிவில் தொழிலாளி</string>
+    <string name="trade_mason_description">செங்கற்கள், டைலிங் &amp; கான்கிரீட் வேலைகள்</string>
+    <string name="trade_grill">கிரில் &amp; மெட்டல் தொழிலாளி</string>
+    <string name="trade_grill_description">இரும்பு வேலைகள், வெல்டிங் &amp; கேட் பழுது பார்த்தல்</string>
+    <string name="trade_ac_technician">ஏசி தொழில்நுட்ப வல்லுநர்</string>
+    <string name="trade_ac_technician_description">ஏசி சேவை, பழுது பார்த்தல் &amp; நிறுவுதல்</string>
+    <string name="trade_appliance_repair">உபகரணங்கள் பழுது பார்த்தல்</string>
+    <string name="trade_appliance_repair_description">வாஷிங் மெஷின்கள், பிரிட்ஜ்கள் &amp; பல</string>
+    <string name="trade_waterproofing">நீர்ப்புகா சிறப்பு வல்லுநர்</string>
+    <string name="trade_waterproofing_description">கசிவு கட்டுப்பாடு &amp; ஈரப்பதம் சிகிச்சை</string>
+    <string name="trade_pest_control">பூச்சி கட்டுப்பாடு சிறப்பு வல்லுநர்</string>
+    <string name="trade_pest_control_description">கரையான், பூச்சி &amp; கொறித்துண்ணி சிகிச்சை</string>
+    <string name="trade_car_bike_mechanic">கார் &amp; பைக் மெக்கானிக்</string>
+    <string name="trade_car_bike_mechanic_description">வாகன சேவை &amp; பழுது பார்த்தல்</string>
+    <string name="trade_cctv_security">சிசிடிவி &amp; பாதுகாப்பு நிறுவி</string>
+    <string name="trade_cctv_security_description">கேமராக்கள், அலாரங்கள் &amp; சென்சார்கள்</string>
+    <string name="trade_solar_installer">சூரிய ஆற்றல் நிறுவி</string>
+    <string name="trade_solar_installer_description">பேனல்கள், இன்வெர்ட்டர்கள் &amp; பேட்டரி அமைப்பு</string>
+    <string name="trade_aluminium_upvc">அலுமினியம் &amp; யுபிவிசி தயாரிப்பாளர்</string>
+    <string name="trade_aluminium_upvc_description">ஜன்னல்கள், கதவுகள் &amp; பகிர்வுகள்</string>
+    <string name="trade_civil_contractor">சிவில் ஒப்பந்ததாரர்</string>
+    <string name="trade_civil_contractor_description">சிறிய கட்டுமான திட்டங்கள்</string>
+    <string name="trade_bore_well">ஆழ்குழாய் கிணறு &amp; தண்ணீர் தொட்டி</string>
+    <string name="trade_bore_well_description">துளையிடுதல், பம்புகள் &amp; பராமரிப்பு</string>
+    <string name="trade_gas_lpg_fitter">கேஸ் &amp; எல்பிஜி ஃபிட்டர்</string>
+    <string name="trade_gas_lpg_fitter_description">குழாய்கள், அடுப்புகள் &amp; பழுது பார்த்தல்</string>
+    <string name="trade_network_support">நெட்வொர்க் &amp; ஐடி ஆதரவு</string>
+    <string name="trade_network_support_description">கேபிளிங், ரவுட்டர்கள் &amp; வைஃபை</string>
+</resources>

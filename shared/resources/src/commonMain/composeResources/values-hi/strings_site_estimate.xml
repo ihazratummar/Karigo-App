@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List Screen -->
+    <string name="estimate_list_title">अनुमान</string>
+    <string name="estimate_list_search_placeholder">अनुमान या ग्राहक खोजें</string>
+    <string name="estimate_list_btn_new">नया अनुमान</string>
+    <string name="estimate_list_empty_title">अभी कोई अनुमान नहीं है</string>
+    <string name="estimate_list_empty_desc">साइट पर जाएं, सामग्री चुनें, ग्राहक को भेजें</string>
+    <string name="estimate_list_btn_create_first">पहला अनुमान बनाएं</string>
+    <!-- Add/Edit Screen -->
+    <string name="estimate_add_toast_added">जोड़ा गया</string>
+    <string name="estimate_add_title_new">नया अनुमान</string>
+    <string name="estimate_add_title_edit">अनुमान संपादित करें</string>
+    <string name="estimate_add_section_title">परियोजना का शीर्षक</string>
+    <string name="estimate_add_placeholder_title">जैसे: बाथरूम का नवीनीकरण</string>
+    <string name="estimate_add_section_client">ग्राहक</string>
+    <string name="estimate_add_section_date">दिनांक</string>
+    <string name="estimate_add_section_notes">साइट नोट्स</string>
+    <string name="estimate_add_placeholder_notes">कोई विशेष निर्देश...</string>
+    <string name="estimate_add_label_show_rate">दर दिखाएं</string>
+    <string name="estimate_add_desc_rate_visible">ग्राहक दर और कुल राशि देख सकता है</string>
+    <string name="estimate_add_desc_rate_hidden">केवल सामग्री सूची, कोई कीमत नहीं</string>
+    <string name="estimate_add_section_materials">सामग्री</string>
+    <string name="estimate_add_btn_save">अनुमान सहेजें</string>
+    <string name="estimate_add_btn_update">अनुमान अपडेट करें</string>
+    <!-- Components -->
+    <string name="estimate_comp_section_materials">सामग्री</string>
+    <string name="estimate_comp_section_total">अनुमान कुल</string>
+    <string name="estimate_comp_status_no_prices">कोई कीमत नहीं</string>
+    <!-- Details Screen -->
+    <string name="estimate_detail_title">अनुमान</string>
+    <string name="estimate_detail_preview_title">अनुमान पूर्वावलोकन</string>
+    <string name="estimate_detail_default_provider">Karigo प्रदाता</string>
+    <string name="estimate_detail_btn_whatsapp">व्हाट्सएप</string>
+    <string name="estimate_detail_toast_print_unavailable">इस डिवाइस पर प्रिंट सेवा उपलब्ध नहीं है</string>
+    <string name="estimate_detail_toast_print_failed">प्रिंटर खोलने में विफल: %1$s</string>
+    <string name="estimate_detail_toast_generic_failed">प्रिंट करने में विफल: %1$s</string>
+</resources>

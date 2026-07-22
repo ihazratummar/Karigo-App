@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="worker_action_needed">معلومات درکار ہیں</string>
+    <string name="worker_action_title">پروفائل مکمل کریں</string>
+    <string name="worker_action_description">بلوں اور تخمینوں پر اپنی تفصیلات دکھانے کے لیے معلومات مکمل کریں۔</string>
+    <string name="worker_action_missing">معلومات نامکمل</string>
+    <string name="worker_owner_question">آپ کا نام کیا ہے؟</string>
+    <string name="worker_owner_asking_name">اپنا پورا نام درج کریں</string>
+    <string name="worker_owner_name_section">آپ کا نام</string>
+    <string name="worker_owner_name_textfield_placeholder">جیسے: محمد علی</string>
+    <string name="worker_business">کاروبار</string>
+    <string name="worker_business_tagline">اپنے کاروبار کا نام اور تفصیلات درج کریں</string>
+    <string name="worker_business_name">کاروبار کا نام</string>
+    <string name="worker_business_textfield_placeholder">جیسے: علی الیکٹرک سروسز</string>
+    <string name="worker_contact">رابطہ</string>
+    <string name="worker_contact_tagline">گاہکوں کے رابطے کے لیے معلومات</string>
+    <string name="worker_phone_number">فون نمبر</string>
+    <string name="worker_phone_textfield_placeholder">+92 300 1234567</string>
+    <string name="worker_email_address">ای میل ایڈریس</string>
+    <string name="worker_email_textfield_placeholder">name@email.com</string>
+    <string name="worker_optional_skip">چھوڑیں (اختیاری)</string>
+    <string name="worker_your_progress">آپ کی پیش رفت</string>
+    <string name="worker_required_fields">مطلوبہ معلومات</string>
+    <string name="worker_optional_details">اختیاری معلومات</string>
+    <string name="worker_extra_info">اضافی معلومات</string>
+    <string name="worker_extra_info_tagline">کاروبار کا پتہ اور ٹیکس کی تفصیلات</string>
+    <string name="worker_extra_gst">ٹیکس نمبر / جی ایس ٹی (اختیاری)</string>
+    <string name="worker_extra_gst_textfield_placeholder">ٹیکس رجسٹریشن نمبر درج کریں</string>
+    <string name="worker_extra_business_address">کاروبار کا پتہ</string>
+    <string name="worker_extra_business_address_textfield_placeholder">اپنے دفتر یا دکان کا پتہ درج کریں</string>
+    <string name="worker_btn_finish">مکمل کریں</string>
+    <string name="worker_btn_skip_this">اسے چھوڑ دیں</string>
+</resources>

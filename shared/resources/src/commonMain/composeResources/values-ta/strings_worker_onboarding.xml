@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="worker_action_needed">செயல் தேவை</string>
+    <string name="worker_action_title">உங்கள் வணிக சுயவிவரத்தை நிரப்பவும்</string>
+    <string name="worker_action_description">உங்கள் மதிப்பீடு மற்றும் விலைப்பட்டியல்கள் தொழில்முறையாகத் தோன்ற உரிமையாளர் பெயர் மற்றும் வணிகப் பெயரைச் சேர்க்கவும்</string>
+    <string name="worker_action_missing">%1$d விடுபட்டுள்ளது</string>
+    <string name="worker_owner_question">நீங்கள் யார்?</string>
+    <string name="worker_owner_asking_name">உங்கள் பெயருடன் தொடங்குவோம்</string>
+    <string name="worker_owner_name_section">உரிமையாளர் பெயர்</string>
+    <string name="worker_owner_name_textfield_placeholder">உங்கள் முழுப் பெயர்</string>
+    <string name="worker_business">உங்கள் வணிகம்</string>
+    <string name="worker_business_tagline">உங்கள் வேலையை நீங்கள் என்னவென்று அழைக்கிறீர்கள்?</string>
+    <string name="worker_business_name">வணிகப் பெயர்</string>
+    <string name="worker_business_textfield_placeholder">உங்கள் கடை அல்லது வணிகத்தின் பெயர்</string>
+    <string name="worker_contact">தொடர்பு விவரங்கள்</string>
+    <string name="worker_contact_tagline">அதனால் வாடிக்கையாளர் உங்களை அணுக முடியும்</string>
+    <string name="worker_phone_number">தொலைபேசி எண்</string>
+    <string name="worker_phone_textfield_placeholder">+91 9999901010</string>
+    <string name="worker_email_address">மின்னஞ்சல் முகவரி</string>
+    <string name="worker_email_textfield_placeholder">your@email.com</string>
+    <string name="worker_optional_skip">விருப்பத்திற்குரியது — நீங்கள் இதைத் தவிர்க்கலாம்</string>
+    <string name="worker_your_progress">உங்கள் முன்னேற்றம்</string>
+    <string name="worker_required_fields">கட்டாயப் புலங்கள்</string>
+    <string name="worker_optional_details">விருப்ப விவரங்கள்</string>
+    <string name="worker_extra_info">கூடுதல் தகவல்</string>
+    <string name="worker_extra_info_tagline">விருப்பத்திற்குரியது ஆனால் பயனுள்ளது</string>
+    <string name="worker_extra_gst">ஜிஎஸ்டி எண்</string>
+    <string name="worker_extra_gst_textfield_placeholder">22AAAAA0000A1Z5</string>
+    <string name="worker_extra_business_address">வணிக முகவரி</string>
+    <string name="worker_extra_business_address_textfield_placeholder">முழு வணிக முகவரி</string>
+    <string name="worker_btn_finish">அமைப்பை முடிக்கவும்</string>
+    <string name="worker_btn_skip_this">இந்த படியைத் தவிர்க்கவும்</string>
+</resources>

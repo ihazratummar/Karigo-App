@@ -85,7 +85,7 @@ fun <T> SettingsSelectionModal(
     description: String,
     items: List<T>,
     selectedItem: T,
-    itemLabel: (T) -> String,
+    itemLabel: @Composable (T) -> String,
     onItemSelected: (T) -> Unit,
     onDismiss: () -> Unit
 ) {

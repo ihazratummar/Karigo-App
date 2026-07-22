@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="worker_action_needed">कार्रवाई आवश्यक</string>
+    <string name="worker_action_title">तुमचे व्यावसायिक प्रोफाइल पूर्ण करा</string>
+    <string name="worker_action_description">मालकाचे आणि व्यवसायाचे नाव जोडा जेणेकरून तुमचे अंदाज आणि बिले व्यावसायिक दिसतील</string>
+    <string name="worker_action_missing">%1$d अपूर्ण</string>
+    <string name="worker_owner_question">तुमचे नाव काय आहे?</string>
+    <string name="worker_owner_asking_name">चला तुमच्या नावापासून सुरुवात करूया</string>
+    <string name="worker_owner_name_section">मालकाचे नाव</string>
+    <string name="worker_owner_name_textfield_placeholder">तुमचे पूर्ण नाव</string>
+    <string name="worker_business">तुमचा व्यवसाय</string>
+    <string name="worker_business_tagline">तुम्ही तुमच्या कामाला काय म्हणता?</string>
+    <string name="worker_business_name">व्यवसायाचे नाव</string>
+    <string name="worker_business_textfield_placeholder">तुमचे दुकान किंवा व्यवसायाचे नाव</string>
+    <string name="worker_contact">संपर्क तपशील</string>
+    <string name="worker_contact_tagline">जेणेकरून ग्राहक तुमच्याशी संपर्क साधू शकेल</string>
+    <string name="worker_phone_number">फोन नंबर</string>
+    <string name="worker_phone_textfield_placeholder">+91 9999901010</string>
+    <string name="worker_email_address">ईमेल पत्ता</string>
+    <string name="worker_email_textfield_placeholder">your@email.com</string>
+    <string name="worker_optional_skip">पर्यायी — तुम्ही हे वगळू शकता</string>
+    <string name="worker_your_progress">तुमची प्रगती</string>
+    <string name="worker_required_fields">आवश्यक फील्ड</string>
+    <string name="worker_optional_details">पर्यायी तपशील</string>
+    <string name="worker_extra_info">अतिरिक्त माहिती</string>
+    <string name="worker_extra_info_tagline">पर्यायी पण उपयुक्त</string>
+    <string name="worker_extra_gst">जीएसटी नंबर</string>
+    <string name="worker_extra_gst_textfield_placeholder">22AAAAA0000A1Z5</string>
+    <string name="worker_extra_business_address">व्यवसायाचा पत्ता</string>
+    <string name="worker_extra_business_address_textfield_placeholder">व्यवसायाचा पूर्ण पत्ता</string>
+    <string name="worker_btn_finish">सेटअप पूर्ण करा</string>
+    <string name="worker_btn_skip_this">ही पायरी वगळा</string>
+</resources>

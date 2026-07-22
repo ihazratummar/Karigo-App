@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="job_list_search_field">పనులు లేదా క్లయింట్ కోసం వెతకండి</string>
+    <string name="job_detail_title">పని వివరాలు</string>
+    <string name="job_new_job">కొత్త పని</string>
+    <string name="job_edit_job">పనిని సవరించండి</string>
+    <string name="job_detail_status_pending">పెండింగ్‌లో ఉంది</string>
+    <string name="job_detail_status_in_progress">కొనసాగుతోంది</string>
+    <string name="job_detail_status_complete">పూర్తయింది</string>
+    <string name="job_detail_status_invoiced">బిల్ చేయబడింది</string>
+    <string name="job_detail_status_paid">చెల్లించబడింది</string>
+    <string name="job_details_labour_and_materials">కూలీ &amp; వస్తువులు</string>
+    <string name="job_details_labour_total">మొత్తం కూలీ</string>
+    <string name="job_details_materials_total">మొత్తం వస్తువులు</string>
+    <string name="job_labour_item_name_field_placeholder">ఉదాహరణకు: ఫిట్టింగ్ సేవలు</string>
+</resources>

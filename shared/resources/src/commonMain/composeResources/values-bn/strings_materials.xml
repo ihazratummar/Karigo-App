@@ -2,17 +2,17 @@
 <resources>
     <string name="materials_select_materials">উপকরণ নির্বাচন করুন</string>
     <string name="materials_search_materials">উপাদান অনুসন্ধান করুন</string>
-    <string name="materials_add_materials">Add Material</string>
-    <string name="materials_material_name">Material Name</string>
-    <string name="materials_material_name_text_field_placeholder">e.g PVC Pipe 1/2 inch</string>
-    <string name="materials_trade">Trade</string>
-    <string name="materials_category">Category</string>
-    <string name="materials_category_text_field_placeholder">e.g. Pipes, Fittings, Valves..</string>
-    <string name="materials_category_description">Type a new name to create a category, or pick an existing on above</string>
-    <string name="materials_new_category_text_field_placeholder">New category name...</string>
-    <string name="material_manager_category">Manage Category</string>
-    <string name="materials_count_category">%1$d categories</string>
-    <string name="materials_btn_add_to_library">Add to Library</string>
-    <string name="materials_btn_save_changes">Save Changes</string>
-    <string name="materials_btn_manage">Manage</string>
+    <string name="materials_add_materials">মালামাল যোগ করুন</string>
+    <string name="materials_material_name">মালামালের নাম</string>
+    <string name="materials_material_name_text_field_placeholder">যেমন: ২/১ ইঞ্চি পিভিসি পাইপ</string>
+    <string name="materials_trade">কাজের ক্যাটাগরি</string>
+    <string name="materials_category">ক্যাটাগরি</string>
+    <string name="materials_category_text_field_placeholder">যেমন: পাইপ, ফিটিংস, ভালভ...</string>
+    <string name="materials_category_description">নতুন ক্যাটাগরি তৈরি করতে নাম লিখুন অথবা তালিকা থেকে বেছে নিন</string>
+    <string name="materials_new_category_text_field_placeholder">নতুন ক্যাটাগরির নাম...</string>
+    <string name="material_manager_category">ক্যাটাগরি পরিচালনা</string>
+    <string name="materials_count_category">%1$d টি ক্যাটাগরি</string>
+    <string name="materials_btn_add_to_library">লাইব্রেরিতে যোগ করুন</string>
+    <string name="materials_btn_save_changes">পরিবর্তন সেভ করুন</string>
+    <string name="materials_btn_manage">পরিচালনা</string>
 </resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Delete Dialog -->
+    <string name="dialog_delete_title_job">வேலையை நீக்கு</string>
+    <string name="dialog_delete_desc_job">இது இந்த வேலையையும் அதன் விலைப்பட்டியல் வரலாற்றையும் நிரந்தரமாக நீக்கிவிடும்.</string>
+    <string name="dialog_delete_title_client">வாடிக்கையாளரை நீக்கு</string>
+    <string name="dialog_delete_desc_client">இது %1$s மற்றும் தொடர்புடைய அனைத்து வேலை வரலாறு &amp; மதிப்பீட்டு வரலாற்றையும் அகற்றும்.</string>
+    <string name="dialog_delete_title_material">பொருளை நீக்கு</string>
+    <string name="dialog_delete_desc_material">இது உங்கள் நூலகத்திலிருந்து இந்த உருப்படியை நிரந்தரமாக நீக்கிவிடும்.</string>
+    <string name="dialog_delete_title_estimate">மதிப்பீட்டை நீக்கு</string>
+    <string name="dialog_delete_desc_estimate">இது இந்த தள மதிப்பீட்டை நிரந்தரமாக நீக்கிவிடும்.</string>
+    <!-- Permission Rationale Dialog -->
+    <string name="dialog_permission_btn_deny">இப்போது வேண்டாம்</string>
+    <string name="dialog_permission_btn_allow">அனுமதி</string>
+    <string name="dialog_permission_btn_settings">அமைப்புகளைத் திற</string>
+    <string name="dialog_permission_title_notification">அறிவிப்புகளை இயக்கு</string>
+    <string name="dialog_permission_desc_notification">செலுத்தப்படாத விலைப்பட்டியல்கள் மற்றும் வரவிருக்கும் வேலைகளுக்கான நினைவூட்டல்களைப் பெறவும்.</string>
+    <string name="dialog_permission_permanently_denied_notification">அறிவிப்பு அனுமதி மறுக்கப்பட்டது. அமைப்புகளில் அதை இயக்கவும்</string>
+    <string name="dialog_permission_title_contact">தொடர்புகளை அணுகவும்</string>
+    <string name="dialog_permission_desc_contact">உங்கள் தொலைபேசி தொடர்புகளிலிருந்து வாடிக்கையாளர்களை விரைவாகச் சேர்க்கவும்.</string>
+    <string name="dialog_permission_permanently_denied_contact">தொடர்புகள் அனுமதி மறுக்கப்பட்டது. பயன்பாட்டு அமைப்புகளிலிருந்து அதை இயக்கவும்</string>
+    <!-- Share Choice Dialog -->
+    <string name="dialog_share_title">மதிப்பீட்டைப் பகிரவும்</string>
+    <string name="dialog_share_title_job">விலைப்பட்டியலைப் பகிரவும்</string>
+    <string name="dialog_share_desc_estimate">இந்த மதிப்பீட்டை உங்கள் வாடிக்கையாளருடன் எவ்வாறு பகிர விரும்புகிறீர்கள் என்பதைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="dialog_share_desc_job">இந்த வேலை விலைப்பட்டியலை உங்கள் வாடிக்கையாளருடன் எவ்வாறு பகிர விரும்புகிறீர்கள் என்பதைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="dialog_share_option_pdf">PDF-ஐ பகிரவும்</string>
+    <string name="dialog_share_option_text">சாதாரண உரை</string>
+    <!-- Rename Category Dialog -->
+    <string name="dialog_rename_category_title">வகையை மறுபெயரிடவும்</string>
+    <string name="dialog_rename_category_placeholder">உதாரணமாக: செப்பு குழாய்கள், பொருத்துதல்கள்</string>
+    <!-- Settings Dialog Modals -->
+    <string name="dialog_theme_desc">கரிகோ உங்களுக்கு எப்படித் தோன்ற வேண்டும் என்பதைத் தேர்வு செய்யவும்.</string>
+    <string name="dialog_language_desc">நீங்கள் விரும்பும் மொழியைத் தேர்வு செய்யவும்.</string>
+    <!-- Backup Confirmation Dialogs -->
+    <string name="dialog_confirm_backup_title">காப்புப்பிரதியை உறுதிப்படுத்தவும்</string>
+    <string name="dialog_confirm_backup_desc">இது உங்கள் தற்போதைய சாதனத் தரவு மற்றும் அமைப்புகளை கூகிள் டிரைவில் பாதுகாப்பாக பதிவேற்றும், முந்தைய காப்புப்பிரதியை மேலெழுதும். தொடரவா?</string>
+    <string name="dialog_confirm_restore_title">மீட்டமைப்பை உறுதிப்படுத்தவும்</string>
+    <string name="dialog_confirm_restore_desc">எச்சரிக்கை: மீட்டமைப்பது உங்கள் கூகிள் டிரைவ் காப்புப்பிரதியிலிருந்து தரவுடன் தற்போதைய அனைத்து சாதனத் தரவு மற்றும் அமைப்புகளையும் மேலெழுதும். இந்தச் செயலைத் தவிர்க்க முடியாது. நீங்கள் தொடர விரும்புகிறீர்களா?</string>
+</resources>

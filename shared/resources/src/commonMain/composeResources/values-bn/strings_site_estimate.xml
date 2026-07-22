@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- List Screen -->
-    <string name="estimate_list_title">Estimates</string>
-    <string name="estimate_list_search_placeholder">Search estimates or client</string>
-    <string name="estimate_list_btn_new">New Estimate</string>
-    <string name="estimate_list_empty_title">No estimate yet</string>
-    <string name="estimate_list_empty_desc">Walk a site, tap materials, send to client</string>
-    <string name="estimate_list_btn_create_first">Create First Estimate</string>
+    <string name="estimate_list_title">এস্টিমেট সমূহ</string>
+    <string name="estimate_list_search_placeholder">এস্টিমেট বা গ্রাহকের নাম খুঁজুন</string>
+    <string name="estimate_list_btn_new">নতুন এস্টিমেট</string>
+    <string name="estimate_list_empty_title">এখনো কোনো এস্টিমেট নেই</string>
+    <string name="estimate_list_empty_desc">সাইট ঘুরে মালামাল নির্বাচন করুন এবং গ্রাহককে পাঠান</string>
+    <string name="estimate_list_btn_create_first">প্রথম এস্টিমেট তৈরি করুন</string>
     <!-- Add/Edit Screen -->
-    <string name="estimate_add_toast_added">Added</string>
-    <string name="estimate_add_title_new">New Estimate</string>
-    <string name="estimate_add_title_edit">Edit Estimate</string>
-    <string name="estimate_add_section_title">PROJECT TITLE</string>
-    <string name="estimate_add_placeholder_title">e.g. Bathroom Renovation</string>
-    <string name="estimate_add_section_client">CLIENT</string>
-    <string name="estimate_add_section_date">DATE</string>
-    <string name="estimate_add_section_notes">SITE NOTES</string>
-    <string name="estimate_add_placeholder_notes">Any special instructions...</string>
-    <string name="estimate_add_label_show_rate">Show Rate</string>
-    <string name="estimate_add_desc_rate_visible">Client Sees rate &amp; total</string>
-    <string name="estimate_add_desc_rate_hidden">Material list only, no prices</string>
-    <string name="estimate_add_section_materials">MATERIALS</string>
-    <string name="estimate_add_btn_save">Save Estimate</string>
-    <string name="estimate_add_btn_update">Update Estimate</string>
+    <string name="estimate_add_toast_added">যোগ করা হয়েছে</string>
+    <string name="estimate_add_title_new">নতুন এস্টিমেট</string>
+    <string name="estimate_add_title_edit">এস্টিমেট সম্পাদনা</string>
+    <string name="estimate_add_section_title">প্রজেক্টের নাম</string>
+    <string name="estimate_add_placeholder_title">যেমন: বাথরুম রেনোভেশন</string>
+    <string name="estimate_add_section_client">গ্রাহক</string>
+    <string name="estimate_add_section_date">তারিখ</string>
+    <string name="estimate_add_section_notes">সাইট নোটস</string>
+    <string name="estimate_add_placeholder_notes">যেকোনো বিশেষ নির্দেশাবলী...</string>
+    <string name="estimate_add_label_show_rate">দর দেখান</string>
+    <string name="estimate_add_desc_rate_visible">গ্রাহক দর ও মোট টাকা দেখতে পাবেন</string>
+    <string name="estimate_add_desc_rate_hidden">শুধুমাত্র মালামালের তালিকা, কোনো দাম নেই</string>
+    <string name="estimate_add_section_materials">মালামাল</string>
+    <string name="estimate_add_btn_save">এস্টিমেট সেভ করুন</string>
+    <string name="estimate_add_btn_update">এস্টিমেট আপডেট করুন</string>
     <!-- Components -->
-    <string name="estimate_comp_section_materials">Materials</string>
-    <string name="estimate_comp_section_total">Estimate Total</string>
-    <string name="estimate_comp_status_no_prices">No prices</string>
+    <string name="estimate_comp_section_materials">মালামাল</string>
+    <string name="estimate_comp_section_total">মোট এস্টিমেট</string>
+    <string name="estimate_comp_status_no_prices">দাম নেই</string>
     <!-- Details Screen -->
-    <string name="estimate_detail_title">Estimate</string>
-    <string name="estimate_detail_preview_title">Estimate Preview</string>
-    <string name="estimate_detail_default_provider">Karigo Provider</string>
-    <string name="estimate_detail_btn_whatsapp">WhatsApp</string>
-    <string name="estimate_detail_toast_print_unavailable">Print service is not available on this device</string>
-    <string name="estimate_detail_toast_print_failed">Failed to open printer: %1$s</string>
-    <string name="estimate_detail_toast_generic_failed">Failed to print: %1$s</string>
+    <string name="estimate_detail_title">এস্টিমেট</string>
+    <string name="estimate_detail_preview_title">এস্টিমেট প্রাকদর্শন</string>
+    <string name="estimate_detail_default_provider">Karigo প্রোভাইডার</string>
+    <string name="estimate_detail_btn_whatsapp">হোয়াটসঅ্যাপ</string>
+    <string name="estimate_detail_toast_print_unavailable">এই ডিভাইসে প্রিন্ট সুবিধা উপলব্ধ নেই</string>
+    <string name="estimate_detail_toast_print_failed">প্রিন্টার খুলতে ব্যর্থ: %1$s</string>
+    <string name="estimate_detail_toast_generic_failed">প্রিন্ট করতে ব্যর্থ: %1$s</string>
 </resources>

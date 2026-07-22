@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_home">ഹോം</string>
+    <string name="nav_jobs">ജോലികൾ</string>
+    <string name="nav_clients">ക്ലയൻ്റ്</string>
+    <string name="nav_materials">സാമഗ്രികൾ</string>
+    <string name="nav_settings">സെറ്റിംഗ്സ്</string>
+</resources>

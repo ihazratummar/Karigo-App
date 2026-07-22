@@ -23,6 +23,7 @@ import com.karigojobs.ui.common.JobCard
 import com.karigojobs.ui.common.KarigojobsSearchField
 import com.karigojobs.ui.common.TopBarTitle
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.toLocaleString
 import karigojobs.shared.resources.generated.resources.Res
 import karigojobs.shared.resources.generated.resources.common_label_search
 import karigojobs.shared.resources.generated.resources.common_total
@@ -62,7 +63,7 @@ fun JobListScreen(
                 ) {
                     TopBarTitle(title = stringResource(Res.string.nav_jobs))
                     Text(
-                        text = stringResource(Res.string.common_total_count, jobListState.jobs.size),
+                        text = stringResource(Res.string.common_total_count, jobListState.jobs.size.toLocaleString()),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

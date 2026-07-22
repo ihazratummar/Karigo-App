@@ -67,12 +67,20 @@ class DataBackupViewModel(
     private fun checkLastBackup(token: String) {
         viewModelScope.launch {
             val result = getLastBackupTimestampUseCase(token)
-            val data = (result as? Result.Success)?.data
-            if (data != null) {
-                val formattedTime = data.formatToLocalizeDate()
-                _state.update { it.copy(lastBackupTime = formattedTime) }
-            } else {
-                _state.update { it.copy(lastBackupTime = "No backup found") }
+            when (result) {
+                is Result.Success -> {
+                    val data = result.data
+                    if (data != null) {
+                        val formattedTime = data.formatToLocalizeDate()
+                        _state.update { it.copy(lastBackupTime = formattedTime) }
+                    } else {
+                        _state.update { it.copy(lastBackupTime = "No backup found") }
+                    }
+                }
+                is Result.Error -> {
+                    val msg = (result.error as? com.karigojobs.domain.result.BackupError.UnknownErrorWithMessage)?.message ?: "Unknown Error"
+                    _state.update { it.copy(lastBackupTime = msg) }
+                }
             }
         }
     }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="materials_select_materials">వస్తువులను ఎంచుకోండి</string>
+    <string name="materials_search_materials">వస్తువుల కోసం వెతకండి</string>
+    <string name="materials_add_materials">వస్తువును జోడించండి</string>
+    <string name="materials_material_name">వస్తువు పేరు</string>
+    <string name="materials_material_name_text_field_placeholder">ఉదాహరణకు: పీవీసీ పైపు 1/2 అంగుళం</string>
+    <string name="materials_trade">వృత్తి</string>
+    <string name="materials_category">వర్గం</string>
+    <string name="materials_category_text_field_placeholder">ఉదాహరణకు: పైపులు, అమరికలు, కవాటాలు...</string>
+    <string name="materials_category_description">వర్గాన్ని సృష్టించడానికి కొత్త పేరు టైప్ చేయండి లేదా పైన ఉన్న వాటిలో ఎంచుకోండి</string>
+    <string name="materials_new_category_text_field_placeholder">కొత్త వర్గం పేరు...</string>
+    <string name="material_manager_category">వర్గాన్ని నిర్వహించండి</string>
+    <string name="materials_count_category">%1$d వర్గాలు</string>
+    <string name="materials_btn_add_to_library">లైబ్రరీకి జోడించండి</string>
+    <string name="materials_btn_save_changes">మార్పులను సేవ్ చేయండి</string>
+    <string name="materials_btn_manage">నిర్వహించండి</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List Screen -->
+    <string name="estimate_list_title">अंदाज</string>
+    <string name="estimate_list_search_placeholder">अंदाज किंवा ग्राहक शोधा</string>
+    <string name="estimate_list_btn_new">नवीन अंदाज</string>
+    <string name="estimate_list_empty_title">अद्याप कोणताही अंदाज नाही</string>
+    <string name="estimate_list_empty_desc">साइटला भेट द्या, साहित्यावर टॅप करा, ग्राहकाला पाठवा</string>
+    <string name="estimate_list_btn_create_first">पहिला अंदाज तयार करा</string>
+    <!-- Add/Edit Screen -->
+    <string name="estimate_add_toast_added">जोडले</string>
+    <string name="estimate_add_title_new">नवीन अंदाज</string>
+    <string name="estimate_add_title_edit">अंदाज संपादित करा</string>
+    <string name="estimate_add_section_title">प्रकल्पाचे शीर्षक</string>
+    <string name="estimate_add_placeholder_title">उदा. बाथरूमचे नूतनीकरण</string>
+    <string name="estimate_add_section_client">ग्राहक</string>
+    <string name="estimate_add_section_date">तारीख</string>
+    <string name="estimate_add_section_notes">साइट नोट्स</string>
+    <string name="estimate_add_placeholder_notes">काही विशेष सूचना असल्यास...</string>
+    <string name="estimate_add_label_show_rate">दर दाखवा</string>
+    <string name="estimate_add_desc_rate_visible">ग्राहकाला दर आणि एकूण रक्कम दिसेल</string>
+    <string name="estimate_add_desc_rate_hidden">फक्त साहित्याची यादी, किंमती दिसणार नाहीत</string>
+    <string name="estimate_add_section_materials">साहित्य</string>
+    <string name="estimate_add_btn_save">अंदाज जतन करा</string>
+    <string name="estimate_add_btn_update">अंदाज अपडेट करा</string>
+    <!-- Components -->
+    <string name="estimate_comp_section_materials">साहित्य</string>
+    <string name="estimate_comp_section_total">अंदाजे एकूण</string>
+    <string name="estimate_comp_status_no_prices">किंमत नाही</string>
+    <!-- Details Screen -->
+    <string name="estimate_detail_title">अंदाज</string>
+    <string name="estimate_detail_preview_title">अंदाज पूर्वावलोकन</string>
+    <string name="estimate_detail_default_provider">Karigo कंत्राटदार</string>
+    <string name="estimate_detail_btn_whatsapp">WhatsApp</string>
+    <string name="estimate_detail_toast_print_unavailable">Print service is not available on this device</string>
+    <string name="estimate_detail_toast_print_failed">Failed to open printer: %1$s</string>
+    <string name="estimate_detail_toast_generic_failed">Failed to print: %1$s</string>
+</resources>

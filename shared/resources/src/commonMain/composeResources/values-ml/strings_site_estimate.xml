@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List Screen -->
+    <string name="estimate_list_title">എസ്റ്റിമേറ്റുകൾ</string>
+    <string name="estimate_list_search_placeholder">എസ്റ്റിമേറ്റുകളോ ക്ലയൻ്റുകളോ തിരയുക</string>
+    <string name="estimate_list_btn_new">പുതിയ എസ്റ്റിമേറ്റ്</string>
+    <string name="estimate_list_empty_title">ഇതുവരെ എസ്റ്റിമേറ്റില്ല</string>
+    <string name="estimate_list_empty_desc">ഒരു സൈറ്റ് സന്ദർശിക്കുക, മെറ്റീരിയലുകൾ ടാപ്പ് ചെയ്യുക, ക്ലയൻ്റിന് അയക്കുക</string>
+    <string name="estimate_list_btn_create_first">ആദ്യത്തെ എസ്റ്റിമേറ്റ് ഉണ്ടാക്കുക</string>
+    <!-- Add/Edit Screen -->
+    <string name="estimate_add_toast_added">ചേർത്തു</string>
+    <string name="estimate_add_title_new">പുതിയ എസ്റ്റിമേറ്റ്</string>
+    <string name="estimate_add_title_edit">എസ്റ്റിമേറ്റ് എഡിറ്റ് ചെയ്യുക</string>
+    <string name="estimate_add_section_title">പ്രോജക്റ്റ് ടൈറ്റിൽ</string>
+    <string name="estimate_add_placeholder_title">ഉദാഹരണത്തിന്: ബാത്ത്റൂം നവീകരണം</string>
+    <string name="estimate_add_section_client">ക്ലയൻ്റ്</string>
+    <string name="estimate_add_section_date">തീയതി</string>
+    <string name="estimate_add_section_notes">സൈറ്റ് നോട്ട്സ്</string>
+    <string name="estimate_add_placeholder_notes">എന്തെങ്കിലും പ്രത്യേക നിർദ്ദേശങ്ങൾ...</string>
+    <string name="estimate_add_label_show_rate">നിരക്ക് കാണിക്കുക</string>
+    <string name="estimate_add_desc_rate_visible">ക്ലയൻ്റ് നിരക്കും മൊത്തം തുകയും കാണുന്നു</string>
+    <string name="estimate_add_desc_rate_hidden">സാമഗ്രികളുടെ ലിസ്റ്റ് മാത്രം, വിലകളില്ല</string>
+    <string name="estimate_add_section_materials">സാമഗ്രികൾ</string>
+    <string name="estimate_add_btn_save">എസ്റ്റിമേറ്റ് സേവ് ചെയ്യുക</string>
+    <string name="estimate_add_btn_update">എസ്റ്റിമേറ്റ് അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <!-- Components -->
+    <string name="estimate_comp_section_materials">സാമഗ്രികൾ</string>
+    <string name="estimate_comp_section_total">എസ്റ്റിമേറ്റ് ടോട്ടൽ</string>
+    <string name="estimate_comp_status_no_prices">വിലകളില്ല</string>
+    <!-- Details Screen -->
+    <string name="estimate_detail_title">എസ്റ്റിമേറ്റ്</string>
+    <string name="estimate_detail_preview_title">എസ്റ്റിമേറ്റ് പ്രിവ്യൂ</string>
+    <string name="estimate_detail_default_provider">കരിഗോ പ്രൊവൈഡർ</string>
+    <string name="estimate_detail_btn_whatsapp">WhatsApp</string>
+    <string name="estimate_detail_toast_print_unavailable">ഈ ഉപകരണത്തിൽ പ്രിൻ്റ് സേവനം ലഭ്യമല്ല</string>
+    <string name="estimate_detail_toast_print_failed">പ്രിൻ്റർ തുറക്കുന്നതിൽ പരാജയപ്പെട്ടു: %1$s</string>
+    <string name="estimate_detail_toast_generic_failed">പ്രിൻ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു: %1$s</string>
+</resources>

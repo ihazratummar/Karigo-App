@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="job_list_search_field">कामे किंवा ग्राहक शोधा</string>
+    <string name="job_detail_title">कामाचे तपशील</string>
+    <string name="job_new_job">नवीन काम</string>
+    <string name="job_edit_job">काम संपादित करा</string>
+    <string name="job_detail_status_pending">प्रलंबित</string>
+    <string name="job_detail_status_in_progress">काम सुरू आहे</string>
+    <string name="job_detail_status_complete">पूर्ण</string>
+    <string name="job_detail_status_invoiced">इनव्हॉइस केले</string>
+    <string name="job_detail_status_paid">पेमेंट झाले</string>
+    <string name="job_details_labour_and_materials">मजुरी &amp; साहित्य</string>
+    <string name="job_details_labour_total">एकूण मजुरी</string>
+    <string name="job_details_materials_total">एकूण साहित्य</string>
+    <string name="job_labour_item_name_field_placeholder">उदा. फिटिंग सेवा</string>
+</resources>

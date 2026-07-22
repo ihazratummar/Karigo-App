@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings Screen -->
+    <string name="settings_tab_privacy">സ്വകാര്യതാ നയം</string>
+    <string name="settings_tab_tos">സേവന നിബന്ധനകൾ</string>
+    <string name="settings_tab_toc">നിബന്ധനകളും വ്യവസ്ഥകളും</string>
+    <string name="settings_tab_disclaimer">നിരാകരണം</string>
+    <string name="settings_section_data_support">ഡാറ്റ &amp; സപ്പോർട്ട്</string>
+    <string name="settings_section_app_settings">ആപ്പ് സെറ്റിംഗ്സ്</string>
+    <string name="settings_section_legal_info">ലീഗൽ &amp; ഇൻഫോ</string>
+    <string name="settings_option_backup">ഡാറ്റ ബാക്കപ്പ്</string>
+    <string name="settings_option_backup_desc">Google Drive സിങ്ക്</string>
+    <string name="settings_option_language">ആപ്പ് ഭാഷ</string>
+    <string name="settings_option_theme">ആപ്പ് തീം</string>
+    <string name="settings_theme_system">സിസ്റ്റം ഡിഫോൾട്ട്</string>
+    <string name="settings_theme_light">ലൈറ്റ്</string>
+    <string name="settings_theme_dark">ഡാർക്ക്</string>
+    <string name="settings_my_trade">എന്റെ വ്യാപാരം</string>
+    <!-- About Screen -->
+    <string name="about_title">കരിഗോയെക്കുറിച്ച്</string>
+    <string name="about_version">പതിപ്പ് %1$s (%2$d)</string>
+    <string name="about_logo_description">കരിഗോ ലോഗോ</string>
+    <string name="about_tagline">കോൺട്രാക്ടർമാർക്കും സേവന പ്രൊഫഷണലുകൾക്കും തൊഴിലാളികൾക്കുമുള്ള ഓൾ-ഇൻ-വൺ ബിസിനസ്സ് പങ്കാളി.</string>
+    <string name="about_section_what_does">കരിഗോ എന്ത് ചെയ്യുന്നു</string>
+    <string name="about_what_does_desc">പേപ്പർ വർക്കുകളുടെയോ സങ്കീർണ്ണമായ സ്പ്രെഡ്ഷീറ്റുകളുടെയോ ബുദ്ധിമുട്ടില്ലാതെ നിങ്ങളുടെ ഫോണിൽ നിന്ന് തന്നെ കോൺട്രാക്റ്റിംഗ് അല്ലെങ്കിൽ സേവന ബിസിനസ്സ് നടത്താൻ കരിഗോ നിങ്ങളെ സഹായിക്കുന്നു. ജോലികൾ മാനേജ് ചെയ്യുക, ക്ലയൻ്റുകളുടെ വിവരങ്ങൾ സൂക്ഷിക്കുക, നിങ്ങളുടെ സാമഗ്രികളുടെയും നിരക്കുകളുടെയും ഒരു ലൈബ്രറി നിർമ്മിക്കുക, തൽക്ഷണം പ്രൊഫഷണൽ സൈറ്റ് എസ്റ്റിമേറ്റുകൾ തയ്യാറാക്കുക, വാട്സ്ആപ്പ് വഴി എല്ലാം പങ്കിടുക.</string>
+    <string name="about_section_features">പ്രധാന സവിശേഷതകൾ</string>
+    <string name="about_feature_job_title">ജോലി മാനേജ്മെൻ്റ്</string>
+    <string name="about_feature_job_desc">തുടക്കം മുതൽ അവസാന പെയ്മെൻ്റ് വരെയുള്ള ജോലികൾ ട്രാക്ക് ചെയ്യുക</string>
+    <string name="about_feature_client_title">ക്ലയൻ്റ് ഡയറക്ടറി</string>
+    <string name="about_feature_client_desc">ഉപഭോക്തൃ കോൺടാക്റ്റ് വിവരങ്ങളും ചരിത്രവും സുരക്ഷിതമായി സൂക്ഷിക്കുക</string>
+    <string name="about_feature_material_title">മെറ്റീരിയൽ ലൈബ്രറി</string>
+    <string name="about_feature_material_desc">വേഗത്തിലുള്ള ഉപയോഗത്തിനായി നിങ്ങളുടെ സാധാരണ മെറ്റീരിയലുകളും വിലകളും സേവ് ചെയ്യുക</string>
+    <string name="about_feature_estimate_title">സൈറ്റ് എസ്റ്റിമേറ്റുകൾ</string>
+    <string name="about_feature_estimate_desc">സൈറ്റിൽ വെച്ച് തന്നെ വിശദമായ ക്വട്ടേഷനുകൾ തയ്യാറാക്കി തൽക്ഷണം അയക്കുക</string>
+    <string name="about_feature_earning_title">വരുമാനം ട്രാക്ക് ചെയ്യുക</string>
+    <string name="about_feature_earning_desc">നിങ്ങളുടെ മൊത്തം വരുമാനവും കിട്ടാനുള്ള തുകയും നിരീക്ഷിക്കുക</string>
+    <string name="about_feature_backup_desc">നിങ്ങളുടെ ഡാറ്റ ബാക്കപ്പ് ചെയ്യുന്നതിനും എപ്പോൾ വേണമെങ്കിലും റിസ്റ്റോർ ചെയ്യുന്നതിനും Google Drive ലിങ്ക് ചെയ്യുക</string>
+    <string name="about_section_who_for">ഇത് ആർക്കാണ്</string>
+    <string name="about_who_for_desc">നമ്മുടെ ലോകം നിർമ്മിക്കുകയും ഇൻസ്റ്റാൾ ചെയ്യുകയും അറ്റകുറ്റപ്പണികൾ നടത്തുകയും സംരക്ഷിക്കുകയും ചെയ്യുന്ന കഠിനാധ്വാനികളായ പ്രൊഫഷണലുകൾക്ക് വേണ്ടിയാണ് കരിഗോ നിർമ്മിച്ചിരിക്കുന്നത്:</string>
+    <string name="about_section_made_pride">അഭിമാനത്തോടെ നിർമ്മിച്ചത്</string>
+    <string name="about_made_pride_desc">കോൺട്രാക്റ്റ് ജോലിയുടെ യാഥാർത്ഥ്യം മനസ്സിൽ വെച്ചുകൊണ്ട് രൂപകൽപ്പന ചെയ്തത് — മൾട്ടി-കറൻസി സപ്പോർട്ട്, വാട്സ്ആപ്പ് ഷെയറിംഗ്, ഓഫ്‌ലൈൻ കഴിവുകൾ, ലളിതമായ ഇൻ്റർഫേസ്.</string>
+    <string name="about_copyright">Karigo v%1$s • എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം</string>
+    <!-- Legal Screen -->
+    <string name="legal_default_title">നിയമപരമായ രേഖ</string>
+    <string name="legal_doc_not_found">രേഖ കണ്ടെത്തിയില്ല</string>
+    <string name="legal_effective_date">പ്രാബല്യത്തിൽ വരുന്ന തീയതി: ജൂൺ 30, 2026</string>
+    <string name="legal_doc_footer">%1$s • Karigo • പ്രാബല്യം ജൂൺ 30, 2026</string>
+    <string name="legal_info_app">ആപ്പ്</string>
+    <string name="legal_info_developer">ഡെവലപ്പർ</string>
+    <string name="legal_info_email">ഇമെയിൽ</string>
+    <string name="legal_info_grievance">ഗ്രീവൻസ് ഓഫീസർ</string>
+    <string name="legal_info_response_time">പ്രതികരണ സമയം</string>
+    <!-- Data Backup Screen -->
+    <string name="backup_title">ക്ലൗഡ് സിങ്ക് &amp; ബാക്കപ്പ്</string>
+    <string name="backup_toast_signin_failed_token">സൈൻ ഇൻ പരാജയപ്പെട്ടു: ആക്സസ് ടോക്കൺ വീണ്ടെടുക്കാനായില്ല</string>
+    <string name="backup_toast_signin_failed_info">സൈൻ ഇൻ പരാജയപ്പെട്ടു: അക്കൗണ്ട് വിവരങ്ങൾ ലഭ്യമല്ല</string>
+    <string name="backup_toast_signin_cancelled">സൈൻ ഇൻ റദ്ദാക്കി</string>
+    <string name="backup_toast_signin_error">Google സൈൻ ഇൻ എറർ: %1$s (%2$d)</string>
+    <string name="backup_toast_signin_generic">സൈൻ ഇൻ പരാജയപ്പെട്ടു അല്ലെങ്കിൽ റദ്ദാക്കി</string>
+    <string name="backup_toast_auth_error">ഓതൻ്റിക്കേഷൻ എറർ. ദയവായി വീണ്ടും കണക്ട് ചെയ്യുക.</string>
+    <string name="backup_status_connected">Google Drive-മായി ബന്ധിപ്പിച്ചു</string>
+    <string name="backup_status_disconnected">ബന്ധിപ്പിച്ചിട്ടില്ല</string>
+    <string name="backup_latest_time">അവസാന ബാക്കപ്പ്: %1$s</string>
+    <string name="backup_no_backup">Google Drive-ൽ ബാക്കപ്പ് കണ്ടെത്തിയില്ല</string>
+    <string name="backup_btn_disconnect">ഡിസ്കണക്ട് ചെയ്യുക</string>
+    <string name="backup_btn_connect">Google Drive കണക്ട് ചെയ്യുക</string>
+    <string name="backup_label_auto">ഓട്ടോ ബാക്കപ്പ്</string>
+    <string name="backup_desc_auto_on">ഓരോ 24 മണിക്കൂറിലും ബാക്കപ്പ് എടുക്കും</string>
+    <string name="backup_desc_auto_off">നിങ്ങളുടെ ഡാറ്റ സുരക്ഷിതമായി സൂക്ഷിക്കാൻ ഓട്ടോ ബാക്കപ്പ് പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="backup_status_uploading">സുരക്ഷിതമായി അപ്‌ലോഡ് ചെയ്യുന്നു...</string>
+    <string name="backup_btn_backup_now">ഇപ്പോൾ ബാക്കപ്പ് ചെയ്യുക</string>
+    <string name="backup_status_restoring">ഡാറ്റ റിസ്റ്റോർ ചെയ്യുന്നു...</string>
+    <string name="backup_btn_restore">ഡ്രൈവിൽ നിന്ന് റിസ്റ്റോർ ചെയ്യുക</string>
+    <string name="backup_btn_restore_confirm">ഡാറ്റ റിസ്റ്റോർ ചെയ്യുക</string>
+    <string name="backup_info_title">സമ്പൂർണ്ണ സംരക്ഷണം</string>
+    <string name="backup_info_desc">നിങ്ങളുടെ എല്ലാ ബിസിനസ്സ് ഡാറ്റയും — ജോലികൾ, ക്ലയൻ്റുകൾ, സാമഗ്രികൾ, ആപ്പ് സെറ്റിംഗ്സ് എന്നിവ — നിങ്ങളുടെ Google ഡ്രൈവിലെ ഒരു സ്വകാര്യ ഫോൾഡറിൽ സുരക്ഷിതമായി ബാക്കപ്പ് ചെയ്തിരിക്കുന്നു.</string>
+</resources>

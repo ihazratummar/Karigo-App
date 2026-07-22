@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_new_estimate">نیا تخمینہ</string>
+    <string name="home_site_estimate">سائٹ کا تخمینہ</string>
+    <string name="home_estimate_desctiption">سائٹ کا جائزہ لیں، سامان کی فہرست بنائیں اور اسے واٹس ایپ پر گاہک کو بھیجیں</string>
+    <string name="home_recent_job">حالیہ کام</string>
+</resources>

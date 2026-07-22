@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="client_details_total_jobs">کل کام</string>
+    <string name="client_details_unpaid">غیر ادا شدہ</string>
+    <string name="client_btn_new_job">%1$s کے لیے نیا کام</string>
+</resources>

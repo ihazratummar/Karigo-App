@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_home">హోమ్</string>
+    <string name="nav_jobs">పనులు</string>
+    <string name="nav_clients">క్లయింట్</string>
+    <string name="nav_materials">వస్తువులు</string>
+    <string name="nav_settings">సెట్టింగులు</string>
+</resources>

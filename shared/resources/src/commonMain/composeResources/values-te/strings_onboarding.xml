@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_started_description">కాంట్రాక్టర్లు మరియు సర్వీస్ ప్రొవైడర్ల కోసం సులభమైన డిజిటల్ అసిస్టెంట్.</string>
+    <string name="onboarding_started_track_job">పనులను ట్రాక్ చేయండి</string>
+    <string name="onboarding_started_track_description">మీ పనులు, చెల్లింపులు మరియు క్లయింట్ల రికార్డులను ఉంచండి.</string>
+    <string name="onboarding_started_whatsapp">వాట్సాప్ భాగస్వామ్యం</string>
+    <string name="onboarding_started_whatsapp_description">వృత్తిపరమైన అంచనాలు మరియు ఇన్‌వాయిస్‌లను నేరుగా క్లయింట్‌లకు పంపండి.</string>
+    <string name="onboarding_started_earnings">సంపాదనను పర్యవేక్షించండి</string>
+    <string name="onboarding_started_earnings_description">మీ మొత్తం సంపాదన మరియు పెండింగ్ బ్యాలెన్స్‌లపై నిఘా ఉంచండి.</string>
+    <string name="onboarding_progress">దశ %1$d / %2$d</string>
+    <string name="onboarding_what_do_you_trade">మీ వృత్తి ఏమిటి?</string>
+    <string name="onboarding_what_do_you_trade_description">మీ ప్రాథమిక వృత్తిని ఎంచుకోండి, తద్వారా మేము కొన్ని ప్రాథమిక వస్తువులను ముందే నింపగలము.</string>
+    <string name="onboarding_btn_trade_not_selected">వృత్తిని ఎంచుకోండి</string>
+    <string name="onboarding_btn_continue">కొనసాగించండి</string>
+    <string name="onboarding_last_title">మీరు సిద్ధంగా ఉన్నారు!</string>
+    <string name="onboarding_last_description">మీ పనిని డిజిటల్ చేద్దాం మరియు కాగితాలను వదిలించుకుందాం.</string>
+    <string name="onboarding_starter_material">ప్రాథమిక వస్తువులు</string>
+    <string name="onboarding_materials_ready">వస్తువులు సిద్ధంగా ఉన్నాయి!</string>
+    <string name="onboarding_materials_ready_description">మీరు ఎంచుకున్న వృత్తి ఆధారంగా మేము కొన్ని సాధారణ వస్తువులను ముందే నింపాము.</string>
+    <string name="onboarding_back_to_trade">వృత్తిని మార్చండి</string>
+</resources>

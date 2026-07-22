@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="job_list_search_field">வேலைகள் அல்லது வாடிக்கையாளரைத் தேடவும்</string>
+    <string name="job_detail_title">வேலை விவரங்கள்</string>
+    <string name="job_new_job">புதிய வேலை</string>
+    <string name="job_edit_job">வேலையைத் திருத்தவும்</string>
+    <string name="job_detail_status_pending">நிலுவையில் உள்ளது</string>
+    <string name="job_detail_status_in_progress">செயல்பாட்டில் உள்ளது</string>
+    <string name="job_detail_status_complete">முடிந்தது</string>
+    <string name="job_detail_status_invoiced">பில் செய்யப்பட்டது</string>
+    <string name="job_detail_status_paid">செலுத்தப்பட்டது</string>
+    <string name="job_details_labour_and_materials">தொழிலாளர் &amp; பொருட்கள்</string>
+    <string name="job_details_labour_total">தொழிலாளர் மொத்தம்</string>
+    <string name="job_details_materials_total">பொருள் மொத்தம்</string>
+    <string name="job_labour_item_name_field_placeholder">உதாரணமாக: பொருத்துதல் சேவைகள்</string>
+</resources>

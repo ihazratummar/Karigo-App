@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Delete Dialog -->
+    <string name="dialog_delete_title_job">کام حذف کریں</string>
+    <string name="dialog_delete_desc_job">یہ آپ کے آلے سے اس کام کی تمام تفصیلات مستقل طور پر حذف کر دے گا۔</string>
+    <string name="dialog_delete_title_client">گاہک حذف کریں</string>
+    <string name="dialog_delete_desc_client">یہ %1$s اور اس سے وابستہ تمام کاموں کی تفصیلات مستقل طور پر حذف کر دے گا۔</string>
+    <string name="dialog_delete_title_material">سامان حذف کریں</string>
+    <string name="dialog_delete_desc_material">یہ آپ کی فہرست سے اس سامان کو مستقل طور پر حذف کر دے گا۔</string>
+    <string name="dialog_delete_title_estimate">تخمینہ حذف کریں</string>
+    <string name="dialog_delete_desc_estimate">یہ آپ کی فہرست سے اس سائٹ کے تخمینے کو مستقل طور پر حذف کر دے گا۔</string>
+    <!-- Permission Rationale Dialog -->
+    <string name="dialog_permission_btn_deny">ابھی نہیں</string>
+    <string name="dialog_permission_btn_allow">اجازت دیں</string>
+    <string name="dialog_permission_btn_settings">سیٹنگز کھولیں</string>
+    <string name="dialog_permission_title_notification">نوٹیفیکیشن کی اجازت</string>
+    <string name="dialog_permission_desc_notification">بقایا ادائیگیوں اور کام کی اپ ڈیٹس کے لیے نوٹیفیکیشنز حاصل کریں۔</string>
+    <string name="dialog_permission_permanently_denied_notification">نوٹیفیکیشنز کی اجازت بند ہے۔ براہ کرم سیٹنگز میں جا کر اسے فعال کریں۔</string>
+    <string name="dialog_permission_title_contact">روابط تک رسائی کی اجازت</string>
+    <string name="dialog_permission_desc_contact">اپنے فون بک روابط سے گاہکوں کو جلدی شامل کریں۔</string>
+    <string name="dialog_permission_permanently_denied_contact">روابط کی اجازت بند ہے۔ براہ کرم سیٹنگز میں جا کر اسے فعال کریں۔</string>
+    <!-- Share Choice Dialog -->
+    <string name="dialog_share_title">تخمینہ شیئر کریں</string>
+    <string name="dialog_share_title_job">بل شیئر کریں</string>
+    <string name="dialog_share_desc_estimate">منتخب کریں کہ آپ گاہک کے ساتھ تخمینہ کیسے شیئر کرنا چاہتے ہیں۔</string>
+    <string name="dialog_share_desc_job">منتخب کریں کہ آپ گاہک کے ساتھ بل کیسے شیئر کرنا چاہتے ہیں۔</string>
+    <string name="dialog_share_option_pdf">پی ڈی ایف شیئر کریں</string>
+    <string name="dialog_share_option_text">سادہ ٹیکسٹ</string>
+    <!-- Rename Category Dialog -->
+    <string name="dialog_rename_category_title">زمرہ کا نام تبدیل کریں</string>
+    <string name="dialog_rename_category_placeholder">مثال کے طور پر: پائپ، وائرنگ</string>
+    <!-- Settings Dialog Modals -->
+    <string name="dialog_theme_desc">ایپ کا تھیم منتخب کریں۔</string>
+    <string name="dialog_language_desc">ایپ کی زبان منتخب کریں۔</string>
+    <!-- Backup Confirmation Dialogs -->
+    <string name="dialog_confirm_backup_title">بیک اپ کی تصدیق</string>
+    <string name="dialog_confirm_backup_desc">آپ کے ڈیٹا کو آپ کے گوگل ڈرائیو پر بیک اپ کیا جائے گا۔</string>
+    <string name="dialog_confirm_restore_title">ڈیٹا بحال کرنے کی تصدیق</string>
+    <string name="dialog_confirm_restore_desc">وارننگ: گوگل ڈرائیو سے ڈیٹا بحال کرنے سے اس آلے پر موجود موجودہ ڈیٹا تبدیل ہو جائے گا۔</string>
+</resources>

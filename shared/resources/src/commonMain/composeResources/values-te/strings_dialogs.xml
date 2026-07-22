@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Delete Dialog -->
+    <string name="dialog_delete_title_job">పనిని తొలగించండి</string>
+    <string name="dialog_delete_desc_job">ఇది ఈ పనిని మరియు దాని ఇన్‌వాయిస్ చరిత్రను శాశ్వతంగా తొలగిస్తుంది.</string>
+    <string name="dialog_delete_title_client">క్లయింట్‌ను తొలగించండి</string>
+    <string name="dialog_delete_desc_client">ఇది %1$s ని మరియు అనుబంధిత అన్ని పని చరిత్ర మరియు అంచనా చరిత్రను తొలగిస్తుంది.</string>
+    <string name="dialog_delete_title_material">వస్తువును తొలగించండి</string>
+    <string name="dialog_delete_desc_material">ఇది మీ లైబ్రరీ నుండి ఈ అంశాన్ని శాశ్వతంగా తొలగిస్తుంది.</string>
+    <string name="dialog_delete_title_estimate">అంచనాను తొలగించండి</string>
+    <string name="dialog_delete_desc_estimate">ఇది ఈ సైట్ అంచనాను శాశ్వతంగా తొలగిస్తుంది.</string>
+    <!-- Permission Rationale Dialog -->
+    <string name="dialog_permission_btn_deny">ఇప్పుడు కాదు</string>
+    <string name="dialog_permission_btn_allow">అనుమతించండి</string>
+    <string name="dialog_permission_btn_settings">సెట్టింగ్‌లను తెరవండి</string>
+    <string name="dialog_permission_title_notification">నోటిఫికేషన్‌లను ప్రారంభించండి</string>
+    <string name="dialog_permission_desc_notification">చెల్లించని ఇన్‌వాయిస్‌లు మరియు రాబోయే పనుల కోసం రిమైండర్‌ను పొందండి.</string>
+    <string name="dialog_permission_permanently_denied_notification">నోటిఫికేషన్ అనుమతి నిరాకరించబడింది. దీన్ని సెట్టింగ్‌లలో ప్రారంభించండి</string>
+    <string name="dialog_permission_title_contact">పరిచయాలను ప్రాప్యత చేయండి</string>
+    <string name="dialog_permission_desc_contact">మీ ఫోన్ పరిచయాల నుండి క్లయింట్‌లను త్వరగా జోడించండి.</string>
+    <string name="dialog_permission_permanently_denied_contact">పరిచయాల అనుమతి నిరాకరించబడింది. యాప్ సెట్టింగ్‌ల నుండి దీన్ని ప్రారంభించండి</string>
+    <!-- Share Choice Dialog -->
+    <string name="dialog_share_title">అంచనాను పంచుకోండి</string>
+    <string name="dialog_share_title_job">ఇన్‌వాయిస్‌ను పంచుకోండి</string>
+    <string name="dialog_share_desc_estimate">ఈ అంచనాను మీ క్లయింట్‌తో ఎలా పంచుకోవాలో ఎంచుకోండి.</string>
+    <string name="dialog_share_desc_job">ఈ పని ఇన్‌వాయిస్‌ను మీ క్లయింట్‌తో ఎలా పంచుకోవాలో ఎంచుకోండి.</string>
+    <string name="dialog_share_option_pdf">పీడీఎఫ్ పంచుకోండి</string>
+    <string name="dialog_share_option_text">సాధారణ వచనం</string>
+    <!-- Rename Category Dialog -->
+    <string name="dialog_rename_category_title">వర్గం పేరు మార్చండి</string>
+    <string name="dialog_rename_category_placeholder">ఉదాహరణకు: రాగి పైపులు, అమరికలు</string>
+    <!-- Settings Dialog Modals -->
+    <string name="dialog_theme_desc">కరిగో మీకు ఎలా కనిపించాలో ఎంచుకోండి.</string>
+    <string name="dialog_language_desc">మీకు ఇష్టమైన భాషను ఎంచుకోండి.</string>
+    <!-- Backup Confirmation Dialogs -->
+    <string name="dialog_confirm_backup_title">బ్యాకప్‌ను నిర్ధారించండి</string>
+    <string name="dialog_confirm_backup_desc">ఇది మీ ప్రస్తుత పరికర డేటా మరియు సెట్టింగ్‌లను సురక్షితంగా గూగుల్ డ్రైవ్‌కు అప్‌లోడ్ చేస్తుంది, మునుపటి బ్యాకప్‌ను భర్తీ చేస్తుంది. కొనసాగించాలా?</string>
+    <string name="dialog_confirm_restore_title">పునరుద్ధరణను నిర్ధారించండి</string>
+    <string name="dialog_confirm_restore_desc">హెచ్చరిక: పునరుద్ధరించడం వల్ల ప్రస్తుత పరికర డేటా మరియు సెట్టింగ్‌లు గూగుల్ డ్రైవ్ బ్యాకప్ డేటాతో భర్తీ చేయబడతాయి. ఈ చర్యను వెనక్కి తీసుకోలేరు. మీరు ఖచ్చితంగా కొనసాగించాలనుకుంటున్నారా?</string>
+</resources>

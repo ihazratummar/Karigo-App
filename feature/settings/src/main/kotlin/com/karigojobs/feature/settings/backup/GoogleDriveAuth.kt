@@ -48,7 +48,16 @@ object GoogleDriveAuth {
         return withContext(Dispatchers.IO) {
             try {
                 val androidAccount = account.account ?: return@withContext null
-                GoogleAuthUtil.getToken(context, androidAccount, "oauth2:$SCOPE_DRIVE_APPDATA")
+                val scope = "oauth2:$SCOPE_DRIVE_APPDATA"
+                
+                // Get the token, which might be expired but still in the local cache
+                val token = GoogleAuthUtil.getToken(context, androidAccount, scope)
+                
+                // Clear it from the cache to force a fresh fetch
+                GoogleAuthUtil.clearToken(context, token)
+                
+                // Fetch a guaranteed fresh token
+                GoogleAuthUtil.getToken(context, androidAccount, scope)
             } catch (e: Exception) {
                 e.printStackTrace()
                 null

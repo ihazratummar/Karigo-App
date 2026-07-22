@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trade_plumber">പ്ലംബർ</string>
+    <string name="trade_plumber_description">പൈപ്പുകൾ, ഫിറ്റിംഗുകൾ, ടാപ്പുകൾ, അറ്റകുറ്റപ്പണികൾ</string>
+    <string name="trade_electrician">ഇലക്ട്രീഷ്യൻ</string>
+    <string name="trade_electrician_description">വയറിംഗ്, പാനലുകൾ, ഫിക്സ്ചറുകൾ</string>
+    <string name="trade_carpenter">ആശാരി</string>
+    <string name="trade_carpenter_description">മരപ്പണി, വാതിലുകൾ, ഫർണിച്ചറുകൾ</string>
+    <string name="trade_painter">പെയിൻ്റർ</string>
+    <string name="trade_painter_description">ഇൻ്റീരിയർ &amp; എക്സ്റ്റീരിയർ പെയിൻ്റിംഗ്</string>
+    <string name="trade_mason">മേസ്തിരി &amp; സിവിൽ വർക്കർ</string>
+    <string name="trade_mason_description">ഇഷ്ടിക, ടൈലിംഗ്, കോൺക്രീറ്റ് പണികൾ</string>
+    <string name="trade_grill">ഗ്രിൽ &amp; മെറ്റൽ വർക്കർ</string>
+    <string name="trade_grill_description">ഇരുമ്പ് പണികൾ, വെൽഡിംഗ്, ഗേറ്റ് അറ്റകുറ്റപ്പണികൾ</string>
+    <string name="trade_ac_technician">എസി ടെക്നീഷ്യൻ</string>
+    <string name="trade_ac_technician_description">എസി സർവീസ്, അറ്റകുറ്റപ്പണികൾ, ഇൻസ്റ്റലേഷൻ</string>
+    <string name="trade_appliance_repair">അപ്ലയൻസ് റിപ്പയർ</string>
+    <string name="trade_appliance_repair_description">വാഷിംഗ് മെഷീൻ, ഫ്രിഡ്ജ് തുടങ്ങിയവ</string>
+    <string name="trade_waterproofing">വാട്ടർപ്രൂഫിംഗ് സ്പെഷ്യലിസ്റ്റ്</string>
+    <string name="trade_waterproofing_description">ചോർച്ച നിയന്ത്രണവും ഈർപ്പ ചികിത്സയും</string>
+    <string name="trade_pest_control">പെസ്റ്റ് കൺട്രോൾ സ്പെഷ്യലിസ്റ്റ്</string>
+    <string name="trade_pest_control_description">ചിതൽ, പ്രാണികൾ, എലികൾ എന്നിവയ്ക്കുള്ള ചികിത്സ</string>
+    <string name="trade_car_bike_mechanic">കാർ &amp; ബൈക്ക് മെക്കാനിക്ക്</string>
+    <string name="trade_car_bike_mechanic_description">വാഹന സർവീസിംഗും അറ്റകുറ്റപ്പണികളും</string>
+    <string name="trade_cctv_security">സിസിടിവി &amp; സെക്യൂരിറ്റി ഇൻസ്റ്റാളർ</string>
+    <string name="trade_cctv_security_description">ക്യാമറകൾ, അലാറങ്ങൾ, സെൻസറുകൾ</string>
+    <string name="trade_solar_installer">സോളാർ എനർജി ഇൻസ്റ്റാളർ</string>
+    <string name="trade_solar_installer_description">പാനലുകൾ, ഇൻവെർട്ടറുകൾ, ബാറ്ററി സെറ്റപ്പ്</string>
+    <string name="trade_aluminium_upvc">അലുമിനിയം &amp; യുപിവിസി ഫാബ്രിക്കേറ്റർ</string>
+    <string name="trade_aluminium_upvc_description">ജനാലകൾ, വാതിലുകൾ, പാർട്ടീഷനുകൾ</string>
+    <string name="trade_civil_contractor">സിവിൽ കോൺട്രാക്ടർ</string>
+    <string name="trade_civil_contractor_description">ചെറിയ നിർമ്മാണ പദ്ധതികൾ</string>
+    <string name="trade_bore_well">കുഴൽക്കിണർ &amp; വാട്ടർ ടാങ്ക്</string>
+    <string name="trade_bore_well_description">ഡ്രില്ലിംഗ്, പമ്പുകൾ, പരിപാലനം</string>
+    <string name="trade_gas_lpg_fitter">ഗ്യാസ് &amp; എൽപിജി ഫിറ്റർ</string>
+    <string name="trade_gas_lpg_fitter_description">പൈപ്പ്ലൈനുകൾ, സ്റ്റൗ, അറ്റകുറ്റപ്പണികൾ</string>
+    <string name="trade_network_support">നെറ്റ്‌വർക്ക് &amp; ഐടി സപ്പോർട്ട്</string>
+    <string name="trade_network_support_description">കേബ്ലിംഗ്, റൂട്ടറുകൾ, വൈഫൈ</string>
+</resources>

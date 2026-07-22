@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="worker_action_needed">നടപടി ആവശ്യമാണ്</string>
+    <string name="worker_action_title">നിങ്ങളുടെ ബിസിനസ്സ് പ്രൊഫൈൽ പൂർത്തിയാക്കുക</string>
+    <string name="worker_action_description">നിങ്ങളുടെ എസ്റ്റിമേറ്റും ഇൻവോയ്‌സുകളും പ്രൊഫഷണലായി കാണുന്നതിന് ഉടമയുടെ പേരും ബിസിനസ്സിൻ്റെ പേരും ചേർക്കുക</string>
+    <string name="worker_action_missing">%1$d നഷ്ടമായി</string>
+    <string name="worker_owner_question">നിങ്ങൾ ആരാണ്?</string>
+    <string name="worker_owner_asking_name">നമുക്ക് നിങ്ങളുടെ പേരിൽ നിന്ന് തുടങ്ങാം</string>
+    <string name="worker_owner_name_section">ഉടമയുടെ പേര്</string>
+    <string name="worker_owner_name_textfield_placeholder">നിങ്ങളുടെ പൂർണ്ണമായ പേര്</string>
+    <string name="worker_business">നിങ്ങളുടെ ബിസിനസ്സ്</string>
+    <string name="worker_business_tagline">നിങ്ങളുടെ ജോലിയെ നിങ്ങൾ എന്താണ് വിളിക്കുന്നത്?</string>
+    <string name="worker_business_name">ബിസിനസ്സിൻ്റെ പേര്</string>
+    <string name="worker_business_textfield_placeholder">നിങ്ങളുടെ കടയുടെയോ ബിസിനസ്സിൻ്റെയോ പേര്</string>
+    <string name="worker_contact">കോൺടാക്റ്റ് വിവരങ്ങൾ</string>
+    <string name="worker_contact_tagline">അതിനാൽ ക്ലയൻ്റിന് നിങ്ങളെ ബന്ധപ്പെടാൻ കഴിയും</string>
+    <string name="worker_phone_number">ഫോൺ നമ്പർ</string>
+    <string name="worker_phone_textfield_placeholder">+91 9999901010</string>
+    <string name="worker_email_address">ഇമെയിൽ വിലാസം</string>
+    <string name="worker_email_textfield_placeholder">your@email.com</string>
+    <string name="worker_optional_skip">ഓപ്ഷണൽ — നിങ്ങൾക്ക് ഇത് ഒഴിവാക്കാം</string>
+    <string name="worker_your_progress">നിങ്ങളുടെ പുരോഗതി</string>
+    <string name="worker_required_fields">നിർബന്ധമായ ഫീൽഡുകൾ</string>
+    <string name="worker_optional_details">ഓപ്ഷണൽ വിവരങ്ങൾ</string>
+    <string name="worker_extra_info">കൂടുതൽ വിവരങ്ങൾ</string>
+    <string name="worker_extra_info_tagline">ഓപ്ഷണൽ എന്നാൽ സഹായകരമാണ്</string>
+    <string name="worker_extra_gst">GST നമ്പർ</string>
+    <string name="worker_extra_gst_textfield_placeholder">22AAAAA0000A1Z5</string>
+    <string name="worker_extra_business_address">ബിസിനസ്സ് വിലാസം</string>
+    <string name="worker_extra_business_address_textfield_placeholder">പൂർണ്ണമായ ബിസിനസ്സ് വിലാസം</string>
+    <string name="worker_btn_finish">സെറ്റപ്പ് പൂർത്തിയാക്കുക</string>
+    <string name="worker_btn_skip_this">ഈ ഘട്ടം ഒഴിവാക്കുക</string>
+</resources>

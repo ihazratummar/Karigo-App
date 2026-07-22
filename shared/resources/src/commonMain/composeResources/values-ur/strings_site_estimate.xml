@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List Screen -->
+    <string name="estimate_list_title">تخمینے</string>
+    <string name="estimate_list_search_placeholder">تخمینے یا گاہک تلاش کریں</string>
+    <string name="estimate_list_btn_new">نیا تخمینہ</string>
+    <string name="estimate_list_empty_title">ابھی کوئی تخمینہ نہیں ہے</string>
+    <string name="estimate_list_empty_desc">سائٹ کا جائزہ لیں، سامان کا انتخاب کریں، اور گاہک کو بھیجیں</string>
+    <string name="estimate_list_btn_create_first">پہلا تخمینہ بنائیں</string>
+    <!-- Add/Edit Screen -->
+    <string name="estimate_add_toast_added">شامل کر دیا گیا</string>
+    <string name="estimate_add_title_new">نیا تخمینہ</string>
+    <string name="estimate_add_title_edit">تخمینہ کی ترمیم</string>
+    <string name="estimate_add_section_title">منصوبے کا عنوان</string>
+    <string name="estimate_add_placeholder_title">مثال کے طور پر: غسل خانے کی تزئین و آرائش</string>
+    <string name="estimate_add_section_client">گاہک</string>
+    <string name="estimate_add_section_date">تاریخ</string>
+    <string name="estimate_add_section_notes">سائٹ کے نوٹس</string>
+    <string name="estimate_add_placeholder_notes">کوئی بھی خصوصی ہدایات...</string>
+    <string name="estimate_add_label_show_rate">شرح دکھائیں</string>
+    <string name="estimate_add_desc_rate_visible">گاہک شرح اور کل رقم دیکھ سکتا ہے</string>
+    <string name="estimate_add_desc_rate_hidden">صرف سامان کی فہرست، قیمتیں پوشیدہ ہوں گی</string>
+    <string name="estimate_add_section_materials">سامان</string>
+    <string name="estimate_add_btn_save">تخمینہ محفوظ کریں</string>
+    <string name="estimate_add_btn_update">تخمینہ اپ ڈیٹ کریں</string>
+    <!-- Components -->
+    <string name="estimate_comp_section_materials">سامان</string>
+    <string name="estimate_comp_section_total">تخمینہ کا کل</string>
+    <string name="estimate_comp_status_no_prices">کوئی قیمت نہیں</string>
+    <!-- Details Screen -->
+    <string name="estimate_detail_title">تخمینہ</string>
+    <string name="estimate_detail_preview_title">تخمینہ کا پیش نظارہ</string>
+    <string name="estimate_detail_default_provider">Karigo فراہم کنندہ</string>
+    <string name="estimate_detail_btn_whatsapp">واٹس ایپ</string>
+    <string name="estimate_detail_toast_print_unavailable">اس آلے پر پرنٹ سروس دستیاب نہیں ہے</string>
+    <string name="estimate_detail_toast_print_failed">پرنٹر کھولنے میں ناکامی: %1$s</string>
+    <string name="estimate_detail_toast_generic_failed">پرنٹ کرنے میں ناکامی: %1$s</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="worker_action_needed">చర్య అవసరం</string>
+    <string name="worker_action_title">మీ వ్యాపార ప్రొఫైల్‌ను పూర్తి చేయండి</string>
+    <string name="worker_action_description">మీ అంచనా మరియు ఇన్‌వాయిస్‌లు వృత్తిపరంగా కనిపించడానికి యజమాని పేరు మరియు వ్యాపార పేరును జోడించండి</string>
+    <string name="worker_action_missing">%1$d తప్పిపోయాయి</string>
+    <string name="worker_owner_question">మీరు ఎవరు?</string>
+    <string name="worker_owner_asking_name">మీ పేరుతో ప్రారంభిద్దాం</string>
+    <string name="worker_owner_name_section">యజమాని పేరు</string>
+    <string name="worker_owner_name_textfield_placeholder">మీ పూర్తి పేరు</string>
+    <string name="worker_business">మీ వ్యాపారం</string>
+    <string name="worker_business_tagline">మీ పనిని మీరు ఏమని పిలుస్తారు?</string>
+    <string name="worker_business_name">వ్యాపార పేరు</string>
+    <string name="worker_business_textfield_placeholder">మీ దుకాణం లేదా వ్యాపార పేరు</string>
+    <string name="worker_contact">సంప్రదింపు వివరాలు</string>
+    <string name="worker_contact_tagline">తద్వారా క్లయింట్ మిమ్మల్ని చేరుకోగలరు</string>
+    <string name="worker_phone_number">ఫోన్ నంబర్</string>
+    <string name="worker_phone_textfield_placeholder">+91 9999901010</string>
+    <string name="worker_email_address">ఈమెయిల్ చిరునామా</string>
+    <string name="worker_email_textfield_placeholder">your@email.com</string>
+    <string name="worker_optional_skip">ఐచ్ఛికం — మీరు దీన్ని దాటవేయవచ్చు</string>
+    <string name="worker_your_progress">మీ పురోగతి</string>
+    <string name="worker_required_fields">తప్పనిసరి ఫీల్డ్‌లు</string>
+    <string name="worker_optional_details">ఐచ్ఛిక వివరాలు</string>
+    <string name="worker_extra_info">అదనపు సమాచారం</string>
+    <string name="worker_extra_info_tagline">ఐచ్ఛికం కానీ ఉపయోగకరంగా ఉంటుంది</string>
+    <string name="worker_extra_gst">జీఎస్టీ నంబర్</string>
+    <string name="worker_extra_gst_textfield_placeholder">22AAAAA0000A1Z5</string>
+    <string name="worker_extra_business_address">వ్యాపార చిరునామా</string>
+    <string name="worker_extra_business_address_textfield_placeholder">పూర్తి వ్యాపార చిరునామా</string>
+    <string name="worker_btn_finish">సెటప్‌ను ముగించండి</string>
+    <string name="worker_btn_skip_this">ఈ దశను దాటవేయండి</string>
+</resources>

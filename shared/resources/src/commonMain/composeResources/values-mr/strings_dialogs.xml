@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Delete Dialog -->
+    <string name="dialog_delete_title_job">काम हटवा</string>
+    <string name="dialog_delete_desc_job">हे हे काम आणि त्याचा बिल इतिहास कायमचा हटवेल.</string>
+    <string name="dialog_delete_title_client">ग्राहक हटवा</string>
+    <string name="dialog_delete_desc_client">हे %1$s आणि त्याशी संबंधित सर्व काम आणि अंदाजाचा इतिहास हटवेल.</string>
+    <string name="dialog_delete_title_material">साहित्य हटवा</string>
+    <string name="dialog_delete_desc_material">हे हे साहित्य तुमच्या लायब्ररीमधून कायमचे हटवेल.</string>
+    <string name="dialog_delete_title_estimate">अंदाज हटवा</string>
+    <string name="dialog_delete_desc_estimate">हे या साइटचा अंदाज कायमचा हटवेल.</string>
+    <!-- Permission Rationale Dialog -->
+    <string name="dialog_permission_btn_deny">आता नाही</string>
+    <string name="dialog_permission_btn_allow">परवानगी द्या</string>
+    <string name="dialog_permission_btn_settings">सेटिंग्ज उघडा</string>
+    <string name="dialog_permission_title_notification">अधिसूचना सक्षम करा</string>
+    <string name="dialog_permission_desc_notification">न मिळालेल्या बिलांसाठी आणि आगामी कामांसाठी स्मरणपत्रे मिळवा.</string>
+    <string name="dialog_permission_permanently_denied_notification">अधिसूचना परवानगी नाकारली गेली. सेटिंग्जमध्ये ती सक्षम करा</string>
+    <string name="dialog_permission_title_contact">संपर्कांमध्ये प्रवेश</string>
+    <string name="dialog_permission_desc_contact">तुमच्या फोनमधील संपर्कांमधून ग्राहकांना झटपट जोडा.</string>
+    <string name="dialog_permission_permanently_denied_contact">संपर्क परवानगी नाकारली गेली. सेटिंग्जमधून ती सक्षम करा</string>
+    <!-- Share Choice Dialog -->
+    <string name="dialog_share_title">अंदाज शेअर करा</string>
+    <string name="dialog_share_title_job">इनव्हॉइस शेअर करा</string>
+    <string name="dialog_share_desc_estimate">तुम्ही तुमच्या ग्राहकासोबत हा अंदाज कसा शेअर करू इच्छिता ते निवडा.</string>
+    <string name="dialog_share_desc_job">तुम्ही तुमच्या ग्राहकासोबत हे बिल कसे शेअर करू इच्छिता ते निवडा.</string>
+    <string name="dialog_share_option_pdf">पीडीएफ शेअर करा</string>
+    <string name="dialog_share_option_text">सामान्य मजकूर (टेक्स्ट)</string>
+    <!-- Rename Category Dialog -->
+    <string name="dialog_rename_category_title">श्रेणीचे नाव बदला</string>
+    <string name="dialog_rename_category_placeholder">उदा. तांब्याचे पाईप्स, फिटिंग्ज</string>
+    <!-- Settings Dialog Modals -->
+    <string name="dialog_theme_desc">Karigo तुमच्यासाठी कसा दिसावा ते निवडा.</string>
+    <string name="dialog_language_desc">तुमची पसंतीची भाषा निवडा.</string>
+    <!-- Backup Confirmation Dialogs -->
+    <string name="dialog_confirm_backup_title">बॅकअपची खात्री करा</string>
+    <string name="dialog_confirm_backup_desc">हे तुमच्या डिव्हाइसचा सद्य डेटा आणि सेटिंग्ज गुगल ड्राइव्हवर सुरक्षितपणे अपलोड करेल, ज्यामुळे मागील बॅकअप ओव्हरराईट होईल. सुरू ठेवायचे?</string>
+    <string name="dialog_confirm_restore_title">डेटा रिस्टोर करण्याची खात्री करा</string>
+    <string name="dialog_confirm_restore_desc">चेतावणी: रिस्टोर केल्याने गुगल ड्राइव्ह बॅकअपमधील डेटासह डिव्हाइसचा सर्व सद्य डेटा आणि सेटिंग्ज ओव्हरराईट होतील. ही क्रिया पूर्ववत केली जाऊ शकत नाही. तुम्ही नक्की पुढे जाऊ इच्छिता?</string>
+</resources>

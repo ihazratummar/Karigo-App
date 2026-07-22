@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="client_details_total_jobs">మొత్తం పనులు</string>
+    <string name="client_details_unpaid">చెల్లించనివి</string>
+    <string name="client_btn_new_job">%1$s కోసం కొత్త పని</string>
+</resources>

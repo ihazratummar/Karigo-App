@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List Screen -->
+    <string name="estimate_list_title">மதிப்பீடுகள்</string>
+    <string name="estimate_list_search_placeholder">மதிப்பீடுகள் அல்லது வாடிக்கையாளரைத் தேடவும்</string>
+    <string name="estimate_list_btn_new">புதிய மதிப்பீடு</string>
+    <string name="estimate_list_empty_title">இதுவரை எந்த மதிப்பீடும் இல்லை</string>
+    <string name="estimate_list_empty_desc">ஒரு தளத்தை பார்வையிடவும், பொருட்களை தேர்ந்தெடுக்கவும், வாடிக்கையாளருக்கு அனுப்பவும்</string>
+    <string name="estimate_list_btn_create_first">முதல் மதிப்பீட்டை உருவாக்கவும்</string>
+    <!-- Add/Edit Screen -->
+    <string name="estimate_add_toast_added">சேர்க்கப்பட்டது</string>
+    <string name="estimate_add_title_new">புதிய மதிப்பீடு</string>
+    <string name="estimate_add_title_edit">மதிப்பீட்டை திருத்தவும்</string>
+    <string name="estimate_add_section_title">திட்டத் தலைப்பு</string>
+    <string name="estimate_add_placeholder_title">உதாரணமாக: குளியலறை புதுப்பித்தல்</string>
+    <string name="estimate_add_section_client">வாடிக்கையாளர்</string>
+    <string name="estimate_add_section_date">தேதி</string>
+    <string name="estimate_add_section_notes">தளக் குறிப்புகள்</string>
+    <string name="estimate_add_placeholder_notes">ஏதேனும் சிறப்பு வழிமுறைகள்...</string>
+    <string name="estimate_add_label_show_rate">விலையைக் காட்டு</string>
+    <string name="estimate_add_desc_rate_visible">வாடிக்கையாளர் விலை &amp; மொத்தத்தைக் காண்பார்</string>
+    <string name="estimate_add_desc_rate_hidden">பொருள் பட்டியல் மட்டும், விலைகள் இல்லை</string>
+    <string name="estimate_add_section_materials">பொருட்கள்</string>
+    <string name="estimate_add_btn_save">மதிப்பீட்டை சேமிக்கவும்</string>
+    <string name="estimate_add_btn_update">மதிப்பீட்டை புதுப்பிக்கவும்</string>
+    <!-- Components -->
+    <string name="estimate_comp_section_materials">பொருட்கள்</string>
+    <string name="estimate_comp_section_total">மதிப்பீட்டு மொத்தம்</string>
+    <string name="estimate_comp_status_no_prices">விலைகள் இல்லை</string>
+    <!-- Details Screen -->
+    <string name="estimate_detail_title">மதிப்பீடு</string>
+    <string name="estimate_detail_preview_title">மதிப்பீட்டு முன்னோட்டம்</string>
+    <string name="estimate_detail_default_provider">கரிகோ வழங்குநர்</string>
+    <string name="estimate_detail_btn_whatsapp">WhatsApp</string>
+    <string name="estimate_detail_toast_print_unavailable">இந்தச் சாதனத்தில் அச்சு சேவை கிடைக்கவில்லை</string>
+    <string name="estimate_detail_toast_print_failed">அச்சுப்பொறியைத் திறப்பதில் தோல்வி: %1$s</string>
+    <string name="estimate_detail_toast_generic_failed">அச்சிடுவதில் தோல்வி: %1$s</string>
+</resources>

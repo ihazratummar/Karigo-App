@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings Screen -->
+    <string name="settings_tab_privacy">தனியுரிமை கொள்கை</string>
+    <string name="settings_tab_tos">சேவை விதிமுறைகள்</string>
+    <string name="settings_tab_toc">விதிமுறைகள் மற்றும் நிபந்தனைகள்</string>
+    <string name="settings_tab_disclaimer">பொறுப்புத் துறப்பு</string>
+    <string name="settings_section_data_support">தரவு &amp; ஆதரவு</string>
+    <string name="settings_section_app_settings">பயன்பாட்டு அமைப்புகள்</string>
+    <string name="settings_section_legal_info">சட்ட &amp; தகவல்</string>
+    <string name="settings_option_backup">தரவு காப்புப்பிரதி</string>
+    <string name="settings_option_backup_desc">கூகிள் டிரைவ் ஒத்திசைவு</string>
+    <string name="settings_option_language">பயன்பாட்டு மொழி</string>
+    <string name="settings_option_theme">பயன்பாட்டு கருப்பொருள்</string>
+    <string name="settings_theme_system">கணினி இயல்புநிலை</string>
+    <string name="settings_theme_light">ஒளி</string>
+    <string name="settings_theme_dark">இருண்ட</string>
+    <string name="settings_my_trade">எனது வர்த்தகம்</string>
+    <!-- About Screen -->
+    <string name="about_title">கரிகோ பற்றி</string>
+    <string name="about_version">பதிப்பு %1$s (%2$d)</string>
+    <string name="about_logo_description">கரிகோ சின்னம்</string>
+    <string name="about_tagline">ஒப்பந்ததாரர்கள், சேவை வல்லுநர்கள் மற்றும் தொழிலாளர்களுக்கான அனைத்தையும் உள்ளடக்கிய வணிக கூட்டாளர்.</string>
+    <string name="about_section_what_does">கரிகோ என்ன செய்கிறது</string>
+    <string name="about_what_does_desc">காகித வேலைகள் அல்லது சிக்கலான விரிதாள்களின் தொந்தரவு இல்லாமல் உங்கள் தொலைபேசியிலிருந்தே ஒப்பந்தம் அல்லது சேவை வணிகத்தை நடத்த கரிகோ உங்களுக்கு உதவுகிறது. வேலைகளை நிர்வகிக்கவும், வாடிக்கையாளர் பதிவுகளை வைத்திருக்கவும், உங்கள் பொருட்கள் மற்றும் விலைகளின் நூலகத்தை உருவாக்கவும், இடத்திலேயே தொழில்முறை தள மதிப்பீடுகளை உருவாக்கவும், மற்றும் வாட்ஸ்அப் மூலம் எல்லாவற்றையும் நேரடியாகப் பகிரவும்.</string>
+    <string name="about_section_features">முக்கிய அம்சங்கள்</string>
+    <string name="about_feature_job_title">வேலை மேலாண்மை</string>
+    <string name="about_feature_job_desc">தொடக்கம் முதல் இறுதி கட்டணம் வரை வேலையை கண்காணிக்கவும்</string>
+    <string name="about_feature_client_title">வாடிக்கையாளர் அடைவு</string>
+    <string name="about_feature_client_desc">வாடிக்கையாளர் தொடர்பு விவரங்கள் &amp; வரலாற்றை பாதுகாப்பாக சேமிக்கவும்</string>
+    <string name="about_feature_material_title">பொருள் நூலகம்</string>
+    <string name="about_feature_material_desc">விரைவான மறுபயன்பாட்டிற்காக உங்கள் நிலையான பொருட்கள் &amp; விலையை சேமிக்கவும்</string>
+    <string name="about_feature_estimate_title">தள மதிப்பீடுகள்</string>
+    <string name="about_feature_estimate_desc">தளத்திலேயே விரிவான மேற்கோள்களை உருவாக்கி உடனடியாக அனுப்பவும்</string>
+    <string name="about_feature_earning_title">வருவாய் கண்காணிப்பு</string>
+    <string name="about_feature_earning_desc">உங்கள் மொத்த வருவாய் மற்றும் நிலுவையில் உள்ள கட்டணங்களை கண்காணிக்கவும்</string>
+    <string name="about_feature_backup_desc">உங்கள் தரவை காப்புப் பிரதி எடுக்க கூகிள் டிரைவை இணைக்கவும் மற்றும் எப்போது வேண்டுமானாலும் மீட்டமைக்கவும்</string>
+    <string name="about_section_who_for">இது யாருக்காக</string>
+    <string name="about_who_for_desc">நமது உலகத்தை உருவாக்கும், நிறுவும், பழுதுபார்க்கும் மற்றும் பராமரிக்கும் கடின உழைப்பாளிகளுக்காக கரிகோ உருவாக்கப்பட்டுள்ளது:</string>
+    <string name="about_section_made_pride">பெருமையுடன் உருவாக்கப்பட்டது</string>
+    <string name="about_made_pride_desc">ஒப்பந்த வேலையின் யதார்த்தத்தை மனதில் கொண்டு வடிவமைக்கப்பட்டுள்ளது — பல நாணய ஆதரவு, வாட்ஸ்அப் பகிர்வு, ஆஃப்லைன் திறன்கள் மற்றும் எளிமையான இடைமுகம்.</string>
+    <string name="about_copyright">Karigo v%1$s • அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை</string>
+    <!-- Legal Screen -->
+    <string name="legal_default_title">சட்ட ஆவணம்</string>
+    <string name="legal_doc_not_found">ஆவணம் கிடைக்கவில்லை</string>
+    <string name="legal_effective_date">நடைமுறைக்கு வரும் தேதி: ஜூன் 30, 2026</string>
+    <string name="legal_doc_footer">%1$s • Karigo • நடைமுறைக்கு வருவது ஜூன் 30, 2026</string>
+    <string name="legal_info_app">பயன்பாடு</string>
+    <string name="legal_info_developer">டெவலப்பர்</string>
+    <string name="legal_info_email">மின்னஞ்சல்</string>
+    <string name="legal_info_grievance">குறை தீர்க்கும் அதிகாரி</string>
+    <string name="legal_info_response_time">பதிலளிக்கும் நேரம்</string>
+    <!-- Data Backup Screen -->
+    <string name="backup_title">கிளவுட் ஒத்திசைவு &amp; காப்புப்பிரதி</string>
+    <string name="backup_toast_signin_failed_token">உள்நுழைவது தோல்வியடைந்தது: அணுகல் டோக்கனை மீட்டெடுக்க முடியவில்லை</string>
+    <string name="backup_toast_signin_failed_info">உள்நுழைவது தோல்வியடைந்தது: கணக்குத் தகவல் இல்லை</string>
+    <string name="backup_toast_signin_cancelled">உள்நுழைவு ரத்து செய்யப்பட்டது</string>
+    <string name="backup_toast_signin_error">கூகிள் உள்நுழைவு பிழை: %1$s (%2$d)</string>
+    <string name="backup_toast_signin_generic">உள்நுழைவு தோல்வியடைந்தது அல்லது ரத்து செய்யப்பட்டது</string>
+    <string name="backup_toast_auth_error">அங்கீகார பிழை. மீண்டும் இணைக்கவும்.</string>
+    <string name="backup_status_connected">கூகிள் டிரைவுடன் இணைக்கப்பட்டுள்ளது</string>
+    <string name="backup_status_disconnected">இணைக்கப்படவில்லை</string>
+    <string name="backup_latest_time">கடைசி காப்புப்பிரதி: %1$s</string>
+    <string name="backup_no_backup">கூகிள் டிரைவில் காப்புப்பிரதி எதுவும் காணவில்லை</string>
+    <string name="backup_btn_disconnect">துண்டிக்கவும்</string>
+    <string name="backup_btn_connect">கூகிள் டிரைவை இணைக்கவும்</string>
+    <string name="backup_label_auto">தானியங்கி காப்புப்பிரதி</string>
+    <string name="backup_desc_auto_on">ஒவ்வொரு 24 மணி நேரத்திற்கும் காப்புப்பிரதி எடுக்கப்படும்</string>
+    <string name="backup_desc_auto_off">உங்கள் தரவை பாதுகாப்பாக வைக்க தானியங்கி காப்புப்பிரதியை இயக்கவும்</string>
+    <string name="backup_status_uploading">பாதுகாப்பாக பதிவேற்றப்படுகிறது...</string>
+    <string name="backup_btn_backup_now">இப்போது காப்புப்பிரதி எடுக்கவும்</string>
+    <string name="backup_status_restoring">தரவை மீட்டெடுக்கிறது...</string>
+    <string name="backup_btn_restore">டிரைவிலிருந்து மீட்டமைக்கவும்</string>
+    <string name="backup_btn_restore_confirm">தரவை மீட்டமைக்கவும்</string>
+    <string name="backup_info_title">முழுமையான பாதுகாப்பு</string>
+    <string name="backup_info_desc">உங்கள் அனைத்து வணிகத் தரவுகளும் — வேலைகள், வாடிக்கையாளர்கள், பொருட்கள் மற்றும் பயன்பாட்டு அமைப்புகள் — உங்கள் கூகிள் டிரைவில் ஒரு தனிப்பட்ட கோப்புறையில் பாதுகாப்பாக காப்புப் பிரதி எடுக்கப்பட்டுள்ளன.</string>
+</resources>

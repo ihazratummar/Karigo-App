@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List Screen -->
+    <string name="estimate_list_title">అంచనాలు</string>
+    <string name="estimate_list_search_placeholder">అంచనాలు లేదా క్లయింట్ కోసం వెతకండి</string>
+    <string name="estimate_list_btn_new">కొత్త అంచనా</string>
+    <string name="estimate_list_empty_title">ఇంకా అంచనాలు లేవు</string>
+    <string name="estimate_list_empty_desc">సైట్‌ను సందర్శించండి, వస్తువులను ఎంచుకోండి, క్లయింట్‌కు పంపండి</string>
+    <string name="estimate_list_btn_create_first">మొదటి అంచనాను రూపొందించండి</string>
+    <!-- Add/Edit Screen -->
+    <string name="estimate_add_toast_added">జోడించబడింది</string>
+    <string name="estimate_add_title_new">కొత్త అంచనా</string>
+    <string name="estimate_add_title_edit">అంచనాను సవరించండి</string>
+    <string name="estimate_add_section_title">ప్రాజెక్ట్ పేరు</string>
+    <string name="estimate_add_placeholder_title">ఉదాహరణకు: బాత్రూమ్ పునరుద్ధరణ</string>
+    <string name="estimate_add_section_client">క్లయింట్</string>
+    <string name="estimate_add_section_date">తేదీ</string>
+    <string name="estimate_add_section_notes">సైట్ గమనికలు</string>
+    <string name="estimate_add_placeholder_notes">ఏవైనా ప్రత్యేక సూచనలు...</string>
+    <string name="estimate_add_label_show_rate">రేటును చూపించండి</string>
+    <string name="estimate_add_desc_rate_visible">క్లయింట్ రేటు &amp; మొత్తం చూస్తారు</string>
+    <string name="estimate_add_desc_rate_hidden">వస్తువుల జాబితా మాత్రమే, ధరలు లేవు</string>
+    <string name="estimate_add_section_materials">వస్తువులు</string>
+    <string name="estimate_add_btn_save">అంచనాను సేవ్ చేయండి</string>
+    <string name="estimate_add_btn_update">అంచనాను నవీకరించండి</string>
+    <!-- Components -->
+    <string name="estimate_comp_section_materials">వస్తువులు</string>
+    <string name="estimate_comp_section_total">మొత్తం అంచనా</string>
+    <string name="estimate_comp_status_no_prices">ధరలు లేవు</string>
+    <!-- Details Screen -->
+    <string name="estimate_detail_title">అంచనా</string>
+    <string name="estimate_detail_preview_title">అంచనా ప్రివ్యూ</string>
+    <string name="estimate_detail_default_provider">కరిగో ప్రొవైడర్</string>
+    <string name="estimate_detail_btn_whatsapp">వాట్సాప్</string>
+    <string name="estimate_detail_toast_print_unavailable">ఈ పరికరంలో ప్రింట్ సర్వీస్ అందుబాటులో లేదు</string>
+    <string name="estimate_detail_toast_print_failed">ప్రింటర్‌ను తెరవడం విఫలమైంది: %1$s</string>
+    <string name="estimate_detail_toast_generic_failed">ప్రింట్ చేయడం విఫలమైంది: %1$s</string>
+</resources>

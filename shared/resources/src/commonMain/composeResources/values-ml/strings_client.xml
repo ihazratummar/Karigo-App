@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="client_details_total_jobs">ആകെ ജോലികൾ</string>
+    <string name="client_details_unpaid">അടയ്ക്കാത്തത്</string>
+    <string name="client_btn_new_job">%1$s-നായി പുതിയ ജോലി</string>
+</resources>

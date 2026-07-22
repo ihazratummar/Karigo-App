@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="materials_select_materials">سامان منتخب کریں</string>
+    <string name="materials_search_materials">سامان تلاش کریں</string>
+    <string name="materials_add_materials">سامان شامل کریں</string>
+    <string name="materials_material_name">سامان کا نام</string>
+    <string name="materials_material_name_text_field_placeholder">مثال کے طور پر: آدھا انچ پی وی سی پائپ</string>
+    <string name="materials_trade">کام کی قسم</string>
+    <string name="materials_category">زمرہ</string>
+    <string name="materials_category_text_field_placeholder">مثال کے طور پر: پائپ، فٹنگز، والوز...</string>
+    <string name="materials_category_description">نیا زمرہ بنانے کے لیے نام لکھیں یا اوپر سے منتخب کریں</string>
+    <string name="materials_new_category_text_field_placeholder">نئے زمرے کا نام...</string>
+    <string name="material_manager_category">زمرہ جات کا انتظام</string>
+    <string name="materials_count_category">%1$d زمرہ جات</string>
+    <string name="materials_btn_add_to_library">لائبریری میں شامل کریں</string>
+    <string name="materials_btn_save_changes">تبدیلیاں محفوظ کریں</string>
+    <string name="materials_btn_manage">انتظام کریں</string>
+</resources>

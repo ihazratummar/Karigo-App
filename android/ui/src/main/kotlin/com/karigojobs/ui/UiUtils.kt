@@ -168,6 +168,31 @@ fun getGreeting() : StringResource {
 }
 
 
+fun String.localizeDigits(): String {
+    val language = Locale.getDefault().language
+    return when (language) {
+        "hi", "mr" -> this.map { char ->
+            if (char in '0'..'9') (char - '0' + 0x0966).toChar() else char
+        }.joinToString("")
+        "bn" -> this.map { char ->
+            if (char in '0'..'9') (char - '0' + 0x09E6).toChar() else char
+        }.joinToString("")
+        "ml" -> this.map { char ->
+            if (char in '0'..'9') (char - '0' + 0x0D66).toChar() else char
+        }.joinToString("")
+        "ta" -> this.map { char ->
+            if (char in '0'..'9') (char - '0' + 0x0BE6).toChar() else char
+        }.joinToString("")
+        "te" -> this.map { char ->
+            if (char in '0'..'9') (char - '0' + 0x0C66).toChar() else char
+        }.joinToString("")
+        "ur" -> this.map { char ->
+            if (char in '0'..'9') (char - '0' + 0x06F0).toChar() else char
+        }.joinToString("")
+        else -> this
+    }
+}
+
 object NumberUtils {
     private val formatter : NumberFormat
         get() = NumberFormat.getNumberInstance(Locale.getDefault())
@@ -176,14 +201,14 @@ object NumberUtils {
         number: Number,
         maxFractionDigits: Int = 2,
         minFractionDigit: Int = 0
-    ) : String{
+    ) : String {
         return formatter.apply {
             maximumFractionDigits = maxFractionDigits
             minimumFractionDigits = minFractionDigit
             isGroupingUsed = true
-        }.format(number)
+        }.format(number).localizeDigits()
     }
 }
 
 fun Number.toLocaleString(): String =
-    NumberFormat.getNumberInstance(Locale.getDefault()).format(this)
+    NumberFormat.getNumberInstance(Locale.getDefault()).format(this).localizeDigits()

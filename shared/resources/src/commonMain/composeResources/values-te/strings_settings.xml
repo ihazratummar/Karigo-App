@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings Screen -->
+    <string name="settings_tab_privacy">గోప్యతా విధానం</string>
+    <string name="settings_tab_tos">సేవా నిబంధనలు</string>
+    <string name="settings_tab_toc">నిబంధనలు మరియు షరతులు</string>
+    <string name="settings_tab_disclaimer">నిరాకరణ</string>
+    <string name="settings_section_data_support">డేటా &amp; మద్దతు</string>
+    <string name="settings_section_app_settings">యాప్ సెట్టింగ్‌లు</string>
+    <string name="settings_section_legal_info">చట్టపరమైన &amp; సమాచారం</string>
+    <string name="settings_option_backup">డేటా బ్యాకప్</string>
+    <string name="settings_option_backup_desc">గూగుల్ డ్రైవ్ సింక్</string>
+    <string name="settings_option_language">యాప్ భాష</string>
+    <string name="settings_option_theme">యాప్ థీమ్</string>
+    <string name="settings_theme_system">సిస్టమ్ డిఫాల్ట్</string>
+    <string name="settings_theme_light">లైట్</string>
+    <string name="settings_theme_dark">డార్క్</string>
+    <string name="settings_my_trade">నా వృత్తి</string>
+    <!-- About Screen -->
+    <string name="about_title">కరిగో గురించి</string>
+    <string name="about_version">వెర్షన్ %1$s (%2$d)</string>
+    <string name="about_logo_description">కరిగో లోగో</string>
+    <string name="about_tagline">కాంట్రాక్టర్లు, సర్వీస్ నిపుణులు మరియు కార్మికుల కోసం ఆల్-ఇన్-వన్ బిజినెస్ పార్టనర్.</string>
+    <string name="about_section_what_does">కరిగో ఏమి చేస్తుంది</string>
+    <string name="about_what_does_desc">పేపర్ వర్క్ లేదా క్లిష్టమైన స్ప్రెడ్‌షీట్‌ల ఇబ్బంది లేకుండా మీ ఫోన్ నుండే మీ కాంట్రాక్టింగ్ లేదా సర్వీస్ బిజినెస్‌ను నడపడానికి కరిగో మీకు సహాయపడుతుంది. పనులను నిర్వహించండి, క్లయింట్ రికార్డులను ఉంచండి, మీ వస్తువులు మరియు రేట్ల లైబ్రరీని రూపొందించండి, అక్కడికక్కడే వృత్తిపరమైన సైట్ అంచనాలను రూపొందించండి మరియు అన్నింటినీ నేరుగా వాట్సాప్ ద్వారా పంచుకోండి.</string>
+    <string name="about_section_features">ముఖ్య లక్షణాలు</string>
+    <string name="about_feature_job_title">పని నిర్వహణ</string>
+    <string name="about_feature_job_desc">ప్రారంభం నుండి తుది చెల్లింపు వరకు పనిని ట్రాక్ చేయండి</string>
+    <string name="about_feature_client_title">క్లయింట్ డైరెక్టరీ</string>
+    <string name="about_feature_client_desc">కస్టమర్ సంప్రదింపు వివరాలు &amp; చరిత్రను సురక్షితంగా నిల్వ చేయండి</string>
+    <string name="about_feature_material_title">వస్తువుల లైబ్రరీ</string>
+    <string name="about_feature_material_desc">వేగవంతమైన పునర్వినియోగం కోసం మీ ప్రామాణిక వస్తువులు &amp; ధరలను సేవ్ చేయండి</string>
+    <string name="about_feature_estimate_title">సైట్ అంచనాలు</string>
+    <string name="about_feature_estimate_desc">సైట్‌లో వివరణాత్మక కొటేషన్‌లను రూపొందించండి &amp; వెంటనే పంపండి</string>
+    <string name="about_feature_earning_title">సంపాదన ట్రాకింగ్</string>
+    <string name="about_feature_earning_desc">మీ మొత్తం ఆదాయం మరియు బకాయి చెల్లింపులను పర్యవేక్షించండి</string>
+    <string name="about_feature_backup_desc">మీ డేటాను బ్యాకప్ చేయడానికి గూగుల్ డ్రైవ్‌ను లింక్ చేయండి మరియు ఎప్పుడైనా పునరుద్ధరించండి</string>
+    <string name="about_section_who_for">ఇది ఎవరి కోసం</string>
+    <string name="about_who_for_desc">మన ప్రపంచాన్ని నిర్మించే, ఇన్‌స్టాల్ చేసే, మరమ్మత్తు చేసే మరియు నిర్వహించే కష్టపడి పనిచేసే నిపుణుల కోసం కరిగో నిర్మించబడింది:</string>
+    <string name="about_section_made_pride">గర్వంగా తయారు చేయబడింది</string>
+    <string name="about_made_pride_desc">కాంట్రాక్ట్ పని యొక్క వాస్తవికతను దృష్టిలో ఉంచుకుని రూపొందించబడింది — బహుళ-కరెన్సీ మద్దతు, వాట్సాప్ భాగస్వామ్యం, ఆఫ్‌లైన్ సామర్థ్యాలు మరియు సాధారణ ఇంటర్‌ఫేస్.</string>
+    <string name="about_copyright">కరిగో v%1$s • సర్వ హక్కులు ప్రత్యేకించబడినవి</string>
+    <!-- Legal Screen -->
+    <string name="legal_default_title">చట్టపరమైన పత్రం</string>
+    <string name="legal_doc_not_found">పత్రం కనుగొనబడలేదు</string>
+    <string name="legal_effective_date">అమలు తేదీ: జూన్ 30, 2026</string>
+    <string name="legal_doc_footer">%1$s • Karigo • జూన్ 30, 2026 నుండి అమలులో ఉంటుంది</string>
+    <string name="legal_info_app">యాప్</string>
+    <string name="legal_info_developer">డెవలపర్</string>
+    <string name="legal_info_email">ఈమెయిల్</string>
+    <string name="legal_info_grievance">గ్రీవెన్స్ ఆఫీసర్</string>
+    <string name="legal_info_response_time">స్పందన సమయం</string>
+    <!-- Data Backup Screen -->
+    <string name="backup_title">క్లౌడ్ సింక్ &amp; బ్యాకప్</string>
+    <string name="backup_toast_signin_failed_token">సైన్ ఇన్ విఫలమైంది: యాక్సెస్ టోకెన్‌ను తిరిగి పొందలేకపోయాము</string>
+    <string name="backup_toast_signin_failed_info">సైన్ ఇన్ విఫలమైంది: ఖాతా సమాచారం లేదు</string>
+    <string name="backup_toast_signin_cancelled">సైన్ ఇన్ రద్దు చేయబడింది</string>
+    <string name="backup_toast_signin_error">గూగుల్ సైన్ ఇన్ లోపం: %1$s (%2$d)</string>
+    <string name="backup_toast_signin_generic">సైన్ ఇన్ విఫలమైంది లేదా రద్దు చేయబడింది</string>
+    <string name="backup_toast_auth_error">ప్రామాణీకరణ లోపం. దయచేసి మళ్లీ కనెక్ట్ చేయండి.</string>
+    <string name="backup_status_connected">గూగుల్ డ్రైవ్‌కు కనెక్ట్ చేయబడింది</string>
+    <string name="backup_status_disconnected">కనెక్ట్ కాలేదు</string>
+    <string name="backup_latest_time">చివరి బ్యాకప్: %1$s</string>
+    <string name="backup_no_backup">గూగుల్ డ్రైవ్‌లో ఎలాంటి బ్యాకప్ కనుగొనబడలేదు</string>
+    <string name="backup_btn_disconnect">డిస్‌కనెక్ట్ చేయండి</string>
+    <string name="backup_btn_connect">గూగుల్ డ్రైవ్‌ను కనెక్ట్ చేయండి</string>
+    <string name="backup_label_auto">ఆటో బ్యాకప్</string>
+    <string name="backup_desc_auto_on">ప్రతి 24 గంటలకు బ్యాకప్ తీసుకోబడుతుంది</string>
+    <string name="backup_desc_auto_off">మీ డేటాను సురక్షితంగా ఉంచడానికి ఆటో బ్యాకప్‌ను ప్రారంభించండి</string>
+    <string name="backup_status_uploading">సురక్షితంగా అప్‌లోడ్ చేయబడుతోంది...</string>
+    <string name="backup_btn_backup_now">ఇప్పుడే బ్యాకప్ చేయండి</string>
+    <string name="backup_status_restoring">డేటాను పునరుద్ధరిస్తోంది...</string>
+    <string name="backup_btn_restore">డ్రైవ్ నుండి పునరుద్ధరించండి</string>
+    <string name="backup_btn_restore_confirm">డేటాను పునరుద్ధరించండి</string>
+    <string name="backup_info_title">సంపూర్ణ రక్షణ</string>
+    <string name="backup_info_desc">మీ వ్యాపార డేటా అంతా — పనులు, క్లయింట్లు, వస్తువులు మరియు యాప్ సెట్టింగ్‌లు — మీ గూగుల్ డ్రైవ్‌లోని ప్రైవేట్ ఫోల్డర్‌లో సురక్షితంగా బ్యాకప్ చేయబడుతుంది.</string>
+</resources>

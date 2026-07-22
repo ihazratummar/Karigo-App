@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Delete Dialog -->
+    <string name="dialog_delete_title_job">ജോലി ഡിലീറ്റ് ചെയ്യുക</string>
+    <string name="dialog_delete_desc_job">ഇത് ഈ ജോലിയും ഇൻവോയ്സ് ചരിത്രവും ശാശ്വതമായി നീക്കം ചെയ്യും.</string>
+    <string name="dialog_delete_title_client">ക്ലയൻ്റിനെ ഡിലീറ്റ് ചെയ്യുക</string>
+    <string name="dialog_delete_desc_client">ഇത് %1$s-യെയും ബന്ധപ്പെട്ട എല്ലാ ജോലികളുടെയും എസ്റ്റിമേറ്റുകളുടെയും ചരിത്രത്തെയും നീക്കം ചെയ്യും.</string>
+    <string name="dialog_delete_title_material">മെറ്റീരിയൽ ഡിലീറ്റ് ചെയ്യുക</string>
+    <string name="dialog_delete_desc_material">ഇത് നിങ്ങളുടെ ലൈബ്രറിയിൽ നിന്ന് ഈ ഐറ്റം ശാശ്വതമായി നീക്കം ചെയ്യും.</string>
+    <string name="dialog_delete_title_estimate">എസ്റ്റിമേറ്റ് ഡിലീറ്റ് ചെയ്യുക</string>
+    <string name="dialog_delete_desc_estimate">ഇത് ഈ സൈറ്റ് എസ്റ്റിമേറ്റ് ശാശ്വതമായി നീക്കം ചെയ്യും.</string>
+    <!-- Permission Rationale Dialog -->
+    <string name="dialog_permission_btn_deny">ഇപ്പോൾ വേണ്ട</string>
+    <string name="dialog_permission_btn_allow">അനുവദിക്കുക</string>
+    <string name="dialog_permission_btn_settings">സെറ്റിംഗ്സ് തുറക്കുക</string>
+    <string name="dialog_permission_title_notification">നോട്ടിഫിക്കേഷൻ പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="dialog_permission_desc_notification">അടയ്ക്കാത്ത ഇൻവോയ്സുകൾക്കും വരാനിരിക്കുന്ന ജോലികൾക്കുമുള്ള റിമൈൻഡറുകൾ നേടുക.</string>
+    <string name="dialog_permission_permanently_denied_notification">നോട്ടിഫിക്കേഷൻ അനുമതി നിഷേധിക്കപ്പെട്ടു. സെറ്റിംഗ്സിൽ ഇത് പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="dialog_permission_title_contact">കോൺടാക്റ്റുകൾ ആക്സസ് ചെയ്യുക</string>
+    <string name="dialog_permission_desc_contact">നിങ്ങളുടെ ഫോൺ കോൺടാക്റ്റുകളിൽ നിന്ന് ക്ലയൻ്റുകളെ വേഗത്തിൽ ചേർക്കുക.</string>
+    <string name="dialog_permission_permanently_denied_contact">കോൺടാക്റ്റ് അനുമതി നിഷേധിക്കപ്പെട്ടു. ആപ്പ് സെറ്റിംഗ്സിൽ ഇത് പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <!-- Share Choice Dialog -->
+    <string name="dialog_share_title">എസ്റ്റിമേറ്റ് ഷെയർ ചെയ്യുക</string>
+    <string name="dialog_share_title_job">ഇൻവോയ്സ് ഷെയർ ചെയ്യുക</string>
+    <string name="dialog_share_desc_estimate">നിങ്ങളുടെ ക്ലയൻ്റുമായി ഈ എസ്റ്റിമേറ്റ് എങ്ങനെ പങ്കിടണമെന്ന് തിരഞ്ഞെടുക്കുക.</string>
+    <string name="dialog_share_desc_job">നിങ്ങളുടെ ക്ലയൻ്റുമായി ഈ ജോലിയുടെ ഇൻവോയ്സ് എങ്ങനെ പങ്കിടണമെന്ന് തിരഞ്ഞെടുക്കുക.</string>
+    <string name="dialog_share_option_pdf">PDF ഷെയർ ചെയ്യുക</string>
+    <string name="dialog_share_option_text">പ്ലെയിൻ ടെക്സ്റ്റ്</string>
+    <!-- Rename Category Dialog -->
+    <string name="dialog_rename_category_title">കാറ്റഗറിയുടെ പേര് മാറ്റുക</string>
+    <string name="dialog_rename_category_placeholder">ഉദാഹരണത്തിന്: കോപ്പർ പൈപ്പുകൾ, ഫിറ്റിംഗുകൾ</string>
+    <!-- Settings Dialog Modals -->
+    <string name="dialog_theme_desc">കരിഗോ നിങ്ങൾക്ക് എങ്ങനെ കാണപ്പെടണം എന്ന് തിരഞ്ഞെടുക്കുക.</string>
+    <string name="dialog_language_desc">നിങ്ങൾക്ക് ഇഷ്ടമുള്ള ഭാഷ തിരഞ്ഞെടുക്കുക.</string>
+    <!-- Backup Confirmation Dialogs -->
+    <string name="dialog_confirm_backup_title">ബാക്കപ്പ് സ്ഥിരീകരിക്കുക</string>
+    <string name="dialog_confirm_backup_desc">ഇത് നിങ്ങളുടെ നിലവിലെ ഉപകരണ ഡാറ്റയും സെറ്റിംഗ്സുകളും സുരക്ഷിതമായി ഗൂഗിൾ ഡ്രൈവിലേക്ക് അപ്‌ലോഡ് ചെയ്യുകയും മുമ്പത്തെ ബാക്കപ്പിനെ മാറ്റിസ്ഥാപിക്കുകയും ചെയ്യും. തുടരട്ടേ?</string>
+    <string name="dialog_confirm_restore_title">റിസ്റ്റോർ സ്ഥിരീകരിക്കുക</string>
+    <string name="dialog_confirm_restore_desc">മുന്നറിയിപ്പ്: റിസ്റ്റോർ ചെയ്യുന്നത് നിങ്ങളുടെ ഗൂഗിൾ ഡ്രൈവ് ബാക്കപ്പിൽ നിന്നുള്ള ഡാറ്റ ഉപയോഗിച്ച് ഉപകരണത്തിലെ നിലവിലെ എല്ലാ ഡാറ്റയും സെറ്റിംഗ്സും മാറ്റിസ്ഥാപിക്കും. ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല. തുടരണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trade_plumber">پلمبر</string>
+    <string name="trade_plumber_description">پائپ، فٹنگز، نل اور مرمت</string>
+    <string name="trade_electrician">الیکٹریشن</string>
+    <string name="trade_electrician_description">وائرنگ، پینلز اور فکسچرز</string>
+    <string name="trade_carpenter">بڑھئی</string>
+    <string name="trade_carpenter_description">لکڑی کا کام، دروازے اور فرنیچر</string>
+    <string name="trade_painter">رنگ ساز</string>
+    <string name="trade_painter_description">اندرونی اور بیرونی رنگ و روغن</string>
+    <string name="trade_mason">راج مستری اور ٹھیکیدار</string>
+    <string name="trade_mason_description">اینٹیں، ٹائلیں اور کنکریٹ کا کام</string>
+    <string name="trade_grill">گرل اور لوہار</string>
+    <string name="trade_grill_description">لوہا، گرل اور گیٹ کا کام</string>
+    <string name="trade_ac_technician">اے سی ٹیکنیشن</string>
+    <string name="trade_ac_technician_description">اے سی سروس، مرمت اور انسٹالیشن</string>
+    <string name="trade_appliance_repair">گھریلو اشیاء کی مرمت</string>
+    <string name="trade_appliance_repair_description">واشنگ مشین، فریج اور دیگر اشیاء کی مرمت</string>
+    <string name="trade_waterproofing">واٹر پروفنگ</string>
+    <string name="trade_waterproofing_description">پانی کے رساؤ اور نمی کا تدارک</string>
+    <string name="trade_pest_control">پیسٹ کنٹرول</string>
+    <string name="trade_pest_control_description">دیمک، کیڑے مکوڑوں اور چوہوں کا علاج</string>
+    <string name="trade_car_bike_mechanic">کار اور بائیک مکینک</string>
+    <string name="trade_car_bike_mechanic_description">گاڑیوں کی مرمت اور سروس</string>
+    <string name="trade_cctv_security">سی سی ٹی وی اور سیکیورٹی</string>
+    <string name="trade_cctv_security_description">کیمرے، سینسرز اور الارم سسٹمز</string>
+    <string name="trade_solar_installer">سولر انسٹالر</string>
+    <string name="trade_solar_installer_description">سولر پینل، انورٹر اور بیٹریاں</string>
+    <string name="trade_aluminium_upvc">ایلومینیم اور یو پی وی سی</string>
+    <string name="trade_aluminium_upvc_description">کھڑکیاں، دروازے اور پارٹیشنز</string>
+    <string name="trade_civil_contractor">تعمیراتی ٹھیکیدار</string>
+    <string name="trade_civil_contractor_description">چھوٹے تعمیراتی منصوبے</string>
+    <string name="trade_bore_well">بور ویل اور واٹر ٹینک</string>
+    <string name="trade_bore_well_description">بورنگ، پانی کے پمپ اور سروس</string>
+    <string name="trade_gas_lpg_fitter">گیس اور ایل پی جی فٹر</string>
+    <string name="trade_gas_lpg_fitter_description">گیس پائپ لائن، چولہے اور مرمت</string>
+    <string name="trade_network_support">نیٹ ورک اور آئی ٹی سپورٹ</string>
+    <string name="trade_network_support_description">نیٹ ورک کیبلنگ، راؤٹرز اور وائی فائی</string>
+</resources>

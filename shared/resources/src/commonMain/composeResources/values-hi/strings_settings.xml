@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings Screen -->
+    <string name="settings_tab_privacy">गोपनीयता नीति</string>
+    <string name="settings_tab_tos">सेवा की शर्तें</string>
+    <string name="settings_tab_toc">नियम और शर्तें</string>
+    <string name="settings_tab_disclaimer">अस्वीकरण</string>
+    <string name="settings_section_data_support">डेटा और सहायता</string>
+    <string name="settings_section_app_settings">ऐप सेटिंग्स</string>
+    <string name="settings_section_legal_info">कानूनी और जानकारी</string>
+    <string name="settings_option_backup">डेटा बैकअप</string>
+    <string name="settings_option_backup_desc">Google Drive सिंक</string>
+    <string name="settings_option_language">ऐप की भाषा</string>
+    <string name="settings_option_theme">ऐप थीम</string>
+    <string name="settings_theme_system">सिस्टम डिफ़ॉल्ट</string>
+    <string name="settings_theme_light">लाइट</string>
+    <string name="settings_theme_dark">डार्क</string>
+    <string name="settings_my_trade">मेरा व्यापार</string>
+    <!-- About Screen -->
+    <string name="about_title">Karigo के बारे में</string>
+    <string name="about_version">संस्करण %1$s (%2$d)</string>
+    <string name="about_logo_description">Karigo लोगो</string>
+    <string name="about_tagline">ठेकेदारों, सेवा पेशेवरों और कारीगरों के लिए ऑल-इन-वन बिजनेस पार्टनर।</string>
+    <string name="about_section_what_does">Karigo क्या करता है</string>
+    <string name="about_what_does_desc">Karigo आपको अपने फोन से ही अपना ठेकेदारी या सेवा व्यवसाय चलाने में मदद करता है — बिना कागजी कार्रवाई या जटिल स्प्रेडशीट के। काम प्रबंधित करें, ग्राहकों का रिकॉर्ड रखें, अपनी सामग्री और दरों की एक लाइब्रेरी बनाएं, मौके पर ही पेशेवर साइट अनुमान तैयार करें, और सब कुछ सीधे व्हाट्सएप के माध्यम से साझा करें।</string>
+    <string name="about_section_features">प्रमुख विशेषताएं</string>
+    <string name="about_feature_job_title">कार्य प्रबंधन</string>
+    <string name="about_feature_job_desc">काम शुरू होने से लेकर अंतिम भुगतान तक ट्रैक करें</string>
+    <string name="about_feature_client_title">ग्राहक निर्देशिका</string>
+    <string name="about_feature_client_desc">ग्राहक संपर्क विवरण और इतिहास सुरक्षित रूप से सहेजें</string>
+    <string name="about_feature_material_title">सामग्री लाइब्रेरी</string>
+    <string name="about_feature_material_desc">त्वरित पुन: उपयोग के लिए अपनी मानक सामग्री और मूल्य निर्धारण सहेजें</string>
+    <string name="about_feature_estimate_title">साइट अनुमान</string>
+    <string name="about_feature_estimate_desc">साइट पर विस्तृत कोटेशन बनाएं और तुरंत भेजें</string>
+    <string name="about_feature_earning_title">कमाई ट्रैकिंग</string>
+    <string name="about_feature_earning_desc">अपनी कुल राजस्व और बकाया भुगतानों की निगरानी करें</string>
+    <string name="about_feature_backup_desc">अपने डेटा का बैकअप लेने और उसे किसी भी समय पुनर्प्राप्त करने के लिए Google Drive को लिंक करें</string>
+    <string name="about_section_who_for">यह किसके लिए है</string>
+    <string name="about_who_for_desc">Karigo उन मेहनती पेशेवरों के लिए बनाया गया है जो हमारी दुनिया का निर्माण, स्थापना, मरम्मत और रखरखाव करते हैं:</string>
+    <string name="about_section_made_pride">गर्व के साथ निर्मित</string>
+    <string name="about_made_pride_desc">ठेकेदारी काम की वास्तविकता को ध्यान में रखकर बनाया गया है — बहु-मुद्रा सहायता, व्हाट्सएप साझाकरण, ऑफ़लाइन क्षमताएं, और एक सरल इंटरफ़ेस।</string>
+    <string name="about_copyright">Karigo v%1$s • सर्वाधिकार सुरक्षित</string>
+    <!-- Legal Screen -->
+    <string name="legal_default_title">कानूनी दस्तावेज</string>
+    <string name="legal_doc_not_found">दस्तावेज़ नहीं मिला</string>
+    <string name="legal_effective_date">प्रभावी तिथि: 30 जून, 2026</string>
+    <string name="legal_doc_footer">%1$s • Karigo • प्रभावी 30 जून, 2026</string>
+    <string name="legal_info_app">ऐप</string>
+    <string name="legal_info_developer">डेवलपर</string>
+    <string name="legal_info_email">ईमेल</string>
+    <string name="legal_info_grievance">शिकायत अधिकारी</string>
+    <string name="legal_info_response_time">प्रतिक्रिया समय</string>
+    <!-- Data Backup Screen -->
+    <string name="backup_title">क्लाउड सिंक और बैकअप</string>
+    <string name="backup_toast_signin_failed_token">साइन इन विफल: एक्सेस टोकन प्राप्त करने में असमर्थ</string>
+    <string name="backup_toast_signin_failed_info">साइन इन विफल: खाता जानकारी गायब</string>
+    <string name="backup_toast_signin_cancelled">साइन इन रद्द कर दिया गया</string>
+    <string name="backup_toast_signin_error">Google साइन इन त्रुटि: %1$s (%2$d)</string>
+    <string name="backup_toast_signin_generic">साइन इन विफल या रद्द</string>
+    <string name="backup_toast_auth_error">प्रमाणीकरण त्रुटि। कृपया पुनः कनेक्ट करें।</string>
+    <string name="backup_status_connected">Google Drive से कनेक्टेड</string>
+    <string name="backup_status_disconnected">कनेक्टेड नहीं है</string>
+    <string name="backup_latest_time">अंतिम बैकअप: %1$s</string>
+    <string name="backup_no_backup">Google Drive पर कोई बैकअप नहीं मिला</string>
+    <string name="backup_btn_disconnect">डिस्कनेक्ट करें</string>
+    <string name="backup_btn_connect">Google Drive कनेक्ट करें</string>
+    <string name="backup_label_auto">ऑटो बैकअप</string>
+    <string name="backup_desc_auto_on">हर 24 घंटे में बैकअप लिया जाएगा</string>
+    <string name="backup_desc_auto_off">अपने डेटा को सुरक्षित रखने के लिए ऑटो बैकअप सक्षम करें</string>
+    <string name="backup_status_uploading">सुरक्षित रूप से अपलोड किया जा रहा है...</string>
+    <string name="backup_btn_backup_now">अभी बैकअप लें</string>
+    <string name="backup_status_restoring">डेटा पुनर्प्राप्त किया जा रहा है...</string>
+    <string name="backup_btn_restore">ड्राइव से पुनर्प्राप्त करें</string>
+    <string name="backup_btn_restore_confirm">डेटा पुनर्प्राप्त करें</string>
+    <string name="backup_info_title">पूर्ण सुरक्षा</string>
+    <string name="backup_info_desc">आपके व्यवसाय का सारा डेटा — काम, ग्राहक, सामग्री और ऐप सेटिंग्स — आपके Google Drive पर एक निजी फ़ोल्डर में सुरक्षित रूप से बैकअप किया जाता है।</string>
+</resources>

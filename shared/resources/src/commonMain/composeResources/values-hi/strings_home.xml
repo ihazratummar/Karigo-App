@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_new_estimate">नया अनुमान</string>
+    <string name="home_site_estimate">साइट अनुमान</string>
+    <string name="home_estimate_desctiption">जॉब साइट का दौरा करें, सामग्री की सूची बनाएं, और इसे ग्राहक को व्हाट्सएप करें</string>
+    <string name="home_recent_job">हालिया काम</string>
+</resources>

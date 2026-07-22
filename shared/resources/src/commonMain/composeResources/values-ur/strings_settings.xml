@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings Screen -->
+    <string name="settings_tab_privacy">رازداری کی پالیسی</string>
+    <string name="settings_tab_tos">شرائط و ضوابط</string>
+    <string name="settings_tab_toc">قواعد و ضوابط</string>
+    <string name="settings_tab_disclaimer">دستبرداری</string>
+    <string name="settings_section_data_support">ڈیٹا اور سپورٹ</string>
+    <string name="settings_section_app_settings">ایپ سیٹنگز</string>
+    <string name="settings_section_legal_info">قانونی اور معلوماتی</string>
+    <string name="settings_option_backup">ڈیٹا بیک اپ</string>
+    <string name="settings_option_backup_desc">گوگل ڈرائیو سنک</string>
+    <string name="settings_option_language">ایپ کی زبان</string>
+    <string name="settings_option_theme">ایپ تھیم</string>
+    <string name="settings_theme_system">سسٹم ڈیفالٹ</string>
+    <string name="settings_theme_light">لائٹ</string>
+    <string name="settings_theme_dark">ڈارک</string>
+    <string name="settings_my_trade">میری تجارت</string>
+    <!-- About Screen -->
+    <string name="about_title">Karigo کے بارے میں</string>
+    <string name="about_version">ورژن %1$s (%2$d)</string>
+    <string name="about_logo_description">Karigo لوگو</string>
+    <string name="about_tagline">ٹھیکیداروں، پیشہ ور افراد اور کاریگروں کے لیے آل ان ون بزنس پارٹنر۔</string>
+    <string name="about_section_what_does">Karigo کیا کام کرتا ہے</string>
+    <string name="about_what_does_desc">Karigo آپ کو اپنے فون سے ٹھیکیداری یا سروس کا کاروبار چلانے میں مدد کرتا ہے — بغیر کسی کاغذی کارروائی یا ایکسل شیٹس کے۔ کاموں کا انتظام کریں، گاہکوں کا ریکارڈ رکھیں، سامان کی قیمتوں کی فہرست بنائیں، سائٹ کا پیشہ ورانہ تخمینہ تیار کریں، اور سب کچھ واٹس ایپ کے ذریعے شیئر کریں۔</string>
+    <string name="about_section_features">اہم خصوصیات</string>
+    <string name="about_feature_job_title">کاموں کا انتظام</string>
+    <string name="about_feature_job_desc">کام کے آغاز سے ادائیگی تک کا ریکارڈ رکھیں</string>
+    <string name="about_feature_client_title">گاہکوں کا ریکارڈ</string>
+    <string name="about_feature_client_desc">گاہکوں کی تفصیلات اور تاریخ محفوظ رکھیں</string>
+    <string name="about_feature_material_title">سامان کی لائبریری</string>
+    <string name="about_feature_material_desc">قیمتوں کی فہرست بنائیں اور اسے بار بار استعمال کریں</string>
+    <string name="about_feature_estimate_title">سائٹ کا تخمینہ</string>
+    <string name="about_feature_estimate_desc">موقع پر تخمینہ بنائیں اور واٹس ایپ پر بھیجیں</string>
+    <string name="about_feature_earning_title">آمدنی کی ٹریکنگ</string>
+    <string name="about_feature_earning_desc">اپنی کل آمدنی ایک نظر میں دیکھیں</string>
+    <string name="about_feature_backup_desc">گوگل ڈرائیو پر ڈیٹا محفوظ کریں اور جب چاہیں بحال کریں</string>
+    <string name="about_section_who_for">یہ کس کے لیے ہے</string>
+    <string name="about_who_for_desc">Karigo ان محنتی پیشہ ور افراد کے لیے بنایا گیا ہے جو ہماری دنیا کی تعمیر اور دیکھ بھال کرتے ہیں:</string>
+    <string name="about_section_made_pride">فخر کے ساتھ تیار کردہ</string>
+    <string name="about_made_pride_desc">ٹھیکیداروں کے کام کرنے کے طریقے کے مطابق بنایا گیا ہے — ملٹی کرنسی سپورٹ، واٹس ایپ شیئرنگ، اور انتہائی آسان انٹرفیس۔</string>
+    <string name="about_copyright">Karigo v%1$s · جملہ حقوق محفوظ ہیں</string>
+    <!-- Legal Screen -->
+    <string name="legal_default_title">قانونی صفحہ</string>
+    <string name="legal_doc_not_found">دستاویز نہیں ملی</string>
+    <string name="legal_effective_date">نفاذ: 30 جون، 2026</string>
+    <string name="legal_doc_footer">%1$s • Karigo • مؤثر تاریخ 30 جون, 2026</string>
+    <string name="legal_info_app">ایپ</string>
+    <string name="legal_info_developer">ڈویلپر</string>
+    <string name="legal_info_email">ای میل</string>
+    <string name="legal_info_grievance">افسرِ شکایت</string>
+    <string name="legal_info_response_time">جوابی وقت</string>
+    <!-- Data Backup Screen -->
+    <string name="backup_title">کلاؤڈ سنک اور بیک اپ</string>
+    <string name="backup_toast_signin_failed_token">سائن ان ناکام: ایکسیز ٹوکن حاصل کرنے میں ناکام</string>
+    <string name="backup_toast_signin_failed_info">سائن ان ناکام: اکاؤنٹ کی معلومات غائب ہیں</string>
+    <string name="backup_toast_signin_cancelled">سائن ان منسوخ کر دیا گیا</string>
+    <string name="backup_toast_signin_error">گوگل سائن ان خرابی: %1$s (%2$d)</string>
+    <string name="backup_toast_signin_generic">سائن ان ناکام یا منسوخ ہو گیا</string>
+    <string name="backup_toast_auth_error">توثیق کی خرابی۔ دوبارہ رابطہ قائم کریں۔</string>
+    <string name="backup_status_connected">گوگل ڈرائیو منسلک ہے</string>
+    <string name="backup_status_disconnected">منسلک نہیں ہے</string>
+    <string name="backup_latest_time">آخری بیک اپ: %1$s</string>
+    <string name="backup_no_backup">گوگل ڈرائیو پر کوئی بیک اپ نہیں ملا</string>
+    <string name="backup_btn_disconnect">منقطع کریں</string>
+    <string name="backup_btn_connect">گوگل ڈرائیو سے منسلک کریں</string>
+    <string name="backup_label_auto">خودکار بیک اپ</string>
+    <string name="backup_desc_auto_on">ہر 24 گھنٹے بعد بیک اپ لیا جائے گا</string>
+    <string name="backup_desc_auto_off">ڈیٹا محفوظ رکھنے کے لیے خودکار بیک اپ فعال کریں</string>
+    <string name="backup_status_uploading">محفوظ طریقے سے اپ لوڈ ہو رہا ہے...</string>
+    <string name="backup_btn_backup_now">ابھی بیک اپ لیں</string>
+    <string name="backup_status_restoring">ڈیٹا بحال ہو رہا ہے...</string>
+    <string name="backup_btn_restore">ڈرائیو سے بحال کریں</string>
+    <string name="backup_btn_restore_confirm">ڈیٹا بحال کریں</string>
+    <string name="backup_info_title">مکمل تحفظ</string>
+    <string name="backup_info_desc">آپ کے کاروبار کا تمام ڈیٹا بشمول کام، گاہک، سامان اور ایپ سیٹنگز آپ کے گوگل ڈرائیو پر ایک پوشیدہ فولڈر میں محفوظ کیا جاتا ہے۔</string>
+</resources>

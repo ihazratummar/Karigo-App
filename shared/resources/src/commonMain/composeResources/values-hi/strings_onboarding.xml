@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_started_description">ठेकेदारों और सेवा प्रदाताओं के लिए सरल डिजिटल सहायक।</string>
+    <string name="onboarding_started_track_job">कार्यों को ट्रैक करें</string>
+    <string name="onboarding_started_track_description">अपने काम, भुगतान और ग्राहकों का रिकॉर्ड रखें।</string>
+    <string name="onboarding_started_whatsapp">व्हाट्सएप साझाकरण</string>
+    <string name="onboarding_started_whatsapp_description">सीधे ग्राहकों को पेशेवर अनुमान और इनवॉइस भेजें।</string>
+    <string name="onboarding_started_earnings">कमाई की निगरानी करें</string>
+    <string name="onboarding_started_earnings_description">अपनी कुल कमाई और लंबित शेष राशि पर नजर रखें।</string>
+    <string name="onboarding_progress">कदम %1$d का %2$d</string>
+    <string name="onboarding_what_do_you_trade">आपका पेशा क्या है?</string>
+    <string name="onboarding_what_do_you_trade_description">अपने प्राथमिक पेशे का चयन करें ताकि हम कुछ बुनियादी सामग्री पहले से भर सकें।</string>
+    <string name="onboarding_btn_trade_not_selected">पेशा चुनें</string>
+    <string name="onboarding_btn_continue">जारी रखें</string>
+    <string name="onboarding_last_title">आप पूरी तरह तैयार हैं!</string>
+    <string name="onboarding_last_description">आइए आपके काम को डिजिटल बनाएं और कागजात से छुटकारा पाएं।</string>
+    <string name="onboarding_starter_material">स्टार्टर सामग्री</string>
+    <string name="onboarding_materials_ready">सामग्री तैयार है!</string>
+    <string name="onboarding_materials_ready_description">हमने आपके चयनित पेशे के आधार पर कुछ सामान्य सामग्रियां पहले से भर दी हैं।</string>
+    <string name="onboarding_back_to_trade">पेशा बदलें</string>
+</resources>

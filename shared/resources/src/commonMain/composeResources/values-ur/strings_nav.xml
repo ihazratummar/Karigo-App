@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_home">ہوم</string>
+    <string name="nav_jobs">کام</string>
+    <string name="nav_clients">گاہک</string>
+    <string name="nav_materials">سامان</string>
+    <string name="nav_settings">ترتیبات</string>
+</resources>

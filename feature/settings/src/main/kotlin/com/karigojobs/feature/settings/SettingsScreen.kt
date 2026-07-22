@@ -141,7 +141,13 @@ fun SettingsScreen(
                 description = stringResource(Res.string.dialog_theme_desc),
                 items = ThemePreference.entries.toList(),
                 selectedItem = state.currentTheme,
-                itemLabel = { it.displayName },
+                itemLabel = { theme ->
+                    when (theme) {
+                        ThemePreference.SYSTEM -> stringResource(Res.string.settings_theme_system)
+                        ThemePreference.LIGHT -> stringResource(Res.string.settings_theme_light)
+                        ThemePreference.DARK -> stringResource(Res.string.settings_theme_dark)
+                    }
+                },
                 onItemSelected = { event(SettingsEvent.UpdateTheme(it)) },
                 onDismiss = { event(SettingsEvent.ToggleThemeModal(false)) }
             )
@@ -154,7 +160,7 @@ fun SettingsScreen(
                 description = stringResource(Res.string.dialog_language_desc),
                 items = AppLanguage.entries.toList(),
                 selectedItem = state.currentLanguage,
-                itemLabel = { it.displayName },
+                itemLabel = { it.nativeName },
                 onItemSelected = { event(SettingsEvent.UpdateLanguage(it)) },
                 onDismiss = { event(SettingsEvent.ToggleLanguageModal(false)) }
             )
@@ -224,14 +230,18 @@ fun SettingsScreen(
                         modifier = Modifier.fillMaxWidth(),
                         icon = R.drawable.map_point, // map_point as a fallback for language
                         label = stringResource(Res.string.settings_option_language),
-                        value = state.currentLanguage.displayName,
+                        value = state.currentLanguage.nativeName,
                         onClick = { event(SettingsEvent.ToggleLanguageModal(true)) }
                     )
                     SettingsValueRow(
                         modifier = Modifier.fillMaxWidth(),
                         icon = R.drawable.settings_line,
                         label = stringResource(Res.string.settings_option_theme),
-                        value = state.currentTheme.displayName,
+                        value = when (state.currentTheme) {
+                            ThemePreference.SYSTEM -> stringResource(Res.string.settings_theme_system)
+                            ThemePreference.LIGHT -> stringResource(Res.string.settings_theme_light)
+                            ThemePreference.DARK -> stringResource(Res.string.settings_theme_dark)
+                        },
                         onClick = { event(SettingsEvent.ToggleThemeModal(true)) }
                     )
                 }

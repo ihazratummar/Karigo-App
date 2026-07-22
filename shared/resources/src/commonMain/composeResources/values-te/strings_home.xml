@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_new_estimate">కొత్త అంచనా</string>
+    <string name="home_site_estimate">సైట్ అంచనా</string>
+    <string name="home_estimate_desctiption">పని చేసే స్థలాన్ని సందర్శించండి, వస్తువుల జాబితాను రూపొందించండి మరియు వాట్సాప్ ద్వారా క్లయింట్‌కు పంపండి</string>
+    <string name="home_recent_job">ఇటీవలి పనులు</string>
+</resources>

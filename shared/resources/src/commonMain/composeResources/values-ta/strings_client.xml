@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="client_details_total_jobs">மொத்த வேலைகள்</string>
+    <string name="client_details_unpaid">செலுத்தப்படாதது</string>
+    <string name="client_btn_new_job">%1$s-க்காக புதிய வேலை</string>
+</resources>

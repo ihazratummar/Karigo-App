@@ -99,7 +99,7 @@ fun ClientListScreen(
                 title = stringResource(Res.string.nav_clients),
                 action = {
                     Text(
-                        text = stringResource(Res.string.common_clients_count, state.clients.size),
+                        text = stringResource(Res.string.common_clients_count, state.clients.size.toLocaleString()),
                         style = MaterialTheme.typography.labelSmall.copy(
                             color = KarigojobsText3
                         )
@@ -201,7 +201,7 @@ fun ClientListScreen(
                                 modifier = Modifier.size(dimens.Icon._2xs)
                             )
                             Text(
-                                text = stringResource(Res.string.common_jobs_count, client.totalJob),
+                                text = stringResource(Res.string.common_jobs_count, client.totalJob.toLocaleString()),
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = appColor.tertiaryText
                                 )

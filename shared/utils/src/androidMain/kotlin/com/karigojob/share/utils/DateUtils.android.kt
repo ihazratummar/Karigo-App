@@ -8,30 +8,24 @@ import java.util.Locale
 actual fun Long.formatToLocalizeDate(): String {
     val baseLocale = Locale.getDefault()
     
-    // CLDR (the industry standard for locales) defaults to Western digits (0-9) 
-    // for many languages like Bengali in technical contexts. 
-    // To cleanly override this and force native digits, we use the official 
-    // Unicode Extension "nu" (Numbering System).
-    val numberingSystem = when (baseLocale.language) {
-        "bn" -> "beng" // Force Bengali digits
-        "ar" -> "arab" // Force Arabic digits
-        "hi" -> "deva" // Force Devanagari digits
-        // Add more forced overrides here if needed in the future
-        else -> null
-    }
-
-    val locale = if (numberingSystem != null) {
-        Locale.Builder()
-            .setLocale(baseLocale)
-            .setExtension(Locale.UNICODE_LOCALE_EXTENSION, "nu-$numberingSystem")
-            .build()
-    } else {
-        baseLocale
-    }
-
-    val formatter = DateTimeFormatter.ofPattern("d MMM · h:mm a", locale)
-        .withDecimalStyle(java.time.format.DecimalStyle.of(locale))
+    val formatter = DateTimeFormatter.ofPattern("d MMM · h:mm a", baseLocale)
         
     val instant = Instant.ofEpochMilli(this)
-    return instant.atZone(ZoneId.systemDefault()).format(formatter)
+    val formatted = instant.atZone(ZoneId.systemDefault()).format(formatter)
+    
+    return formatted.map { char ->
+        if (char in '0'..'9') {
+            when (baseLocale.language) {
+                "hi", "mr" -> (char - '0' + 0x0966).toChar()
+                "bn" -> (char - '0' + 0x09E6).toChar()
+                "ml" -> (char - '0' + 0x0D66).toChar()
+                "ta" -> (char - '0' + 0x0BE6).toChar()
+                "te" -> (char - '0' + 0x0C66).toChar()
+                "ur", "ar" -> (char - '0' + 0x06F0).toChar()
+                else -> char
+            }
+        } else {
+            char
+        }
+    }.joinToString("")
 }

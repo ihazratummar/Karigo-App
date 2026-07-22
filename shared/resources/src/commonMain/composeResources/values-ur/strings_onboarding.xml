@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_started_description">ٹھیکیداروں اور سروس فراہم کرنے والوں کے لیے ایک آسان ڈیجیٹل اسسٹنٹ۔</string>
+    <string name="onboarding_started_track_job">کاموں کو ٹریک کریں</string>
+    <string name="onboarding_started_track_description">اپنے کاموں، ادائیگیوں اور گاہکوں کا ریکارڈ رکھیں۔</string>
+    <string name="onboarding_started_whatsapp">واٹس ایپ شیئرنگ</string>
+    <string name="onboarding_started_whatsapp_description">فوری طور پر بل اور تخمینے گاہک کو واٹس ایپ پر بھیجیں۔</string>
+    <string name="onboarding_started_earnings">آمدنی مانیٹر کریں</string>
+    <string name="onboarding_started_earnings_description">اپنے منافع اور بقایا رقوم پر نظر رکھیں۔</string>
+    <string name="onboarding_progress">مرحلہ %1$d از %2$d</string>
+    <string name="onboarding_what_do_you_trade">آپ کا پیشہ کیا ہے؟</string>
+    <string name="onboarding_what_do_you_trade_description">اپنے کام کی قسم منتخب کریں تاکہ ہم آپ کے لیے پہلے سے کچھ بنیادی سامان تیار کر سکیں۔</string>
+    <string name="onboarding_btn_trade_not_selected">پیشہ منتخب کریں</string>
+    <string name="onboarding_btn_continue">جاری رکھیں</string>
+    <string name="onboarding_last_title">اب آپ تیار ہیں!</string>
+    <string name="onboarding_last_description">آئیے آپ کے کاروبار کو ڈیجیٹل بنائیں اور کاغذی کام ختم کریں۔</string>
+    <string name="onboarding_starter_material">بنیادی سامان</string>
+    <string name="onboarding_materials_ready">آپ کا سامان تیار ہے!</string>
+    <string name="onboarding_materials_ready_description">ہم نے آپ کے منتخب کردہ پیشے کے مطابق سامان کی بنیادی فہرست تیار کر دی ہے۔</string>
+    <string name="onboarding_back_to_trade">پیشہ تبدیل کریں</string>
+</resources>

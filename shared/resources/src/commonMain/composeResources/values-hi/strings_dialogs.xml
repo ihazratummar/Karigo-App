@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Delete Dialog -->
+    <string name="dialog_delete_title_job">काम हटाएं</string>
+    <string name="dialog_delete_desc_job">यह इस काम और इसके इनवॉइस इतिहास को स्थायी रूप से हटा देगा।</string>
+    <string name="dialog_delete_title_client">ग्राहक हटाएं</string>
+    <string name="dialog_delete_desc_client">यह %1$s और उससे जुड़े सभी काम और अनुमान इतिहास को हटा देगा।</string>
+    <string name="dialog_delete_title_material">सामग्री हटाएं</string>
+    <string name="dialog_delete_desc_material">यह इस सामग्री को आपकी लाइब्रेरी से स्थायी रूप से हटा देगा।</string>
+    <string name="dialog_delete_title_estimate">अनुमान हटाएं</string>
+    <string name="dialog_delete_desc_estimate">यह इस साइट अनुमान को स्थायी रूप से हटा देगा।</string>
+    <!-- Permission Rationale Dialog -->
+    <string name="dialog_permission_btn_deny">अभी नहीं</string>
+    <string name="dialog_permission_btn_allow">अनुमति दें</string>
+    <string name="dialog_permission_btn_settings">सेटिंग्स खोलें</string>
+    <string name="dialog_permission_title_notification">अधिसूचना सक्षम करें</string>
+    <string name="dialog_permission_desc_notification">अवैतनिक इनवॉइस और आगामी कार्यों के लिए अनुस्मारक प्राप्त करें।</string>
+    <string name="dialog_permission_permanently_denied_notification">अधिसूचना अनुमति अस्वीकार कर दी गई थी। इसे सेटिंग्स में सक्षम करें</string>
+    <string name="dialog_permission_title_contact">संपर्क तक पहुंच</string>
+    <string name="dialog_permission_desc_contact">अपने फोन संपर्कों से ग्राहकों को तुरंत जोड़ें।</string>
+    <string name="dialog_permission_permanently_denied_contact">संपर्क अनुमति अस्वीकार कर दी गई थी। इसे ऐप सेटिंग्स से सक्षम करें</string>
+    <!-- Share Choice Dialog -->
+    <string name="dialog_share_title">अनुमान साझा करें</string>
+    <string name="dialog_share_title_job">इनवॉइस साझा करें</string>
+    <string name="dialog_share_desc_estimate">चुनें कि आप इस अनुमान को अपने ग्राहक के साथ कैसे साझा करना चाहते हैं।</string>
+    <string name="dialog_share_desc_job">चुनें कि आप इस इनवॉइस को अपने ग्राहक के साथ कैसे साझा करना चाहते हैं।</string>
+    <string name="dialog_share_option_pdf">पीडीएफ साझा करें</string>
+    <string name="dialog_share_option_text">सामान्य पाठ (टेक्स्ट)</string>
+    <!-- Rename Category Dialog -->
+    <string name="dialog_rename_category_title">श्रेणी का नाम बदलें</string>
+    <string name="dialog_rename_category_placeholder">जैसे: तांबे के पाइप, फिटिंग</string>
+    <!-- Settings Dialog Modals -->
+    <string name="dialog_theme_desc">चुनें कि Karigo आपके लिए कैसा दिखे।</string>
+    <string name="dialog_language_desc">अपनी पसंदीदा भाषा चुनें।</string>
+    <!-- Backup Confirmation Dialogs -->
+    <string name="dialog_confirm_backup_title">बैकअप की पुष्टि करें</string>
+    <string name="dialog_confirm_backup_desc">यह आपके वर्तमान डिवाइस डेटा और सेटिंग्स को सुरक्षित रूप से Google Drive पर अपलोड कर देगा, जिससे कोई भी पिछला बैकअप ओवरराइट हो जाएगा। जारी रखें?</string>
+    <string name="dialog_confirm_restore_title">पुनर्प्राप्ति की पुष्टि करें</string>
+    <string name="dialog_confirm_restore_desc">चेतावनी: पुनर्प्राप्त करने से आपके Google Drive बैकअप के डेटा के साथ वर्तमान डिवाइस के सभी डेटा और सेटिंग्स ओवरराइट हो जाएंगे। इस क्रिया को पूर्ववत नहीं किया जा सकता है। क्या आप वाकई जारी रखना चाहते हैं?</string>
+</resources>

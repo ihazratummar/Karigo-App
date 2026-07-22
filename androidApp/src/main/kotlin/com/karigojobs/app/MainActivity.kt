@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,6 +24,7 @@ import com.karigojobs.domain.usecase.backup.GetAutoBackupStatusUseCase
 import com.karigojobs.feature.settings.backup.BackupScheduler
 import com.karigojobs.presentation.onboarding.OnboardingCompleteState
 import com.karigojobs.presentation.onboarding.OnboardingViewModel
+import com.karigojobs.domain.usecase.settings.UpdateAppLanguageUseCase
 import com.karigojobs.share.model.AppLanguage
 import com.karigojobs.share.model.ThemePreference
 import com.karigojobs.shared.device.LocaleManager
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private val updateManager : UpdateManager by inject ()
     private val getAppPreferencesUseCase: GetAppPreferencesUseCase by inject()
     private val getAutoBackupStatusUseCase: GetAutoBackupStatusUseCase by inject()
+    private val updateAppLanguageUseCase: UpdateAppLanguageUseCase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashscreen = installSplashScreen()
@@ -77,10 +82,22 @@ class MainActivity : AppCompatActivity() {
                 language = AppLanguage.ENGLISH
             )
 
+            var isInitialLanguageSyncDone by remember { mutableStateOf(false) }
+
             LaunchedEffect(appPreferencesState.value?.language) {
                 appPreferencesState.value?.language?.let { language ->
-                    if (LocaleManager.getAppLocale() != language.code) {
-                        LocaleManager.setAppLocale(language.code)
+                    val systemLocaleCode = LocaleManager.getAppLocale()
+                    if (!isInitialLanguageSyncDone) {
+                        isInitialLanguageSyncDone = true
+                        if (systemLocaleCode != language.code) {
+                            // System locale was changed outside the app, sync to Datastore
+                            updateAppLanguageUseCase(AppLanguage.fromCode(systemLocaleCode))
+                        }
+                    } else {
+                        // In-app locale change, sync to System
+                        if (systemLocaleCode != language.code) {
+                            LocaleManager.setAppLocale(language.code)
+                        }
                     }
                 }
             }

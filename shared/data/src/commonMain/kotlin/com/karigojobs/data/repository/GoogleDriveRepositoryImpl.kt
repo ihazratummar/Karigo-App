@@ -127,7 +127,7 @@ class GoogleDriveRepositoryImpl(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Result.Error(BackupError.UnknownError)
+            Result.Error(BackupError.UnknownErrorWithMessage(e.message ?: "Unknown Error"))
         }
     }
 

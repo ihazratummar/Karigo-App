@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="client_details_total_jobs">एकूण कामे</string>
+    <string name="client_details_unpaid">थकीत</string>
+    <string name="client_btn_new_job">%1$s साठी नवीन काम</string>
+</resources>

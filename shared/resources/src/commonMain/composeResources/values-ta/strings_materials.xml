@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="materials_select_materials">பொருட்களைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="materials_search_materials">பொருட்களைத் தேடவும்</string>
+    <string name="materials_add_materials">பொருளைச் சேர்</string>
+    <string name="materials_material_name">பொருளின் பெயர்</string>
+    <string name="materials_material_name_text_field_placeholder">உதாரணமாக: பிவிசி குழாய் 1/2 அங்குலம்</string>
+    <string name="materials_trade">தொழில்</string>
+    <string name="materials_category">வகை</string>
+    <string name="materials_category_text_field_placeholder">உதாரணமாக: குழாய்கள், பொருத்துதல்கள், வால்வுகள்...</string>
+    <string name="materials_category_description">ஒரு வகையை உருவாக்க புதிய பெயரை உள்ளிடவும் அல்லது மேலே உள்ள ஒன்றைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="materials_new_category_text_field_placeholder">புதிய வகையின் பெயர்...</string>
+    <string name="material_manager_category">வகையை நிர்வகிக்கவும்</string>
+    <string name="materials_count_category">%1$d வகைகள்</string>
+    <string name="materials_btn_add_to_library">நூலகத்தில் சேர்</string>
+    <string name="materials_btn_save_changes">மாற்றங்களைச் சேமிக்கவும்</string>
+    <string name="materials_btn_manage">நிர்வகி</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trade_plumber">प्लंबर</string>
+    <string name="trade_plumber_description">पाईप्स, फिटिंग्स, नळ आणि दुरुस्ती</string>
+    <string name="trade_electrician">इलेक्ट्रीशियन</string>
+    <string name="trade_electrician_description">वायरिंग, पॅनल्स आणि फिक्स्चर</string>
+    <string name="trade_carpenter">सुतार</string>
+    <string name="trade_carpenter_description">लाकडी काम, दरवाजे आणि फर्निचर</string>
+    <string name="trade_painter">पेंटर</string>
+    <string name="trade_painter_description">अंतर्गत आणि बाह्य रंगकाम</string>
+    <string name="trade_mason">गवंडी आणि सिव्हिल कामगार</string>
+    <string name="trade_mason_description">विटा, टायलिंग आणि काँक्रीटचे काम</string>
+    <string name="trade_grill">ग्रिल &amp; मेटल कामगार</string>
+    <string name="trade_grill_description">लोखंडी काम, वेल्डिंग आणि गेट दुरुस्ती</string>
+    <string name="trade_ac_technician">एसी टेक्निशियन</string>
+    <string name="trade_ac_technician_description">एसी सर्व्हिसिंग, दुरुस्ती आणि इन्स्टॉलेशन</string>
+    <string name="trade_appliance_repair">घरगुती उपकरणे दुरुस्ती</string>
+    <string name="trade_appliance_repair_description">वॉशिंग मशीन, फ्रिज आणि इतर उपकरणे दुरुस्ती</string>
+    <string name="trade_waterproofing">वॉटरप्रूफिंग तज्ज्ञ</string>
+    <string name="trade_waterproofing_description">गळती नियंत्रण आणि ओलसरपणा उपचार</string>
+    <string name="trade_pest_control">कीट नियंत्रण तज्ज्ञ</string>
+    <string name="trade_pest_control_description">वाळवी, कीटक आणि उंदीर नियंत्रण उपचार</string>
+    <string name="trade_car_bike_mechanic">कार आणि बाईक मेकॅनिक</string>
+    <string name="trade_car_bike_mechanic_description">वाहनांची सर्व्हिसिंग आणि दुरुस्ती</string>
+    <string name="trade_cctv_security">सीसीटीव्ही आणि सुरक्षा इन्स्टॉलर</string>
+    <string name="trade_cctv_security_description">कॅमेरे, अलार्म &amp; सेन्सर्स</string>
+    <string name="trade_solar_installer">सौर ऊर्जा इन्स्टॉलर</string>
+    <string name="trade_solar_installer_description">पॅनल्स, इनव्हर्टर &amp; बॅटरी सेटअप</string>
+    <string name="trade_aluminium_upvc">ॲल्युमिनियम आणि यूपीव्हीसी फॅब्रिकेटर</string>
+    <string name="trade_aluminium_upvc_description">खिडक्या, दरवाजे आणि पार्टिशन्स</string>
+    <string name="trade_civil_contractor">सिव्हिल कंत्राटदार</string>
+    <string name="trade_civil_contractor_description">लहन बांधकाम प्रकल्प</string>
+    <string name="trade_bore_well">बोअरवेल आणि पाण्याची टाकी</string>
+    <string name="trade_bore_well_description">ड्रिलिंग, पंप आणि देखभाल दुरुस्ती</string>
+    <string name="trade_gas_lpg_fitter">गॅस आणि एलपीजी फिटर</string>
+    <string name="trade_gas_lpg_fitter_description">पाईपलाइन, शेगडी आणि दुरुस्ती</string>
+    <string name="trade_network_support">नेटवर्क आणि आयटी सपोर्ट</string>
+    <string name="trade_network_support_description">केबलिंग, राउटर &amp; वायफाय</string>
+</resources>

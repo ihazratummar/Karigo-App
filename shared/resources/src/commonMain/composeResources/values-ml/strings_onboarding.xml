@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_started_description">കോൺട്രാക്ടർമാർക്കും സേവന ദാതാക്കൾക്കുമുള്ള ലളിതമായ ഡിജിറ്റൽ അസിസ്റ്റൻ്റ്.</string>
+    <string name="onboarding_started_track_job">ജോലികൾ ട്രാക്ക് ചെയ്യുക</string>
+    <string name="onboarding_started_track_description">നിങ്ങളുടെ ജോലികളുടെയും പെയ്മെൻ്റുകളുടെയും ക്ലയൻ്റുകളുടെയും റെക്കോർഡുകൾ സൂക്ഷിക്കുക.</string>
+    <string name="onboarding_started_whatsapp">WhatsApp ഷെയറിംഗ്</string>
+    <string name="onboarding_started_whatsapp_description">പ്രൊഫഷണൽ എസ്റ്റിമേറ്റുകളും ഇൻവോയ്സുകളും ക്ലയൻ്റുകൾക്ക് നേരിട്ട് അയയ്ക്കുക.</string>
+    <string name="onboarding_started_earnings">വരുമാനം നിരീക്ഷിക്കുക</string>
+    <string name="onboarding_started_earnings_description">നിങ്ങളുടെ മൊത്തം വരുമാനത്തിലും കിട്ടാനുള്ള തുകയിലും ശ്രദ്ധിക്കുക.</string>
+    <string name="onboarding_progress">സ്റ്റെപ്പ് %1$d / %2$d</string>
+    <string name="onboarding_what_do_you_trade">നിങ്ങളുടെ തൊഴിൽ എന്താണ്?</string>
+    <string name="onboarding_what_do_you_trade_description">നിങ്ങളുടെ പ്രധാന തൊഴിൽ തിരഞ്ഞെടുക്കുക, അതുവഴി ഞങ്ങൾക്ക് ചില അടിസ്ഥാന മെറ്റീരിയലുകൾ മുൻകൂട്ടി തയ്യാറാക്കാൻ കഴിയും.</string>
+    <string name="onboarding_btn_trade_not_selected">തൊഴിൽ തിരഞ്ഞെടുക്കുക</string>
+    <string name="onboarding_btn_continue">തുടരുക</string>
+    <string name="onboarding_last_title">നിങ്ങൾ പൂർണ്ണമായും സജ്ജമാണ്!</string>
+    <string name="onboarding_last_description">നമുക്ക് നിങ്ങളുടെ ജോലി ഡിജിറ്റലൈസ് ചെയ്യാം, പേപ്പറുകൾ ഒഴിവാക്കാം.</string>
+    <string name="onboarding_starter_material">സ്റ്റാർട്ടർ സാമഗ്രികൾ</string>
+    <string name="onboarding_materials_ready">സാമഗ്രികൾ തയ്യാറാണ്!</string>
+    <string name="onboarding_materials_ready_description">നിങ്ങൾ തിരഞ്ഞെടുത്ത തൊഴിലിൻ്റെ അടിസ്ഥാനത്തിൽ ഞങ്ങൾ ചില സാധാരണ സാമഗ്രികൾ മുൻകൂട്ടി പൂരിപ്പിച്ചിട്ടുണ്ട്.</string>
+    <string name="onboarding_back_to_trade">തൊഴിൽ മാറ്റുക</string>
+</resources>

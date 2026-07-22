@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_started_description">ஒப்பந்ததாரர்கள் மற்றும் சேவை வழங்குநர்களுக்கான எளிய டிஜிட்டல் உதவியாளர்.</string>
+    <string name="onboarding_started_track_job">வேலைகளை கண்காணிக்கவும்</string>
+    <string name="onboarding_started_track_description">உங்கள் வேலைகள், கொடுப்பனவுகள் மற்றும் வாடிக்கையாளர்களின் பதிவுகளை வைத்திருக்கவும்.</string>
+    <string name="onboarding_started_whatsapp">வாட்ஸ்அப் பகிர்வு</string>
+    <string name="onboarding_started_whatsapp_description">தொழில்முறை மதிப்பீடுகள் மற்றும் விலைப்பட்டியல்களை வாடிக்கையாளர்களுக்கு நேரடியாக அனுப்பவும்.</string>
+    <string name="onboarding_started_earnings">வருவாயை கண்காணிக்கவும்</string>
+    <string name="onboarding_started_earnings_description">உங்கள் மொத்த வருவாய் மற்றும் நிலுவையிலுள்ள தொகைகளை கண்காணிக்கவும்.</string>
+    <string name="onboarding_progress">படி %1$d இல் %2$d</string>
+    <string name="onboarding_what_do_you_trade">உங்கள் தொழில் என்ன?</string>
+    <string name="onboarding_what_do_you_trade_description">உங்கள் முதன்மை தொழிலைத் தேர்ந்தெடுக்கவும், அதனால் சில அடிப்படை பொருட்களை நாங்கள் முன்பே நிரப்ப முடியும்.</string>
+    <string name="onboarding_btn_trade_not_selected">தொழிலைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="onboarding_btn_continue">தொடரவும்</string>
+    <string name="onboarding_last_title">நீங்கள் தயாராகிவிட்டீர்கள்!</string>
+    <string name="onboarding_last_description">உங்கள் வேலையை டிஜிட்டல் மயமாக்குவோம் மற்றும் காகிதங்களிலிருந்து விடுபடுவோம்.</string>
+    <string name="onboarding_starter_material">ஆரம்ப பொருட்கள்</string>
+    <string name="onboarding_materials_ready">பொருட்கள் தயார்!</string>
+    <string name="onboarding_materials_ready_description">நீங்கள் தேர்ந்தெடுத்த தொழிலின் அடிப்படையில் சில பொதுவான பொருட்களை நாங்கள் முன்கூட்டியே நிரப்பியுள்ளோம்.</string>
+    <string name="onboarding_back_to_trade">தொழிலை மாற்று</string>
+</resources>

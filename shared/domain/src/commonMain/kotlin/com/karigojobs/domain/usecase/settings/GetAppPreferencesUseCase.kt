@@ -11,22 +11,25 @@ class GetAppPreferencesUseCase(
 ) {
     data class AppPreferences(
         val theme: ThemePreference,
-        val language: AppLanguage
+        val language: AppLanguage,
+        val currency: String
     )
 
     operator fun invoke(): Flow<AppPreferences> {
         return combine(
             settingsStore.themePreference,
-            settingsStore.appLanguage
-        ) { theme, language ->
-            AppPreferences(theme, language)
+            settingsStore.appLanguage,
+            settingsStore.appCurrency
+        ) { theme, language, currency ->
+            AppPreferences(theme, language, currency)
         }
     }
 
     fun getSync(): AppPreferences {
         return AppPreferences(
             theme = settingsStore.themePreference.value,
-            language = settingsStore.appLanguage.value
+            language = settingsStore.appLanguage.value,
+            currency = settingsStore.appCurrency.value
         )
     }
 }

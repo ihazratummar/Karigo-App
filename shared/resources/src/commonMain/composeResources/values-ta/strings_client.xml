@@ -3,4 +3,7 @@
     <string name="client_details_total_jobs">மொத்த வேலைகள்</string>
     <string name="client_details_unpaid">செலுத்தப்படாதது</string>
     <string name="client_btn_new_job">%1$s-க்காக புதிய வேலை</string>
+    <string name="client_list_empty_title">இதுவரை வாடிக்கையாளர்கள் இல்லை</string>
+    <string name="client_list_empty_desc">தொடர்புகள் மற்றும் இன்வாய்ஸ்களை நிர்வகிக்க உங்கள் முதல் வாடிக்கையாளரைச் சேர்க்கவும்</string>
+    <string name="client_list_btn_create_first">முதல் வாடிக்கையாளரைச் சேர்க்கவும்</string>
 </resources>

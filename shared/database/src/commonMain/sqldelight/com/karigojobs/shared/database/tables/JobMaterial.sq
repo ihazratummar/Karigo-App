@@ -29,3 +29,6 @@ DELETE FROM job_material WHERE job_id = ?;
 
 sumMaterialsByJob:
 SELECT COALESCE(SUM(total), 0.0) FROM job_material WHERE job_id =?;
+
+updateJobMaterialUnitPrice:
+UPDATE job_material SET unit_price = ?, total = quantity * ? WHERE id = ?;

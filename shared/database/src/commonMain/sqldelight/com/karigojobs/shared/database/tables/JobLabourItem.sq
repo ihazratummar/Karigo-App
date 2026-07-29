@@ -4,9 +4,10 @@ CREATE TABLE job_labour_item (
     job_id TEXT NOT NULL REFERENCES job(id) ON DELETE CASCADE,
     description TEXT NOT NULL,
     quantity INTEGER NOT NULL DEFAULT 1,
+    workers_count INTEGER NOT NULL DEFAULT 1,
     rate REAL NOT NULL DEFAULT 0.0,
     unit TEXT NOT NULL DEFAULT 'point',
-    total REAL NOT NULL DEFAULT 0.0, -- hours x rate or quantity x rate
+    total REAL NOT NULL DEFAULT 0.0, -- workers_count * quantity * rate
     created_at INTEGER NOT NULL
 );
 
@@ -17,14 +18,17 @@ SELECT * FROM job_labour_item WHERE job_id =? ORDER BY created_at;
 
 -------- WRITE----------
 insertLabourItemsByJob:
-INSERT INTO job_labour_item(id, job_id, description, quantity, rate, total, created_at)
-VALUES (?,?,?,?,?,?,?);
+INSERT INTO job_labour_item(id, job_id, description, quantity, workers_count, rate, unit, total, created_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 updateLabourQuantity:
 UPDATE job_labour_item SET quantity = ? WHERE  id =?;
 
+updateLabourWorkersCount:
+UPDATE job_labour_item SET workers_count = ? WHERE id =?;
+
 updateLabourItem:
-UPDATE job_labour_item SET description = ? , rate = ?, total = ? WHERE id = ?;
+UPDATE job_labour_item SET description = ?, quantity = ?, workers_count = ?, rate = ?, unit = ?, total = ? WHERE id = ?;
 
 deleteLabourItem:
 DELETE FROM job_labour_item WHERE id =?;

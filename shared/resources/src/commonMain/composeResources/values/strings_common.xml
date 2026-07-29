@@ -67,8 +67,14 @@
     --- Job Status
     <string name="common_status">Status</string>
     <string name="common_labour">Labour</string>
+    <string name="common_workers">Workers</string>
     <string name="common_materials">Materials</string>
     <string name="common_grand_total">Grand Total</string>
     <string name="common_invoice_preview">Invoice Preview</string>
     <string name="common_export">Export PDF</string>
+    <string name="common_labour_history">Labour Edit History</string>
+    <string name="common_no_history">No history available</string>
+    <string name="common_added">Added</string>
+    <string name="common_removed">Removed</string>
+    <string name="common_close">Close</string>
 </resources>

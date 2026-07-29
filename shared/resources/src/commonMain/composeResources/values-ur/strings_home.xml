@@ -4,4 +4,7 @@
     <string name="home_site_estimate">سائٹ کا تخمینہ</string>
     <string name="home_estimate_desctiption">سائٹ کا جائزہ لیں، سامان کی فہرست بنائیں اور اسے واٹس ایپ پر گاہک کو بھیجیں</string>
     <string name="home_recent_job">حالیہ کام</string>
+    <string name="home_recent_jobs_empty_title">کوئی حالیہ کام نہیں</string>
+    <string name="home_recent_jobs_empty_desc">آپ کے بنائے گئے کام یہاں ظاہر ہوں گے</string>
+    <string name="home_recent_jobs_btn_create">کام شامل کریں</string>
 </resources>

@@ -426,6 +426,24 @@ class AddEstimateViewModel(
                 }
                 _state.update { it.copy(selectedMaterials = updatedList) }
             }
+            is SiteEstimateEvent.ChangeMaterialRate -> {
+                val updatedList = _state.value.selectedMaterials.map { item ->
+                    if (item.id == event.id) {
+                        val raw = event.rate
+                        val parsed = raw.toDoubleOrNull()
+                        item.copy(
+                            rateInput = raw,
+                            rate = when {
+                                raw.isEmpty() -> item.rate
+                                parsed == null -> item.rate
+                                parsed < 0.0 -> 0.0
+                                else -> parsed
+                            }
+                        )
+                    } else item
+                }
+                _state.update { it.copy(selectedMaterials = updatedList) }
+            }
             is SiteEstimateEvent.DecreaseMaterialQuantity -> {
                 val updateList = _state.value.selectedMaterials.map { item ->
                     if (item.id == event.id) {

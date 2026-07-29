@@ -13,4 +13,7 @@
     <string name="job_details_labour_total">మొత్తం కూలీ</string>
     <string name="job_details_materials_total">మొత్తం వస్తువులు</string>
     <string name="job_labour_item_name_field_placeholder">ఉదాహరణకు: ఫిట్టింగ్ సేవలు</string>
+    <string name="job_list_empty_title">ఇంకా పనులు లేవు</string>
+    <string name="job_list_empty_desc">పని మరియు చెల్లింపులను ట్రాక్ చేయడానికి మీ మొదటి పనిని సృష్టించండి</string>
+    <string name="job_list_btn_create_first">మొదటి పనిని సృష్టించండి</string>
 </resources>

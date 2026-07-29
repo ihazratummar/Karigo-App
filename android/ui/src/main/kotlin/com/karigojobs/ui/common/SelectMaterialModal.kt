@@ -64,8 +64,8 @@ fun SelectMaterialModal(
     onCategorySelected: (MaterialCategoryModel?) -> Unit,
     searchQuery: String,
     onSearchQueryChanged: (String) -> Unit,
-    selectedMaterialIds: Set<String>,
-    onConfirmClick: (List<String>) -> Unit
+    selectedMaterialIds: Set<String?>,
+    onConfirmClick: (List<String?>) -> Unit
 ) {
     val selectedMaterials = remember(selectedMaterialIds) {
         mutableStateOf(selectedMaterialIds.toList())

@@ -48,8 +48,14 @@
     <string name="common_greeting_night">ശുഭരാത്രി</string>
     <string name="common_status">സ്റ്റാറ്റസ്</string>
     <string name="common_labour">കൂലി</string>
+    <string name="common_workers">Workers</string>
     <string name="common_materials">സാമഗ്രികൾ</string>
     <string name="common_grand_total">ആകെ തുക</string>
     <string name="common_invoice_preview">ഇൻവോയ്സ് പ്രിവ്യൂ</string>
     <string name="common_export">PDF എക്സ്പോർട്ട് ചെയ്യുക</string>
+    <string name="common_labour_history">ചരിത്രമൊന്നും ലഭ്യമല്ല</string>
+    <string name="common_no_history">ചരിത്രമൊന്നും ലഭ്യമല്ല</string>
+    <string name="common_added">ചേർത്തു</string>
+    <string name="common_removed">നീക്കം ചെയ്തു</string>
+    <string name="common_close">കോസ്</string>
 </resources>

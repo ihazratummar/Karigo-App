@@ -20,12 +20,14 @@ class SaveFullJobTransactionUseCase(
     suspend operator fun invoke(
         job: JobModel,
         jobLabourItemModel: List<JobLabourItemModel>,
-        jobMaterialItemModel: List<JobMaterialItemModel>
+        jobMaterialItemModel: List<JobMaterialItemModel>,
+        jobLabourLogs: List<com.karigojobs.share.model.JobLabourLogModel> = emptyList()
     ) : Result<Unit, JobError> {
         return jobRepository.saveJobTransaction(
             job = job,
             jobLabourItemModel = jobLabourItemModel,
-            jobMaterialItemModel = jobMaterialItemModel
+            jobMaterialItemModel = jobMaterialItemModel,
+            jobLabourLogs = jobLabourLogs
         )
     }
 

@@ -13,4 +13,7 @@
     <string name="job_details_labour_total">মোট শ্রম</string>
     <string name="job_details_materials_total">মোট উপকরণ</string>
     <string name="job_labour_item_name_field_placeholder">কাজের নাম, যেমন—প্রতি পয়েন্টে ওয়্যারিং</string>
+    <string name="job_list_empty_title">এখনো কোনো কাজ নেই</string>
+    <string name="job_list_empty_desc">কাজ ও পেমেন্ট ট্র্যাক করতে আপনার প্রথম কাজ তৈরি করুন</string>
+    <string name="job_list_btn_create_first">প্রথম কাজ তৈরি করুন</string>
 </resources>

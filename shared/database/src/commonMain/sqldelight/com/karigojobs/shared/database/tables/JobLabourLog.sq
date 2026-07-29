@@ -1,0 +1,20 @@
+CREATE TABLE job_labour_log (
+    id TEXT PRIMARY KEY NOT NULL,
+    labour_item_id TEXT NOT NULL REFERENCES job_labour_item(id) ON DELETE CASCADE,
+    change_amount INTEGER NOT NULL,
+    log_type TEXT NOT NULL DEFAULT 'QUANTITY',
+    created_at INTEGER NOT NULL
+);
+
+getLogsForLabourItem:
+SELECT * FROM job_labour_log
+WHERE labour_item_id = ?
+ORDER BY created_at DESC;
+
+insertLog:
+INSERT OR IGNORE INTO job_labour_log(id, labour_item_id, change_amount, log_type, created_at)
+VALUES (?, ?, ?, ?, ?);
+
+deleteLogsForLabourItem:
+DELETE FROM job_labour_log
+WHERE labour_item_id = ?;

@@ -4,4 +4,7 @@
     <string name="home_site_estimate">साइट अंदाज</string>
     <string name="home_estimate_desctiption">जॉब साइटला भेट द्या, साहित्याची यादी तयार करा आणि ती ग्राहकाला व्हॉट्सॲप करा</string>
     <string name="home_recent_job">अलीकडील कामे</string>
+    <string name="home_recent_jobs_empty_title">कोणतेही अलीकडील काम नाही</string>
+    <string name="home_recent_jobs_empty_desc">तुमचे तयार केलेले काम येथे दिसेल</string>
+    <string name="home_recent_jobs_btn_create">काम जोडा</string>
 </resources>

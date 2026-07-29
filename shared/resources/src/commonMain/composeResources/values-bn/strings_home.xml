@@ -4,4 +4,7 @@
     <string name="home_site_estimate">সাইট এস্টিমেট</string>
     <string name="home_estimate_desctiption">কাজের সাইট পরিদর্শন করুন, উপকরণের তালিকা তৈরি করুন এবং তা WhatsApp-এ ক্লায়েন্টকে পাঠান।</string>
     <string name="home_recent_job">সাম্প্রতিক কাজসমূহ</string>
+    <string name="home_recent_jobs_empty_title">সাম্প্রতিক কোনো কাজ নেই</string>
+    <string name="home_recent_jobs_empty_desc">আপনার তৈরি করা কাজগুলো এখানে দেখা যাবে</string>
+    <string name="home_recent_jobs_btn_create">কাজ যোগ করুন</string>
 </resources>

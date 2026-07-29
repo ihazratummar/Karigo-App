@@ -19,12 +19,13 @@ data class SiteEstimateModel(
 data class SiteEstimateMaterial(
     val id: String,
     val estimateId: String,
-    val materialId: String,
+    val materialId: String?,
     val materialName : String,
     val quantity: Double,
     val unit: String,
     val rate: Double,
-    val quantityInput: String = quantity.toString()
+    val quantityInput: String = quantity.toString(),
+    val rateInput: String = rate.toString()
 ){
     val total : Double get() = rate * quantity
 }

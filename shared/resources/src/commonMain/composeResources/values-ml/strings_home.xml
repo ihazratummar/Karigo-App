@@ -4,4 +4,7 @@
     <string name="home_site_estimate">സൈറ്റ് എസ്റ്റിമേറ്റ്</string>
     <string name="home_estimate_desctiption">ജോലിസ്ഥലം സന്ദർശിക്കുക, സാധനങ്ങളുടെ പട്ടിക തയ്യാറാക്കുക, എന്നിട്ട് വാട്സ്ആപ്പ് വഴി അയക്കുക</string>
     <string name="home_recent_job">സമീപകാല ജോലികൾ</string>
+    <string name="home_recent_jobs_empty_title">സമീപകാല ജോലികളൊന്നുമില്ല</string>
+    <string name="home_recent_jobs_empty_desc">നിങ്ങൾ നിർമ്മിച്ച ജോലികൾ ഇവിടെ കാണിക്കും</string>
+    <string name="home_recent_jobs_btn_create">ജോലി ചേർക്കുക</string>
 </resources>

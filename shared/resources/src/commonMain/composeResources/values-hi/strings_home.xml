@@ -4,4 +4,7 @@
     <string name="home_site_estimate">साइट अनुमान</string>
     <string name="home_estimate_desctiption">जॉब साइट का दौरा करें, सामग्री की सूची बनाएं, और इसे ग्राहक को व्हाट्सएप करें</string>
     <string name="home_recent_job">हालिया काम</string>
+    <string name="home_recent_jobs_empty_title">कोई हालिया काम नहीं</string>
+    <string name="home_recent_jobs_empty_desc">आपके द्वारा बनाए गए काम यहां दिखाई देंगे</string>
+    <string name="home_recent_jobs_btn_create">काम जोड़ें</string>
 </resources>

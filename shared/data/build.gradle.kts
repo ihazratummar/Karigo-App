@@ -38,6 +38,8 @@ kotlin {
                 implementation(projects.shared.domain)
                 implementation(projects.shared.database)
                 implementation(projects.shared.datastore)
+                implementation(projects.shared.utils)
+
                 implementation(libs.sqldelight.coroutines)
                 api(libs.ktor.client.core)
                 api(libs.ktor.client.content.negotiation)

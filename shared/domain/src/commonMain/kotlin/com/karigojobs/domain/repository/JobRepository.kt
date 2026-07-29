@@ -23,7 +23,8 @@ interface JobRepository {
     fun getJobById(id: String):  Flow<Result<JobModel?, JobError>>
     suspend fun saveJobTransaction(
         job: JobModel, jobLabourItemModel: List<JobLabourItemModel>,
-        jobMaterialItemModel: List<JobMaterialItemModel>
+        jobMaterialItemModel: List<JobMaterialItemModel>,
+        jobLabourLogs: List<com.karigojobs.share.model.JobLabourLogModel> = emptyList()
     ) : Result<Unit, JobError>
 
     suspend fun updatedJobStatus(id: String, status: JobStatus) : Result<Unit, JobError>
@@ -34,6 +35,7 @@ interface JobRepository {
     suspend fun addLabourItem(item: JobLabourItemModel) : Result<Unit, JobError>
     suspend fun updateLabourQuantity(itemId: String, quantity: Int) : Result<Unit, JobError>
     suspend fun removeLabourItem(itemId: String) : Result<Unit, JobError>
+    fun getLabourLogs(labourItemId: String): Flow<Result<List<com.karigojobs.share.model.JobLabourLogModel>, JobError>>
 
     fun getMaterials(jobId: String): Flow<Result<List<JobMaterialItemModel>, JobError>>
     suspend fun addMaterial(item: JobMaterialItemModel) : Result<Unit, JobError>

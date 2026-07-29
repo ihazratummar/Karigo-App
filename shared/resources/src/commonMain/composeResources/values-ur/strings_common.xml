@@ -48,8 +48,14 @@
     <string name="common_greeting_night">شب بخیر</string>
     <string name="common_status">حالت</string>
     <string name="common_labour">مزدوری</string>
+    <string name="common_workers">Workers</string>
     <string name="common_materials">سامان</string>
     <string name="common_grand_total">میزان کل</string>
     <string name="common_invoice_preview">بل کا پیش نظارہ</string>
     <string name="common_export">پی ڈی ایف ایکسپورٹ کریں</string>
+    <string name="common_labour_history">لیبر کی تاریخ میں ترمیم کریں۔</string>
+    <string name="common_no_history">کوئی تاریخ دستیاب نہیں ہے۔</string>
+    <string name="common_added">شامل کیا گیا۔</string>
+    <string name="common_removed">ہٹا دیا گیا۔</string>
+    <string name="common_close">بند</string>
 </resources>

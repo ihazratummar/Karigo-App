@@ -48,8 +48,14 @@
     <string name="common_greeting_night">শুভ রাত্রি</string>
     <string name="common_status">অবস্থা</string>
     <string name="common_labour">শ্রম</string>
+    <string name="common_workers">Workers</string>
     <string name="common_materials">উপকরণ</string>
     <string name="common_grand_total">সর্বমোট</string>
     <string name="common_invoice_preview">চালানের পূর্বরূপ</string>
     <string name="common_export">PDF হিসেবে রপ্তানি করুন</string>
+    <string name="common_labour_history">শ্রম সম্পাদনার ইতিহাস</string>
+    <string name="common_no_history">কোনো ইতিহাস নেই</string>
+    <string name="common_added">যোগ করা হয়েছে</string>
+    <string name="common_removed">অপসারণ করা হয়েছে</string>
+    <string name="common_close">বন্ধ</string>
 </resources>

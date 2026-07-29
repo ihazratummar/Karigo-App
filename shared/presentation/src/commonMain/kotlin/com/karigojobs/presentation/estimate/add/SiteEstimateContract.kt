@@ -60,13 +60,14 @@ sealed interface SiteEstimateEvent {
     data class SelectCategory(val category: MaterialCategoryModel?) : SiteEstimateEvent
 
     data class ToggleMaterialPicker(val isOpen: Boolean) : SiteEstimateEvent
-    data class AddMaterials(val materials: List<String>) : SiteEstimateEvent
+    data class AddMaterials(val materials: List<String?>) : SiteEstimateEvent
 
     data object SaveEstimate : SiteEstimateEvent
 
     data class IncreaseMaterialQuantity(val id: String) : SiteEstimateEvent
     data class DecreaseMaterialQuantity(val id: String) : SiteEstimateEvent
     data class ChangeMaterialQuantity(val id: String, val quantity : String ) : SiteEstimateEvent
+    data class ChangeMaterialRate(val id: String, val rate : String ) : SiteEstimateEvent
 
     data class DeleteMaterial(val id: String) : SiteEstimateEvent
 }

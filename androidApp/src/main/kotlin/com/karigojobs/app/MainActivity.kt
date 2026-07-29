@@ -79,7 +79,8 @@ class MainActivity : AppCompatActivity() {
             }
             val appPreferences = appPreferencesState.value ?: GetAppPreferencesUseCase.AppPreferences(
                 theme = ThemePreference.SYSTEM,
-                language = AppLanguage.ENGLISH
+                language = AppLanguage.ENGLISH,
+                currency = "₹"
             )
 
             var isInitialLanguageSyncDone by remember { mutableStateOf(false) }

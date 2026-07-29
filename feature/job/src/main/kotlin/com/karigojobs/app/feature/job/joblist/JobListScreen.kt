@@ -39,12 +39,26 @@ import org.jetbrains.compose.resources.stringResource
  */
 
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import com.karigojobs.app.android.ui.R
+import com.karigojobs.ui.common.KarigoIconWIthBg
+import com.karigojobs.ui.common.contentHorizontalPadding
+import com.karigojobs.ui.theme.KarigojobsShapes
+import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.KarigojobsText3
+import karigojobs.shared.resources.generated.resources.job_list_empty_title
+import karigojobs.shared.resources.generated.resources.job_list_empty_desc
+import karigojobs.shared.resources.generated.resources.job_list_btn_create_first
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JobListScreen(
     modifier: Modifier = Modifier,
     jobListState: JobListState,
     onJobClick: (String) -> Unit,
+    onAddJobClick: (() -> Unit)? = null,
     event: (JobListIntent) -> Unit
 ) {
     Scaffold(
@@ -84,6 +98,45 @@ fun JobListScreen(
         ) {
             if (jobListState.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            } else if (jobListState.jobs.isEmpty()) {
+                Column(
+                    modifier = Modifier
+                        .contentHorizontalPadding()
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    KarigoIconWIthBg(
+                        icon = R.drawable.job_line,
+                        iconColor = KarigojobsText2
+                    )
+
+                    Spacer(Modifier.height(dimens.Space.base))
+                    Text(
+                        text = stringResource(Res.string.job_list_empty_title),
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            color = KarigojobsText2
+                        )
+                    )
+                    Spacer(Modifier.height(dimens.Space.sm))
+                    Text(
+                        text = stringResource(Res.string.job_list_empty_desc),
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = KarigojobsText3
+                        )
+                    )
+                    if (onAddJobClick != null) {
+                        Spacer(Modifier.height(dimens.Space.base))
+                        Button(
+                            onClick = { onAddJobClick() },
+                            shape = KarigojobsShapes.medium
+                        ) {
+                            Text(
+                                text = stringResource(Res.string.job_list_btn_create_first),
+                            )
+                        }
+                    }
+                }
             } else {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),

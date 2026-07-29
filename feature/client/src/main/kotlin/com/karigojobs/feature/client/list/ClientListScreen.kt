@@ -46,6 +46,12 @@ import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsAccent
 import com.karigojobs.ui.theme.KarigojobsCard
 import com.karigojobs.ui.theme.KarigojobsError
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import com.karigojobs.ui.common.KarigoIconWIthBg
+import karigojobs.shared.resources.generated.resources.client_list_empty_title
+import karigojobs.shared.resources.generated.resources.client_list_empty_desc
+import karigojobs.shared.resources.generated.resources.client_list_btn_create_first
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
@@ -74,7 +80,8 @@ fun ClientListScreen(
     state: ClientListState,
     event: (ClientListEvent) -> Unit,
     effect: SharedFlow<ClientListEffect>?,
-    onClientClick: (String) -> Unit
+    onClientClick: (String) -> Unit,
+    onAddClientClick: (() -> Unit)? = null
 ) {
 
     val snackbarHost = remember { SnackbarHostState() }
@@ -109,13 +116,54 @@ fun ClientListScreen(
             )
         }
     ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(top = dimens.Padding.base)
-                .contentHorizontalPadding(),
-            verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
-        ) {
+        if (state.clients.isEmpty()) {
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .contentHorizontalPadding()
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                KarigoIconWIthBg(
+                    icon = R.drawable.user_line,
+                    iconColor = KarigojobsText2
+                )
+
+                Spacer(Modifier.height(dimens.Space.base))
+                Text(
+                    text = stringResource(Res.string.client_list_empty_title),
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        color = KarigojobsText2
+                    )
+                )
+                Spacer(Modifier.height(dimens.Space.sm))
+                Text(
+                    text = stringResource(Res.string.client_list_empty_desc),
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        color = KarigojobsText3
+                    )
+                )
+                if (onAddClientClick != null) {
+                    Spacer(Modifier.height(dimens.Space.base))
+                    Button(
+                        onClick = { onAddClientClick() },
+                        shape = KarigojobsShapes.medium
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.client_list_btn_create_first),
+                        )
+                    }
+                }
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .padding(top = dimens.Padding.base)
+                    .contentHorizontalPadding(),
+                verticalArrangement = Arrangement.spacedBy(dimens.Space.base)
+            ) {
             items(state.clients, key = {it.id}) { client ->
                 Card(
                     onClick = { onClientClick(client.id) },
@@ -228,5 +276,6 @@ fun ClientListScreen(
             }
         }
     }
+}
 }
 

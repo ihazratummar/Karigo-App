@@ -13,4 +13,7 @@
     <string name="job_details_labour_total">کل مزدوری</string>
     <string name="job_details_materials_total">کل سامان</string>
     <string name="job_labour_item_name_field_placeholder">جیسے: پائپ فٹنگ سروس</string>
+    <string name="job_list_empty_title">ابھی کوئی کام نہیں ہے</string>
+    <string name="job_list_empty_desc">کام اور ادائیگیوں کو ٹریک کرنے کے لیے اپنا پہلا کام بنائیں</string>
+    <string name="job_list_btn_create_first">پہلا کام بنائیں</string>
 </resources>

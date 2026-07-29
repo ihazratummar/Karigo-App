@@ -13,4 +13,7 @@
     <string name="job_details_labour_total">മൊത്തം കൂലി</string>
     <string name="job_details_materials_total">മൊത്തം സാമഗ്രികൾ</string>
     <string name="job_labour_item_name_field_placeholder">ഉദാഹരണത്തിന്: ഫിറ്റിംഗ് സേവനങ്ങൾ</string>
+    <string name="job_list_empty_title">ഇതുവരെ ജോലികളൊന്നുമില്ല</string>
+    <string name="job_list_empty_desc">ജോലിയും പേയ്‌മെന്റുകളും ട്രാക്ക് ചെയ്യാൻ നിങ്ങളുടെ ആദ്യ ജോലി സൃഷ്‌ടിക്കുക</string>
+    <string name="job_list_btn_create_first">ആദ്യ ജോലി സൃഷ്ടിക്കുക</string>
 </resources>

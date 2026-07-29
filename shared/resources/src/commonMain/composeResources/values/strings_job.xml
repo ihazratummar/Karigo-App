@@ -16,4 +16,8 @@
     <string name="job_details_labour_total">LABOUR TOTAL</string>
     <string name="job_details_materials_total">MATERIAL TOTAL</string>
     <string name="job_labour_item_name_field_placeholder">Work name, e.g. Wiring per point</string>
+
+    <string name="job_list_empty_title">No jobs yet</string>
+    <string name="job_list_empty_desc">Create your first job to track work and payments</string>
+    <string name="job_list_btn_create_first">Create First Job</string>
 </resources>

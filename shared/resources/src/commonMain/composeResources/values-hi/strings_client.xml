@@ -3,4 +3,7 @@
     <string name="client_details_total_jobs">कुल काम</string>
     <string name="client_details_unpaid">बकाया</string>
     <string name="client_btn_new_job">%1$s के लिए नया काम</string>
+    <string name="client_list_empty_title">अभी कोई ग्राहक नहीं है</string>
+    <string name="client_list_empty_desc">संपर्क और इनवॉइस प्रबंधित करने के लिए अपना पहला ग्राहक जोड़ें</string>
+    <string name="client_list_btn_create_first">पहला ग्राहक जोड़ें</string>
 </resources>

@@ -39,6 +39,7 @@ import com.karigojobs.domain.usecase.settings.GetAppPreferencesUseCase
 import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
 import com.karigojobs.domain.usecase.settings.SaveWorkerProfileUseCase
 import com.karigojobs.domain.usecase.settings.UpdateAppLanguageUseCase
+import com.karigojobs.domain.usecase.settings.UpdateAppCurrencyUseCase
 import com.karigojobs.domain.usecase.settings.UpdateThemePreferenceUseCase
 import com.karigojobs.domain.usecase.trade.SaveTradesUseCase
 import com.karigojobs.domain.usecase.backup.UploadBackupUseCase
@@ -84,6 +85,7 @@ fun getDomainModule(): Module = module {
     single { ChangeJobStatusUseCase(jobRepository = get()) }
     single { DeleteJobUseCase(jobRepository = get()) }
     single { GetJobLabourItemUseCase(jobRepository = get()) }
+    single { com.karigojobs.domain.usecase.job.GetJobLabourLogsUseCase(jobRepository = get()) }
     single { GetJobMaterialItemsUseCase(jobRepository = get()) }
     single { GetJobByClientUseCase(jobRepository = get()) }
 
@@ -105,8 +107,9 @@ fun getDomainModule(): Module = module {
     single { SaveWorkerProfileUseCase(workerRepository = get()) }
 
     single { GetAppPreferencesUseCase(settingsStore = get()) }
-    single { UpdateThemePreferenceUseCase(settingsStore = get()) }
     single { UpdateAppLanguageUseCase(settingsStore = get()) }
+    single { UpdateThemePreferenceUseCase(settingsStore = get()) }
+    single { UpdateAppCurrencyUseCase(settingsStore = get()) }
 
     single { UploadBackupUseCase(repository = get()) }
     single { RestoreBackupUseCase(repository = get()) }

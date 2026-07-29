@@ -313,6 +313,14 @@ fun AddEstimateScreen(
                                         )
                                     )
                                 },
+                                onMaterialRateChange = { rate ->
+                                    event(
+                                        SiteEstimateEvent.ChangeMaterialRate(
+                                            id = material.id,
+                                            rate = rate
+                                        )
+                                    )
+                                },
                                 onMaterialMinusClick = {  event(SiteEstimateEvent.DecreaseMaterialQuantity(id = material.id)) },
                                 onMaterialPlusClick = {
                                     event(SiteEstimateEvent.IncreaseMaterialQuantity(id = material.id))

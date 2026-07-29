@@ -48,8 +48,14 @@
     <string name="common_greeting_night">இரவு வணக்கம்</string>
     <string name="common_status">நிலை</string>
     <string name="common_labour">தொழிலாளர்</string>
+    <string name="common_workers">Workers</string>
     <string name="common_materials">பொருட்கள்</string>
     <string name="common_grand_total">பெரு மொத்தம்</string>
     <string name="common_invoice_preview">விலைப்பட்டியல் முன்னோட்டம்</string>
     <string name="common_export">PDF ஏற்றுமதி செய்</string>
+    <string name="common_labour_history">தொழிலாளர் திருத்த வரலாறு</string>
+    <string name="common_no_history">வரலாறு எதுவும் இல்லை</string>
+    <string name="common_added">சேர்க்கப்பட்டது</string>
+    <string name="common_removed">நீக்கப்பட்டது</string>
+    <string name="common_close">மூடு</string>
 </resources>

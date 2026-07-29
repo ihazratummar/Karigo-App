@@ -4,4 +4,7 @@
     <string name="home_site_estimate">தள மதிப்பீடு</string>
     <string name="home_estimate_desctiption">ஒரு வேலை தளத்தை பார்வையிடவும், பொருள் பட்டியலை உருவாக்கவும், அதை வாடிக்கையாளருக்கு வாட்ஸ்அப் மூலம் அனுப்பவும்</string>
     <string name="home_recent_job">சமீபத்திய வேலைகள்</string>
+    <string name="home_recent_jobs_empty_title">சமீபத்திய வேலைகள் எதுவும் இல்லை</string>
+    <string name="home_recent_jobs_empty_desc">நீங்கள் உருவாக்கிய வேலைகள் இங்கே தோன்றும்</string>
+    <string name="home_recent_jobs_btn_create">வேலையைச் சேர்க்கவும்</string>
 </resources>

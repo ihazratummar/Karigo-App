@@ -10,13 +10,15 @@ import com.karigojobs.shared.device.LocaleProvide
  */
  
 
+val LocalDeviceInfo = compositionLocalOf { getDeviceInfo() }
+
 data class DeviceInfo(
     val currency: String = "",
     val countryName: String = ""
 )
 
 fun getDeviceInfo(): DeviceInfo {
-    val info = LocaleProvide().getLocationInfo()
+    val info = com.karigojobs.shared.device.LocaleProvide().getLocationInfo()
     return DeviceInfo(
         currency = info.currencySymbol,
         countryName = info.countryName

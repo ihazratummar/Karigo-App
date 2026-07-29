@@ -68,8 +68,11 @@ object InvoiceHtmlBuilder {
         if (!clientEmail.isNullOrBlank()) sb.append("Email: $clientEmail\n")
         sb.append("\n*ITEMS:*\n")
         
-        labourItems.forEach {
-            sb.append("- ${it.itemName} x${it.quantity}: $currencySymbol${it.mainTotal.formatNumber()}\n")
+        if (job.includeLabourInInvoice) {
+            labourItems.forEach {
+                val workerPrefix = if (it.workersCount > 1) "${it.workersCount} Workers x " else ""
+                sb.append("- ${it.itemName} ${workerPrefix}x${it.quantity}: $currencySymbol${it.mainTotal.formatNumber()}\n")
+            }
         }
         materialItems.forEach {
             sb.append("- ${it.name} x${it.quantity}: $currencySymbol${it.mainTotal.formatNumber()}\n")
@@ -98,17 +101,19 @@ object InvoiceHtmlBuilder {
         val items = mutableListOf<PrintItem>()
         
         // Map Labour items
-        labourItems.forEach {
-            items.add(
-                PrintItem(
-                    name = it.itemName,
-                    subtitle = "Labour / Services",
-                    quantity = it.quantity.toDouble(),
-                    unit = it.unit,
-                    rate = it.rate,
-                    total = it.mainTotal
+        if (job.includeLabourInInvoice) {
+            labourItems.forEach {
+                items.add(
+                    PrintItem(
+                        name = it.itemName,
+                        subtitle = if (it.workersCount > 1) "Labour / Services (${it.workersCount} Workers)" else "Labour / Services",
+                        quantity = it.quantity.toDouble(),
+                        unit = it.unit,
+                        rate = it.rate,
+                        total = it.mainTotal
+                    )
                 )
-            )
+            }
         }
         
         // Map Material items
@@ -126,7 +131,7 @@ object InvoiceHtmlBuilder {
         }
 
         val subtotals = mutableListOf<SubtotalItem>()
-        if (labourItems.isNotEmpty()) {
+        if (job.includeLabourInInvoice && labourItems.isNotEmpty()) {
             val labourTotalVal = labourItems.sumOf { it.quantity * it.rate }
             subtotals.add(SubtotalItem("Labour Subtotal", labourTotalVal))
         }

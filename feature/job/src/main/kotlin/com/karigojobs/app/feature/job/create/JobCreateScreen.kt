@@ -1,6 +1,7 @@
 package com.karigojobs.app.feature.job.create
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -216,6 +217,25 @@ fun JobCreateScreen(
             }
 
             item {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = dimens.Padding.sm),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Include Labour in Invoice",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    )
+                    com.karigojobs.ui.common.SpringToggle(
+                        checked = addJobState.includeLabourInInvoice,
+                        onCheckedChange = {
+                            onIntent(AddJobIntent.ToggleIncludeLabourInInvoice(it))
+                        }
+                    )
+                }
+                Spacer(modifier = Modifier.height(dimens.Space.sm))
                 AddJobLabourItemSection(
                     onClick = {
                         onIntent(AddJobIntent.LabourItemModalOpen(true))
@@ -228,6 +248,9 @@ fun JobCreateScreen(
                         onIntent(AddJobIntent.IncreaseLabourItemQuantity(itemId = it))
                     },
                     onQuantityMinusClick = {  onIntent(AddJobIntent.MinusLabourItemQuantity(itemId = it)) },
+                    onWorkersAddClick = { onIntent(AddJobIntent.IncreaseLabourItemWorkersCount(itemId = it)) },
+                    onWorkersMinusClick = { onIntent(AddJobIntent.MinusLabourItemWorkersCount(itemId = it)) },
+                    onViewLogsClick = { onIntent(AddJobIntent.ViewLabourLogs(itemId = it)) }
                 )
             }
 
@@ -239,6 +262,9 @@ fun JobCreateScreen(
                     materialsItems = addJobState.selectedMaterials,
                     onMaterialQuantityChange = { id, qty ->
                         onIntent(AddJobIntent.ChangeMaterialQuantity(id, qty))
+                    },
+                    onMaterialRateChange = { id, rate ->
+                        onIntent(AddJobIntent.ChangeMaterialRate(id, rate))
                     },
                     onMaterialMinusClick = { onIntent(AddJobIntent.MinusMaterialQuantity(it)) },
                     onMaterialPlusClick = { onIntent(AddJobIntent.IncreaseMaterialQuantity(it)) },
@@ -253,4 +279,12 @@ fun JobCreateScreen(
         }
     }
 
+    if (addJobState.isLabourLogsModalOpen) {
+        val selectedUnit = addJobState.labourItems.find { it.id == addJobState.selectedLabourItemId }?.unit ?: "point"
+        com.karigojobs.app.feature.job.component.LabourLogsModal(
+            logs = addJobState.selectedLabourLogs,
+            itemUnit = selectedUnit,
+            onDismiss = { onIntent(AddJobIntent.CloseLabourLogsModal) }
+        )
+    }
 }

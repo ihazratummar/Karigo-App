@@ -25,6 +25,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import android.content.Intent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.stringResource
@@ -67,6 +69,7 @@ fun SettingsScreen(
     event: (SettingsEvent) -> Unit
 ) {
     val snackbarState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -166,6 +169,7 @@ fun SettingsScreen(
             )
         }
 
+
         LazyColumn(
             modifier = Modifier
                 .padding(paddingValues)
@@ -243,6 +247,16 @@ fun SettingsScreen(
                             ThemePreference.DARK -> stringResource(Res.string.settings_theme_dark)
                         },
                         onClick = { event(SettingsEvent.ToggleThemeModal(true)) }
+                    )
+                    SettingsValueRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        icon = R.drawable.about, // Using about icon for now
+                        label = "Currency", // We can add string resource later
+                        value = com.karigojobs.ui.theme.deviceInfo.currency,
+                        onClick = { 
+                            val intent = Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS)
+                            context.startActivity(intent)
+                        }
                     )
                 }
             }

@@ -12,6 +12,7 @@ import com.karigojobs.domain.usecase.trade.SaveTradesUseCase
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.domain.analytics.AnalyticsLogger
 import com.karigojobs.domain.analytics.AnalyticsEvent
+import com.karigojobs.domain.usecase.settings.UpdateAppCurrencyUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,6 +33,7 @@ class SettingsViewModel (
     private val getAppPreferencesUseCase: GetAppPreferencesUseCase,
     private val updateThemePreferenceUseCase: UpdateThemePreferenceUseCase,
     private val updateAppLanguageUseCase: UpdateAppLanguageUseCase,
+    private val updateAppCurrencyUseCase: UpdateAppCurrencyUseCase,
     private val analytics: AnalyticsLogger
 ): ViewModel() {
 
@@ -80,6 +82,9 @@ class SettingsViewModel (
             is SettingsEvent.ToggleThemeModal -> {
                 _state.update { it.copy(isThemeModalOpen = event.isOpen) }
             }
+            is SettingsEvent.ToggleCurrencyModal -> {
+                _state.update { it.copy(isCurrencyModalOpen = event.isOpen) }
+            }
             is SettingsEvent.UpdateLanguage -> {
                 viewModelScope.launch {
                     updateAppLanguageUseCase(event.language)
@@ -90,6 +95,12 @@ class SettingsViewModel (
                 viewModelScope.launch {
                     updateThemePreferenceUseCase(event.theme)
                     _state.update { it.copy(isThemeModalOpen = false) }
+                }
+            }
+            is SettingsEvent.UpdateCurrency -> {
+                viewModelScope.launch {
+                    updateAppCurrencyUseCase(event.currency)
+                    _state.update { it.copy(isCurrencyModalOpen = false) }
                 }
             }
         }
@@ -136,7 +147,7 @@ class SettingsViewModel (
     private fun loadAppPreferences() {
         viewModelScope.launch {
             getAppPreferencesUseCase().collectLatest { prefs ->
-                _state.update { it.copy(currentTheme = prefs.theme, currentLanguage = prefs.language) }
+                _state.update { it.copy(currentTheme = prefs.theme, currentLanguage = prefs.language, currentCurrency = prefs.currency) }
             }
         }
     }

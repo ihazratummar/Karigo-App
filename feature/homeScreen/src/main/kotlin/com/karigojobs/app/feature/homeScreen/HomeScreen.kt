@@ -36,6 +36,23 @@ import com.karigojobs.ui.theme.dimens
 import karigojobs.shared.resources.generated.resources.Res
 import karigojobs.shared.resources.generated.resources.common_see_all
 import karigojobs.shared.resources.generated.resources.home_recent_job
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.ui.graphics.Color
+import com.karigojobs.app.android.ui.R
+import com.karigojobs.ui.common.KarigoIconWIthBg
+import com.karigojobs.ui.common.customCardBorder
+import com.karigojobs.ui.theme.KarigojobsShapes
+import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.KarigojobsText3
+import com.karigojobs.ui.theme.appColor
+import karigojobs.shared.resources.generated.resources.home_recent_jobs_empty_title
+import karigojobs.shared.resources.generated.resources.home_recent_jobs_empty_desc
+import karigojobs.shared.resources.generated.resources.home_recent_jobs_btn_create
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.stringResource
@@ -146,11 +163,56 @@ fun HomeScreen(
                 }
             }
 
-            homeState.jobs?.let { jobs ->
-                items(jobs, key = {job -> job.id}) { job ->
+            val jobs = homeState.jobs
+            if (jobs.isNullOrEmpty()) {
+                item {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                        shape = KarigojobsShapes.medium,
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(dimens.Padding.lg),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            KarigoIconWIthBg(
+                                icon = R.drawable.job_line,
+                                iconColor = KarigojobsText2
+                            )
+                            Spacer(Modifier.height(dimens.Space.base))
+                            Text(
+                                text = org.jetbrains.compose.resources.stringResource(Res.string.home_recent_jobs_empty_title),
+                                style = MaterialTheme.typography.labelMedium.copy(
+                                    color = KarigojobsText2
+                                )
+                            )
+                            Spacer(Modifier.height(dimens.Space.sm))
+                            Text(
+                                text = org.jetbrains.compose.resources.stringResource(Res.string.home_recent_jobs_empty_desc),
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = KarigojobsText3
+                                )
+                            )
+                            Spacer(Modifier.height(dimens.Space.base))
+                            Button(
+                                onClick = { onFabClick() },
+                                shape = KarigojobsShapes.medium
+                            ) {
+                                Text(
+                                    text = org.jetbrains.compose.resources.stringResource(Res.string.home_recent_jobs_btn_create),
+                                )
+                            }
+                        }
+                    }
+                }
+            } else {
+                items(jobs, key = { job -> job.id }) { job ->
                     JobCard(
                         job = job,
-                        onClick = {onJobClick(job.id)}
+                        onClick = { onJobClick(job.id) }
                     )
                 }
             }

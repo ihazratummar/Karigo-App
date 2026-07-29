@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -27,6 +29,7 @@ import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
@@ -87,6 +90,7 @@ import karigojobs.shared.resources.generated.resources.common_btn_add_item
 import karigojobs.shared.resources.generated.resources.common_btn_change
 import karigojobs.shared.resources.generated.resources.common_item_count
 import karigojobs.shared.resources.generated.resources.common_labour
+import karigojobs.shared.resources.generated.resources.common_workers
 import karigojobs.shared.resources.generated.resources.common_manage_library
 import karigojobs.shared.resources.generated.resources.common_materials
 import karigojobs.shared.resources.generated.resources.common_rate
@@ -302,6 +306,9 @@ fun AddJobLabourItemSection(
     onRemoveLabourItemClick: (String) -> Unit,
     onQuantityAddClick: (String) -> Unit,
     onQuantityMinusClick: (String) -> Unit,
+    onWorkersAddClick: (String) -> Unit,
+    onWorkersMinusClick: (String) -> Unit,
+    onViewLogsClick: ((String) -> Unit)? = null
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -321,6 +328,9 @@ fun AddJobLabourItemSection(
                 onRemoveClick = { onRemoveLabourItemClick(item.id) },
                 onAddClick = { onQuantityAddClick(item.id) },
                 onMinusClick = { onQuantityMinusClick(item.id) },
+                onWorkersAddClick = { onWorkersAddClick(item.id) },
+                onWorkersMinusClick = { onWorkersMinusClick(item.id) },
+                onViewLogsClick = onViewLogsClick?.let { { it(item.id) } }
             )
             Spacer(modifier = Modifier.height(dimens.Space.xs))
         }
@@ -339,7 +349,10 @@ fun LabourItemCard(
     labourItem: JobLabourItemModel,
     onRemoveClick: () -> Unit,
     onAddClick: () -> Unit,
-    onMinusClick: () -> Unit
+    onMinusClick: () -> Unit,
+    onWorkersAddClick: () -> Unit,
+    onWorkersMinusClick: () -> Unit,
+    onViewLogsClick: (() -> Unit)? = null
 ) {
 
     Card(
@@ -382,19 +395,77 @@ fun LabourItemCard(
                 )
             }
 
-            MinusButton(onClick = onMinusClick)
-            Text(
-                text = labourItem.quantity.toLocaleString(),
-                style = MaterialTheme.typography.titleMedium.copy(
-                    color = appColor.primaryText,
-                    fontWeight = FontWeight.Bold
-                )
-            )
-            PlusButton(onClick = onAddClick)
-
-            CrossButton(
-                onClick = onRemoveClick
-            )
+            Column {
+                // Workers Row
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+                ) {
+                    Text(
+                        text = stringResource(Res.string.common_workers),
+                        style = MaterialTheme.typography.labelMedium.copy(color = appColor.secondaryText),
+                        modifier = Modifier.width(dimens.Space._5xl)
+                    )
+                    MinusButton(onClick = onWorkersMinusClick)
+                    Text(
+                        text = labourItem.workersCount.toLocaleString(),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = appColor.primaryText,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier.widthIn(min = dimens.Space.sm),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+                    PlusButton(onClick = onWorkersAddClick)
+                    
+                    if (onViewLogsClick != null) {
+                        IconButton(onClick = onViewLogsClick, modifier = Modifier.size(dimens.Icon.md)) {
+                            Icon(
+                                painter = painterResource(R.drawable.info),
+                                contentDescription = "Info",
+                                tint = appColor.primaryText,
+                                modifier = Modifier.size(dimens.Icon.sm)
+                            )
+                        }
+                    } else {
+                        Spacer(modifier = Modifier.size(dimens.Icon.md))
+                    }
+                }
+                
+                Spacer(modifier = Modifier.height(dimens.Space.xs))
+                
+                // Duration/Unit Row
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+                ) {
+                    Text(
+                        text = labourItem.unit,
+                        style = MaterialTheme.typography.labelMedium.copy(color = appColor.secondaryText),
+                        modifier = Modifier.width(dimens.Space._5xl)
+                    )
+                    MinusButton(onClick = onMinusClick)
+                    Text(
+                        text = labourItem.quantity.toLocaleString(),
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = appColor.primaryText,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier.widthIn(min = dimens.Space.sm),
+                        textAlign = TextAlign.Center
+                    )
+                    PlusButton(onClick = onAddClick)
+                    
+                    IconButton(onClick = onRemoveClick, modifier = Modifier.size(dimens.Icon.md)) {
+                        Icon(
+                            painter = painterResource(R.drawable.delete),
+                            contentDescription = "Remove",
+                            tint = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.size(dimens.Icon.sm)
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -407,6 +478,7 @@ fun AddMaterialItemSection(
     onClick: () -> Unit = {},
     materialsItems: List<JobMaterialItemModel>,
     onMaterialQuantityChange: (String, String) -> Unit,
+    onMaterialRateChange: (String, String) -> Unit,
     onMaterialMinusClick: (String) -> Unit,
     onMaterialPlusClick: (String) -> Unit,
     onRemoveMaterialItemClick: (String) -> Unit
@@ -455,6 +527,12 @@ fun AddMaterialItemSection(
                                 it
                             )
                         },
+                        onMaterialRateChange = {
+                            onMaterialRateChange(
+                                item.materialId ?: "",
+                                it
+                            )
+                        },
                         onMaterialMinusClick = { onMaterialMinusClick(item.materialId ?: "") },
                         onMaterialPlusClick = { onMaterialPlusClick(item.materialId ?: "") },
                         onRemoveMaterialItemClick = {
@@ -483,6 +561,7 @@ fun JobMaterialSelectedCard(
     selectedMaterial: JobMaterialItemModel,
     number: Int,
     onMaterialQuantityChange: (String) -> Unit,
+    onMaterialRateChange: (String) -> Unit,
     onMaterialMinusClick: () -> Unit,
     onMaterialPlusClick: () -> Unit,
     onRemoveMaterialItemClick: () -> Unit
@@ -532,12 +611,36 @@ fun JobMaterialSelectedCard(
                             color = MaterialTheme.colorScheme.onBackground
                         )
                     )
-                    Text(
-                        text = "${deviceInfo.currency}${selectedMaterial.unitPrice.toLocaleString()} / ${selectedMaterial.unit}",
-                        style = MaterialTheme.typography.labelSmall.copy(
-                            color = KarigojobsText2
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = "${deviceInfo.currency} ",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = KarigojobsText2
+                            )
                         )
-                    )
+                        BasicTextField(
+                            value = selectedMaterial.unitPriceInput,
+                            onValueChange = onMaterialRateChange,
+                            textStyle = MaterialTheme.typography.labelSmall.copy(
+                                color = MaterialTheme.colorScheme.primary
+                            ),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                            modifier = Modifier.width(IntrinsicSize.Min).widthIn(min = dimens.Size.toggleThumb)
+                        )
+                        Icon(
+                            painter = painterResource(R.drawable.edit), // Assuming edit icon exists
+                            contentDescription = null,
+                            modifier = Modifier.padding(horizontal = dimens.Padding.xs).size(dimens.Space._2md),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Text(
+                            text = " / ${selectedMaterial.unit}",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = KarigojobsText2
+                            )
+                        )
+                    }
                 }
 
                 Icon(
@@ -1132,6 +1235,7 @@ fun LabourItemList(
                 ItemList(
                     itemName = item.itemName,
                     quantity = item.quantity.toInt(),
+                    workersCount = item.workersCount.toInt(),
                     itemRate = item.rate,
                     unit = item.unit,
                     total = item.total
@@ -1239,6 +1343,7 @@ fun ItemList(
     itemName: String,
     itemRate: Double,
     quantity: Int,
+    workersCount: Int? = null,
     unit: String,
     total: Double
 ) {
@@ -1260,8 +1365,13 @@ fun ItemList(
                     color = appColor.tertiaryText
                 )
             )
+            val subText = if (workersCount != null) {
+                "${workersCount.toLocaleString()} x ${quantity.toLocaleString()} x ${deviceInfo.currency}${itemRate.toLocaleString()} / $unit"
+            } else {
+                "${quantity.toLocaleString()} x ${deviceInfo.currency}${itemRate.toLocaleString()} / $unit"
+            }
             Text(
-                text = "${quantity.toLocaleString()} x ${deviceInfo.currency}${itemRate.toLocaleString()} / $unit",
+                text = subText,
                 style = MaterialTheme.typography.labelSmall.copy(
                     color = appColor.secondaryText
                 )

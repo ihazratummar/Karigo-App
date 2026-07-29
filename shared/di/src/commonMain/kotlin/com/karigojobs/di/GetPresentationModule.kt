@@ -54,6 +54,7 @@ fun getPresentationModule(): Module = module {
             getJobDetailsUseCase = get(),
             getJobLabourItemUseCase = get(),
             getJobMaterialItemsUseCase = get(),
+            getJobLabourLogsUseCase = get(),
             getClientUseCase = get(),
             analytics = get()
         )

@@ -33,7 +33,8 @@ fun Job.toJobModel() : JobModel {
         totalItems = total_items.toInt(),
         notes = notes,
         jobDate = job_date,
-        createdAt = created_at
+        createdAt = created_at,
+        includeLabourInInvoice = include_labour_in_invoice
     )
 }
 
@@ -55,7 +56,8 @@ fun GetAllJobs.toAllJobModel(): JobModel {
         total = this.total,
         notes = this.notes,
         jobDate = this.job_date,
-        createdAt = this.created_at
+        createdAt = this.created_at,
+        includeLabourInInvoice = this.include_labour_in_invoice
     )
 }
 
@@ -76,7 +78,8 @@ fun SearchJobs.toAllJobModel(): JobModel {
         total = this.total,
         notes = this.notes,
         jobDate = this.job_date,
-        createdAt = this.created_at
+        createdAt = this.created_at,
+        includeLabourInInvoice = this.include_labour_in_invoice
     )
 }
 
@@ -97,7 +100,8 @@ fun GetActiveJobs.toAllJobModel() : JobModel {
         total = this.total,
         notes = this.notes,
         jobDate = this.job_date,
-        createdAt = this.created_at
+        createdAt = this.created_at,
+        includeLabourInInvoice = this.include_labour_in_invoice
     )
 }
 
@@ -121,7 +125,8 @@ fun GetJobById.toJobByIdModel() : JobModel {
         total = this.total,
         notes = this.notes,
         jobDate = this.job_date,
-        createdAt = this.created_at
+        createdAt = this.created_at,
+        includeLabourInInvoice = this.include_labour_in_invoice
     )
 }
 
@@ -138,6 +143,21 @@ fun Job_material.toJobMaterialModel() : JobMaterialItemModel {
         total = total,
     )
 }
-fun List<Job_material>.toModelListJobMaterial() : List<JobMaterialItemModel>{
+
+fun List<Job_material>.toModelListJobMaterial() : List<JobMaterialItemModel> {
     return this.map { it.toJobMaterialModel() }
+}
+
+fun com.karigojobs.shared.database.tables.Job_labour_log.toJobLabourLogModel() : com.karigojobs.share.model.JobLabourLogModel {
+    return com.karigojobs.share.model.JobLabourLogModel(
+        id = id,
+        labourItemId = labour_item_id,
+        changeAmount = change_amount.toInt(),
+        logType = log_type,
+        createdAt = created_at
+    )
+}
+
+fun List<com.karigojobs.shared.database.tables.Job_labour_log>.toJobLabourLogModelList() : List<com.karigojobs.share.model.JobLabourLogModel> {
+    return this.map { it.toJobLabourLogModel() }
 }

@@ -24,6 +24,7 @@ class SettingsStore(
         val APP_THEME = stringPreferencesKey("app_theme")
         val APP_LANGUAGE = stringPreferencesKey("app_language")
         val AUTO_BACKUP_ENABLED = androidx.datastore.preferences.core.booleanPreferencesKey("auto_backup_enabled")
+        val APP_CURRENCY = stringPreferencesKey("app_currency")
     }
 
     val themePreference: StateFlow<ThemePreference> =
@@ -43,6 +44,11 @@ class SettingsStore(
             pref[AUTO_BACKUP_ENABLED] ?: false
         }.stateIn(scope, SharingStarted.Eagerly, false)
 
+    val appCurrency: StateFlow<String> =
+        dataStore.data.map { pref ->
+            pref[APP_CURRENCY] ?: "₹"
+        }.stateIn(scope, SharingStarted.Eagerly, "₹")
+
     suspend fun setThemePreference(theme: ThemePreference) {
         dataStore.edit { pref ->
             pref[APP_THEME] = theme.name
@@ -58,6 +64,12 @@ class SettingsStore(
     suspend fun setAutoBackupEnabled(enabled: Boolean) {
         dataStore.edit { pref ->
             pref[AUTO_BACKUP_ENABLED] = enabled
+        }
+    }
+
+    suspend fun setAppCurrency(currency: String) {
+        dataStore.edit { pref ->
+            pref[APP_CURRENCY] = currency
         }
     }
 }

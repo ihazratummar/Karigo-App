@@ -48,8 +48,14 @@
     <string name="common_greeting_night">శుభరాత్రి</string>
     <string name="common_status">స్థితి</string>
     <string name="common_labour">కూలీ</string>
+    <string name="common_workers">Workers</string>
     <string name="common_materials">వస్తువులు</string>
     <string name="common_grand_total">మొత్తం దర</string>
     <string name="common_invoice_preview">ఇన్‌వాయిస్ ప్రివ్యూ</string>
     <string name="common_export">పీడీఎఫ్ ఎగుమతి చేయండి</string>
+    <string name="common_labour_history">కార్మిక సవరణ చరిత్ర</string>
+    <string name="common_no_history">ఎటువంటి చరిత్ర అందుబాటులో లేదు</string>
+    <string name="common_added">జోడించబడింది</string>
+    <string name="common_removed">తొలగించబడింది</string>
+    <string name="common_close">మూయండి</string>
 </resources>

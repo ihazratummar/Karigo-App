@@ -3,4 +3,7 @@
     <string name="client_details_total_jobs">মোট কাজ</string>
     <string name="client_details_unpaid">অপরিশোধিত</string>
     <string name="client_btn_new_job">%1$s-এর জন্য নতুন কাজ</string>
+    <string name="client_list_empty_title">এখনো কোনো ক্লায়েন্ট নেই</string>
+    <string name="client_list_empty_desc">যোগাযোগ ও ইনভয়েস পরিচালনা করতে আপনার প্রথম ক্লায়েন্ট যোগ করুন</string>
+    <string name="client_list_btn_create_first">প্রথম ক্লায়েন্ট যোগ করুন</string>
 </resources>

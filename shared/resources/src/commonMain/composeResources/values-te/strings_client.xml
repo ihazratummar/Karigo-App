@@ -3,4 +3,7 @@
     <string name="client_details_total_jobs">మొత్తం పనులు</string>
     <string name="client_details_unpaid">చెల్లించనివి</string>
     <string name="client_btn_new_job">%1$s కోసం కొత్త పని</string>
+    <string name="client_list_empty_title">ఇంకా క్లయింట్లు లేరు</string>
+    <string name="client_list_empty_desc">కాంటాక్ట్‌లు మరియు ఇన్‌వాయిస్‌లను నిర్వహించడానికి మీ మొదటి క్లయింట్‌ను జోడించండి</string>
+    <string name="client_list_btn_create_first">మొదటి క్లయింట్‌ను జోడించండి</string>
 </resources>

@@ -6,4 +6,8 @@
 
     -- Buttons
     <string name="client_btn_new_job">New Job for %1$s</string>
+
+    <string name="client_list_empty_title">No clients yet</string>
+    <string name="client_list_empty_desc">Add your first client to manage contacts and invoices</string>
+    <string name="client_list_btn_create_first">Add First Client</string>
 </resources>

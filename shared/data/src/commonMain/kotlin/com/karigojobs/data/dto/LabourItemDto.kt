@@ -16,6 +16,7 @@ fun Job_labour_item.toJobMaterialModel() : JobLabourItemModel {
         jobId = job_id,
         itemName = description,
         quantity = quantity,
+        workersCount = workers_count,
         rate = rate,
         total = total,
         unit = unit

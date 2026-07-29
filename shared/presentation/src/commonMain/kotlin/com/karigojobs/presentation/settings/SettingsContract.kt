@@ -20,8 +20,10 @@ data class SettingsState(
     val editTrades : Set<TradeType> = emptySet(),
     val currentTheme: ThemePreference = ThemePreference.SYSTEM,
     val currentLanguage: AppLanguage = AppLanguage.ENGLISH,
+    val currentCurrency: String = "₹",
     val isThemeModalOpen: Boolean = false,
-    val isLanguageModalOpen: Boolean = false
+    val isLanguageModalOpen: Boolean = false,
+    val isCurrencyModalOpen: Boolean = false
 ){
     val selectedCount : Int get() = editTrades.count()
 }
@@ -34,8 +36,10 @@ sealed interface SettingsEvent {
 
     data class ToggleThemeModal(val isOpen: Boolean) : SettingsEvent
     data class ToggleLanguageModal(val isOpen: Boolean) : SettingsEvent
+    data class ToggleCurrencyModal(val isOpen: Boolean) : SettingsEvent
     data class UpdateTheme(val theme: ThemePreference) : SettingsEvent
     data class UpdateLanguage(val language: AppLanguage) : SettingsEvent
+    data class UpdateCurrency(val currency: String) : SettingsEvent
 }
 
 sealed interface SettingsEffect {

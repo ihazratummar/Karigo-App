@@ -350,15 +350,22 @@ class MaterialListViewModel(
             getSelectedTradeTypeUseCase.invoke().collectLatest { result ->
                 when (result) {
                     is Result.Error -> {
-
                         _effect.emit(ShowError(result.error.asString()))
-
                     }
 
                     is Result.Success -> {
-                        _state.update {
-                            it.copy(
-                                selectTrades = result.data
+                        val trades = result.data
+                        _state.update { current ->
+                            val initialTrade = current.selectedTradeType ?: trades.firstOrNull()
+                            val initialFilter = if (current.selectedTradeType == null && initialTrade != null) {
+                                MaterialListFilter.SelectedTrade(setOf(initialTrade))
+                            } else {
+                                current.materialFilter
+                            }
+                            current.copy(
+                                selectTrades = trades,
+                                selectedTradeType = initialTrade,
+                                materialFilter = initialFilter
                             )
                         }
                     }

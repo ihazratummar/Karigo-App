@@ -13,4 +13,7 @@
     <string name="job_details_labour_total">एकूण मजुरी</string>
     <string name="job_details_materials_total">एकूण साहित्य</string>
     <string name="job_labour_item_name_field_placeholder">उदा. फिटिंग सेवा</string>
+    <string name="job_list_empty_title">अद्याप कोणतेही काम नाही</string>
+    <string name="job_list_empty_desc">काम आणि पेमेंट ट्रॅक करण्यासाठी तुमचे पहिले काम तयार करा</string>
+    <string name="job_list_btn_create_first">पहिले काम तयार करा</string>
 </resources>

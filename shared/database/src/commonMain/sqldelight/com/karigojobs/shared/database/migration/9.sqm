@@ -1,0 +1,15 @@
+CREATE TABLE estimate_materials_dg_tmp (
+    id TEXT PRIMARY KEY NOT NULL,
+    estimate_id TEXT NOT NULL REFERENCES site_estimate(id) ON DELETE CASCADE,
+    material_id TEXT REFERENCES materials(id) ON DELETE SET NULL,
+    material_name TEXT NOT NULL,
+    quantity REAL NOT NULL,
+    unit TEXT NOT NULL,
+    rate REAL,
+    amount REAL,
+    created_at INTEGER NOT NULL
+);
+
+INSERT INTO estimate_materials_dg_tmp SELECT id, estimate_id, material_id, material_name, quantity, unit, rate, amount, created_at FROM estimate_materials;
+DROP TABLE estimate_materials;
+ALTER TABLE estimate_materials_dg_tmp RENAME TO estimate_materials;

@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import com.karigojobs.domain.analytics.AnalyticsLogger
 import com.karigojobs.domain.analytics.AnalyticsEvent
+import com.karigojobs.share.model.AppLanguage
+import com.karigojobs.share.model.ThemePreference
 
 class MainViewModel(
     getAppPreferencesUseCase: GetAppPreferencesUseCase,
@@ -23,8 +25,9 @@ class MainViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = GetAppPreferencesUseCase.AppPreferences(
-                theme = com.karigojobs.share.model.ThemePreference.SYSTEM,
-                language = com.karigojobs.share.model.AppLanguage.ENGLISH
+                theme = ThemePreference.SYSTEM,
+                language = AppLanguage.ENGLISH,
+                currency = "₹"
             )
         )
 }

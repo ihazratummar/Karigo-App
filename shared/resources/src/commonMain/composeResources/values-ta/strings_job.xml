@@ -13,4 +13,7 @@
     <string name="job_details_labour_total">தொழிலாளர் மொத்தம்</string>
     <string name="job_details_materials_total">பொருள் மொத்தம்</string>
     <string name="job_labour_item_name_field_placeholder">உதாரணமாக: பொருத்துதல் சேவைகள்</string>
+    <string name="job_list_empty_title">இதுவரை வேலைகள் எதுவும் இல்லை</string>
+    <string name="job_list_empty_desc">வேலை மற்றும் கட்டணங்களைக் கண்காணிக்க உங்கள் முதல் வேலையை உருவாக்கவும்</string>
+    <string name="job_list_btn_create_first">முதல் வேலையை உருவாக்கவும்</string>
 </resources>

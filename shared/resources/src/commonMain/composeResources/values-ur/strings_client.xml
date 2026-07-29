@@ -3,4 +3,7 @@
     <string name="client_details_total_jobs">کل کام</string>
     <string name="client_details_unpaid">غیر ادا شدہ</string>
     <string name="client_btn_new_job">%1$s کے لیے نیا کام</string>
+    <string name="client_list_empty_title">ابھی کوئی کلائنٹ نہیں ہے</string>
+    <string name="client_list_empty_desc">رابطوں اور انوائسز کو سنبھالنے کے لیے اپنا پہلا کلائنٹ شامل کریں</string>
+    <string name="client_list_btn_create_first">پہلا کلائنٹ شامل کریں</string>
 </resources>

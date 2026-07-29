@@ -3,7 +3,7 @@ CREATE TABLE estimate_materials (
     id TEXT PRIMARY KEY NOT NULL,
 
     estimate_id TEXT NOT NULL REFERENCES site_estimate(id) ON DELETE CASCADE,
-    material_id TEXT NOT NULL REFERENCES materials(id) ON DELETE SET NULL,
+    material_id TEXT REFERENCES materials(id) ON DELETE SET NULL,
 
     material_name TEXT NOT NULL,
     quantity REAL NOT NULL,
@@ -38,4 +38,7 @@ SET material_name = ?,
     rate = ?,
     amount = ?
 WHERE id = ?;
+
+nullifyMaterialReference:
+UPDATE estimate_materials SET material_id = NULL WHERE material_id = :materialId;
 

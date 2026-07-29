@@ -4,4 +4,7 @@
     <string name="home_site_estimate">సైట్ అంచనా</string>
     <string name="home_estimate_desctiption">పని చేసే స్థలాన్ని సందర్శించండి, వస్తువుల జాబితాను రూపొందించండి మరియు వాట్సాప్ ద్వారా క్లయింట్‌కు పంపండి</string>
     <string name="home_recent_job">ఇటీవలి పనులు</string>
+    <string name="home_recent_jobs_empty_title">ఇటీవలి పనులు లేవు</string>
+    <string name="home_recent_jobs_empty_desc">మీరు సృష్టించిన పనులు ఇక్కడ కనిపిస్తాయి</string>
+    <string name="home_recent_jobs_btn_create">పనిని జోడించండి</string>
 </resources>

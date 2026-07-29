@@ -13,4 +13,7 @@
     <string name="job_details_labour_total">मजदूरी कुल</string>
     <string name="job_details_materials_total">सामग्री कुल</string>
     <string name="job_labour_item_name_field_placeholder">जैसे: फिटिंग सेवाएं</string>
+    <string name="job_list_empty_title">अभी कोई काम नहीं है</string>
+    <string name="job_list_empty_desc">काम और भुगतान को ट्रैक करने के लिए अपना पहला काम बनाएं</string>
+    <string name="job_list_btn_create_first">पहला काम बनाएं</string>
 </resources>

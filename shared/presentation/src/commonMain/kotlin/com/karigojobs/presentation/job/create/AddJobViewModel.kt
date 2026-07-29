@@ -2,6 +2,8 @@ package com.karigojobs.presentation.job.create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.karigojob.share.utils.EpochUtils
+import com.karigojob.share.utils.UuidGenerator
 import com.karigojobs.domain.repository.DeviceContactProvider
 import com.karigojobs.domain.result.Result
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
@@ -65,6 +67,7 @@ class AddJobViewModel(
     private val getJobDetailsUseCase: GetJobDetailsUseCase,
     private val getJobLabourItemUseCase: GetJobLabourItemUseCase,
     private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase,
+    private val getJobLabourLogsUseCase: com.karigojobs.domain.usecase.job.GetJobLabourLogsUseCase,
     private val getClientUseCase: GetClientUseCase,
     private val analytics: AnalyticsLogger
 ) : ViewModel() {
@@ -336,13 +339,14 @@ class AddJobViewModel(
 
             is AddJobIntent.AddLabourItem -> {
                 val newItem = JobLabourItemModel(
-                    id = Uuid.random().toString(),
-                    jobId = draftJobId,
+                    id = UuidGenerator.generate(),
+                    jobId = _state.value.jobId ?: "",
                     itemName = event.labourItem.itemName,
-                    quantity = event.labourItem.quantity.toLong(),
                     rate = event.labourItem.itemRate,
-                    unit = event.labourItem.unit,
-                    total = event.labourItem.quantity * event.labourItem.itemRate
+                    quantity = event.labourItem.quantity.toLong(),
+                    workersCount = event.labourItem.workersCount.toLong(),
+                    total = event.labourItem.itemRate * event.labourItem.quantity * event.labourItem.workersCount,
+                    unit = event.labourItem.unit
                 )
                 // 3. Update the State using pure Kotlin list addition (+)
                 _state.value = _state.value.copy(
@@ -357,23 +361,42 @@ class AddJobViewModel(
                         val newQty = item.quantity + 1
                         item.copy(
                             quantity = newQty,
-                            total = newQty * item.rate
+                            total = newQty * item.rate * item.workersCount
                         )
                     } else item
                 }
+                val newLog = com.karigojobs.share.model.JobLabourLogModel(
+                    id = UuidGenerator.generate(),
+                    labourItemId = event.itemId,
+                    changeAmount = 1,
+                    logType = "QUANTITY",
+                    createdAt = EpochUtils.now()
+                )
                 _state.update {
-                    it.copy(labourItems = updateList)
+                    it.copy(
+                        labourItems = updateList,
+                        labourLogs = it.labourLogs + newLog,
+                        selectedLabourLogs = if (it.selectedLabourItemId == event.itemId) it.selectedLabourLogs + newLog else it.selectedLabourLogs
+                    )
                 }
             }
 
             is AddJobIntent.MinusLabourItemQuantity -> {
+                var recordedLog: com.karigojobs.share.model.JobLabourLogModel? = null
                 val updateList = _state.value.labourItems.map { item ->
                     if (item.id == event.itemId) {
                         if (item.quantity > 1) {
                             val newQty = item.quantity - 1
+                            recordedLog = com.karigojobs.share.model.JobLabourLogModel(
+                                id = UuidGenerator.generate(),
+                                labourItemId = event.itemId,
+                                changeAmount = -1,
+                                logType = "QUANTITY",
+                                createdAt = EpochUtils.now()
+                            )
                             item.copy(
                                 quantity = newQty,
-                                total = newQty * item.rate
+                                total = newQty * item.rate * item.workersCount
                             )
                         } else {
                             item.copy(
@@ -383,7 +406,70 @@ class AddJobViewModel(
                     } else item
                 }
                 _state.update {
-                    it.copy(labourItems = updateList)
+                    it.copy(
+                        labourItems = updateList,
+                        labourLogs = if (recordedLog != null) it.labourLogs + recordedLog!! else it.labourLogs,
+                        selectedLabourLogs = if (recordedLog != null && it.selectedLabourItemId == event.itemId) it.selectedLabourLogs + recordedLog!! else it.selectedLabourLogs
+                    )
+                }
+            }
+
+            is AddJobIntent.IncreaseLabourItemWorkersCount -> {
+                val updateList = _state.value.labourItems.map { item ->
+                    if (item.id == event.itemId) {
+                        val newQty = item.workersCount + 1
+                        item.copy(
+                            workersCount = newQty,
+                            total = newQty * item.rate * item.quantity
+                        )
+                    } else item
+                }
+                val newLog = com.karigojobs.share.model.JobLabourLogModel(
+                    id = UuidGenerator.generate(),
+                    labourItemId = event.itemId,
+                    changeAmount = 1,
+                    logType = "WORKERS",
+                    createdAt = EpochUtils.now()
+                )
+                _state.update {
+                    it.copy(
+                        labourItems = updateList,
+                        labourLogs = it.labourLogs + newLog,
+                        selectedLabourLogs = if (it.selectedLabourItemId == event.itemId) it.selectedLabourLogs + newLog else it.selectedLabourLogs
+                    )
+                }
+            }
+
+            is AddJobIntent.MinusLabourItemWorkersCount -> {
+                var recordedLog: com.karigojobs.share.model.JobLabourLogModel? = null
+                val updateList = _state.value.labourItems.map { item ->
+                    if (item.id == event.itemId) {
+                        if (item.workersCount > 1) {
+                            val newQty = item.workersCount - 1
+                            recordedLog = com.karigojobs.share.model.JobLabourLogModel(
+                                id = UuidGenerator.generate(),
+                                labourItemId = event.itemId,
+                                changeAmount = -1,
+                                logType = "WORKERS",
+                                createdAt = EpochUtils.now()
+                            )
+                            item.copy(
+                                workersCount = newQty,
+                                total = newQty * item.rate * item.quantity
+                            )
+                        } else {
+                            item.copy(
+                                workersCount = 1
+                            )
+                        }
+                    } else item
+                }
+                _state.update {
+                    it.copy(
+                        labourItems = updateList,
+                        labourLogs = if (recordedLog != null) it.labourLogs + recordedLog!! else it.labourLogs,
+                        selectedLabourLogs = if (recordedLog != null && it.selectedLabourItemId == event.itemId) it.selectedLabourLogs + recordedLog!! else it.selectedLabourLogs
+                    )
                 }
             }
 
@@ -391,11 +477,41 @@ class AddJobViewModel(
                 val filterList = _state.value.labourItems.filter {
                     it.id != event.id
                 }
+                val filterLogs = _state.value.labourLogs.filter {
+                    it.labourItemId != event.id
+                }
                 _state.update {
                     it.copy(
-                        labourItems = filterList
+                        labourItems = filterList,
+                        labourLogs = filterLogs
                     )
                 }
+            }
+
+            is AddJobIntent.ToggleIncludeLabourInInvoice -> {
+                _state.update { it.copy(includeLabourInInvoice = event.include) }
+            }
+            
+            is AddJobIntent.ViewLabourLogs -> {
+                _state.update { it.copy(selectedLabourItemId = event.itemId, isLabourLogsModalOpen = true) }
+                viewModelScope.launch {
+                    getJobLabourLogsUseCase(event.itemId).collectLatest { result ->
+                        when(result) {
+                            is Result.Success -> {
+                                _state.update { state ->
+                                    val dbLogs = result.data ?: emptyList()
+                                    val sessionLogs = state.labourLogs.filter { log -> log.labourItemId == event.itemId }
+                                    state.copy(selectedLabourLogs = (dbLogs + sessionLogs).distinctBy { it.id })
+                                }
+                            }
+                            else -> {}
+                        }
+                    }
+                }
+            }
+            
+            AddJobIntent.CloseLabourLogsModal -> {
+                _state.update { it.copy(isLabourLogsModalOpen = false, selectedLabourItemId = null, selectedLabourLogs = emptyList()) }
             }
 
             is AddJobIntent.SelectTradeType -> {
@@ -475,6 +591,21 @@ class AddJobViewModel(
                 _state.update { it.copy(selectedMaterials = updatedList) }
             }
 
+            is AddJobIntent.ChangeMaterialRate -> {
+                val updatedList = _state.value.selectedMaterials.map { item ->
+                    if (item.materialId == event.id) {
+                        val cleanedInput = event.rate.replace(",", ".")
+                        val parsedRate = cleanedInput.toDoubleOrNull() ?: item.unitPrice
+                        item.copy(
+                            unitPrice = parsedRate,
+                            unitPriceInput = event.rate,
+                            total = item.quantity * parsedRate
+                        )
+                    } else item
+                }
+                _state.update { it.copy(selectedMaterials = updatedList) }
+            }
+
             is AddJobIntent.IncreaseMaterialQuantity -> {
                 val updatedList = _state.value.selectedMaterials.map { item ->
                     if (item.materialId == event.id) {
@@ -528,20 +659,12 @@ class AddJobViewModel(
                             tradeType = _state.value.selectedTradeType ?: TradeType.PLUMBER,
                             materialTotal = _state.value.materialTotal,
                             total = _state.value.grandTotal,
-                            notes = ""
+                            notes = "",
+                            includeLabourInInvoice = _state.value.includeLabourInInvoice
                         ),
-                        jobLabourItemModel = _state.value.labourItems.map {
-                            JobLabourItemModel(
-                                id = it.id,
-                                jobId = it.jobId,
-                                itemName = it.itemName,
-                                quantity = it.quantity,
-                                rate = it.rate,
-                                total = it.mainTotal,
-                                unit = it.unit
-                            )
-                        },
-                        jobMaterialItemModel = _state.value.selectedMaterials
+                        jobLabourItemModel = _state.value.labourItems,
+                        jobMaterialItemModel = _state.value.selectedMaterials,
+                        jobLabourLogs = _state.value.labourLogs
                     )
 
                     when (result) {

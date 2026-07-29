@@ -143,7 +143,6 @@ fun KarigojobsThemePreview(
 
 val LocalDimens = compositionLocalOf { CompactAppDimens }
 val LocalAppTypography = compositionLocalOf { CompactTypography }
-val LocalDeviceInfo = compositionLocalOf { getDeviceInfo() }
 
 val dimens
     @Composable

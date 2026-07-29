@@ -13,7 +13,8 @@ data class JobModel(
     val totalItems: Int = 0,
     val notes: String,
     val jobDate: Long = 0L,
-    val createdAt: Long = 0L
+    val createdAt: Long = 0L,
+    val includeLabourInInvoice: Boolean = true
 )
 
 enum class JobStatus {
@@ -49,12 +50,13 @@ data class JobLabourItemModel(
     val jobId: String,
     val itemName: String,
     val quantity: Long,
+    val workersCount: Long = 1,
     val rate: Double,
     val total: Double,
     val unit: String
 ) {
 
-    val mainTotal: Double get() = rate * quantity
+    val mainTotal: Double get() = rate * quantity * workersCount
 
 }
 
@@ -67,9 +69,18 @@ data class JobMaterialItemModel(
     val unitPrice: Double,
     val quantity: Int,
     val total: Double,
-    val quantityInput: String = quantity.toString()
+    val quantityInput: String = quantity.toString(),
+    val unitPriceInput: String = unitPrice.toString()
 ) {
 
     val mainTotal: Double get() = unitPrice * quantity
 
 }
+
+data class JobLabourLogModel(
+    val id: String,
+    val labourItemId: String,
+    val changeAmount: Int,
+    val logType: String = "QUANTITY", // "WORKERS" or "QUANTITY"
+    val createdAt: Long
+)

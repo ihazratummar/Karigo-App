@@ -35,6 +35,9 @@ fi
 echo "Uploading latest English source strings to Crowdin..."
 crowdin upload sources
 
+echo "Uploading local translations to Crowdin..."
+crowdin upload translations
+
 echo "Downloading latest translations from Crowdin..."
 crowdin download translations
 

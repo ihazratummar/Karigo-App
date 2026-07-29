@@ -3,4 +3,7 @@
     <string name="client_details_total_jobs">एकूण कामे</string>
     <string name="client_details_unpaid">थकीत</string>
     <string name="client_btn_new_job">%1$s साठी नवीन काम</string>
+    <string name="client_list_empty_title">अद्याप कोणताही ग्राहक नाही</string>
+    <string name="client_list_empty_desc">संपर्क आणि पावत्या व्यवस्थापित करण्यासाठी तुमचा पहिला ग्राहक जोडा</string>
+    <string name="client_list_btn_create_first">पहिला ग्राहक जोडा</string>
 </resources>

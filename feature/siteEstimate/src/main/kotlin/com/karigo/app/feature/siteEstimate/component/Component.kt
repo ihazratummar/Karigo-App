@@ -7,6 +7,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -139,6 +141,7 @@ fun SelectedMaterialSection(
     isRateVisible: Boolean = true,
     number: Int,
     onMaterialQuantityChange: (String) -> Unit,
+    onMaterialRateChange: (String) -> Unit,
     onMaterialMinusClick: () -> Unit,
     onMaterialPlusClick: () -> Unit,
     onMaterialRemoveClick: () -> Unit
@@ -190,12 +193,36 @@ fun SelectedMaterialSection(
                         )
                     )
                     if (isRateVisible) {
-                        Text(
-                            text = "${deviceInfo.currency}${selectedMaterial.rate} / ${selectedMaterial.unit}",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = KarigojobsText2
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = "${deviceInfo.currency} ",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = KarigojobsText2
+                                )
                             )
+                            BasicTextField(
+                                value = selectedMaterial.rateInput,
+                                onValueChange = onMaterialRateChange,
+                                textStyle = MaterialTheme.typography.labelSmall.copy(
+                                    color = MaterialTheme.colorScheme.primary
+                                ),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                singleLine = true,
+                            modifier = Modifier.width(IntrinsicSize.Min).widthIn(min = dimens.Size.toggleThumb)
                         )
+                        Icon(
+                            painter = painterResource(R.drawable.edit), // Assuming edit icon exists
+                            contentDescription = null,
+                            modifier = Modifier.padding(horizontal = dimens.Padding.xs).size(dimens.Space._2md),
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                            Text(
+                                text = " / ${selectedMaterial.unit}",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = KarigojobsText2
+                                )
+                            )
+                        }
                     }
                 }
 

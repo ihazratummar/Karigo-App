@@ -133,6 +133,9 @@ fun NavGraphBuilder.contentNavigation(
                 onJobClick = { jobId ->
                     navHostController.navigate(MainRoute.JobDetailsRoute(jobId = jobId))
                 },
+                onAddJobClick = {
+                    navHostController.navigate(MainRoute.AddJobRoute(jobId = null))
+                },
                 event = viewModel::onEvent
             )
         }

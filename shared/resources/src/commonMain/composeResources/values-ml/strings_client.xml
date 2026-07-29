@@ -3,4 +3,7 @@
     <string name="client_details_total_jobs">ആകെ ജോലികൾ</string>
     <string name="client_details_unpaid">അടയ്ക്കാത്തത്</string>
     <string name="client_btn_new_job">%1$s-നായി പുതിയ ജോലി</string>
+    <string name="client_list_empty_title">ഇതുവരെ ക്ലയന്റുകളൊന്നുമില്ല</string>
+    <string name="client_list_empty_desc">കോൺടാക്റ്റുകളും ഇൻവോയ്സുകളും കൈകാര്യം ചെയ്യാൻ നിങ്ങളുടെ ആദ്യ ക്ലയന്റിനെ ചേർക്കുക</string>
+    <string name="client_list_btn_create_first">ആദ്യ ക്ലയന്റിനെ ചേർക്കുക</string>
 </resources>

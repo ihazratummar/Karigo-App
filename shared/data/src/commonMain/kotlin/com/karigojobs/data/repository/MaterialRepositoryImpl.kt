@@ -118,9 +118,11 @@ class MaterialRepositoryImpl(
 
 
     override suspend fun deleteMaterial(id: String): Result<Unit, MaterialError> {
-
         return safeCall(MaterialError.DatabaseError) {
-            database.materialQueries.deleteMaterialById(id = id)
+            database.transaction {
+                database.siteEstimateMaterialQueries.nullifyMaterialReference(materialId = id)
+                database.materialQueries.deleteMaterialById(id = id)
+            }
         }
     }
 

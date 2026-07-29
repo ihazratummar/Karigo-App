@@ -1071,7 +1071,7 @@ fun JobStatusChangeModal(
     ModalBottomSheet(
         modifier = modifier,
         onDismissRequest = onDismiss,
-        containerColor = ModalBackGround,
+        containerColor = appColor.modalColor,
     ) {
         Column(
             modifier = Modifier
@@ -1092,7 +1092,7 @@ fun JobStatusChangeModal(
                     onClick = { onStatusClick(status) },
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(
-                        containerColor = if (isSelected) KarigoSelectedCardColor else KarigojobsCard
+                        containerColor = if (isSelected) appColor.accentBg else appColor.cardColors
                     )
                 ) {
                     Row(
@@ -1106,7 +1106,9 @@ fun JobStatusChangeModal(
 
                         Text(
                             text = status.toString(),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                color = appColor.primaryText
+                            )
                         )
                     }
                 }

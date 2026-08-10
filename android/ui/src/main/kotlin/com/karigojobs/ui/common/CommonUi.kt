@@ -1472,11 +1472,12 @@ fun KarigoButtons(
     label: String,
     icon: Int? = null,
     enabled: Boolean = true,
+    isUnlocked: Boolean = isPro,
     onProRequiredClick: (() -> Unit)? = null
 ) {
-    val finalClick = if (isPro) onClick else { onProRequiredClick ?: {} }
-    val finalButtonColor = if (isPro) buttonColor else appColor.cardColors
-    val finalContentColor = if (isPro) contentColor else appColor.secondaryText.copy(alpha = 0.6f)
+    val finalClick = if (isUnlocked) onClick else { onProRequiredClick ?: {} }
+    val finalButtonColor = if (isUnlocked) buttonColor else appColor.cardColors
+    val finalContentColor = if (isUnlocked) contentColor else appColor.secondaryText.copy(alpha = 0.6f)
 
     Box(modifier = modifier) {
         Button(
@@ -1490,7 +1491,7 @@ fun KarigoButtons(
             shape = KarigojobsShapes.medium,
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
-            border = if (isPro) customCardBorder() else BorderStroke(dimens.Border.thin / 10f, appColor.secondaryText.copy(alpha = 0.2f))
+            border = if (isUnlocked) customCardBorder() else BorderStroke(dimens.Border.thin / 10f, appColor.secondaryText.copy(alpha = 0.2f))
         ) {
             icon?.let {
                 Icon(
@@ -1511,7 +1512,7 @@ fun KarigoButtons(
             )
         }
 
-        if (!isPro) {
+        if (!isUnlocked) {
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -1803,7 +1804,9 @@ fun ShareChoiceDialog(
     onSharePdf: () -> Unit,
     onShareText: () -> Unit,
     title: String = "Share Invoice",
-    description: String = "Select how you would like to share this invoice with your client."
+    description: String = "Select how you would like to share this invoice with your client.",
+    isPdfUnlocked: Boolean = isPro,
+    onProRequiredClick: (() -> Unit)? = null
 ) {
     Dialog(
         onDismissRequest = onDismiss
@@ -1852,7 +1855,9 @@ fun ShareChoiceDialog(
                         buttonColor = appColor.cardColors,
                         contentColor = appColor.primaryText,
                         label = "PDF Document",
-                        icon = R.drawable.ic_pdf
+                        icon = R.drawable.ic_pdf,
+                        isUnlocked = isPdfUnlocked,
+                        onProRequiredClick = onProRequiredClick
                     )
                     KarigoButtons(
                         modifier = Modifier.weight(1f),
@@ -1863,7 +1868,8 @@ fun ShareChoiceDialog(
                         buttonColor = appColor.cardColors,
                         contentColor = appColor.primaryText,
                         label = "Text Message",
-                        icon = R.drawable.whatsapp
+                        icon = R.drawable.whatsapp,
+                        isUnlocked = true
                     )
                 }
             }

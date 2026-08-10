@@ -50,7 +50,9 @@ class JobDetailsViewModel(
     private val getJobPaymentsUseCase: GetJobPaymentsUseCase,
     private val addJobPaymentUseCase: AddJobPaymentUseCase,
     private val deleteJobPaymentUseCase: DeleteJobPaymentUseCase,
-    private val analytics: AnalyticsLogger
+    private val analytics: AnalyticsLogger,
+    private val observeMonthlyJobLimitUseCase: com.karigojobs.domain.usecase.monetization.ObserveMonthlyJobLimitUseCase? = null,
+    private val incrementPdfCountUseCase: com.karigojobs.domain.usecase.monetization.IncrementPdfCountUseCase? = null
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(JobDetailsState())
@@ -67,7 +69,16 @@ class JobDetailsViewModel(
         loadJobMaterialItem()
         loadWorkerProfile()
         observeProStatus()
+        observeQuota()
         loadPayments()
+    }
+
+    private fun observeQuota() {
+        viewModelScope.launch {
+            observeMonthlyJobLimitUseCase?.invoke()?.collectLatest { quota ->
+                _state.update { it.copy(monthlyJobLimit = quota) }
+            }
+        }
     }
 
 
@@ -122,6 +133,10 @@ class JobDetailsViewModel(
             }
 
             is JobDetailsIntent.GenerateInvoicePdf -> {
+                if (!_state.value.isPro && _state.value.monthlyJobLimit.isPdfQuotaExhausted) {
+                    _state.update { it.copy(showProDialog = true, proDialogFeatureName = "PDF_EXPORT") }
+                    return
+                }
                 val job = _state.value.jobModel ?: return
                 val client = _state.value.clientModel
                 val worker = _state.value.workerProfileModel
@@ -139,6 +154,7 @@ class JobDetailsViewModel(
                 )
                 val jobTitle = "Invoice_${job.title.replace(" ", "_")}"
                 viewModelScope.launch {
+                    if (!_state.value.isPro) incrementPdfCountUseCase?.invoke()
                     _effect.emit(JobDetailsEffect.ShareInvoicePdf(html, jobTitle))
                 }
             }

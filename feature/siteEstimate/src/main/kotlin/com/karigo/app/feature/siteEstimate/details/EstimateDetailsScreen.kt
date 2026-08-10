@@ -296,6 +296,7 @@ fun EstimateDetailsScreen(
 
             item {
                 val currency = deviceInfo.currency
+                val isPdfUnlocked = state.isPro || !state.monthlyJobLimit.isPdfQuotaExhausted
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(dimens.Space.base)
@@ -311,6 +312,7 @@ fun EstimateDetailsScreen(
                         contentColor = Color(0xFFEF5350),
                         label = stringResource(Res.string.common_export),
                         icon = R.drawable.ic_pdf,
+                        isUnlocked = isPdfUnlocked,
                         onProRequiredClick = {
                             event(EstimateDetailsEvent.ToggleProDialog(isOpen = true, featureName = "PDF Export"))
                         }
@@ -326,9 +328,7 @@ fun EstimateDetailsScreen(
                         contentColor = Color(0xFF4CAF50),
                         label = stringResource(Res.string.estimate_detail_btn_whatsapp),
                         icon = R.drawable.whatsapp,
-                        onProRequiredClick = {
-                            event(EstimateDetailsEvent.ToggleProDialog(isOpen = true, featureName = "WhatsApp Sharing"))
-                        }
+                        isUnlocked = true
                     )
                 }
             }
@@ -341,6 +341,7 @@ fun EstimateDetailsScreen(
 
     if (showShareDialog) {
         val currency = deviceInfo.currency
+        val isPdfUnlocked = state.isPro || !state.monthlyJobLimit.isPdfQuotaExhausted
         ShareChoiceDialog(
             onDismiss = { showShareDialog = false },
             onSharePdf = {
@@ -351,7 +352,11 @@ fun EstimateDetailsScreen(
                 event(EstimateDetailsEvent.ShareEstimateOnWhatsapp(currencySymbol = currency))
             },
             title = stringResource(Res.string.dialog_share_title),
-            description = stringResource(Res.string.dialog_share_desc_estimate)
+            description = stringResource(Res.string.dialog_share_desc_estimate),
+            isPdfUnlocked = isPdfUnlocked,
+            onProRequiredClick = {
+                event(EstimateDetailsEvent.ToggleProDialog(isOpen = true, featureName = "PDF Export"))
+            }
         )
     }
 

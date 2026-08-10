@@ -155,7 +155,8 @@ actual class AppPathProvider(private val context: Context) {
                     "job_labour_log",
                     "job_material",
                     "job_payment",
-                    "estimate_materials"
+                    "estimate_materials",
+                    "monthly_quota"
                 )
 
                 for (table in mergeTables) {
@@ -225,15 +226,15 @@ actual class AppPathProvider(private val context: Context) {
             val commonCols = activeCols.intersect(backupCols)
             if (commonCols.isNotEmpty()) {
                 val colListStr = commonCols.joinToString(", ")
-                val sql = "INSERT OR IGNORE INTO $tableName ($colListStr) SELECT $colListStr FROM backup_db.$tableName;"
+                val sql = "INSERT OR REPLACE INTO $tableName ($colListStr) SELECT $colListStr FROM backup_db.$tableName;"
                 db.execSQL(sql)
             } else {
-                db.execSQL("INSERT OR IGNORE INTO $tableName SELECT * FROM backup_db.$tableName;")
+                db.execSQL("INSERT OR REPLACE INTO $tableName SELECT * FROM backup_db.$tableName;")
             }
         } catch (e: Exception) {
             e.printStackTrace()
             try {
-                db.execSQL("INSERT OR IGNORE INTO $tableName SELECT * FROM backup_db.$tableName;")
+                db.execSQL("INSERT OR REPLACE INTO $tableName SELECT * FROM backup_db.$tableName;")
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }

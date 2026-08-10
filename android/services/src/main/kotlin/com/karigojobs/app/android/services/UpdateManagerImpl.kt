@@ -5,8 +5,10 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.install.InstallException
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallErrorCode
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
@@ -94,8 +96,11 @@ class UpdateManagerImpl(
                 }
             }
             .addOnFailureListener { e ->
-                // ✅ Fail silently in production; log for debugging
-                Log.e(TAG, "Failed to check for updates", e)
+                if (e is InstallException && e.errorCode == InstallErrorCode.ERROR_APP_NOT_OWNED) {
+                    Log.d(TAG, "App not installed from Google Play (sideloaded/debug build); skipping update check.")
+                } else {
+                    Log.w(TAG, "Failed to check for updates: ${e.message}")
+                }
             }
     }
 
@@ -115,7 +120,11 @@ class UpdateManagerImpl(
                     }
                 }
                 .addOnFailureListener { e ->
-                    Log.e(TAG, "onResume update check failed", e)
+                    if (e is com.google.android.play.core.install.InstallException && e.errorCode == com.google.android.play.core.install.model.InstallErrorCode.ERROR_APP_NOT_OWNED) {
+                        Log.d(TAG, "App not installed from Google Play (sideloaded/debug build); skipping onResume update check.")
+                    } else {
+                        Log.w(TAG, "onResume update check failed: ${e.message}")
+                    }
                 }
         }
 

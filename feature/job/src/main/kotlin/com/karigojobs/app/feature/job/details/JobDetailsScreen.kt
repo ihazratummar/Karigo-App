@@ -483,6 +483,7 @@ fun JobDetailsScreen(
 
                 item {
                     val currency = deviceInfo.currency
+                    val isPdfUnlocked = jobDetailsState.isPro || !jobDetailsState.monthlyJobLimit.isPdfQuotaExhausted
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(dimens.Space.base)
@@ -498,6 +499,7 @@ fun JobDetailsScreen(
                             contentColor = Color(0xFFEF5350),
                             label = stringResource(Res.string.common_export),
                             icon = R.drawable.ic_pdf,
+                            isUnlocked = isPdfUnlocked,
                             onProRequiredClick = {
                                 event(JobDetailsIntent.ToggleProDialog(isOpen = true, featureName = "PDF Export"))
                             }
@@ -513,9 +515,7 @@ fun JobDetailsScreen(
                             contentColor = Color(0xFF4CAF50),
                             label = "WhatsApp",
                             icon = R.drawable.whatsapp,
-                            onProRequiredClick = {
-                                event(JobDetailsIntent.ToggleProDialog(isOpen = true, featureName = "WhatsApp Sharing"))
-                            }
+                            isUnlocked = true
                         )
                     }
                 }
@@ -528,6 +528,7 @@ fun JobDetailsScreen(
 
     if (showShareDialog) {
         val currency = deviceInfo.currency
+        val isPdfUnlocked = jobDetailsState.isPro || !jobDetailsState.monthlyJobLimit.isPdfQuotaExhausted
         ShareChoiceDialog(
             onDismiss = { showShareDialog = false },
             onSharePdf = {
@@ -536,6 +537,10 @@ fun JobDetailsScreen(
             },
             onShareText = {
                 event(JobDetailsIntent.ShareInvoiceOnWhatsapp(currencySymbol = currency))
+            },
+            isPdfUnlocked = isPdfUnlocked,
+            onProRequiredClick = {
+                event(JobDetailsIntent.ToggleProDialog(isOpen = true, featureName = "PDF Export"))
             }
         )
     }

@@ -43,7 +43,9 @@ class EstimateDetailsViewModel(
     private val getWorkerProfileUseCase: GetWorkerProfileUseCase,
     private val getClientUseCase: GetClientUseCase,
     private val observeProStatusUseCase: ObserveProStatusUseCase,
-    private val analytics: AnalyticsLogger
+    private val analytics: AnalyticsLogger,
+    private val observeMonthlyJobLimitUseCase: com.karigojobs.domain.usecase.monetization.ObserveMonthlyJobLimitUseCase? = null,
+    private val incrementPdfCountUseCase: com.karigojobs.domain.usecase.monetization.IncrementPdfCountUseCase? = null
 ) : ViewModel() {
 
 
@@ -60,6 +62,15 @@ class EstimateDetailsViewModel(
         loadEstimateMaterial()
         loadWorkerProfile()
         observeProStatus()
+        observeQuota()
+    }
+
+    private fun observeQuota() {
+        viewModelScope.launch {
+            observeMonthlyJobLimitUseCase?.invoke()?.collectLatest { quota ->
+                _state.update { it.copy(monthlyJobLimit = quota) }
+            }
+        }
     }
 
     fun onEvent(event: EstimateDetailsEvent) {
@@ -114,6 +125,10 @@ class EstimateDetailsViewModel(
             }
 
             is EstimateDetailsEvent.GenerateEstimatePdf -> {
+                if (!_state.value.isPro && _state.value.monthlyJobLimit.isPdfQuotaExhausted) {
+                    _state.update { it.copy(showProDialog = true, proDialogFeatureName = "PDF_EXPORT") }
+                    return
+                }
                 val estimate = state.value.estimateDetails ?: return
                 val materials = state.value.siteEstimateMaterial
                 val worker = state.value.workerProfileModel
@@ -155,6 +170,7 @@ class EstimateDetailsViewModel(
                 )
 
                 viewModelScope.launch {
+                    if (!_state.value.isPro) incrementPdfCountUseCase?.invoke()
                     _effect.emit(EstimateDetailsEffect.ShareEstimatePdf(html = html, estimateTitle = "Estimate_${estimate.projectTitle.replace(" ", "_")}"))
                 }
             }

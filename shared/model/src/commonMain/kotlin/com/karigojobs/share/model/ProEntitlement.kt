@@ -31,15 +31,37 @@ data class ProStatus(
 }
 
 data class MonthlyJobLimit(
+    val yearMonth: String = "",
     val maxFreeJobs: Int = 5,
-    val usedJobsCount: Int = 0
+    val usedJobsCount: Int = 0,
+    val maxFreeEstimates: Int = 5,
+    val usedEstimatesCount: Int = 0,
+    val maxFreePdfExports: Int = 5,
+    val usedPdfCount: Int = 0
 ) {
     val remainingJobsCount: Int
         get() = (maxFreeJobs - usedJobsCount).coerceAtLeast(0)
 
     val isQuotaExhausted: Boolean
         get() = usedJobsCount >= maxFreeJobs
+
+    val isJobsQuotaExhausted: Boolean
+        get() = usedJobsCount >= maxFreeJobs
+
+    val remainingEstimatesCount: Int
+        get() = (maxFreeEstimates - usedEstimatesCount).coerceAtLeast(0)
+
+    val isEstimatesQuotaExhausted: Boolean
+        get() = usedEstimatesCount >= maxFreeEstimates
+
+    val remainingPdfCount: Int
+        get() = (maxFreePdfExports - usedPdfCount).coerceAtLeast(0)
+
+    val isPdfQuotaExhausted: Boolean
+        get() = usedPdfCount >= maxFreePdfExports
 }
+
+typealias MonthlyQuotaLimit = MonthlyJobLimit
 
 data class PaywallPackage(
     val planTier: PlanTier,

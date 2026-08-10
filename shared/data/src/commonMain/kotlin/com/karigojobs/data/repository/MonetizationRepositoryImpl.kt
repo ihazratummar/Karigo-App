@@ -1,8 +1,9 @@
 package com.karigojobs.data.repository
 
-import com.karigojobs.data.billing.PlatformBillingProviderImpl
+import com.karigojobs.data.billing.PlatformBillingProvider
 import com.karigojobs.datastore.store.MonetizationStore
 import com.karigojobs.domain.repository.MonetizationRepository
+import com.karigojobs.domain.repository.QuotaRepository
 import com.karigojobs.share.model.MonthlyJobLimit
 import com.karigojobs.share.model.PaywallPackage
 import com.karigojobs.share.model.PlanTier
@@ -12,7 +13,8 @@ import kotlinx.coroutines.flow.StateFlow
 
 class MonetizationRepositoryImpl(
     private val monetizationStore: MonetizationStore,
-    private val billingProvider: PlatformBillingProviderImpl
+    private val billingProvider: PlatformBillingProvider,
+    private val quotaRepository: QuotaRepository
 ) : MonetizationRepository {
 
     override val availablePackages: StateFlow<List<PaywallPackage>>
@@ -26,7 +28,7 @@ class MonetizationRepositoryImpl(
     }
 
     override fun observeMonthlyJobLimit(): Flow<MonthlyJobLimit> {
-        return monetizationStore.monthlyJobLimit
+        return quotaRepository.observeCurrentMonthQuota()
     }
 
     override suspend fun getProStatus(): ProStatus {
@@ -34,23 +36,18 @@ class MonetizationRepositoryImpl(
     }
 
     override suspend fun getMonthlyJobLimit(): MonthlyJobLimit {
-        return monetizationStore.monthlyJobLimit.value
+        return quotaRepository.getCurrentMonthQuota()
     }
 
     override suspend fun canCreateJob(): Boolean {
         val pro = getProStatus()
         if (pro.hasProAccess) return true
         val quota = getMonthlyJobLimit()
-        return !quota.isQuotaExhausted
+        return !quota.isJobsQuotaExhausted
     }
 
     override suspend fun incrementJobCount() {
-        val currentQuota = getMonthlyJobLimit()
-        val currentMonth = monetizationStore.lastResetYearMonth.value
-        monetizationStore.setMonthlyJobCount(
-            count = currentQuota.usedJobsCount + 1,
-            yearMonth = currentMonth
-        )
+        quotaRepository.incrementJobUsage()
     }
 
     override suspend fun setProStatus(
@@ -72,10 +69,7 @@ class MonetizationRepositoryImpl(
     }
 
     override suspend fun checkAndResetMonthlyQuota(currentYearMonth: String) {
-        val storedMonth = monetizationStore.lastResetYearMonth.value
-        if (storedMonth != currentYearMonth) {
-            monetizationStore.setMonthlyJobCount(count = 0, yearMonth = currentYearMonth)
-        }
+        quotaRepository.getCurrentMonthQuota()
     }
 
     override suspend fun restorePurchases(): Result<Boolean> {

@@ -23,6 +23,7 @@ data class EstimateDetailsState(
     val clientModel : ClientModel? = null,
 
     val isPro: Boolean = false,
+    val monthlyJobLimit: com.karigojobs.share.model.MonthlyJobLimit = com.karigojobs.share.model.MonthlyJobLimit(),
     val showProDialog: Boolean = false,
     val proDialogFeatureName: String = ""
 )

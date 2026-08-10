@@ -14,6 +14,12 @@ import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.job.details.JobDetailsEffect.*
 import com.karigojobs.domain.analytics.AnalyticsLogger
 import com.karigojobs.domain.analytics.AnalyticsEvent
+import com.karigojobs.domain.usecase.monetization.ObserveProStatusUseCase
+import com.karigojobs.domain.usecase.job.GetJobPaymentsUseCase
+import com.karigojobs.domain.usecase.job.AddJobPaymentUseCase
+import com.karigojobs.domain.usecase.job.DeleteJobPaymentUseCase
+import com.karigojobs.share.model.JobPaymentModel
+import com.karigojob.share.utils.UuidGenerator
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -23,6 +29,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.karigojob.share.utils.EpochUtils
 
 
 /**
@@ -39,6 +46,10 @@ class JobDetailsViewModel(
     private val getJobLabourItemUseCase: GetJobLabourItemUseCase,
     private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase,
     private val getWorkerProfileUseCase: GetWorkerProfileUseCase,
+    private val observeProStatusUseCase: ObserveProStatusUseCase,
+    private val getJobPaymentsUseCase: GetJobPaymentsUseCase,
+    private val addJobPaymentUseCase: AddJobPaymentUseCase,
+    private val deleteJobPaymentUseCase: DeleteJobPaymentUseCase,
     private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
@@ -55,6 +66,8 @@ class JobDetailsViewModel(
         loadJobLabourItem()
         loadJobMaterialItem()
         loadWorkerProfile()
+        observeProStatus()
+        loadPayments()
     }
 
 
@@ -114,12 +127,14 @@ class JobDetailsViewModel(
                 val worker = _state.value.workerProfileModel
                 val labour = _state.value.jobLabourItems
                 val materials = _state.value.jobMaterialItems
+                val payments = _state.value.jobPayments
                 val html = InvoiceHtmlBuilder.buildInvoiceHtml(
                     job = job,
                     client = client,
                     workerProfile = worker,
                     labourItems = labour,
                     materialItems = materials,
+                    payments = payments,
                     currencySymbol = event.currencySymbol
                 )
                 val jobTitle = "Invoice_${job.title.replace(" ", "_")}"
@@ -134,16 +149,48 @@ class JobDetailsViewModel(
                 val worker = _state.value.workerProfileModel
                 val labour = _state.value.jobLabourItems
                 val materials = _state.value.jobMaterialItems
+                val payments = _state.value.jobPayments
                 val whatsappText = InvoiceHtmlBuilder.buildWhatsappText(
                     job = job,
                     client = client,
                     workerProfile = worker,
                     labourItems = labour,
                     materialItems = materials,
+                    payments = payments,
                     currencySymbol = event.currencySymbol
                 )
                 viewModelScope.launch {
                     _effect.emit(JobDetailsEffect.ShareTextOnWhatsapp(whatsappText))
+                }
+            }
+
+            is JobDetailsIntent.AddPayment -> {
+                viewModelScope.launch {
+                    val payment = JobPaymentModel(
+                        id = UuidGenerator.generate(),
+                        jobId = jobId,
+                        amount = event.amount,
+                        paymentMethod = event.paymentMethod,
+                        paymentDate = event.date,
+                        note = event.note,
+                        createdAt = EpochUtils.now()
+                    )
+                    addJobPaymentUseCase(payment)
+                }
+            }
+
+            is JobDetailsIntent.DeletePayment -> {
+                viewModelScope.launch {
+                    deleteJobPaymentUseCase(event.paymentId)
+                }
+            }
+
+            is JobDetailsIntent.ToggleProDialog -> {
+                _state.update { it.copy(showProDialog = event.isOpen, proDialogFeatureName = event.featureName) }
+                if (!event.isOpen && event.featureName == "PAYWALL") {
+                    viewModelScope.launch {
+                        _effect.emit(NavigateToPaywall)
+                    }
                 }
             }
         }
@@ -219,6 +266,29 @@ class JobDetailsViewModel(
                     }
                     is Result.Error -> {
                         // Suppress profile load error for job details
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeProStatus() {
+        viewModelScope.launch {
+            observeProStatusUseCase().collectLatest { proStatus ->
+                _state.update { it.copy(isPro = proStatus.hasProAccess) }
+            }
+        }
+    }
+
+    private fun loadPayments() {
+        viewModelScope.launch {
+            getJobPaymentsUseCase(jobId = jobId).collectLatest { result ->
+                when (result) {
+                    is Result.Success -> {
+                        _state.update { it.copy(jobPayments = result.data) }
+                    }
+                    is Result.Error -> {
+                        _effect.emit(ShowError(result.error.asString()))
                     }
                 }
             }

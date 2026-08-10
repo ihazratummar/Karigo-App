@@ -16,4 +16,19 @@
     <string name="job_list_empty_title">এখনো কোনো কাজ নেই</string>
     <string name="job_list_empty_desc">কাজ ও পেমেন্ট ট্র্যাক করতে আপনার প্রথম কাজ তৈরি করুন</string>
     <string name="job_list_btn_create_first">প্রথম কাজ তৈরি করুন</string>
+<string name="payments_received_title">প্রাপ্ত পেমেন্টসমূহ</string>
+    <string name="payments_add_payment">+ পেমেন্ট যোগ করুন</string>
+    <string name="payments_no_payments_yet">এখনও কোনও পেমেন্ট রেকর্ড করা হয়নি।</string>
+    <string name="payments_total_received">মোট প্রাপ্ত</string>
+    <string name="payments_record_payment_title">পেমেন্ট রেকর্ড করুন</string>
+    <string name="payments_amount_label">পরিমাণ (%s)</string>
+    <string name="payments_remaining_balance">অবশিষ্ট ব্যালেন্স: %s</string>
+    <string name="payments_payment_method">পেমেন্ট পদ্ধতি</string>
+    <string name="payments_method_cash">ক্যাশ</string>
+    <string name="payments_method_upi">UPI</string>
+    <string name="payments_method_bank_transfer">ব্যাংক ট্রান্সফার</string>
+    <string name="payments_date_label">তারিখ</string>
+    <string name="payments_note_label">নোট (ঐচ্ছিক)</string>
+    <string name="payments_note_placeholder">যেমন অগ্রিম, দ্বিতীয় কিস্তি...</string>
+    <string name="payments_btn_add_payment">পেমেন্ট যোগ করুন</string>
 </resources>

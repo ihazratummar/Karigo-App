@@ -7,4 +7,8 @@
     <string name="home_recent_jobs_empty_title">সাম্প্রতিক কোনো কাজ নেই</string>
     <string name="home_recent_jobs_empty_desc">আপনার তৈরি করা কাজগুলো এখানে দেখা যাবে</string>
     <string name="home_recent_jobs_btn_create">কাজ যোগ করুন</string>
+    <string name="home_free_jobs_title">ফ্রি কাজ</string>
+    <string name="home_free_jobs_remaining">%1$dটি বাকি</string>
+    <string name="home_free_jobs_used_fmt">এই মাসে ৫টির মধ্যে %1$dটি ব্যবহৃত</string>
+    <string name="home_btn_go_pro">প্রো নিন — %1$s/মাস</string>
 </resources>

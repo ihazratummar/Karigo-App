@@ -15,7 +15,9 @@ import com.karigojobs.presentation.backup.DataBackupViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import com.karigojobs.feature.settings.LegalScreen
 import com.karigojobs.feature.settings.AboutScreen
+import com.karigojobs.feature.settings.paywall.PaywallScreen
 import com.karigojobs.presentation.settings.SettingsViewModel
+import com.karigojobs.presentation.monetization.MonetizationViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -66,7 +68,11 @@ fun NavGraphBuilder.settingsNav(
         }
 
         composable<SettingsRootRoute.ProOverviewRoute> {
-            PlaceholderSettingsScreen(title = "Pro Overview", onBack = { navHostController.popBackStack() })
+            val viewModel = koinViewModel<MonetizationViewModel>()
+            PaywallScreen(
+                viewModel = viewModel,
+                onBackClick = { navHostController.popBackStack() }
+            )
         }
 
         composable<SettingsRootRoute.NotificationRoute> {

@@ -58,10 +58,35 @@ import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
+import com.karigojobs.ui.common.ProFeatureDialog
+import com.karigojobs.ui.common.PreviewPaymentItem
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.*
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.BorderStroke
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
 import androidx.core.net.toUri
 import com.karigojobs.ui.toLocaleString
+import com.karigojobs.ui.common.PaymentsReceivedCard
+import com.karigojobs.ui.common.RecordPaymentBottomSheet
+import com.karigojobs.ui.common.UiPaymentRecord
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.Date
 import karigojobs.shared.resources.generated.resources.Res
 import karigojobs.shared.resources.generated.resources.common_export
 import karigojobs.shared.resources.generated.resources.common_grand_total
@@ -78,6 +103,7 @@ import org.jetbrains.compose.resources.stringResource
  * Created on 26/05/26
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JobDetailsScreen(
     modifier: Modifier = Modifier,
@@ -85,6 +111,7 @@ fun JobDetailsScreen(
     jobDetailsEffect: SharedFlow<JobDetailsEffect>?,
     onBackClick: () -> Unit,
     onEditClick: (String) -> Unit,
+    onPaywallClick: () -> Unit,
     event: (JobDetailsIntent) -> Unit
 ) {
 
@@ -92,6 +119,13 @@ fun JobDetailsScreen(
     val snackbarState = remember { SnackbarHostState() }
     var showShareDialog by remember { mutableStateOf(false) }
     var shareType by remember { mutableStateOf<ShareType?>(null) }
+    
+    var showRecordPaymentSheet by remember { mutableStateOf(false) }
+    var amountInput by remember { mutableStateOf("") }
+    var selectedMethod by remember { mutableStateOf("Cash") }
+    var paymentDate by remember { mutableStateOf(System.currentTimeMillis()) }
+    var noteInput by remember { mutableStateOf("") }
+    var showDatePicker by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         jobDetailsEffect?.collect { effect ->
@@ -151,6 +185,10 @@ fun JobDetailsScreen(
                         }
                         context.startActivity(android.content.Intent.createChooser(shareIntent, "Share Invoice"))
                     }
+                }
+
+                JobDetailsEffect.NavigateToPaywall -> {
+                    onPaywallClick()
                 }
             }
         }
@@ -242,7 +280,7 @@ fun JobDetailsScreen(
                     }
                 }
 
-                if (jobDetailsState.jobLabourItems.isNotEmpty()) {
+                if (jobDetailsState.jobModel?.includeLabourInInvoice == true && jobDetailsState.jobLabourItems.isNotEmpty()) {
                     item {
                         LabourItemList(
                             labourItems = jobDetailsState.jobLabourItems,
@@ -259,11 +297,44 @@ fun JobDetailsScreen(
                     }
                 }
 
+                // Payments log list section
                 item {
+                    Spacer(modifier = Modifier.height(dimens.Space.sm))
+                    val uiPayments = remember(jobDetailsState.jobPayments) {
+                        jobDetailsState.jobPayments.map { pay ->
+                            UiPaymentRecord(
+                                id = pay.id,
+                                amount = pay.amount,
+                                paymentMethod = pay.paymentMethod,
+                                paymentDate = pay.paymentDate,
+                                note = pay.note
+                            )
+                        }
+                    }
+                    PaymentsReceivedCard(
+                        currency = deviceInfo.currency,
+                        payments = uiPayments,
+                        totalReceived = jobDetailsState.paymentsTotal,
+                        onAddPaymentClick = {
+                            amountInput = ""
+                            selectedMethod = "Cash"
+                            paymentDate = System.currentTimeMillis()
+                            noteInput = ""
+                            showRecordPaymentSheet = true
+                        },
+                        onDeletePaymentClick = { paymentId ->
+                            event(JobDetailsIntent.DeletePayment(paymentId))
+                        },
+                        formatEpochMs = { formatEpochMs(it) }
+                    )
+                }
+
+                item {
+                    val currency = deviceInfo.currency
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(
-                            containerColor = appColor.accentBg
+                            containerColor = Color(0xFF0C2424)
                         ),
                         shape = KarigojobsShapes.medium,
                         border = customCardBorder()
@@ -276,29 +347,75 @@ fun JobDetailsScreen(
                         ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(
-                                    text = stringResource(Res.string.common_grand_total),
-                                    style = MaterialTheme.typography.bodyMedium.copy(
-                                        color = appColor.secondaryText
+                                Column {
+                                    Text(
+                                        text = "Grand Total",
+                                        color = appColor.secondaryText,
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Medium
                                     )
-                                )
-                                Text(
-                                    text = stringResource(Res.string.job_details_labour_and_materials),
-                                    style = MaterialTheme.typography.labelSmall.copy(
-                                        color = appColor.secondaryText
+                                    Spacer(modifier = Modifier.height(2.dp))
+                                    Text(
+                                        text = "$currency${jobDetailsState.jobModel?.total?.toLocaleString()}",
+                                        color = Color(0xFF00FFCC),
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.ExtraBold
                                     )
-                                )
+                                }
+
+                                Column(horizontalAlignment = Alignment.End) {
+                                    Text(
+                                        text = "Remaining",
+                                        color = appColor.secondaryText,
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                    Spacer(modifier = Modifier.height(2.dp))
+                                    Text(
+                                        text = "$currency${jobDetailsState.remainingBalance.toLocaleString()}",
+                                        color = Color(0xFFEF4444),
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.ExtraBold
+                                    )
+                                }
                             }
 
-                            Text(
-                                text = "${deviceInfo.currency}${jobDetailsState.jobModel?.total?.toLocaleString()}",
-                                style = MaterialTheme.typography.headlineLarge.copy(
-                                    color = KarigojobsIconColor
-                                )
+                            Spacer(modifier = Modifier.height(4.dp))
+
+                            // Progress Bar
+                            LinearProgressIndicator(
+                                progress = { jobDetailsState.paidPercentage },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(6.dp)
+                                    .clip(RoundedCornerShape(3.dp)),
+                                color = Color(0xFF00FFCC),
+                                trackColor = Color(0xFF1B3D3D)
                             )
+
+                            Spacer(modifier = Modifier.height(2.dp))
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "${(jobDetailsState.paidPercentage * 100).toInt()}% paid",
+                                    color = appColor.secondaryText,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                                Text(
+                                    text = "$currency${jobDetailsState.paymentsTotal.toLocaleString()} of $currency${jobDetailsState.jobModel?.total?.toLocaleString()}",
+                                    color = appColor.secondaryText,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
                         }
                     }
                 }
@@ -320,15 +437,17 @@ fun JobDetailsScreen(
                     ?: "Karigo Provider"
 
                 val previewItems = mutableListOf<PreviewItem>()
-                jobDetailsState.jobLabourItems.forEach { item ->
-                    previewItems.add(
-                        PreviewItem(
-                            name = item.itemName,
-                            subtitle = stringResource(Res.string.common_labour),
-                            quantityText = item.quantity.toLocaleString(),
-                            totalText = "$currency${item.mainTotal.toLocaleString()}"
+                if (jobDetailsState.jobModel?.includeLabourInInvoice == true) {
+                    jobDetailsState.jobLabourItems.forEach { item ->
+                        previewItems.add(
+                            PreviewItem(
+                                name = item.itemName,
+                                subtitle = stringResource(Res.string.common_labour),
+                                quantityText = item.quantity.toLocaleString(),
+                                totalText = "$currency${item.mainTotal.toLocaleString()}"
+                            )
                         )
-                    )
+                    }
                 }
                 jobDetailsState.jobMaterialItems.forEach { item ->
                     previewItems.add(
@@ -341,6 +460,14 @@ fun JobDetailsScreen(
                     )
                 }
 
+                val previewPayments = jobDetailsState.jobPayments.map { pay ->
+                    PreviewPaymentItem(
+                        dateText = formatEpochMs(pay.paymentDate),
+                        note = pay.note.ifBlank { null },
+                        amountText = "$currency${pay.amount.toLocaleString()}"
+                    )
+                }
+
                 DocumentPreviewCard(
                     businessName = businessName,
                     documentId = "Invoice #INV-${jobDetailsState.jobModel?.id?.takeLast(6)?.uppercase()}",
@@ -348,7 +475,9 @@ fun JobDetailsScreen(
                     clientName = jobDetailsState.clientModel?.name ?: jobDetailsState.jobModel?.clientName ?: "",
                     clientAddress = jobDetailsState.clientModel?.address?.ifBlank { null },
                     items = previewItems,
-                    totalText = "$currency${jobDetailsState.jobModel?.total?.toLocaleString()}"
+                    totalText = "$currency${jobDetailsState.jobModel?.total?.toLocaleString()}",
+                    payments = previewPayments,
+                    balanceDueText = "$currency${jobDetailsState.remainingBalance.toLocaleString()}"
                 )
             }
 
@@ -368,7 +497,10 @@ fun JobDetailsScreen(
                             buttonColor = appColor.cardColors,
                             contentColor = Color(0xFFEF5350),
                             label = stringResource(Res.string.common_export),
-                            icon = R.drawable.ic_pdf
+                            icon = R.drawable.ic_pdf,
+                            onProRequiredClick = {
+                                event(JobDetailsIntent.ToggleProDialog(isOpen = true, featureName = "PDF Export"))
+                            }
                         )
 
                         // WhatsApp Button
@@ -380,7 +512,10 @@ fun JobDetailsScreen(
                             buttonColor = appColor.cardColors,
                             contentColor = Color(0xFF4CAF50),
                             label = "WhatsApp",
-                            icon = R.drawable.whatsapp
+                            icon = R.drawable.whatsapp,
+                            onProRequiredClick = {
+                                event(JobDetailsIntent.ToggleProDialog(isOpen = true, featureName = "WhatsApp Sharing"))
+                            }
                         )
                     }
                 }
@@ -403,6 +538,75 @@ fun JobDetailsScreen(
                 event(JobDetailsIntent.ShareInvoiceOnWhatsapp(currencySymbol = currency))
             }
         )
+    }
+
+    if (jobDetailsState.showProDialog) {
+        ProFeatureDialog(
+            onDismiss = {
+                event(JobDetailsIntent.ToggleProDialog(isOpen = false))
+            },
+            onSeePlansClick = {
+                event(JobDetailsIntent.ToggleProDialog(isOpen = false, featureName = "PAYWALL"))
+            },
+            featureName = jobDetailsState.proDialogFeatureName
+        )
+    }
+
+    // Bottom Sheet for Record Payment
+    if (showRecordPaymentSheet) {
+        RecordPaymentBottomSheet(
+            currency = deviceInfo.currency,
+            remainingBalance = jobDetailsState.remainingBalance,
+            amountInput = amountInput,
+            onAmountChange = { amountInput = it.filter { char -> char.isDigit() || char == '.' } },
+            selectedMethod = selectedMethod,
+            onMethodSelect = { selectedMethod = it },
+            paymentDate = paymentDate,
+            onDatePickerClick = { showDatePicker = true },
+            noteInput = noteInput,
+            onNoteChange = { noteInput = it },
+            onDismissRequest = { showRecordPaymentSheet = false },
+            onAddPaymentClick = {
+                val amount = amountInput.toDoubleOrNull() ?: 0.0
+                event(JobDetailsIntent.AddPayment(
+                    amount = amount,
+                    paymentMethod = selectedMethod,
+                    date = paymentDate,
+                    note = noteInput
+                ))
+                showRecordPaymentSheet = false
+            }
+        )
+    }
+
+    if (showDatePicker) {
+        val datePickerState = rememberDatePickerState(initialSelectedDateMillis = paymentDate)
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let { paymentDate = it }
+                    showDatePicker = false
+                }) {
+                    Text("OK", color = Color(0xFF00FFCC))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePicker = false }) {
+                    Text("Cancel", color = appColor.secondaryText)
+                }
+            }
+        ) {
+            DatePicker(
+                state = datePickerState,
+                colors = DatePickerDefaults.colors(
+                    titleContentColor = appColor.primaryText,
+                    headlineContentColor = appColor.primaryText,
+                    selectedDayContainerColor = Color(0xFF00FFCC),
+                    selectedDayContentColor = Color.Black
+                )
+            )
+        }
     }
 }
 

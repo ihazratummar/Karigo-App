@@ -21,4 +21,8 @@ class DataStoreProvider(
         createDataStore { "$baseDir/settings.preferences_pb" }
     }
 
+    val monetization : DataStore<Preferences> by lazy {
+        createDataStore { "$baseDir/monetization.preferences_pb" }
+    }
+
 }

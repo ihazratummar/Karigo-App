@@ -22,10 +22,12 @@ import com.karigojobs.app.navigation.AppNavigation
 import com.karigojobs.domain.usecase.settings.GetAppPreferencesUseCase
 import com.karigojobs.domain.usecase.backup.GetAutoBackupStatusUseCase
 import com.karigojobs.feature.settings.backup.BackupScheduler
+import com.karigojobs.presentation.main.MainViewModel
 import com.karigojobs.presentation.onboarding.OnboardingCompleteState
 import com.karigojobs.presentation.onboarding.OnboardingViewModel
 import com.karigojobs.domain.usecase.settings.UpdateAppLanguageUseCase
 import com.karigojobs.share.model.AppLanguage
+import com.karigojobs.share.model.ProStatus
 import com.karigojobs.share.model.ThemePreference
 import com.karigojobs.shared.device.LocaleManager
 import com.karigojobs.ui.theme.KarigojobsTheme
@@ -35,8 +37,8 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 class MainActivity : AppCompatActivity() {
 
     private lateinit var onboardingViewModel: OnboardingViewModel
-    private val updateManager : UpdateManager by inject ()
-    private val getAppPreferencesUseCase: GetAppPreferencesUseCase by inject()
+    private val mainViewModel: MainViewModel by inject()
+    private val updateManager: UpdateManager by inject()
     private val getAutoBackupStatusUseCase: GetAutoBackupStatusUseCase by inject()
     private val updateAppLanguageUseCase: UpdateAppLanguageUseCase by inject()
 
@@ -52,14 +54,18 @@ class MainActivity : AppCompatActivity() {
         var isPreferencesLoaded = false
 
         splashscreen.setKeepOnScreenCondition {
-            onboardingViewModel.completedState.value == OnboardingCompleteState.Loading || !isPreferencesLoaded
+            onboardingViewModel.completedState.value == OnboardingCompleteState.Loading || !isPreferencesLoaded || mainViewModel.proStatus.value == null
         }
 
         setContent {
-            val appPreferencesState = getAppPreferencesUseCase().collectAsStateWithLifecycle(
+            val appPreferencesState = mainViewModel.appPreferences.collectAsStateWithLifecycle(
                 initialValue = null
             )
-            
+
+            val proStatusState = mainViewModel.proStatus.collectAsStateWithLifecycle(
+                initialValue = null
+            )
+
             val autoBackupState = getAutoBackupStatusUseCase().collectAsStateWithLifecycle(
                 initialValue = false
             )
@@ -77,11 +83,15 @@ class MainActivity : AppCompatActivity() {
                     BackupScheduler.cancelNightlyBackup(this@MainActivity)
                 }
             }
+
             val appPreferences = appPreferencesState.value ?: GetAppPreferencesUseCase.AppPreferences(
                 theme = ThemePreference.SYSTEM,
                 language = AppLanguage.ENGLISH,
                 currency = "₹"
             )
+
+            val proStatus = proStatusState.value ?: ProStatus()
+            val isProActive = proStatus.isProActive
 
             var isInitialLanguageSyncDone by remember { mutableStateOf(false) }
 
@@ -114,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                     Color.TRANSPARENT,
                     Color.TRANSPARENT
                 ) { isDarkTheme }
-                
+
                 enableEdgeToEdge(
                     statusBarStyle = style,
                     navigationBarStyle = style
@@ -124,7 +134,9 @@ class MainActivity : AppCompatActivity() {
             val windowsSizeClass = currentWindowAdaptiveInfo().windowSizeClass
             KarigojobsTheme(
                 windowSizeClass = windowsSizeClass,
-                darkTheme = isDarkTheme
+                darkTheme = isDarkTheme,
+                appCurrencySymbol = appPreferences.currency,
+                isPro = isProActive
             ) {
                 AppNavigation(
                     modifier = Modifier.fillMaxSize(),

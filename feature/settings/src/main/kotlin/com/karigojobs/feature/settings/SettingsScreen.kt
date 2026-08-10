@@ -1,21 +1,15 @@
 package com.karigojobs.feature.settings
 
-import androidx.compose.foundation.BorderStroke
+
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
@@ -24,39 +18,42 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import android.content.Intent
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import org.jetbrains.compose.resources.stringResource
-import karigojobs.shared.resources.generated.resources.*
-
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.feature.settings.component.QuickAccessData
 import com.karigojobs.feature.settings.component.SettingsComponent
 import com.karigojobs.feature.settings.component.SettingsOptionRow
 import com.karigojobs.feature.settings.component.SettingsScreenQuickAction
+import com.karigojobs.feature.settings.component.SettingsSelectionModal
 import com.karigojobs.feature.settings.component.SettingsTabData
 import com.karigojobs.feature.settings.component.SettingsTradeCard
 import com.karigojobs.feature.settings.component.SettingsTradeChangeModal
+import com.karigojobs.feature.settings.component.SettingsValueRow
 import com.karigojobs.feature.settings.component.WorkerProfileCard
 import com.karigojobs.presentation.settings.SettingsEvent
 import com.karigojobs.presentation.settings.SettingsState
 import com.karigojobs.share.model.AppLanguage
 import com.karigojobs.share.model.ThemePreference
-import com.karigojobs.feature.settings.component.SettingsSelectionModal
-import com.karigojobs.feature.settings.component.SettingsValueRow
 import com.karigojobs.ui.common.ActionNeedBanner
-import com.karigojobs.ui.common.IconPlaceholder
+import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.KarigoTopAppBar
+import com.karigojobs.ui.common.SpringToggle
 import com.karigojobs.ui.common.contentHorizontalPadding
-import com.karigojobs.ui.theme.KarigojobsCard
-import com.karigojobs.ui.theme.KarigojobsIconColor
-import com.karigojobs.ui.theme.KarigojobsShapes
-import com.karigojobs.ui.theme.KarigojobsText
-import com.karigojobs.ui.theme.KarigojobsText2
+import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.common.CurrencyPickerBottomSheet
+import com.karigojobs.ui.theme.isPro
+import karigojobs.shared.resources.generated.resources.*
+import karigojobs.shared.resources.generated.resources.settings_section_data_support
+import karigojobs.shared.resources.generated.resources.settings_section_legal_info
+import karigojobs.shared.resources.generated.resources.settings_tab_disclaimer
+import karigojobs.shared.resources.generated.resources.settings_tab_privacy
+import karigojobs.shared.resources.generated.resources.settings_tab_toc
+import karigojobs.shared.resources.generated.resources.settings_tab_tos
+import karigojobs.shared.resources.generated.resources.settings_theme_dark
+import karigojobs.shared.resources.generated.resources.settings_theme_light
+import karigojobs.shared.resources.generated.resources.settings_theme_system
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Settings screen showing either a banner to complete setup or the worker's business profile card.
@@ -93,11 +90,11 @@ fun SettingsScreen(
                 label = stringResource(Res.string.estimate_list_title),
                 onClick = settingsNavigation.navigateToEstimate,
             ),
-//            QuickAccessData(
-//                icon = R.drawable.earning,
-//                label = "Earnings",
-//                onClick = settingsNavigation.navigateToEarnings,
-//            )
+            QuickAccessData(
+                icon = R.drawable.earning,
+                label = "Earnings",
+                onClick = settingsNavigation.navigateToEarnings,
+            )
         )
 
         val legalAndInfoTabs = listOf(
@@ -169,6 +166,16 @@ fun SettingsScreen(
             )
         }
 
+        if (state.isCurrencyModalOpen) {
+            CurrencyPickerBottomSheet(
+                currentCurrencySymbol = state.currentCurrency,
+                onCurrencySelected = { selected ->
+                    event(SettingsEvent.UpdateCurrency(selected.symbol))
+                },
+                onDismissRequest = { event(SettingsEvent.ToggleCurrencyModal(false)) }
+            )
+        }
+
 
         LazyColumn(
             modifier = Modifier
@@ -213,6 +220,31 @@ fun SettingsScreen(
             }
 
             item {
+
+                val sectionTitle = if (isPro) stringResource(Res.string.pro_plan_active_section) else stringResource(Res.string.pro_section_title)
+                val cardTitle = if (isPro) stringResource(Res.string.pro_activated_title) else stringResource(Res.string.pro_banner_title)
+                val cardDesc = if (isPro) {
+                    when (state.proStatus.planTier) {
+                        com.karigojobs.share.model.PlanTier.PRO_YEARLY -> stringResource(Res.string.pro_yearly_active)
+                        com.karigojobs.share.model.PlanTier.PRO_LIFETIME -> stringResource(Res.string.pro_lifetime_active)
+                        else -> stringResource(Res.string.pro_monthly_active)
+                    }
+                } else stringResource(Res.string.pro_banner_desc)
+
+                SettingsComponent(
+                    title = sectionTitle
+                ) {
+                    SettingsOptionRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        icon = R.drawable.crown_fill,
+                        tabName = cardTitle,
+                        description = cardDesc,
+                        onClick = settingsNavigation.navigateToProOverView
+                    )
+                }
+            }
+
+            item {
                 SettingsComponent (
                     title = stringResource(Res.string.settings_section_data_support)
                 ){
@@ -223,6 +255,8 @@ fun SettingsScreen(
                         description = stringResource(Res.string.settings_option_backup_desc),
                         onClick = settingsNavigation.navigateToDataBackUp,
                     )
+
+
                 }
             }
 
@@ -250,13 +284,10 @@ fun SettingsScreen(
                     )
                     SettingsValueRow(
                         modifier = Modifier.fillMaxWidth(),
-                        icon = R.drawable.about, // Using about icon for now
-                        label = "Currency", // We can add string resource later
-                        value = com.karigojobs.ui.theme.deviceInfo.currency,
-                        onClick = { 
-                            val intent = Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS)
-                            context.startActivity(intent)
-                        }
+                        icon = R.drawable.about,
+                        label = stringResource(Res.string.settings_currency_title),
+                        value = state.currentCurrency,
+                        onClick = { event(SettingsEvent.ToggleCurrencyModal(true)) }
                     )
                 }
             }

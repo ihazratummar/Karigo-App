@@ -15,6 +15,7 @@ import com.karigojobs.domain.analytics.AnalyticsLogger
 import com.karigojobs.domain.analytics.AnalyticsEvent
 import com.karigojobs.domain.usecase.settings.GetWorkerProfileUseCase
 import com.karigojobs.domain.usecase.client.GetClientUseCase
+import com.karigojobs.domain.usecase.monetization.ObserveProStatusUseCase
 import com.karigojobs.presentation.job.details.InvoiceHtmlBuilder
 import com.karigojobs.presentation.job.details.PrintItem
 import com.karigojobs.presentation.job.details.SubtotalItem
@@ -41,6 +42,7 @@ class EstimateDetailsViewModel(
     private val deleteEstimateUseCase: DeleteEstimateUseCase,
     private val getWorkerProfileUseCase: GetWorkerProfileUseCase,
     private val getClientUseCase: GetClientUseCase,
+    private val observeProStatusUseCase: ObserveProStatusUseCase,
     private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
@@ -57,6 +59,7 @@ class EstimateDetailsViewModel(
         loadEstimate()
         loadEstimateMaterial()
         loadWorkerProfile()
+        observeProStatus()
     }
 
     fun onEvent(event: EstimateDetailsEvent) {
@@ -184,6 +187,15 @@ class EstimateDetailsViewModel(
                     _effect.emit(EstimateDetailsEffect.ShareTextOnWhatsapp(message))
                 }
             }
+
+            is EstimateDetailsEvent.ToggleProDialog -> {
+                _state.update { it.copy(showProDialog = event.isOpen, proDialogFeatureName = event.featureName) }
+                if (!event.isOpen && event.featureName == "PAYWALL") {
+                    viewModelScope.launch {
+                        _effect.emit(EstimateDetailsEffect.NavigateToPaywall)
+                    }
+                }
+            }
         }
     }
 
@@ -246,9 +258,17 @@ class EstimateDetailsViewModel(
                         _state.update { it.copy(workerProfileModel = result.data) }
                     }
                     is Result.Error -> {
-                        // Suppress
+                        // Suppress profile load error for estimate details
                     }
                 }
+            }
+        }
+    }
+
+    private fun observeProStatus() {
+        viewModelScope.launch {
+            observeProStatusUseCase().collectLatest { proStatus ->
+                _state.update { it.copy(isPro = proStatus.hasProAccess) }
             }
         }
     }

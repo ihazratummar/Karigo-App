@@ -3,13 +3,6 @@ package com.karigojobs.ui.theme
 import androidx.compose.runtime.compositionLocalOf
 import com.karigojobs.shared.device.LocaleProvide
 
-
-/**
- * @author hazratummar
- * Created on 24/05/26
- */
- 
-
 val LocalDeviceInfo = compositionLocalOf { getDeviceInfo() }
 
 data class DeviceInfo(
@@ -17,10 +10,15 @@ data class DeviceInfo(
     val countryName: String = ""
 )
 
-fun getDeviceInfo(): DeviceInfo {
-    val info = com.karigojobs.shared.device.LocaleProvide().getLocationInfo()
+fun getDeviceInfo(savedCurrencySymbol: String? = null): DeviceInfo {
+    val info = LocaleProvide().getLocationInfo()
+    val activeCurrency = if (!savedCurrencySymbol.isNullOrBlank()) {
+        savedCurrencySymbol
+    } else {
+        info.currencySymbol
+    }
     return DeviceInfo(
-        currency = info.currencySymbol,
+        currency = activeCurrency,
         countryName = info.countryName
     )
 }

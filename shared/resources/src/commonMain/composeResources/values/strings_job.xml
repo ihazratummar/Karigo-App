@@ -20,4 +20,20 @@
     <string name="job_list_empty_title">No jobs yet</string>
     <string name="job_list_empty_desc">Create your first job to track work and payments</string>
     <string name="job_list_btn_create_first">Create First Job</string>
+
+    <string name="payments_received_title">Payments Received</string>
+    <string name="payments_add_payment">+ Add Payment</string>
+    <string name="payments_no_payments_yet">No payments recorded yet.</string>
+    <string name="payments_total_received">TOTAL RECEIVED</string>
+    <string name="payments_record_payment_title">Record Payment</string>
+    <string name="payments_amount_label">AMOUNT (%s)</string>
+    <string name="payments_remaining_balance">Remaining balance: %s</string>
+    <string name="payments_payment_method">PAYMENT METHOD</string>
+    <string name="payments_method_cash">Cash</string>
+    <string name="payments_method_upi">UPI</string>
+    <string name="payments_method_bank_transfer">Bank Transfer</string>
+    <string name="payments_date_label">DATE</string>
+    <string name="payments_note_label">NOTE (OPTIONAL)</string>
+    <string name="payments_note_placeholder">e.g. Advance, 2nd installment...</string>
+    <string name="payments_btn_add_payment">Add Payment</string>
 </resources>

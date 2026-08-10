@@ -58,4 +58,9 @@
     <string name="common_added">شامل کیا گیا۔</string>
     <string name="common_removed">ہٹا دیا گیا۔</string>
     <string name="common_close">بند</string>
+    <!-- Currency Selector -->
+    <string name="settings_currency_title">کرنسی منتخب کریں</string>
+    <string name="settings_currency_search_placeholder">کرنسی یا ملک تلاش کریں...</string>
+    <string name="settings_popular_currencies">مقبول ترین کرنسیاں</string>
+    <string name="settings_all_currencies">تمام کرنسیاں</string>
 </resources>

@@ -16,4 +16,19 @@
     <string name="job_list_empty_title">ఇంకా పనులు లేవు</string>
     <string name="job_list_empty_desc">పని మరియు చెల్లింపులను ట్రాక్ చేయడానికి మీ మొదటి పనిని సృష్టించండి</string>
     <string name="job_list_btn_create_first">మొదటి పనిని సృష్టించండి</string>
+<string name="payments_received_title">అందుకున్న చెల్లింపులు</string>
+    <string name="payments_add_payment">+ చెల్లింపును జోడించండి</string>
+    <string name="payments_no_payments_yet">ఇప్పటివరకు ఎటువంటి చెల్లింపులు నమోదు కాలేదు.</string>
+    <string name="payments_total_received">మొత్తం అందుకోబడింది</string>
+    <string name="payments_record_payment_title">చెల్లింపును నమోదు చేయండి</string>
+    <string name="payments_amount_label">సొమ్ము (%s)</string>
+    <string name="payments_remaining_balance">మిగిలిన బ్యాలెన్స్: %s</string>
+    <string name="payments_payment_method">చెల్లింపు పద్ధతి</string>
+    <string name="payments_method_cash">నగదు</string>
+    <string name="payments_method_upi">UPI</string>
+    <string name="payments_method_bank_transfer">బ్యాంక్ బదిలీ</string>
+    <string name="payments_date_label">తేదీ</string>
+    <string name="payments_note_label">గమనిక (ఐచ్ఛికం)</string>
+    <string name="payments_note_placeholder">ఉదా. అడ్వాన్స్, 2వ విడత...</string>
+    <string name="payments_btn_add_payment">చెల్లింపును జోడించండి</string>
 </resources>

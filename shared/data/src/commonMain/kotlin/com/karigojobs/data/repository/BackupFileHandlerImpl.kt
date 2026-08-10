@@ -4,10 +4,6 @@ import com.karigojobs.domain.repository.BackupFileHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
-import okio.Path.Companion.toPath
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import okio.Buffer
 
 class BackupFileHandlerImpl(
@@ -71,26 +67,26 @@ class BackupFileHandlerImpl(
                 val onboardingBytes = readChunk()
                 val settingsBytes = readChunk()
                 
-                val dbPath = pathProvider.getDatabasePath()
-                val walPath = pathProvider.getDatabasePath().plus("-wal")
-                val shmPath = pathProvider.getDatabasePath().plus("-shm")
-                val onboardingPath = pathProvider.getDatastorePath("onboarding.preferences_pb")
-                val settingsPath = pathProvider.getDatastorePath("settings.preferences_pb")
+                if (dbBytes != null) {
+                    pathProvider.mergeDatabaseBackup(dbBytes, walBytes, shmBytes)
+                }
                 
-                if (dbBytes != null) NativeFileAccess.writeBytes(dbPath, dbBytes)
-                
-                if (walBytes != null) NativeFileAccess.writeBytes(walPath, walBytes)
-                else NativeFileAccess.delete(walPath)
-                
-                if (shmBytes != null) NativeFileAccess.writeBytes(shmPath, shmBytes)
-                else NativeFileAccess.delete(shmPath)
-                
-                if (onboardingBytes != null) NativeFileAccess.writeBytes(onboardingPath, onboardingBytes)
-                if (settingsBytes != null) NativeFileAccess.writeBytes(settingsPath, settingsBytes)
+                if (onboardingBytes != null) {
+                    val onboardingPath = pathProvider.getDatastorePath("onboarding.preferences_pb")
+                    if (!NativeFileAccess.exists(onboardingPath)) {
+                        NativeFileAccess.writeBytes(onboardingPath, onboardingBytes)
+                    }
+                }
+                if (settingsBytes != null) {
+                    val settingsPath = pathProvider.getDatastorePath("settings.preferences_pb")
+                    if (!NativeFileAccess.exists(settingsPath)) {
+                        NativeFileAccess.writeBytes(settingsPath, settingsBytes)
+                    }
+                }
                 
                 pathProvider.restartApp()
             } else {
-                // Not V1 binary format, try legacy ZIP fallback
+                // Not V1 binary format, try legacy ZIP/raw DB fallback
                 val success = pathProvider.extractLegacyBackup(bytes)
                 if (success) {
                     pathProvider.restartApp()

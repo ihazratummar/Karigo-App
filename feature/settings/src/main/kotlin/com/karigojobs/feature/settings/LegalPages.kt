@@ -107,12 +107,10 @@ object LegalPages {
                             LegalContentItem.Paragraph("Karigo uses the following third-party services, each of which may process limited data as described below. We do not control how these services collect or process data beyond what is described here."),
                             LegalContentItem.Subheading("4.1 Google Play Billing"),
                             LegalContentItem.Paragraph("When you purchase the Pro subscription, your payment is processed entirely by Google Play. Google may process your Google account identifier, payment method details, and transaction history. Karigo does not receive your payment card details, bank account information, or UPI credentials at any time."),
-                            LegalContentItem.Subheading("4.2 RevenueCat"),
-                            LegalContentItem.Paragraph("Karigo uses RevenueCat to manage subscription entitlements. When you purchase or restore a subscription, RevenueCat receives your Google Play purchase token and a pseudonymous app user identifier to verify and cache your subscription status. RevenueCat does not receive any personal information you enter into Karigo (no names, phone numbers, job data, or invoice data). RevenueCat stores purchase timestamps, subscription status, and app version."),
-                            LegalContentItem.Subheading("4.3 Android Vitals / Google Play Crash Reporting"),
-                            LegalContentItem.Paragraph("If you have enabled \"Share usage and diagnostics\" in your Android device settings, Google may automatically collect anonymised crash reports and performance data from Karigo. These reports contain technical stack trace information but do not include any personal data or business data you have entered into the app. You can disable this at any time in your device settings under Settings → Privacy → Usage & Diagnostics."),
-                            LegalContentItem.Subheading("4.4 No Advertising or Analytics SDKs"),
-                            LegalContentItem.Paragraph("Karigo contains no advertising networks, no analytics platforms (such as Firebase Analytics, Mixpanel, Amplitude, or similar), no social media SDKs, and no cross-app tracking. We do not display advertisements. We do not sell data to any third party for advertising purposes."),
+                            LegalContentItem.Subheading("4.2 Zero Advertising IDs & No Cross-App Tracking"),
+                            LegalContentItem.Paragraph("Karigo explicitly blocks Google Advertising ID (AAID) collection (`AD_ID` permission removed) and disables ad personalization signals. Karigo contains no advertising networks and does not track users across apps or websites. We do not display advertisements. We do not sell or share data with any third party for advertising purposes."),
+                            LegalContentItem.Subheading("4.3 Anonymized & Aggregate Usage Diagnostics"),
+                            LegalContentItem.Paragraph("Karigo logs high-level aggregate usage metrics (such as screen views and feature interactions) to improve app stability. IP addresses are automatically anonymized, and no personally identifiable information (no names, phone numbers, client data, or financial figures) is ever collected or transmitted."),
                             LegalContentItem.Table(
                                 headers = listOf("Data type", "Collected by Karigo?", "Where stored"),
                                 rows = listOf(
@@ -123,8 +121,8 @@ object LegalPages {
                                     ),
                                     listOf(
                                         TableCell.Text("Purchase token / subscription status"),
-                                        TableCell.Badge("RevenueCat + Google", BadgeType.YES),
-                                        TableCell.Text("RevenueCat servers")
+                                        TableCell.Badge("Google Play only", BadgeType.YES),
+                                        TableCell.Text("Google Play servers")
                                     ),
                                     listOf(
                                         TableCell.Text("Payment details"),

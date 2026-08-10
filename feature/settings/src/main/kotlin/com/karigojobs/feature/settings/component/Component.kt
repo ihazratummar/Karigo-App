@@ -82,7 +82,6 @@ fun SettingsScreenQuickAction(
     label: String,
     onClick: () -> Unit
 ) {
-
     Card(
         onClick = onClick,
         modifier = modifier,

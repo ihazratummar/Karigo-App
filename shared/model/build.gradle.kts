@@ -7,11 +7,7 @@ plugins {
 kotlin {
     android {
         namespace = "com.karigojobs.share.model"
-        compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
-            }
-        }
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
 
         withHostTestBuilder {

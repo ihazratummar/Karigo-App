@@ -17,6 +17,7 @@ class KarigojobsApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        com.karigojobs.data.billing.ActivityProvider.init(this)
 
         initKoin {
             androidContext(this@KarigojobsApp)

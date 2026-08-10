@@ -5,4 +5,5 @@ expect class AppPathProvider {
     fun getDatastorePath(fileName: String): String
     fun restartApp()
     fun extractLegacyBackup(bytes: ByteArray): Boolean
+    fun mergeDatabaseBackup(dbBytes: ByteArray, walBytes: ByteArray? = null, shmBytes: ByteArray? = null): Boolean
 }

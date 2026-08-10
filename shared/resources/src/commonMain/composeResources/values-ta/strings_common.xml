@@ -58,4 +58,9 @@
     <string name="common_added">சேர்க்கப்பட்டது</string>
     <string name="common_removed">நீக்கப்பட்டது</string>
     <string name="common_close">மூடு</string>
+    <!-- Currency Selector -->
+    <string name="settings_currency_title">நாணயத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="settings_currency_search_placeholder">நாணயம் அல்லது நாட்டைத் தேடுங்கள்...</string>
+    <string name="settings_popular_currencies">பிரபலமான நாணயங்கள்</string>
+    <string name="settings_all_currencies">அனைத்து நாணயங்களும்</string>
 </resources>

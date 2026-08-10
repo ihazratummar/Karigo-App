@@ -69,6 +69,7 @@ class AddJobViewModel(
     private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase,
     private val getJobLabourLogsUseCase: com.karigojobs.domain.usecase.job.GetJobLabourLogsUseCase,
     private val getClientUseCase: GetClientUseCase,
+    private val incrementJobCountUseCase: com.karigojobs.domain.usecase.monetization.IncrementJobCountUseCase,
     private val analytics: AnalyticsLogger
 ) : ViewModel() {
 
@@ -132,7 +133,8 @@ class AddJobViewModel(
                             it.copy(
                                 title = job.title,
                                 selectedTradeType = job.tradeType,
-                                status = job.status
+                                status = job.status,
+                                includeLabourInInvoice = job.includeLabourInInvoice
                             )
                         }
 
@@ -669,6 +671,9 @@ class AddJobViewModel(
 
                     when (result) {
                         is Result.Success -> {
+                            if (jobId == null) {
+                                incrementJobCountUseCase()
+                            }
                             analytics.logEvent(AnalyticsEvent.Event.JOB_CREATED)
                             _effect.emit(AddJobEffect.NavigateBack)
                             _state.update { it.copy(isLoading = false) }

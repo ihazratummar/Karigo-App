@@ -23,7 +23,9 @@ data class SettingsState(
     val currentCurrency: String = "₹",
     val isThemeModalOpen: Boolean = false,
     val isLanguageModalOpen: Boolean = false,
-    val isCurrencyModalOpen: Boolean = false
+    val isCurrencyModalOpen: Boolean = false,
+    val isPreviewProEnable: Boolean = false,
+    val proStatus: com.karigojobs.share.model.ProStatus = com.karigojobs.share.model.ProStatus()
 ){
     val selectedCount : Int get() = editTrades.count()
 }
@@ -40,6 +42,8 @@ sealed interface SettingsEvent {
     data class UpdateTheme(val theme: ThemePreference) : SettingsEvent
     data class UpdateLanguage(val language: AppLanguage) : SettingsEvent
     data class UpdateCurrency(val currency: String) : SettingsEvent
+
+    data object PreviewPro  : SettingsEvent
 }
 
 sealed interface SettingsEffect {

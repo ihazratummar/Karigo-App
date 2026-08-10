@@ -45,4 +45,24 @@ object EpochUtils {
         }
         return nextMonth.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
     }
+
+    fun getMonthIndexFromEpoch(epochMs: Long): Int {
+        val dt = Instant.fromEpochMilliseconds(epochMs).toLocalDateTime(TimeZone.UTC)
+        return dt.month.number - 1
+    }
+
+    fun getCurrentMonthIndex(): Int {
+        val today = Clock.System.now().toLocalDateTime(TimeZone.UTC).date
+        return today.month.number - 1
+    }
+
+    fun formatDate(epochMs: Long): String {
+        val dt = Instant.fromEpochMilliseconds(epochMs).toLocalDateTime(TimeZone.UTC)
+        val monthNames = listOf(
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        )
+        val monthName = monthNames.getOrElse(dt.month.number - 1) { "" }
+        return "${dt.dayOfMonth} $monthName ${dt.year}"
+    }
 }

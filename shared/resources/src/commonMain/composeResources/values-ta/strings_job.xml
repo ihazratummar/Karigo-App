@@ -16,4 +16,19 @@
     <string name="job_list_empty_title">இதுவரை வேலைகள் எதுவும் இல்லை</string>
     <string name="job_list_empty_desc">வேலை மற்றும் கட்டணங்களைக் கண்காணிக்க உங்கள் முதல் வேலையை உருவாக்கவும்</string>
     <string name="job_list_btn_create_first">முதல் வேலையை உருவாக்கவும்</string>
+<string name="payments_received_title">பெறப்பட்ட கொடுப்பனவுகள்</string>
+    <string name="payments_add_payment">+ கொடுப்பனவைச் சேர்</string>
+    <string name="payments_no_payments_yet">இதுவரை எந்த கொடுப்பனவும் பதிவு செய்யப்படவில்லை.</string>
+    <string name="payments_total_received">மொத்தம் பெறப்பட்டது</string>
+    <string name="payments_record_payment_title">கொடுப்பனவைப் பதிவு செய்க</string>
+    <string name="payments_amount_label">தொகை (%s)</string>
+    <string name="payments_remaining_balance">மீதமுள்ள இருப்பு: %s</string>
+    <string name="payments_payment_method">கொடுப்பனவு முறை</string>
+    <string name="payments_method_cash">பணம்</string>
+    <string name="payments_method_upi">UPI</string>
+    <string name="payments_method_bank_transfer">வங்கி மாற்றம்</string>
+    <string name="payments_date_label">தேதி</string>
+    <string name="payments_note_label">குறிப்பு (விருப்பமானது)</string>
+    <string name="payments_note_placeholder">உதாரணமாக அட்வான்ஸ், 2வது தவணை...</string>
+    <string name="payments_btn_add_payment">கொடுப்பனவைச் சேர்</string>
 </resources>

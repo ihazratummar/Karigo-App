@@ -23,6 +23,8 @@ import com.karigojobs.share.model.JobStatus
 import com.karigojobs.shared.database.EpochUtils
 import com.karigojobs.shared.database.KarigojobsDatabase
 import com.karigojobs.shared.database.UuidGenerator
+import com.karigojobs.share.model.JobPaymentModel
+import com.karigojobs.data.dto.toJobPaymentModelList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -402,5 +404,37 @@ class JobRepositoryImpl(
             }.catch {
                 Result.Error(JobError.NotFound)
             }
+    }
+
+    override fun getPaymentsForJob(jobId: String): Flow<Result<List<JobPaymentModel>, JobError>> {
+        return karigojobsDatabase.jobPaymentQueries
+            .getPaymentsForJob(job_id = jobId)
+            .asFlow()
+            .mapToList(ioDispatcher)
+            .map { payments ->
+                Result.Success(payments.toJobPaymentModelList()) as Result<List<JobPaymentModel>, JobError>
+            }.catch {
+                emit(Result.Error(JobError.NotFound))
+            }
+    }
+
+    override suspend fun addPayment(payment: JobPaymentModel): Result<Unit, JobError> {
+        return safeCall(JobError.SaveFailed) {
+            karigojobsDatabase.jobPaymentQueries.insertPayment(
+                id = payment.id,
+                job_id = payment.jobId,
+                amount = payment.amount,
+                payment_method = payment.paymentMethod,
+                payment_date = payment.paymentDate,
+                note = payment.note,
+                created_at = payment.createdAt
+            )
+        }
+    }
+
+    override suspend fun deletePayment(paymentId: String): Result<Unit, JobError> {
+        return safeCall(JobError.DeleteFailed) {
+            karigojobsDatabase.jobPaymentQueries.deletePayment(id = paymentId)
+        }
     }
 }

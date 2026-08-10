@@ -1,15 +1,24 @@
 package com.karigojobs.di
 
+import com.karigojobs.data.repository.BackupFileHandlerImpl
 import com.karigojobs.data.repository.ClientRepositoryImpl
+import com.karigojobs.data.repository.EarningsRepositoryImpl
+import com.karigojobs.data.repository.GoogleDriveRepositoryImpl
 import com.karigojobs.data.repository.JobRepositoryImpl
 import com.karigojobs.data.repository.MaterialCategoryRepositoryImpl
 import com.karigojobs.data.repository.MaterialRepositoryImpl
+import com.karigojobs.data.repository.MonetizationRepositoryImpl
 import com.karigojobs.data.repository.SiteEstimateRepositoryImpl
 import com.karigojobs.data.repository.WorkerRepositoryImpl
+import com.karigojobs.domain.analytics.AnalyticsLogger
+import com.karigojobs.domain.repository.BackupFileHandler
 import com.karigojobs.domain.repository.ClientRepository
+import com.karigojobs.domain.repository.EarningsRepository
+import com.karigojobs.domain.repository.GoogleDriveRepository
 import com.karigojobs.domain.repository.JobRepository
 import com.karigojobs.domain.repository.MaterialCategoryRepository
 import com.karigojobs.domain.repository.MaterialRepository
+import com.karigojobs.domain.repository.MonetizationRepository
 import com.karigojobs.domain.repository.SiteEstimateRepository
 import com.karigojobs.domain.repository.WorkerRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -36,6 +45,7 @@ fun getRepositoryModule(): Module = module {
     single<MaterialRepository> { MaterialRepositoryImpl(database = get(), ioDispatcher = get()) }
     single<JobRepository> { JobRepositoryImpl(karigojobsDatabase = get(), ioDispatcher = get()) }
     single<ClientRepository> { ClientRepositoryImpl(database = get(), ioDispatcher = get()) }
+    single<EarningsRepository> { EarningsRepositoryImpl(database = get()) }
     single<SiteEstimateRepository> {
         SiteEstimateRepositoryImpl(
             database = get(),
@@ -44,16 +54,18 @@ fun getRepositoryModule(): Module = module {
     }
     single<WorkerRepository> { WorkerRepositoryImpl(database = get(), ioDispatcher = get()) }
     single<MaterialCategoryRepository> { MaterialCategoryRepositoryImpl(database = get(), ioDispatcher = get()) }
-    single<com.karigojobs.domain.repository.GoogleDriveRepository> { 
-        com.karigojobs.data.repository.GoogleDriveRepositoryImpl(
-            HttpClient() { 
-                install(ContentNegotiation) { 
-                    json(Json { ignoreUnknownKeys = true }) 
-                } 
-            }, 
+    single<GoogleDriveRepository> {
+        GoogleDriveRepositoryImpl(
+            HttpClient() {
+                install(ContentNegotiation) {
+                    json(Json { ignoreUnknownKeys = true })
+                }
+            },
             get()
-        ) 
+        )
     }
-    single<com.karigojobs.domain.repository.BackupFileHandler> { com.karigojobs.data.repository.BackupFileHandlerImpl(pathProvider = get()) }
-    single<com.karigojobs.domain.analytics.AnalyticsLogger> { getAnalyticsLogger() }
+    single<BackupFileHandler> { BackupFileHandlerImpl(get()) }
+    single<MonetizationRepository> { MonetizationRepositoryImpl(get(), get()) }
+    single<AnalyticsLogger> { getAnalyticsLogger() }
+
 }

@@ -1,7 +1,6 @@
 package com.karigojobs.ui.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import org.jetbrains.compose.resources.stringResource
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -83,9 +82,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.karigojob.share.utils.DateUtils.toReadableDate
-import com.karigojob.share.utils.formatNumber
 import com.karigojob.share.utils.formatToLocalizeDate
 import com.karigojobs.app.android.ui.R
 import com.karigojobs.domain.repository.DeviceContact
@@ -121,19 +119,19 @@ import com.karigojobs.ui.theme.StatusPendingSurface
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.theme.isPro
 import com.karigojobs.ui.toLocaleString
 import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_btn_delete
 import karigojobs.shared.resources.generated.resources.common_item_count
 import karigojobs.shared.resources.generated.resources.common_tab_title_client_placeholder
-import karigojobs.shared.resources.generated.resources.dialog_delete_title_job
 import karigojobs.shared.resources.generated.resources.dialog_delete_desc_job
-import karigojobs.shared.resources.generated.resources.common_btn_delete
+import karigojobs.shared.resources.generated.resources.dialog_delete_title_job
 import karigojobs.shared.resources.generated.resources.job_detail_status_complete
 import karigojobs.shared.resources.generated.resources.job_detail_status_in_progress
 import karigojobs.shared.resources.generated.resources.job_detail_status_invoiced
 import karigojobs.shared.resources.generated.resources.job_detail_status_paid
 import karigojobs.shared.resources.generated.resources.job_detail_status_pending
-import karigojobs.shared.resources.generated.resources.job_list_search_field
 import karigojobs.shared.resources.generated.resources.worker_action_description
 import karigojobs.shared.resources.generated.resources.worker_action_missing
 import karigojobs.shared.resources.generated.resources.worker_action_needed
@@ -667,6 +665,33 @@ fun KarigoIconWIthBg(
             contentDescription = "Back",
             modifier = Modifier.size(iconSize),
             tint = iconColor
+        )
+    }
+}
+
+
+@Composable
+fun KarigoTextWIthBg(
+    modifier: Modifier = Modifier,
+    text: String,
+    iconColor: Color = NavInactive,
+    size: Dp = dimens.Height.minTouch,
+    iconBackGroundColor: Color = appColor.iconBgColor
+) {
+    val iconSize = size * 0.6f
+
+    Box(
+        modifier = modifier
+            .size(size)
+            .clip(KarigojobsShapes.medium)
+            .background(color = iconBackGroundColor),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier.size(iconSize),
+            color = iconColor,
+            textAlign = TextAlign.Center
         )
     }
 }
@@ -1446,40 +1471,65 @@ fun KarigoButtons(
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
     label: String,
     icon: Int? = null,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    onProRequiredClick: (() -> Unit)? = null
 ) {
+    val finalClick = if (isPro) onClick else { onProRequiredClick ?: {} }
+    val finalButtonColor = if (isPro) buttonColor else appColor.cardColors
+    val finalContentColor = if (isPro) contentColor else appColor.secondaryText.copy(alpha = 0.6f)
 
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = buttonColor,
-            contentColor = contentColor
-        ),
-        shape = KarigojobsShapes.medium,
-        modifier = modifier,
-        enabled = enabled,
-        border = customCardBorder()
-    ) {
+    Box(modifier = modifier) {
+        Button(
+            onClick = finalClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = finalButtonColor,
+                contentColor = finalContentColor,
+                disabledContainerColor = finalButtonColor,
+                disabledContentColor = finalContentColor
+            ),
+            shape = KarigojobsShapes.medium,
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            border = if (isPro) customCardBorder() else BorderStroke(dimens.Border.thin / 10f, appColor.secondaryText.copy(alpha = 0.2f))
+        ) {
+            icon?.let {
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = null,
+                    tint = finalContentColor,
+                    modifier = Modifier.size(dimens.Icon.xs)
+                )
+                Spacer(Modifier.width(dimens.Space.md))
+            }
 
-        icon?.let {
-            Icon(
-                painter = painterResource(icon),
-                contentDescription = null,
-                tint = contentColor,
-                modifier = Modifier.size(dimens.Icon.xs)
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    color = finalContentColor,
+                    fontWeight = FontWeight.SemiBold
+                )
             )
-            Spacer(Modifier.width(dimens.Space.md))
         }
 
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelMedium.copy(
-                color = contentColor,
-                fontWeight = FontWeight.SemiBold
-            )
-        )
+        if (!isPro) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .offset(x = (-4).dp, y = (-4).dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xFF0F2626))
+                    .border(BorderStroke(0.75.dp, Color(0xFF00FFCC)), RoundedCornerShape(8.dp))
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+            ) {
+                Text(
+                    text = "PRO",
+                    color = Color(0xFF00FFCC),
+                    fontSize = 8.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
     }
-
 }
 
 data class PreviewItem(
@@ -1487,6 +1537,12 @@ data class PreviewItem(
     val subtitle: String? = null,
     val quantityText: String,
     val totalText: String? = null
+)
+
+data class PreviewPaymentItem(
+    val dateText: String,
+    val note: String?,
+    val amountText: String
 )
 
 @Composable
@@ -1498,7 +1554,9 @@ fun DocumentPreviewCard(
     clientName: String,
     clientAddress: String?,
     items: List<PreviewItem>,
-    totalText: String?
+    totalText: String?,
+    payments: List<PreviewPaymentItem> = emptyList(),
+    balanceDueText: String? = null
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -1659,6 +1717,78 @@ fun DocumentPreviewCard(
                         style = MaterialTheme.typography.titleLarge.copy(
                             color = appColor.primaryText,
                             fontWeight = FontWeight.ExtraBold
+                        )
+                    )
+                }
+            }
+
+            if (payments.isNotEmpty()) {
+                Canvas(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(dimens.Padding.xs)
+                ) {
+                    drawLine(
+                        color = dividerColor,
+                        start = Offset(0f, 0f),
+                        end = Offset(size.width, 0f),
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(15f, 15f), 0f),
+                        strokeWidth = 3f
+                    )
+                }
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(dimens.Space.xs)
+                ) {
+                    Text(
+                        text = "PAYMENTS",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            color = appColor.secondaryText,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    payments.forEach { pay ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            val desc = pay.dateText + if (!pay.note.isNullOrBlank()) " · ${pay.note}" else ""
+                            Text(
+                                text = desc,
+                                style = MaterialTheme.typography.labelMedium.copy(color = appColor.secondaryText)
+                            )
+                            Text(
+                                text = pay.amountText,
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = Color(0xFF22C55E),
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+
+            if (!balanceDueText.isNullOrBlank()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "BALANCE DUE",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = appColor.primaryText,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    Text(
+                        text = balanceDueText,
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = Color(0xFFEF4444),
+                            fontWeight = FontWeight.Bold
                         )
                     )
                 }

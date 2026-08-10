@@ -7,4 +7,8 @@
     <string name="home_recent_jobs_empty_title">کوئی حالیہ کام نہیں</string>
     <string name="home_recent_jobs_empty_desc">آپ کے بنائے گئے کام یہاں ظاہر ہوں گے</string>
     <string name="home_recent_jobs_btn_create">کام شامل کریں</string>
+    <string name="home_free_jobs_title">مفت کام</string>
+    <string name="home_free_jobs_remaining">%1$d باقی</string>
+    <string name="home_free_jobs_used_fmt">اس مہینے 5 میں سے %1$d استعمال ہوئے</string>
+    <string name="home_btn_go_pro">پرو حاصل کریں — %1$s/ماہ</string>
 </resources>

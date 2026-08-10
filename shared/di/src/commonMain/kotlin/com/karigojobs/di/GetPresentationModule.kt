@@ -16,6 +16,7 @@ import com.karigojobs.presentation.onboarding.WorkerProfileViewModel
 import com.karigojobs.presentation.settings.SettingsViewModel
 import com.karigojobs.presentation.main.MainViewModel
 import com.karigojobs.presentation.backup.DataBackupViewModel
+import com.karigojobs.presentation.monetization.MonetizationViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
@@ -39,6 +40,7 @@ fun getPresentationModule(): Module = module {
     viewModelOf(::WorkerProfileViewModel)
     viewModelOf(::MainViewModel)
     viewModelOf(::DataBackupViewModel)
+    viewModelOf(::MonetizationViewModel)
 
     viewModel { (jobId: String?, clientId: String?) ->
         AddJobViewModel(
@@ -56,6 +58,7 @@ fun getPresentationModule(): Module = module {
             getJobMaterialItemsUseCase = get(),
             getJobLabourLogsUseCase = get(),
             getClientUseCase = get(),
+            incrementJobCountUseCase = get(),
             analytics = get()
         )
     }
@@ -86,6 +89,10 @@ fun getPresentationModule(): Module = module {
             getJobLabourItemUseCase = get(),
             getJobMaterialItemsUseCase = get(),
             getWorkerProfileUseCase = get(),
+            observeProStatusUseCase = get(),
+            getJobPaymentsUseCase = get(),
+            addJobPaymentUseCase = get(),
+            deleteJobPaymentUseCase = get(),
             analytics = get()
         )
     }
@@ -98,6 +105,7 @@ fun getPresentationModule(): Module = module {
             deleteEstimateUseCase = get(),
             getWorkerProfileUseCase = get(),
             getClientUseCase = get(),
+            observeProStatusUseCase = get(),
             analytics = get()
         )
     }
@@ -112,4 +120,10 @@ fun getPresentationModule(): Module = module {
         )
     }
 
+    viewModel {
+        com.karigojobs.presentation.earnings.EarningsViewModel(
+            observeProStatusUseCase = get(),
+            getEarningsSummaryUseCase = get()
+        )
+    }
 }

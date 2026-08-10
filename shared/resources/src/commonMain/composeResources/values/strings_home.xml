@@ -8,4 +8,10 @@
     <string name="home_recent_jobs_empty_title">No recent jobs</string>
     <string name="home_recent_jobs_empty_desc">Your created jobs will appear here</string>
     <string name="home_recent_jobs_btn_create">Add Job</string>
+
+    <!-- Free Jobs Banner -->
+    <string name="home_free_jobs_title">Free Jobs</string>
+    <string name="home_free_jobs_remaining">%1$d remaining</string>
+    <string name="home_free_jobs_used_fmt">%1$d of %2$d used this month</string>
+    <string name="home_btn_go_pro">Go Pro — %1$s/mo</string>
 </resources>

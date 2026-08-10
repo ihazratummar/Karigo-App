@@ -58,4 +58,9 @@
     <string name="common_added">ചേർത്തു</string>
     <string name="common_removed">നീക്കം ചെയ്തു</string>
     <string name="common_close">കോസ്</string>
+    <!-- Currency Selector -->
+    <string name="settings_currency_title">നാണയം തിരഞ്ഞെടുക്കുക</string>
+    <string name="settings_currency_search_placeholder">നാണയം അല്ലെങ്കിൽ രാജ്യം തിരയുക...</string>
+    <string name="settings_popular_currencies">പ്രശസ്തമായ നാണയങ്ങൾ</string>
+    <string name="settings_all_currencies">എല്ലാ നാണയങ്ങളും</string>
 </resources>

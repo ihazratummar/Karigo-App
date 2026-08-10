@@ -9,11 +9,7 @@ plugins {
 kotlin {
     android {
         namespace = "com.karigojobs.share.di"
-        compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
-            }
-        }
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
 
         withHostTestBuilder {
@@ -84,6 +80,7 @@ kotlin {
             dependencies {
                 implementation(libs.koin.android)
                 implementation(libs.ktor.client.android)
+                implementation(libs.play.billing.ktx)
             }
         }
 

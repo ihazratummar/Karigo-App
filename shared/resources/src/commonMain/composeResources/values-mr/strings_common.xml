@@ -58,4 +58,9 @@
     <string name="common_added">जोडले</string>
     <string name="common_removed">काढून टाकले</string>
     <string name="common_close">बंद करा</string>
+    <!-- Currency Selector -->
+    <string name="settings_currency_title">चलण निवडा</string>
+    <string name="settings_currency_search_placeholder">चलण किंवा देश शोधा...</string>
+    <string name="settings_popular_currencies">लोकप्रिय चलणे</string>
+    <string name="settings_all_currencies">सर्व चलणे</string>
 </resources>

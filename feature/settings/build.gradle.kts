@@ -17,6 +17,7 @@ dependencies {
 
     implementation(projects.shared.model)
     implementation(projects.shared.domain)
+    implementation(projects.shared.utils)
     api(projects.shared.presentation)
 
     implementation(libs.koin.core)

@@ -1,0 +1,15 @@
+DROP VIEW IF EXISTS monthly_earning;
+
+CREATE VIEW monthly_earning AS
+SELECT
+    strftime('%Y-%m', datetime(created_at / 1000, 'unixepoch')) AS month,
+    COUNT(*) AS job_count,
+    TOTAL(CASE WHEN UPPER(status) LIKE '%PAID%' THEN total ELSE 0.0 END) AS revenue,
+    TOTAL(total) AS total_billed,
+    TOTAL(CASE WHEN UPPER(status) NOT LIKE '%PAID%' THEN total ELSE 0.0 END) AS outstanding,
+    AVG(CASE WHEN UPPER(status) LIKE '%PAID%' THEN total ELSE 0.0 END) AS average
+
+FROM job
+WHERE created_at IS NOT NULL AND created_at > 0
+GROUP BY strftime('%Y-%m', datetime(created_at / 1000, 'unixepoch'))
+ORDER BY month DESC;

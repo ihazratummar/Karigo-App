@@ -58,4 +58,9 @@
     <string name="common_added">जोड़ा गया</string>
     <string name="common_removed">निकाला गया</string>
     <string name="common_close">बंद करे</string>
+    <!-- Currency Selector -->
+    <string name="settings_currency_title">मुद्रा चुनें</string>
+    <string name="settings_currency_search_placeholder">मुद्रा या देश खोजें...</string>
+    <string name="settings_popular_currencies">लोकप्रिय मुद्राएं</string>
+    <string name="settings_all_currencies">सभी मुद्राएं</string>
 </resources>

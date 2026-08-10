@@ -16,4 +16,19 @@
     <string name="job_list_empty_title">ابھی کوئی کام نہیں ہے</string>
     <string name="job_list_empty_desc">کام اور ادائیگیوں کو ٹریک کرنے کے لیے اپنا پہلا کام بنائیں</string>
     <string name="job_list_btn_create_first">پہلا کام بنائیں</string>
+<string name="payments_received_title">موصول شدہ ادائیگیوں</string>
+    <string name="payments_add_payment">+ ادائیگی شامل کریں</string>
+    <string name="payments_no_payments_yet">ابھی تک کوئی ادائیگی ریکارڈ نہیں کی گئی ہے۔</string>
+    <string name="payments_total_received">کل موصول شدہ</string>
+    <string name="payments_record_payment_title">ادائیگی ریکارڈ کریں</string>
+    <string name="payments_amount_label">رقم (%s)</string>
+    <string name="payments_remaining_balance">بقایا رقم: %s</string>
+    <string name="payments_payment_method">ادائیگی کا طریقہ</string>
+    <string name="payments_method_cash">نقد</string>
+    <string name="payments_method_upi">UPI</string>
+    <string name="payments_method_bank_transfer">بینک ٹرانسفر</string>
+    <string name="payments_date_label">تاریخ</string>
+    <string name="payments_note_label">نوٹ (اختیاری)</string>
+    <string name="payments_note_placeholder">مثلاً ایڈوانس، دوسری قسط...</string>
+    <string name="payments_btn_add_payment">ادائیگی شامل کریں</string>
 </resources>

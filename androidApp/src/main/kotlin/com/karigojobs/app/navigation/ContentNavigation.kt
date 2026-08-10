@@ -24,6 +24,7 @@ import com.karigojobs.feature.settings.SettingsScreen
 import com.karigojobs.presentation.client.details.ClientDetailsViewModel
 import com.karigojobs.presentation.client.list.ClientListViewModel
 import com.karigojobs.presentation.dashboard.HomeViewModel
+import com.karigojobs.presentation.earnings.EarningsViewModel
 import com.karigojobs.presentation.estimate.add.AddEstimateViewModel
 import com.karigojobs.presentation.estimate.details.EstimateDetailsViewModel
 import com.karigojobs.presentation.estimate.list.EstimateListViewModel
@@ -53,6 +54,8 @@ fun NavGraphBuilder.contentNavigation(
 
             val viewModel = koinViewModel<HomeViewModel>()
             val state by viewModel.state.collectAsStateWithLifecycle()
+            val monetizationViewModel = koinViewModel<com.karigojobs.presentation.monetization.MonetizationViewModel>()
+            val monetizationState by monetizationViewModel.state.collectAsStateWithLifecycle()
 
             HomeScreen(
                 onNotificationClick = {
@@ -83,6 +86,11 @@ fun NavGraphBuilder.contentNavigation(
                 },
                 onCompleteBannerClick = {
                     navHostController.navigate(MainRoute.SetupWorkerRoute)
+                },
+                proStatus = monetizationState.proStatus,
+                monthlyJobLimit = monetizationState.monthlyJobLimit,
+                onGoProClick = {
+                    navHostController.navigate(SettingsRootRoute.ProOverviewRoute)
                 }
             )
         }
@@ -119,6 +127,9 @@ fun NavGraphBuilder.contentNavigation(
                 },
                 onEditClick = { jobId ->
                     navHostController.navigate(MainRoute.AddJobRoute(jobId = jobId))
+                },
+                onPaywallClick = {
+                    navHostController.navigate(SettingsRootRoute.ProOverviewRoute)
                 },
                 event = viewModel::onEven
             )
@@ -237,6 +248,9 @@ fun NavGraphBuilder.contentNavigation(
                 },
                 onEditClick = { estimateId ->
                     navHostController.navigate(MainRoute.AddEstimateRoute(estimateId = estimateId))
+                },
+                onPaywallClick = {
+                    navHostController.navigate(SettingsRootRoute.ProOverviewRoute)
                 }
             )
         }
@@ -279,7 +293,15 @@ fun NavGraphBuilder.contentNavigation(
         }
 
         composable<MainRoute.EarningRoute> {
-            // TODO: Implement Earning Screen
+            val viewModel = koinViewModel<EarningsViewModel>()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            com.karigojobs.feature.settings.earnings.EarningsScreen(
+                state = state,
+                event = viewModel::onEvent,
+                effect = viewModel.effect,
+                onNavigateBack = { navHostController.popBackStack() },
+                onNavigateToPaywall = { navHostController.navigate(SettingsRootRoute.ProOverviewRoute) }
+            )
         }
     }
 }

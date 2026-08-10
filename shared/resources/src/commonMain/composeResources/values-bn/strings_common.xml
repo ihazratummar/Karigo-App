@@ -58,4 +58,9 @@
     <string name="common_added">যোগ করা হয়েছে</string>
     <string name="common_removed">অপসারণ করা হয়েছে</string>
     <string name="common_close">বন্ধ</string>
+    <!-- Currency Selector -->
+    <string name="settings_currency_title">মুদ্রা নির্বাচন করুন</string>
+    <string name="settings_currency_search_placeholder">মুদ্রা বা দেশ খুঁজুন...</string>
+    <string name="settings_popular_currencies">জনপ্রিয় মুদ্রাসমূহ</string>
+    <string name="settings_all_currencies">সকল মুদ্রাসমূহ</string>
 </resources>

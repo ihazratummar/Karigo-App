@@ -58,4 +58,9 @@
     <string name="common_added">జోడించబడింది</string>
     <string name="common_removed">తొలగించబడింది</string>
     <string name="common_close">మూయండి</string>
+    <!-- Currency Selector -->
+    <string name="settings_currency_title">కరెన్సీని ఎంచుకోండి</string>
+    <string name="settings_currency_search_placeholder">కరెన్సీ లేదా దేశాన్ని శోధించండి...</string>
+    <string name="settings_popular_currencies">జనాదరణ పొందిన కరెన్సీలు</string>
+    <string name="settings_all_currencies">అన్ని కరెన్సీలు</string>
 </resources>

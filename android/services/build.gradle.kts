@@ -16,6 +16,7 @@ dependencies {
     //Google Play Store Update
     implementation(libs.app.update)
     implementation(libs.app.update.ktx)
+    implementation(libs.play.billing.ktx)
 
     implementation(libs.koin.compose)
 

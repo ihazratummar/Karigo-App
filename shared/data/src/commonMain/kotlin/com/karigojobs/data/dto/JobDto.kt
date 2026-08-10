@@ -10,6 +10,8 @@ import com.karigojobs.shared.database.tables.GetJobById
 import com.karigojobs.shared.database.tables.Job
 import com.karigojobs.shared.database.tables.Job_material
 import com.karigojobs.shared.database.tables.SearchJobs
+import com.karigojobs.shared.database.tables.Job_payment
+import com.karigojobs.share.model.JobPaymentModel
 
 
 /**
@@ -160,4 +162,20 @@ fun com.karigojobs.shared.database.tables.Job_labour_log.toJobLabourLogModel() :
 
 fun List<com.karigojobs.shared.database.tables.Job_labour_log>.toJobLabourLogModelList() : List<com.karigojobs.share.model.JobLabourLogModel> {
     return this.map { it.toJobLabourLogModel() }
+}
+
+fun Job_payment.toJobPaymentModel() : JobPaymentModel {
+    return JobPaymentModel(
+        id = id,
+        jobId = job_id,
+        amount = amount,
+        paymentMethod = payment_method,
+        paymentDate = payment_date,
+        note = note,
+        createdAt = created_at
+    )
+}
+
+fun List<Job_payment>.toJobPaymentModelList() : List<JobPaymentModel> {
+    return this.map { it.toJobPaymentModel() }
 }

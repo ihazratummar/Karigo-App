@@ -25,6 +25,9 @@ import com.karigojobs.domain.usecase.job.GetJobLabourItemUseCase
 import com.karigojobs.domain.usecase.job.GetJobMaterialItemsUseCase
 import com.karigojobs.domain.usecase.job.SaveFullJobTransactionUseCase
 import com.karigojobs.domain.usecase.job.SearchJobUseCase
+import com.karigojobs.domain.usecase.job.GetJobPaymentsUseCase
+import com.karigojobs.domain.usecase.job.AddJobPaymentUseCase
+import com.karigojobs.domain.usecase.job.DeleteJobPaymentUseCase
 import com.karigojobs.domain.usecase.material.AddMaterialUseCase
 import com.karigojobs.domain.usecase.material.DeleteMaterialUseCase
 import com.karigojobs.domain.usecase.material.GetMaterialByIdUseCase
@@ -47,6 +50,9 @@ import com.karigojobs.domain.usecase.backup.RestoreBackupUseCase
 import com.karigojobs.domain.usecase.backup.GetAutoBackupStatusUseCase
 import com.karigojobs.domain.usecase.backup.SetAutoBackupStatusUseCase
 import com.karigojobs.domain.usecase.backup.GetLastBackupTimestampUseCase
+import com.karigojobs.domain.usecase.monetization.CanCreateJobUseCase
+import com.karigojobs.domain.usecase.monetization.IncrementJobCountUseCase
+import com.karigojobs.domain.usecase.monetization.SetProStatusUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -88,6 +94,9 @@ fun getDomainModule(): Module = module {
     single { com.karigojobs.domain.usecase.job.GetJobLabourLogsUseCase(jobRepository = get()) }
     single { GetJobMaterialItemsUseCase(jobRepository = get()) }
     single { GetJobByClientUseCase(jobRepository = get()) }
+    single { GetJobPaymentsUseCase(jobRepository = get()) }
+    single { AddJobPaymentUseCase(jobRepository = get()) }
+    single { DeleteJobPaymentUseCase(jobRepository = get()) }
 
     single { InsertClientUseCase(clientRepository = get()) }
     single { IsClientExistUseCase(clientRepository = get()) }
@@ -116,4 +125,15 @@ fun getDomainModule(): Module = module {
     single { GetAutoBackupStatusUseCase(settingsStore = get()) }
     single { SetAutoBackupStatusUseCase(settingsStore = get()) }
     single { GetLastBackupTimestampUseCase(repository = get()) }
+
+    single { com.karigojobs.domain.usecase.monetization.ObserveProStatusUseCase(monetizationRepository = get()) }
+    single { com.karigojobs.domain.usecase.monetization.ObserveMonthlyJobLimitUseCase(monetizationRepository = get()) }
+    single { com.karigojobs.domain.usecase.monetization.GetAvailablePackagesUseCase(monetizationRepository = get()) }
+    single { com.karigojobs.domain.usecase.monetization.PurchaseProPlanUseCase(monetizationRepository = get()) }
+    single { com.karigojobs.domain.usecase.monetization.RestorePurchasesUseCase(monetizationRepository = get()) }
+    single { com.karigojobs.domain.usecase.monetization.CheckMonthlyQuotaUseCase(monetizationRepository = get()) }
+    single { CanCreateJobUseCase(monetizationRepository = get()) }
+    single { IncrementJobCountUseCase(monetizationRepository = get()) }
+    single { SetProStatusUseCase(monetizationRepository = get()) }
+    single { com.karigojobs.domain.usecase.earnings.GetEarningsSummaryUseCase(earningsRepository = get()) }
 }

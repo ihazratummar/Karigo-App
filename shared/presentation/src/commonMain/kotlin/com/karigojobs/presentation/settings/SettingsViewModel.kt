@@ -12,7 +12,10 @@ import com.karigojobs.domain.usecase.trade.SaveTradesUseCase
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.domain.analytics.AnalyticsLogger
 import com.karigojobs.domain.analytics.AnalyticsEvent
+import com.karigojobs.domain.usecase.monetization.ObserveProStatusUseCase
+import com.karigojobs.domain.usecase.monetization.SetProStatusUseCase
 import com.karigojobs.domain.usecase.settings.UpdateAppCurrencyUseCase
+import com.karigojobs.share.model.PlanTier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,7 +37,9 @@ class SettingsViewModel (
     private val updateThemePreferenceUseCase: UpdateThemePreferenceUseCase,
     private val updateAppLanguageUseCase: UpdateAppLanguageUseCase,
     private val updateAppCurrencyUseCase: UpdateAppCurrencyUseCase,
-    private val analytics: AnalyticsLogger
+    private val analytics: AnalyticsLogger,
+    private val setProStatusUseCase: SetProStatusUseCase,
+    private val observeProStatusUseCase: ObserveProStatusUseCase
 ): ViewModel() {
 
 
@@ -54,6 +59,7 @@ class SettingsViewModel (
         loadWorker()
         loadSelectedTradeTypes()
         loadAppPreferences()
+        observeProStatus()
     }
 
 
@@ -103,6 +109,13 @@ class SettingsViewModel (
                     _state.update { it.copy(isCurrencyModalOpen = false) }
                 }
             }
+
+            SettingsEvent.PreviewPro -> {
+                viewModelScope.launch {
+                    val nextProState = !_state.value.isPreviewProEnable
+                    setProStatusUseCase(isPro = nextProState, tier = PlanTier.PRO_MONTHLY)
+                }
+            }
         }
     }
 
@@ -148,6 +161,14 @@ class SettingsViewModel (
         viewModelScope.launch {
             getAppPreferencesUseCase().collectLatest { prefs ->
                 _state.update { it.copy(currentTheme = prefs.theme, currentLanguage = prefs.language, currentCurrency = prefs.currency) }
+            }
+        }
+    }
+
+    private fun observeProStatus() {
+        viewModelScope.launch {
+            observeProStatusUseCase().collectLatest { proStatus ->
+                _state.update { it.copy(isPreviewProEnable = proStatus.hasProAccess, proStatus = proStatus) }
             }
         }
     }

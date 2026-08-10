@@ -25,6 +25,8 @@ import karigojobs.shared.resources.generated.resources.common_removed
 import karigojobs.shared.resources.generated.resources.common_close
 import karigojobs.shared.resources.generated.resources.common_workers
 import org.jetbrains.compose.resources.stringResource
+import androidx.compose.ui.platform.LocalLocale
+import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +76,7 @@ fun LabourLogsModal(
                     ) {
                         items(logs.sortedByDescending { it.createdAt }) { log ->
                             val isAddition = log.changeAmount > 0
-                            val formatter = SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.getDefault())
+                            val formatter = SimpleDateFormat("MMM dd, yyyy hh:mm a", LocalLocale.current.platformLocale)
                             val dateString = formatter.format(Date(log.createdAt))
                             
                             Row(
@@ -93,7 +95,7 @@ fun LabourLogsModal(
                                     val logText = if (isAddition) {
                                         "${stringResource(Res.string.common_added)} ${log.changeAmount} $unitLabel"
                                     } else {
-                                        "${stringResource(Res.string.common_removed)} ${Math.abs(log.changeAmount)} $unitLabel"
+                                        "${stringResource(Res.string.common_removed)} ${abs(log.changeAmount)} $unitLabel"
                                     }
                                     Text(
                                         text = logText,

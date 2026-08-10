@@ -16,4 +16,19 @@
     <string name="job_list_empty_title">ഇതുവരെ ജോലികളൊന്നുമില്ല</string>
     <string name="job_list_empty_desc">ജോലിയും പേയ്‌മെന്റുകളും ട്രാക്ക് ചെയ്യാൻ നിങ്ങളുടെ ആദ്യ ജോലി സൃഷ്‌ടിക്കുക</string>
     <string name="job_list_btn_create_first">ആദ്യ ജോലി സൃഷ്ടിക്കുക</string>
+<string name="payments_received_title">ലഭിച്ച പേയ്‌മെന്റുകൾ</string>
+    <string name="payments_add_payment">+ പേയ്‌മെന്റ് ചേർക്കുക</string>
+    <string name="payments_no_payments_yet">ഇതുവരെ പേയ്‌മെന്റുകളൊന്നും രേഖപ്പെടുത്തിയിട്ടില്ല.</string>
+    <string name="payments_total_received">ആകെ ലഭിച്ചത്</string>
+    <string name="payments_record_payment_title">പേയ്‌മെന്റ് രേഖപ്പെടുത്തുക</string>
+    <string name="payments_amount_label">തുക (%s)</string>
+    <string name="payments_remaining_balance">ബാക്കി തുക: %s</string>
+    <string name="payments_payment_method">പേയ്‌മെന്റ് രീതി</string>
+    <string name="payments_method_cash">രൊക്കം</string>
+    <string name="payments_method_upi">UPI</string>
+    <string name="payments_method_bank_transfer">ബാങ്ക് ട്രാൻസ്ഫർ</string>
+    <string name="payments_date_label">തീയതി</string>
+    <string name="payments_note_label">കുറിപ്പ് (ഓപ്ഷണൽ)</string>
+    <string name="payments_note_placeholder">ഉദാഹരണത്തിന് അഡ്വാൻസ്, രണ്ടാമത്തെ ഗഡു...</string>
+    <string name="payments_btn_add_payment">പേയ്‌മെന്റ് ചേർക്കുക</string>
 </resources>

@@ -6,6 +6,7 @@ import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.WorkerProfileModel
+import com.karigojobs.share.model.JobPaymentModel
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -46,6 +47,7 @@ object InvoiceHtmlBuilder {
         workerProfile: WorkerProfileModel?,
         labourItems: List<JobLabourItemModel>,
         materialItems: List<JobMaterialItemModel>,
+        payments: List<JobPaymentModel> = emptyList(),
         currencySymbol: String
     ): String {
         val invoiceNumber = "INV-${job.id.takeLast(6).uppercase()}"
@@ -78,8 +80,21 @@ object InvoiceHtmlBuilder {
             sb.append("- ${it.name} x${it.quantity}: $currencySymbol${it.mainTotal.formatNumber()}\n")
         }
         
-        sb.append("\n*TOTAL: $currencySymbol${job.total.formatNumber()}*\n\n")
-        sb.append("Thank you for your business!")
+        sb.append("\n*TOTAL: $currencySymbol${job.total.formatNumber()}*\n")
+
+        if (payments.isNotEmpty()) {
+            sb.append("\n*PAYMENTS:*\n")
+            payments.forEach { pay ->
+                val dateStr = formatEpochMs(pay.paymentDate)
+                val noteStr = if (pay.note.isNotBlank()) " - ${pay.note}" else ""
+                sb.append("- $dateStr$noteStr: $currencySymbol${pay.amount.formatNumber()}\n")
+            }
+            val paymentsTotal = payments.sumOf { it.amount }
+            val balanceDue = job.total - paymentsTotal
+            sb.append("\n*BALANCE DUE: $currencySymbol${balanceDue.formatNumber()}*\n")
+        }
+
+        sb.append("\nThank you for your business!")
         
         return sb.toString()
     }
@@ -93,6 +108,7 @@ object InvoiceHtmlBuilder {
         workerProfile: WorkerProfileModel?,
         labourItems: List<JobLabourItemModel>,
         materialItems: List<JobMaterialItemModel>,
+        payments: List<JobPaymentModel> = emptyList(),
         currencySymbol: String
     ): String {
         val invoiceNumber = "INV-${job.id.takeLast(6).uppercase()}"
@@ -158,6 +174,7 @@ object InvoiceHtmlBuilder {
             items = items,
             subtotals = subtotals,
             grandTotal = job.total,
+            payments = payments,
             currencySymbol = currencySymbol,
             description = job.description,
             notes = job.notes
@@ -179,6 +196,7 @@ object InvoiceHtmlBuilder {
         items: List<PrintItem>,
         subtotals: List<SubtotalItem>,
         grandTotal: Double,
+        payments: List<JobPaymentModel> = emptyList(),
         currencySymbol: String,
         description: String? = null,
         notes: String? = null,
@@ -559,17 +577,46 @@ object InvoiceHtmlBuilder {
                                 """.trimIndent() else ""}
                             </td>
                             <td style="vertical-align: top; width: 45%; padding: 0;">
-                                ${if (showRate) """
-                                    <div class="summary-container" style="float: none; width: 100%; margin: 0;">
-                                        <table class="summary-table">
-                                            $subtotalsHtml
-                                            <tr class="summary-total-row">
-                                                <td class="total-label">Total:</td>
-                                                <td class="total-val">$currencySymbol${grandTotal.formatNumber()}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                """.trimIndent() else ""}
+                                 ${if (showRate) """
+                                     <div class="summary-container" style="float: none; width: 100%; margin: 0;">
+                                         <table class="summary-table">
+                                             $subtotalsHtml
+                                             <tr class="summary-total-row">
+                                                 <td class="total-label">Total:</td>
+                                                 <td class="total-val">$currencySymbol${grandTotal.formatNumber()}</td>
+                                             </tr>
+                                             ${if (payments.isNotEmpty()) {
+                                                 val paymentsHtml = StringBuilder()
+                                                 paymentsHtml.append("""
+                                                     <tr>
+                                                         <td colspan="2" style="padding-top: 10px; border-top: 1px dashed #cbd5e1;">
+                                                             <div style="font-size: 8px; font-weight: 700; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 2px;">Payments</div>
+                                                         </td>
+                                                     </tr>
+                                                 """.trimIndent())
+                                                 payments.forEach { pay ->
+                                                     val dateStr = formatEpochMs(pay.paymentDate)
+                                                     val noteStr = if (pay.note.isNotBlank()) " &middot; ${pay.note}" else ""
+                                                     paymentsHtml.append("""
+                                                         <tr>
+                                                             <td class="summary-label" style="font-size: 10px; padding: 2px 0;">$dateStr$noteStr</td>
+                                                             <td class="summary-val" style="font-size: 10px; color: #10b981; font-weight: 600; padding: 2px 0;">$currencySymbol${pay.amount.formatNumber()}</td>
+                                                         </tr>
+                                                     """.trimIndent())
+                                                 }
+                                                 val paymentsTotal = payments.sumOf { it.amount }
+                                                 val balanceDue = grandTotal - paymentsTotal
+                                                 paymentsHtml.append("""
+                                                     <tr style="border-top: 1px solid #cbd5e1;">
+                                                         <td class="total-label" style="font-size: 11px; padding-top: 6px;">Balance Due:</td>
+                                                         <td class="total-val" style="font-size: 12px; color: #ef4444; font-weight: 700; padding-top: 6px;">$currencySymbol${balanceDue.formatNumber()}</td>
+                                                     </tr>
+                                                 """.trimIndent())
+                                                 paymentsHtml.toString()
+                                             } else ""}
+                                         </table>
+                                     </div>
+                                 """.trimIndent() else ""}
                             </td>
                         </tr>
                     </table>

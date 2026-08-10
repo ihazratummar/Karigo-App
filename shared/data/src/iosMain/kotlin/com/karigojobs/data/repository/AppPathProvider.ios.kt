@@ -26,12 +26,20 @@ actual class AppPathProvider {
     }
 
     actual fun restartApp() {
-        // Exiting the app to simulate a restart, the user must launch it again on iOS
         exit(0)
     }
 
     actual fun extractLegacyBackup(bytes: ByteArray): Boolean {
-        // iOS never had legacy ZIP backups since it was Android-first
         return false
+    }
+
+    actual fun mergeDatabaseBackup(dbBytes: ByteArray, walBytes: ByteArray?, shmBytes: ByteArray?): Boolean {
+        return try {
+            val dbPath = getDatabasePath()
+            NativeFileAccess.writeBytes(dbPath, dbBytes)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }

@@ -16,4 +16,19 @@
     <string name="job_list_empty_title">अद्याप कोणतेही काम नाही</string>
     <string name="job_list_empty_desc">काम आणि पेमेंट ट्रॅक करण्यासाठी तुमचे पहिले काम तयार करा</string>
     <string name="job_list_btn_create_first">पहिले काम तयार करा</string>
+<string name="payments_received_title">प्राप्त झालेले पेमेंट</string>
+    <string name="payments_add_payment">+ पेमेंट जोडा</string>
+    <string name="payments_no_payments_yet">अद्याप कोणतेही पेमेंट नोंदवले गेलेले नाही.</string>
+    <string name="payments_total_received">एकूण प्राप्त</string>
+    <string name="payments_record_payment_title">पेमेंट नोंदवा</string>
+    <string name="payments_amount_label">रक्कम (%s)</string>
+    <string name="payments_remaining_balance">उरलेली शिल्लक: %s</string>
+    <string name="payments_payment_method">पेमेंट पद्धत</string>
+    <string name="payments_method_cash">रोख</string>
+    <string name="payments_method_upi">UPI</string>
+    <string name="payments_method_bank_transfer">बँक ट्रान्सफर</string>
+    <string name="payments_date_label">दिनांक</string>
+    <string name="payments_note_label">टीप (ऐच्छिक)</string>
+    <string name="payments_note_placeholder">उदा. अ‍ॅडव्हान्स, हप्ता २...</string>
+    <string name="payments_btn_add_payment">पेमेंट जोडा</string>
 </resources>

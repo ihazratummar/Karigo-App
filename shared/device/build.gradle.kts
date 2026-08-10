@@ -9,11 +9,7 @@ plugins {
 kotlin {
     android {
         namespace = "com.karigojobs.share.device"
-        compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
-            }
-        }
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
 
         withHostTestBuilder {
@@ -41,6 +37,7 @@ kotlin {
             dependencies {
                 implementation(projects.shared.domain)
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlinx.coroutines.core)
             }
         }
     }

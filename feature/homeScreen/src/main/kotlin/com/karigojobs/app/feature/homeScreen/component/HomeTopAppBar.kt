@@ -2,6 +2,7 @@ package com.karigojobs.app.feature.homeScreen.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -18,8 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.karigojobs.share.model.WorkerProfileModel
+import com.karigojobs.ui.common.ProLockBadge
 import com.karigojobs.ui.getGreeting
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.theme.isPro
 import karigojobs.shared.resources.generated.resources.Res
 import karigojobs.shared.resources.generated.resources.common_contractor
 import kotlinx.coroutines.delay
@@ -59,12 +62,20 @@ fun HomeTopAppBar(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 )
-                Text(
-                    text = profile?.businessName?:"Karigo",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(dimens.Space.sm)
+                ) {
+                    Text(
+                        text = profile?.businessName?:"Karigo",
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
                     )
-                )
+                    if (isPro){
+                        ProLockBadge()
+                    }
+                }
             }
         },
         windowInsets = WindowInsets(),

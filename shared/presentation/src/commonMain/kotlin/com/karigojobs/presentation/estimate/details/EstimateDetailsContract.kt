@@ -20,7 +20,11 @@ data class EstimateDetailsState(
     val siteEstimateMaterial: List<SiteEstimateMaterial> = emptyList(),
     val isDeleting: Boolean = false,
     val workerProfileModel : WorkerProfileModel? = null,
-    val clientModel : ClientModel? = null
+    val clientModel : ClientModel? = null,
+
+    val isPro: Boolean = false,
+    val showProDialog: Boolean = false,
+    val proDialogFeatureName: String = ""
 )
 
 
@@ -32,6 +36,7 @@ sealed interface EstimateDetailsEvent{
     data class ToggleDelete (val isOpen : Boolean, ) : EstimateDetailsEvent
     data class GenerateEstimatePdf(val currencySymbol: String) : EstimateDetailsEvent
     data class ShareEstimateOnWhatsapp(val currencySymbol: String) : EstimateDetailsEvent
+    data class ToggleProDialog(val isOpen: Boolean, val featureName: String = "") : EstimateDetailsEvent
 
 }
 
@@ -41,4 +46,5 @@ sealed interface EstimateDetailsEffect {
     data object NavigationBack : EstimateDetailsEffect
     data class ShareEstimatePdf(val html: String, val estimateTitle: String) : EstimateDetailsEffect
     data class ShareTextOnWhatsapp(val text: String) : EstimateDetailsEffect
+    data object NavigateToPaywall : EstimateDetailsEffect
 }

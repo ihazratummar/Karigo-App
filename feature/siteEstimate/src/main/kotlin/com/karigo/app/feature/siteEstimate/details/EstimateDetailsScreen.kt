@@ -63,6 +63,7 @@ import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import com.karigojobs.ui.common.ProFeatureDialog
 import kotlinx.coroutines.flow.SharedFlow
 import org.jetbrains.compose.resources.stringResource
 import karigojobs.shared.resources.generated.resources.*
@@ -74,7 +75,8 @@ fun EstimateDetailsScreen(
     event: (EstimateDetailsEvent) -> Unit,
     effect: SharedFlow<EstimateDetailsEffect>?,
     onBackClick: () -> Unit,
-    onEditClick: (String) -> Unit
+    onEditClick: (String) -> Unit,
+    onPaywallClick: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -151,6 +153,10 @@ fun EstimateDetailsScreen(
 
                 EstimateDetailsEffect.NavigationBack -> {
                     onBackClick()
+                }
+
+                EstimateDetailsEffect.NavigateToPaywall -> {
+                    onPaywallClick()
                 }
             }
         }
@@ -304,7 +310,10 @@ fun EstimateDetailsScreen(
                         buttonColor = appColor.cardColors,
                         contentColor = Color(0xFFEF5350),
                         label = stringResource(Res.string.common_export),
-                        icon = R.drawable.ic_pdf
+                        icon = R.drawable.ic_pdf,
+                        onProRequiredClick = {
+                            event(EstimateDetailsEvent.ToggleProDialog(isOpen = true, featureName = "PDF Export"))
+                        }
                     )
 
                     // WhatsApp Button
@@ -316,7 +325,10 @@ fun EstimateDetailsScreen(
                         buttonColor = appColor.cardColors,
                         contentColor = Color(0xFF4CAF50),
                         label = stringResource(Res.string.estimate_detail_btn_whatsapp),
-                        icon = R.drawable.whatsapp
+                        icon = R.drawable.whatsapp,
+                        onProRequiredClick = {
+                            event(EstimateDetailsEvent.ToggleProDialog(isOpen = true, featureName = "WhatsApp Sharing"))
+                        }
                     )
                 }
             }
@@ -340,6 +352,18 @@ fun EstimateDetailsScreen(
             },
             title = stringResource(Res.string.dialog_share_title),
             description = stringResource(Res.string.dialog_share_desc_estimate)
+        )
+    }
+
+    if (state.showProDialog) {
+        ProFeatureDialog(
+            onDismiss = {
+                event(EstimateDetailsEvent.ToggleProDialog(isOpen = false))
+            },
+            onSeePlansClick = {
+                event(EstimateDetailsEvent.ToggleProDialog(isOpen = false, featureName = "PAYWALL"))
+            },
+            featureName = state.proDialogFeatureName
         )
     }
 }

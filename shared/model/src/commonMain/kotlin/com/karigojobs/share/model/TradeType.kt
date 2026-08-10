@@ -42,116 +42,96 @@ import org.jetbrains.compose.resources.StringResource
 
 enum class TradeType(
     val displayNameRes: StringResource,
-    val descriptionRes: StringResource,
-    val defaultLabourRate: Double = 0.0
-
+    val descriptionRes: StringResource
 ) {
     PLUMBER(
         displayNameRes = Res.string.trade_plumber,
-        descriptionRes = Res.string.trade_plumber_description,
-        defaultLabourRate = 150.0
+        descriptionRes = Res.string.trade_plumber_description
     ),
 
     ELECTRICIAN(
         displayNameRes = Res.string.trade_electrician,
-        descriptionRes = Res.string.trade_electrician_description,
-        defaultLabourRate = 180.0
+        descriptionRes = Res.string.trade_electrician_description
     ),
 
     CARPENTER(
         displayNameRes = Res.string.trade_carpenter,
-        descriptionRes = Res.string.trade_carpenter_description,
-        defaultLabourRate = 220.0
+        descriptionRes = Res.string.trade_carpenter_description
     ),
 
     PAINTER(
         displayNameRes = Res.string.trade_painter,
-        descriptionRes = Res.string.trade_painter_description,
-        defaultLabourRate = 140.0
+        descriptionRes = Res.string.trade_painter_description
     ),
 
     MASON(
         displayNameRes = Res.string.trade_mason,
-        descriptionRes = Res.string.trade_mason_description,
-        defaultLabourRate = 200.0
+        descriptionRes = Res.string.trade_mason_description
     ),
 
     GRILL(
         displayNameRes = Res.string.trade_grill,
-        descriptionRes = Res.string.trade_grill_description,
-        defaultLabourRate = 250.0
+        descriptionRes = Res.string.trade_grill_description
     ),
 
     AC_TECHNICIAN(
         displayNameRes = Res.string.trade_ac_technician,
-        descriptionRes = Res.string.trade_ac_technician_description,
-        defaultLabourRate = 350.0
+        descriptionRes = Res.string.trade_ac_technician_description
     ),
 
     APPLIANCE_REPAIR(
         displayNameRes = Res.string.trade_appliance_repair,
-        descriptionRes = Res.string.trade_appliance_repair_description,
-        defaultLabourRate = 300.0
+        descriptionRes = Res.string.trade_appliance_repair_description
     ),
 
     WATERPROOFING(
         displayNameRes = Res.string.trade_waterproofing,
-        descriptionRes = Res.string.trade_waterproofing_description,
-        defaultLabourRate = 280.0
+        descriptionRes = Res.string.trade_waterproofing_description
     ),
 
     PEST_CONTROL(
         displayNameRes = Res.string.trade_pest_control,
-        descriptionRes = Res.string.trade_pest_control_description,
-        defaultLabourRate = 250.0
+        descriptionRes = Res.string.trade_pest_control_description
     ),
 
     CAR_BIKE_MECHANIC(
         displayNameRes = Res.string.trade_car_bike_mechanic,
-        descriptionRes = Res.string.trade_car_bike_mechanic_description,
-        defaultLabourRate = 300.0
+        descriptionRes = Res.string.trade_car_bike_mechanic_description
     ),
 
     CCTV_SECURITY(
         displayNameRes = Res.string.trade_cctv_security,
-        descriptionRes = Res.string.trade_cctv_security_description,
-        defaultLabourRate = 350.0
+        descriptionRes = Res.string.trade_cctv_security_description
     ),
 
     SOLAR_INSTALLER(
         displayNameRes = Res.string.trade_solar_installer,
-        descriptionRes = Res.string.trade_solar_installer_description,
-        defaultLabourRate = 500.0
+        descriptionRes = Res.string.trade_solar_installer_description
     ),
 
     ALUMINIUM_UPVC(
         displayNameRes = Res.string.trade_aluminium_upvc,
-        descriptionRes = Res.string.trade_aluminium_upvc_description,
-        defaultLabourRate = 260.0
+        descriptionRes = Res.string.trade_aluminium_upvc_description
     ),
 
     CIVIL_CONTRACTOR(
         displayNameRes = Res.string.trade_civil_contractor,
-        descriptionRes = Res.string.trade_civil_contractor_description,
-        defaultLabourRate = 400.0
+        descriptionRes = Res.string.trade_civil_contractor_description
     ),
 
     BORE_WELL(
         displayNameRes = Res.string.trade_bore_well,
-        descriptionRes = Res.string.trade_bore_well_description,
-        defaultLabourRate = 450.0
+        descriptionRes = Res.string.trade_bore_well_description
     ),
 
     GAS_LPG_FITTER(
         displayNameRes = Res.string.trade_gas_lpg_fitter,
-        descriptionRes = Res.string.trade_gas_lpg_fitter_description,
-        defaultLabourRate = 300.0
+        descriptionRes = Res.string.trade_gas_lpg_fitter_description
     ),
 
     NETWORK_SUPPORT(
         displayNameRes = Res.string.trade_network_support,
-        descriptionRes = Res.string.trade_network_support_description,
-        defaultLabourRate = 350.0
+        descriptionRes = Res.string.trade_network_support_description
     );
 
     companion object {

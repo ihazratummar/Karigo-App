@@ -77,4 +77,10 @@
     <string name="common_added">Added</string>
     <string name="common_removed">Removed</string>
     <string name="common_close">Close</string>
+
+    <!-- Currency Selector -->
+    <string name="settings_currency_title">Select Currency</string>
+    <string name="settings_currency_search_placeholder">Search currency or country...</string>
+    <string name="settings_popular_currencies">Popular Currencies</string>
+    <string name="settings_all_currencies">All Currencies</string>
 </resources>

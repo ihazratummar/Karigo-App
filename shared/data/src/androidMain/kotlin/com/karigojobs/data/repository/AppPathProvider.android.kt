@@ -34,42 +34,208 @@ actual class AppPathProvider(private val context: Context) {
     }
 
     actual fun extractLegacyBackup(bytes: ByteArray): Boolean {
+        val tempDir = File(context.cacheDir, "legacy_restore_${System.currentTimeMillis()}")
         return try {
-            val dbName = "KarigojobsDatabase.db"
-            val dbFile = context.getDatabasePath(dbName)
+            tempDir.mkdirs()
             val byteStream = java.io.ByteArrayInputStream(bytes)
             val zis = java.util.zip.ZipInputStream(byteStream)
             var entry = zis.nextEntry
             var isZip = false
-            
+            var extractedDbFile: File? = null
+
             while (entry != null) {
                 isZip = true
-                val fileName = entry.name
-                if (fileName == dbName) {
-                    dbFile.outputStream().use { zis.copyTo(it) }
-                } else if (fileName.startsWith("datastore/")) {
-                    val actualFileName = fileName.removePrefix("datastore/")
-                    val datastoreFile = File(context.filesDir, actualFileName)
-                    datastoreFile.parentFile?.mkdirs()
-                    datastoreFile.outputStream().use { zis.copyTo(it) }
+                val name = entry.name
+                val targetFile = File(tempDir, name.substringAfterLast("/"))
+                
+                if (!entry.isDirectory) {
+                    targetFile.parentFile?.mkdirs()
+                    targetFile.outputStream().use { zis.copyTo(it) }
+
+                    val fileName = targetFile.name
+                    if ((fileName.endsWith(".db", ignoreCase = true) || fileName.contains("KarigojobsDatabase", ignoreCase = true)) 
+                        && !fileName.endsWith("-wal", ignoreCase = true) 
+                        && !fileName.endsWith("-shm", ignoreCase = true)) {
+                        extractedDbFile = targetFile
+                    }
                 }
                 zis.closeEntry()
                 entry = zis.nextEntry
             }
             zis.close()
-            
-            // Backwards compatibility: If it wasn't a zip, it must be the raw DB file from previous backups
-            if (!isZip) {
-                dbFile.writeBytes(bytes)
+
+            if (isZip && extractedDbFile != null && extractedDbFile.exists()) {
+                // Checkpoint WAL if -wal file exists in extracted temp folder
+                val walFile = File(extractedDbFile.absolutePath + "-wal")
+                if (walFile.exists()) {
+                    try {
+                        val db = SQLiteDatabase.openDatabase(extractedDbFile.absolutePath, null, SQLiteDatabase.OPEN_READWRITE)
+                        db.rawQuery("PRAGMA wal_checkpoint(FULL);", null).use { it.moveToFirst() }
+                        db.close()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                mergeDatabaseFile(extractedDbFile.absolutePath)
+                true
+            } else {
+                // Fallback: If not zip or no .db found in zip, try merging bytes directly as DB
+                mergeDatabaseBackup(bytes, null, null)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            mergeDatabaseBackup(bytes, null, null)
+        } finally {
+            if (tempDir.exists()) {
+                tempDir.deleteRecursively()
+            }
+        }
+    }
+
+    actual fun mergeDatabaseBackup(dbBytes: ByteArray, walBytes: ByteArray?, shmBytes: ByteArray?): Boolean {
+        val time = System.currentTimeMillis()
+        val tempDbFile = File(context.cacheDir, "temp_restore_$time.db")
+        val tempWalFile = File(context.cacheDir, "temp_restore_$time.db-wal")
+        val tempShmFile = File(context.cacheDir, "temp_restore_$time.db-shm")
+
+        return try {
+            tempDbFile.writeBytes(dbBytes)
+            if (walBytes != null && walBytes.isNotEmpty()) {
+                tempWalFile.writeBytes(walBytes)
+            }
+            if (shmBytes != null && shmBytes.isNotEmpty()) {
+                tempShmFile.writeBytes(shmBytes)
+            }
+
+            // Force WAL checkpoint on backup file before merging so all WAL pages commit to main DB file
+            try {
+                val tempDb = SQLiteDatabase.openDatabase(tempDbFile.absolutePath, null, SQLiteDatabase.OPEN_READWRITE)
+                tempDb.rawQuery("PRAGMA wal_checkpoint(FULL);", null).use { it.moveToFirst() }
+                tempDb.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            mergeDatabaseFile(tempDbFile.absolutePath)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        } finally {
+            if (tempDbFile.exists()) tempDbFile.delete()
+            if (tempWalFile.exists()) tempWalFile.delete()
+            if (tempShmFile.exists()) tempShmFile.delete()
+        }
+    }
+
+    private fun mergeDatabaseFile(backupDbPath: String): Boolean {
+        val activeDbFile = context.getDatabasePath("KarigojobsDatabase.db")
+        if (!activeDbFile.exists()) {
+            activeDbFile.parentFile?.mkdirs()
+            File(backupDbPath).copyTo(activeDbFile, overwrite = true)
+            return true
+        }
+
+        return try {
+            val db = SQLiteDatabase.openDatabase(activeDbFile.absolutePath, null, SQLiteDatabase.OPEN_READWRITE)
+            try {
+                // Disable foreign keys BEFORE starting transaction
+                db.execSQL("PRAGMA foreign_keys = OFF;")
+                db.execSQL("ATTACH DATABASE '$backupDbPath' AS backup_db;")
+
+                db.beginTransaction()
+
+                val mergeTables = listOf(
+                    "client",
+                    "MaterialCategory",
+                    "materials",
+                    "worker_profile",
+                    "job",
+                    "site_estimate",
+                    "job_labour_item",
+                    "job_labour_log",
+                    "job_material",
+                    "job_payment",
+                    "estimate_materials"
+                )
+
+                for (table in mergeTables) {
+                    mergeTableFlexibly(db, table)
+                }
+
+                db.execSQL("DROP VIEW IF EXISTS monthly_earning;")
+                db.execSQL("""
+                    CREATE VIEW monthly_earning AS
+                    SELECT
+                        strftime('%Y-%m', datetime(created_at / 1000, 'unixepoch')) AS month,
+                        COUNT(*) AS job_count,
+                        TOTAL(CASE WHEN UPPER(status) LIKE '%PAID%' THEN total ELSE 0.0 END) AS revenue,
+                        TOTAL(total) AS total_billed,
+                        TOTAL(CASE WHEN UPPER(status) NOT LIKE '%PAID%' THEN total ELSE 0.0 END) AS outstanding
+                    FROM job
+                    WHERE created_at IS NOT NULL AND created_at > 0
+                    GROUP BY strftime('%Y-%m', datetime(created_at / 1000, 'unixepoch'))
+                    ORDER BY month DESC;
+                """.trimIndent())
+
+                db.setTransactionSuccessful()
+            } finally {
+                if (db.inTransaction()) {
+                    db.endTransaction()
+                }
+                try {
+                    db.execSQL("DETACH DATABASE backup_db;")
+                    db.execSQL("PRAGMA foreign_keys = ON;")
+                    db.rawQuery("PRAGMA wal_checkpoint(FULL);", null).use { it.moveToFirst() }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                db.close()
             }
             true
         } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    private fun mergeTableFlexibly(db: SQLiteDatabase, tableName: String) {
+        try {
+            // Get active database column names for tableName
+            val activeCols = mutableSetOf<String>()
+            db.rawQuery("PRAGMA table_info($tableName);", null).use { cursor ->
+                val nameIdx = cursor.getColumnIndex("name")
+                if (nameIdx != -1) {
+                    while (cursor.moveToNext()) {
+                        activeCols.add(cursor.getString(nameIdx))
+                    }
+                }
+            }
+
+            // Get backup database column names for tableName
+            val backupCols = mutableSetOf<String>()
+            db.rawQuery("PRAGMA backup_db.table_info($tableName);", null).use { cursor ->
+                val nameIdx = cursor.getColumnIndex("name")
+                if (nameIdx != -1) {
+                    while (cursor.moveToNext()) {
+                        backupCols.add(cursor.getString(nameIdx))
+                    }
+                }
+            }
+
+            val commonCols = activeCols.intersect(backupCols)
+            if (commonCols.isNotEmpty()) {
+                val colListStr = commonCols.joinToString(", ")
+                val sql = "INSERT OR IGNORE INTO $tableName ($colListStr) SELECT $colListStr FROM backup_db.$tableName;"
+                db.execSQL(sql)
+            } else {
+                db.execSQL("INSERT OR IGNORE INTO $tableName SELECT * FROM backup_db.$tableName;")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
             try {
-                val dbFile = context.getDatabasePath("KarigojobsDatabase.db")
-                dbFile.writeBytes(bytes)
-                true
+                db.execSQL("INSERT OR IGNORE INTO $tableName SELECT * FROM backup_db.$tableName;")
             } catch (ex: Exception) {
-                false
+                ex.printStackTrace()
             }
         }
     }

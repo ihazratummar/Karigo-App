@@ -6,6 +6,7 @@ import com.karigojobs.share.model.JobModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobStatus
+import com.karigojobs.share.model.JobPaymentModel
 import kotlinx.coroutines.flow.Flow
 
 
@@ -42,4 +43,9 @@ interface JobRepository {
     suspend fun removeMaterial(itemId: String) : Result<Unit, JobError>
 
     fun getJobByClient(clientId: String) : Flow<Result<List<JobModel>, JobError>>
+
+    // Payments
+    fun getPaymentsForJob(jobId: String): Flow<Result<List<JobPaymentModel>, JobError>>
+    suspend fun addPayment(payment: JobPaymentModel): Result<Unit, JobError>
+    suspend fun deletePayment(paymentId: String): Result<Unit, JobError>
 }

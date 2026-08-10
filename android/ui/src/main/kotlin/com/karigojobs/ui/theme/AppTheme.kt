@@ -89,6 +89,8 @@ fun KarigojobsTheme(
     // Outdoor field workers — plumbers on rooftops, electricians in engine rooms.
     // Only pass darkTheme = false for explicit light-mode testing or previews.
     darkTheme: Boolean = true,
+    appCurrencySymbol: String? = null,
+    isPro: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     // ── Resolve adaptive tokens from window size ───────────────────────────
@@ -110,13 +112,15 @@ fun KarigojobsTheme(
 
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
     val karigoColors = if (darkTheme) KarigoDarkColor else KarigoLightColor
+    val deviceInfo = remember(appCurrencySymbol) { getDeviceInfo(appCurrencySymbol) }
 
     // ── Provide tokens + apply MaterialTheme ──────────────────────────────
     CompositionLocalProvider(
         LocalDimens provides dimens,
         LocalAppTypography provides typography,
         LocalKarigoColors provides karigoColors,
-        LocalDeviceInfo provides getDeviceInfo()
+        LocalDeviceInfo provides deviceInfo,
+        LocalIsPro provides isPro
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
@@ -143,6 +147,7 @@ fun KarigojobsThemePreview(
 
 val LocalDimens = compositionLocalOf { CompactAppDimens }
 val LocalAppTypography = compositionLocalOf { CompactTypography }
+val LocalIsPro = compositionLocalOf { false }
 
 val dimens
     @Composable
@@ -155,3 +160,7 @@ val deviceInfo
 val appColor
     @Composable
     get() = LocalKarigoColors.current
+
+val isPro
+    @Composable
+    get() = LocalIsPro.current

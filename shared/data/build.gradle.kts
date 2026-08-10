@@ -1,4 +1,3 @@
-import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
@@ -9,11 +8,7 @@ plugins {
 kotlin {
     android {
         namespace = "com.karigojobs.share.data"
-        compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
-            }
-        }
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 26
 
         withHostTestBuilder {
@@ -53,6 +48,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.ktor.client.android)
+                implementation(libs.play.billing.ktx)
                 api(project.dependencies.platform(libs.firebase.bom))
             }
         }

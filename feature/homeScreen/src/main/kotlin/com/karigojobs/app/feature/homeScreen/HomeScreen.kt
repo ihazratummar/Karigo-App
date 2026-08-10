@@ -44,12 +44,16 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.graphics.Color
 import com.karigojobs.app.android.ui.R
+import com.karigojobs.app.feature.homeScreen.component.FreeJobsBanner
+import com.karigojobs.share.model.MonthlyJobLimit
+import com.karigojobs.share.model.ProStatus
 import com.karigojobs.ui.common.KarigoIconWIthBg
 import com.karigojobs.ui.common.customCardBorder
 import com.karigojobs.ui.theme.KarigojobsShapes
 import com.karigojobs.ui.theme.KarigojobsText2
 import com.karigojobs.ui.theme.KarigojobsText3
 import com.karigojobs.ui.theme.appColor
+import com.karigojobs.ui.theme.isPro
 import karigojobs.shared.resources.generated.resources.home_recent_jobs_empty_title
 import karigojobs.shared.resources.generated.resources.home_recent_jobs_empty_desc
 import karigojobs.shared.resources.generated.resources.home_recent_jobs_btn_create
@@ -76,7 +80,10 @@ fun HomeScreen(
     onJobClick : (String) -> Unit,
     navigateToAddEstimate : () -> Unit,
     onSeeAllEstimateClick : () -> Unit,
-    onCompleteBannerClick : () -> Unit
+    onCompleteBannerClick : () -> Unit,
+    proStatus: ProStatus = ProStatus(),
+    monthlyJobLimit: MonthlyJobLimit = MonthlyJobLimit(),
+    onGoProClick: () -> Unit = {}
 ) {
 
     val snackbarState = remember { SnackbarHostState() }
@@ -121,6 +128,16 @@ fun HomeScreen(
             item {
                 if (profile == null) {
                     ActionNeedBanner(onClick = onCompleteBannerClick)
+                }
+            }
+
+            item {
+                if (!isPro){
+                    FreeJobsBanner(
+                        proStatus = proStatus,
+                        monthlyJobLimit = monthlyJobLimit,
+                        onGoProClick = onGoProClick
+                    )
                 }
             }
 

@@ -76,7 +76,8 @@ fun getPresentationModule(): Module = module {
             getEstimateMaterialsUseCase = get(),
             updateSiteEstimateUseCase = get(),
             getMaterialCategoryUseCase = get(),
-            analytics = get()
+            analytics = get(),
+            incrementEstimateCountUseCase = get()
         )
     }
     viewModel { (jobId: String) ->
@@ -93,7 +94,9 @@ fun getPresentationModule(): Module = module {
             getJobPaymentsUseCase = get(),
             addJobPaymentUseCase = get(),
             deleteJobPaymentUseCase = get(),
-            analytics = get()
+            analytics = get(),
+            observeMonthlyJobLimitUseCase = get(),
+            incrementPdfCountUseCase = get()
         )
     }
 
@@ -106,7 +109,9 @@ fun getPresentationModule(): Module = module {
             getWorkerProfileUseCase = get(),
             getClientUseCase = get(),
             observeProStatusUseCase = get(),
-            analytics = get()
+            analytics = get(),
+            observeMonthlyJobLimitUseCase = get(),
+            incrementPdfCountUseCase = get()
         )
     }
 

@@ -28,6 +28,7 @@ data class JobDetailsState(
     val isDeletePopUpOpen: Boolean = false,
 
     val isPro: Boolean = false,
+    val monthlyJobLimit: com.karigojobs.share.model.MonthlyJobLimit = com.karigojobs.share.model.MonthlyJobLimit(),
     val jobPayments: List<JobPaymentModel> = emptyList(),
     val showProDialog: Boolean = false,
     val proDialogFeatureName: String = ""

@@ -55,4 +55,10 @@ object EpochUtils {
         val today = Clock.System.now().toLocalDateTime(TimeZone.UTC).date
         return today.month.number - 1
     }
+
+    fun formatYearMonth(epochMs: Long = now()): String {
+        val dt = Instant.fromEpochMilliseconds(epochMs).toLocalDateTime(TimeZone.UTC)
+        val monthStr = dt.month.number.toString().padStart(2, '0')
+        return "${dt.year}-$monthStr"
+    }
 }

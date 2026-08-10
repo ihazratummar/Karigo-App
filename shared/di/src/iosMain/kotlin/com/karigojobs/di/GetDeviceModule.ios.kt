@@ -11,7 +11,7 @@ import org.koin.dsl.module
 actual fun getDeviceModule(): Module = module {
     single<DeviceContactProvider> { ContactProviderImpl() }
     single { AppPathProvider() }
-    single { com.karigojobs.data.billing.PlatformBillingProviderImpl(monetizationStore = get()) }
+    single<com.karigojobs.data.billing.PlatformBillingProvider> { com.karigojobs.data.billing.PlatformBillingProviderImpl(monetizationStore = get()) }
     single<NetworkMonitor> { NetworkMonitorImpl() }
 }
 

@@ -73,6 +73,21 @@ class IncrementJobCountUseCase(
     }
 }
 
+class IncrementEstimateCountUseCase(
+    private val quotaRepository: com.karigojobs.domain.repository.QuotaRepository
+) {
+    suspend operator fun invoke() {
+        quotaRepository.incrementEstimateUsage()
+    }
+}
+
+class IncrementPdfCountUseCase(
+    private val quotaRepository: com.karigojobs.domain.repository.QuotaRepository
+) {
+    suspend operator fun invoke() {
+        quotaRepository.incrementPdfUsage()
+    }
+}
 
 class SetProStatusUseCase(
     private val monetizationRepository: MonetizationRepository

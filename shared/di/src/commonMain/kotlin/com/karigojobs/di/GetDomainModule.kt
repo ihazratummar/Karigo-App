@@ -134,6 +134,8 @@ fun getDomainModule(): Module = module {
     single { com.karigojobs.domain.usecase.monetization.CheckMonthlyQuotaUseCase(monetizationRepository = get()) }
     single { CanCreateJobUseCase(monetizationRepository = get()) }
     single { IncrementJobCountUseCase(monetizationRepository = get()) }
+    single { com.karigojobs.domain.usecase.monetization.IncrementEstimateCountUseCase(quotaRepository = get()) }
+    single { com.karigojobs.domain.usecase.monetization.IncrementPdfCountUseCase(quotaRepository = get()) }
     single { SetProStatusUseCase(monetizationRepository = get()) }
     single { com.karigojobs.domain.usecase.earnings.GetEarningsSummaryUseCase(earningsRepository = get()) }
 }

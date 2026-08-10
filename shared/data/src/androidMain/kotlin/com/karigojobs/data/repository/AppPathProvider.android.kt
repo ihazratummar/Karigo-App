@@ -144,6 +144,31 @@ actual class AppPathProvider(private val context: Context) {
 
                 db.beginTransaction()
 
+                // Pre-merge: remove local materials/categories with matching name and trade_type to prevent restore duplicates
+                try {
+                    db.execSQL("""
+                        DELETE FROM MaterialCategory WHERE EXISTS (
+                            SELECT 1 FROM backup_db.MaterialCategory b 
+                            WHERE LOWER(TRIM(b.name)) = LOWER(TRIM(MaterialCategory.name)) 
+                            AND LOWER(TRIM(b.trade_type)) = LOWER(TRIM(MaterialCategory.trade_type))
+                        );
+                    """.trimIndent())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                try {
+                    db.execSQL("""
+                        DELETE FROM materials WHERE EXISTS (
+                            SELECT 1 FROM backup_db.materials b 
+                            WHERE LOWER(TRIM(b.name)) = LOWER(TRIM(materials.name)) 
+                            AND LOWER(TRIM(b.trade_type)) = LOWER(TRIM(materials.trade_type))
+                        );
+                    """.trimIndent())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
                 val mergeTables = listOf(
                     "client",
                     "MaterialCategory",
@@ -155,11 +180,35 @@ actual class AppPathProvider(private val context: Context) {
                     "job_labour_log",
                     "job_material",
                     "job_payment",
-                    "estimate_materials"
+                    "estimate_materials",
+                    "monthly_quota"
                 )
 
                 for (table in mergeTables) {
                     mergeTableFlexibly(db, table)
+                }
+
+                // Post-merge safety deduplication pass
+                try {
+                    db.execSQL("""
+                        DELETE FROM materials 
+                        WHERE rowid NOT IN (
+                            SELECT MAX(rowid) 
+                            FROM materials 
+                            GROUP BY LOWER(TRIM(name)), LOWER(TRIM(trade_type))
+                        );
+                    """.trimIndent())
+                    
+                    db.execSQL("""
+                        DELETE FROM MaterialCategory 
+                        WHERE rowid NOT IN (
+                            SELECT MAX(rowid) 
+                            FROM MaterialCategory 
+                            GROUP BY LOWER(TRIM(name)), LOWER(TRIM(trade_type))
+                        );
+                    """.trimIndent())
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
 
                 db.execSQL("DROP VIEW IF EXISTS monthly_earning;")
@@ -225,15 +274,15 @@ actual class AppPathProvider(private val context: Context) {
             val commonCols = activeCols.intersect(backupCols)
             if (commonCols.isNotEmpty()) {
                 val colListStr = commonCols.joinToString(", ")
-                val sql = "INSERT OR IGNORE INTO $tableName ($colListStr) SELECT $colListStr FROM backup_db.$tableName;"
+                val sql = "INSERT OR REPLACE INTO $tableName ($colListStr) SELECT $colListStr FROM backup_db.$tableName;"
                 db.execSQL(sql)
             } else {
-                db.execSQL("INSERT OR IGNORE INTO $tableName SELECT * FROM backup_db.$tableName;")
+                db.execSQL("INSERT OR REPLACE INTO $tableName SELECT * FROM backup_db.$tableName;")
             }
         } catch (e: Exception) {
             e.printStackTrace()
             try {
-                db.execSQL("INSERT OR IGNORE INTO $tableName SELECT * FROM backup_db.$tableName;")
+                db.execSQL("INSERT OR REPLACE INTO $tableName SELECT * FROM backup_db.$tableName;")
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }

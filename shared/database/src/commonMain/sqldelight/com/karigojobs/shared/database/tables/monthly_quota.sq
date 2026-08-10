@@ -1,0 +1,31 @@
+CREATE TABLE monthly_quota (
+    id TEXT NOT NULL PRIMARY KEY,
+    year_month TEXT NOT NULL UNIQUE,
+    used_jobs_count INTEGER NOT NULL DEFAULT 0,
+    used_estimates_count INTEGER NOT NULL DEFAULT 0,
+    used_pdf_count INTEGER NOT NULL DEFAULT 0,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+getQuotaByMonth:
+SELECT * FROM monthly_quota WHERE year_month = :yearMonth;
+
+insertOrIgnoreQuota:
+INSERT OR IGNORE INTO monthly_quota(id, year_month, used_jobs_count, used_estimates_count, used_pdf_count, created_at, updated_at)
+VALUES (:id, :yearMonth, 0, 0, 0, :createdAt, :updatedAt);
+
+incrementJobsUsed:
+UPDATE monthly_quota
+SET used_jobs_count = used_jobs_count + 1, updated_at = :updatedAt
+WHERE year_month = :yearMonth;
+
+incrementEstimatesUsed:
+UPDATE monthly_quota
+SET used_estimates_count = used_estimates_count + 1, updated_at = :updatedAt
+WHERE year_month = :yearMonth;
+
+incrementPdfUsed:
+UPDATE monthly_quota
+SET used_pdf_count = used_pdf_count + 1, updated_at = :updatedAt
+WHERE year_month = :yearMonth;

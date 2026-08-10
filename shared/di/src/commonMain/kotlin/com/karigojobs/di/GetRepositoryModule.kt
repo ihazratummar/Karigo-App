@@ -8,6 +8,7 @@ import com.karigojobs.data.repository.JobRepositoryImpl
 import com.karigojobs.data.repository.MaterialCategoryRepositoryImpl
 import com.karigojobs.data.repository.MaterialRepositoryImpl
 import com.karigojobs.data.repository.MonetizationRepositoryImpl
+import com.karigojobs.data.repository.QuotaRepositoryImpl
 import com.karigojobs.data.repository.SiteEstimateRepositoryImpl
 import com.karigojobs.data.repository.WorkerRepositoryImpl
 import com.karigojobs.domain.analytics.AnalyticsLogger
@@ -19,6 +20,7 @@ import com.karigojobs.domain.repository.JobRepository
 import com.karigojobs.domain.repository.MaterialCategoryRepository
 import com.karigojobs.domain.repository.MaterialRepository
 import com.karigojobs.domain.repository.MonetizationRepository
+import com.karigojobs.domain.repository.QuotaRepository
 import com.karigojobs.domain.repository.SiteEstimateRepository
 import com.karigojobs.domain.repository.WorkerRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -65,7 +67,8 @@ fun getRepositoryModule(): Module = module {
         )
     }
     single<BackupFileHandler> { BackupFileHandlerImpl(get()) }
-    single<MonetizationRepository> { MonetizationRepositoryImpl(get(), get()) }
+    single<QuotaRepository> { QuotaRepositoryImpl(database = get(), ioDispatcher = get()) }
+    single<MonetizationRepository> { MonetizationRepositoryImpl(monetizationStore = get(), billingProvider = get(), quotaRepository = get()) }
     single<AnalyticsLogger> { getAnalyticsLogger() }
 
 }

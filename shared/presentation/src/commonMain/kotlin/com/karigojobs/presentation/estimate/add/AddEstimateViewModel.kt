@@ -62,7 +62,8 @@ class AddEstimateViewModel(
     private val getEstimateMaterialsUseCase: GetEstimateMaterialsUseCase,
     private val updateSiteEstimateUseCase: UpdateSiteEstimateUseCase,
     private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase,
-    private val analytics: AnalyticsLogger
+    private val analytics: AnalyticsLogger,
+    private val incrementEstimateCountUseCase: com.karigojobs.domain.usecase.monetization.IncrementEstimateCountUseCase? = null
 ) : ViewModel() {
 
     @OptIn(ExperimentalUuidApi::class)
@@ -401,6 +402,7 @@ class AddEstimateViewModel(
                             _effect.emit(ShowError(result.error.toString()))
                         }
                         is Result.Success -> {
+                            incrementEstimateCountUseCase?.invoke()
                             analytics.logEvent(AnalyticsEvent.Event.ESTIMATE_CREATED)
                             _effect.emit(NavigationBack)
                         }

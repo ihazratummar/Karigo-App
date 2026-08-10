@@ -1,6 +1,7 @@
 package com.karigojobs.di
 
 import com.karigojobs.data.analytics.FirebaseAnalyticsLogger
+import com.karigojobs.data.billing.PlatformBillingProvider
 import com.karigojobs.data.billing.PlatformBillingProviderImpl
 import com.karigojobs.domain.repository.DeviceContactProvider
 import com.karigojobs.shared.device.ContactProviderImpl
@@ -14,7 +15,7 @@ import org.koin.dsl.module
 actual fun getDeviceModule(): Module = module {
     single<DeviceContactProvider> { ContactProviderImpl(context = get()) }
     single { AppPathProvider(context = get()) }
-    single { PlatformBillingProviderImpl(context = get(), monetizationStore = get()) }
+    single<PlatformBillingProvider> { PlatformBillingProviderImpl(context = get(), monetizationStore = get()) }
     single<NetworkMonitor> { NetworkMonitorImpl(context = get()) }
 }
 

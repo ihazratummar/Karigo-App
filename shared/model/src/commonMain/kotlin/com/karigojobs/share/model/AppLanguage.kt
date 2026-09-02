@@ -8,7 +8,8 @@ enum class AppLanguage(val code: String, val displayName: String, val nativeName
     MARATHI("mr", "Marathi", "मराठी"),
     MALAYALAM("ml", "Malayalam", "മലയാളം"),
     TAMIL("ta", "Tamil", "தமிழ்"),
-    TELUGU("te", "Telugu", "తెలుగు");
+    TELUGU("te", "Telugu", "తెలుగు"),
+    RUSSIAN("ru", "Russian", "Русский");
 
     companion object {
         fun fromCode(code: String): AppLanguage {

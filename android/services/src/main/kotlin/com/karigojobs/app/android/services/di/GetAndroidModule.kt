@@ -28,5 +28,7 @@ fun getUpdateModule() : Module = module {
             updateType = AppUpdateType.IMMEDIATE
         )
     }
+
+    single { com.karigojobs.app.android.services.ApkInstaller(androidContext()) }
 }
 

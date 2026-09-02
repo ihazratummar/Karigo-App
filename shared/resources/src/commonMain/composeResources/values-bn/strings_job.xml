@@ -16,7 +16,7 @@
     <string name="job_list_empty_title">এখনো কোনো কাজ নেই</string>
     <string name="job_list_empty_desc">কাজ ও পেমেন্ট ট্র্যাক করতে আপনার প্রথম কাজ তৈরি করুন</string>
     <string name="job_list_btn_create_first">প্রথম কাজ তৈরি করুন</string>
-<string name="payments_received_title">প্রাপ্ত পেমেন্টসমূহ</string>
+    <string name="payments_received_title">প্রাপ্ত পেমেন্টসমূহ</string>
     <string name="payments_add_payment">+ পেমেন্ট যোগ করুন</string>
     <string name="payments_no_payments_yet">এখনও কোনও পেমেন্ট রেকর্ড করা হয়নি।</string>
     <string name="payments_total_received">মোট প্রাপ্ত</string>

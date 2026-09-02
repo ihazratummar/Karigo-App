@@ -74,6 +74,7 @@
     <string name="backup_btn_restore_confirm">डेटा रिस्टोर करा</string>
     <string name="backup_info_title">पूर्ण संरक्षण</string>
     <string name="backup_info_desc">तुमचा सर्व व्यावसायिक डेटा — कामे, ग्राहक, साहित्य आणि ॲप सेटिंग्ज — तुमच्या गुगल ड्राइव्हवरील एका खाजगी फोल्डरमध्ये सुरक्षितपणे बॅकअप घेतला जातो.</string>
+    <!-- Pro Plan & Paywall -->
     <string name="pro_section_title">प्रो प्लॅन</string>
     <string name="pro_banner_title">प्रो व्हा</string>
     <string name="pro_banner_desc">अमर्याद कामे, पीडीएफ इनव्हॉइस, कस्टम ब्रँडिंग आणि विश्लेषण</string>
@@ -114,10 +115,10 @@
     <string name="paywall_btn_monthly">मासिक सदस्यता घ्या — %1$s</string>
     <string name="paywall_btn_yearly">वार्षिक सदस्यता घ्या — %1$s</string>
     <string name="paywall_btn_lifetime">लाइफटाईम खरेदी करा — %1$s</string>
+    <string name="paywall_btn_restore">Restore Subscription</string>
     <string name="paywall_footer_preview">मर्यादित कालावधीची ऑफर — एकदाच पेमेंट</string>
     <string name="paywall_offline_title">तुम्ही ऑफलाइन आहात</string>
     <string name="paywall_offline_desc">कनेक्शन परत आल्यावर किमती आपोआप लोड होतील.</string>
-
     <!-- Earnings Feature Strings -->
     <string name="earnings_dashboard_title">कमाई</string>
     <string name="earnings_label_revenue">एकूण महसूल</string>
@@ -139,7 +140,6 @@
     <string name="earnings_paywall_subtitle">व्यावसायिक बुद्धिमत्ता अनलॉक करा</string>
     <string name="earnings_paywall_desc">कारिगो प्रो सह तुमचे महसूल कल, सर्वोच्च ग्राहक, प्रति काम सरासरी कमाई आणि मासिक वाढ स्वयंचलितपणे ट्रॅक करा.</string>
     <string name="earnings_paywall_btn_unlock">कमाई डॅशबोर्ड अनलॉक करा</string>
-
     <!-- Subscription & Active Pro Strings -->
     <string name="pro_activated_title">प्रो सक्रिय केले</string>
     <string name="pro_monthly_active">मासिक प्लॅन सक्रिय आहे</string>

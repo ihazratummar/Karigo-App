@@ -70,5 +70,14 @@ fun getRepositoryModule(): Module = module {
     single<QuotaRepository> { QuotaRepositoryImpl(database = get(), ioDispatcher = get()) }
     single<MonetizationRepository> { MonetizationRepositoryImpl(monetizationStore = get(), billingProvider = get(), quotaRepository = get()) }
     single<AnalyticsLogger> { getAnalyticsLogger() }
-
+    single<com.karigojobs.domain.repository.CustomUpdateRepository> {
+        com.karigojobs.data.repository.CustomUpdateRepositoryImpl(
+            httpClient = HttpClient() {
+                install(ContentNegotiation) {
+                    json(Json { ignoreUnknownKeys = true })
+                }
+            },
+            pathProvider = get()
+        )
+    }
 }

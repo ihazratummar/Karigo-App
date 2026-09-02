@@ -74,6 +74,7 @@
     <string name="backup_btn_restore_confirm">ڈیٹا بحال کریں</string>
     <string name="backup_info_title">مکمل تحفظ</string>
     <string name="backup_info_desc">آپ کے کاروبار کا تمام ڈیٹا بشمول کام، گاہک، سامان اور ایپ سیٹنگز آپ کے گوگل ڈرائیو پر ایک پوشیدہ فولڈر میں محفوظ کیا جاتا ہے۔</string>
+    <!-- Pro Plan & Paywall -->
     <string name="pro_section_title">پرو پلان</string>
     <string name="pro_banner_title">پرو بنیں</string>
     <string name="pro_banner_desc">لاکھوں کام، پی ڈی ایف انوائس، برانڈنگ اور اینالیٹکس</string>
@@ -114,10 +115,10 @@
     <string name="paywall_btn_monthly">ماہانہ سبسکرپشن — %1$s</string>
     <string name="paywall_btn_yearly">سالانہ سبسکرپشن — %1$s</string>
     <string name="paywall_btn_lifetime">لائف ٹائم خریدیں — %1$s</string>
+    <string name="paywall_btn_restore">Restore Subscription</string>
     <string name="paywall_footer_preview">محدود وقت کی پیشکش — ایک بار ادائیگی</string>
     <string name="paywall_offline_title">آپ آف لائن ہیں</string>
     <string name="paywall_offline_desc">کنکشن واپس آنے پر قیمتیں خود بخود لوڈ ہو جائیں گی۔</string>
-
     <!-- Earnings Feature Strings -->
     <string name="earnings_dashboard_title">آمدنی</string>
     <string name="earnings_label_revenue">کل آمدنی</string>
@@ -139,7 +140,6 @@
     <string name="earnings_paywall_subtitle">کاروباری تجزیات انلاک کریں</string>
     <string name="earnings_paywall_desc">کاریگو پرو کے ساتھ اپنے آمدنی کے رجحانات، ٹاپ کلائنٹس، اوسط آمدنی اور ماہانہ ترقی کو خود بخود ٹریک کریں۔</string>
     <string name="earnings_paywall_btn_unlock">آمدنی کا ڈیش بورڈ انلاک کریں</string>
-
     <!-- Subscription & Active Pro Strings -->
     <string name="pro_activated_title">پرو فعال ہو گیا</string>
     <string name="pro_monthly_active">ماہانہ پلان فعال ہے</string>

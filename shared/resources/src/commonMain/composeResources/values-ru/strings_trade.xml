@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trade_plumber">Сантехник</string>
+    <string name="trade_plumber_description">Трубы, фитинги, краны и ремонт</string>
+
+    <string name="trade_electrician">Электрик</string>
+    <string name="trade_electrician_description">Проводка, щитки и светильники</string>
+
+    <string name="trade_carpenter">Плотник / Столяр</string>
+    <string name="trade_carpenter_description">Изделия из дерева, двери и мебель</string>
+
+    <string name="trade_painter">Маляр / Штукатур</string>
+    <string name="trade_painter_description">Внутренняя и наружная покраска</string>
+
+    <string name="trade_mason">Каменщик / Строитель</string>
+    <string name="trade_mason_description">Кирпичная кладка, плитка и бетон</string>
+
+    <string name="trade_grill">Сварщик / Металлоконструкции</string>
+    <string name="trade_grill_description">Сталь, решетки и ворота</string>
+
+    <string name="trade_ac_technician">Мастер по кондиционерам</string>
+    <string name="trade_ac_technician_description">Обслуживание, ремонт и монтаж кондиционеров</string>
+
+    <string name="trade_appliance_repair">Ремонт бытовой техники</string>
+    <string name="trade_appliance_repair_description">Стиральные машины, холодильники и техника</string>
+
+    <string name="trade_waterproofing">Гидроизоляция</string>
+    <string name="trade_waterproofing_description">Защита от протечек и сырости</string>
+
+    <string name="trade_pest_control">Дезинсекция / Дератизация</string>
+    <string name="trade_pest_control_description">Обработка от насекомых и грызунов</string>
+
+    <string name="trade_car_bike_mechanic">Авто и мотомеханик</string>
+    <string name="trade_car_bike_mechanic_description">Ремонт и обслуживание транспорта</string>
+
+    <string name="trade_cctv_security">Видеонаблюдение и безопасность</string>
+    <string name="trade_cctv_security_description">Камеры, датчики и сигнализации</string>
+
+    <string name="trade_solar_installer">Монтажник солнечных батарей</string>
+    <string name="trade_solar_installer_description">Панели, инверторы и аккумуляторы</string>
+
+    <string name="trade_aluminium_upvc">Алюминий и ПВХ</string>
+    <string name="trade_aluminium_upvc_description">Окна, двери и перегородки</string>
+
+    <string name="trade_civil_contractor">Общестроительный подрядчик</string>
+    <string name="trade_civil_contractor_description">Малоэтажное строительство и ремонт</string>
+
+    <string name="trade_bore_well">Скважины и водоснабжение</string>
+    <string name="trade_bore_well_description">Бурение, насосы и обслуживание</string>
+
+    <string name="trade_gas_lpg_fitter">Газовое оборудование</string>
+    <string name="trade_gas_lpg_fitter_description">Газопроводы, плиты и ремонт</string>
+
+    <string name="trade_network_support">Сетевое и IT-оборудование</string>
+    <string name="trade_network_support_description">Кабели, роутеры и Wi-Fi</string>
+</resources>

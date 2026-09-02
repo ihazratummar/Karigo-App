@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_delete_title_job">Удалить заказ</string>
+    <string name="dialog_delete_desc_job">Это навсегда удалит заказ и историю его счетов.</string>
+    <string name="dialog_delete_title_client">Удалить клиента</string>
+    <string name="dialog_delete_desc_client">Это удалит %1$s и всю связанную историю заказов и смет.</string>
+    <string name="dialog_delete_title_material">Удалить материал</string>
+    <string name="dialog_delete_desc_material">Это навсегда удалит этот элемент из вашей библиотеки.</string>
+    <string name="dialog_delete_title_estimate">Удалить смету</string>
+    <string name="dialog_delete_desc_estimate">Это навсегда удалит эту смету объекта.</string>
+
+    <string name="dialog_permission_btn_deny">Не сейчас</string>
+    <string name="dialog_permission_btn_allow">Разрешить</string>
+    <string name="dialog_permission_btn_settings">Открыть настройки</string>
+    <string name="dialog_permission_title_notification">Включить уведомления</string>
+    <string name="dialog_permission_desc_notification">Получайте напоминания о неоплаченных счетах и предстоящих заказах.</string>
+    <string name="dialog_permission_permanently_denied_notification">Разрешение на уведомления отклонено. Включите его в настройках</string>
+    <string name="dialog_permission_title_contact">Доступ к контактам</string>
+    <string name="dialog_permission_desc_contact">Быстро добавляйте клиентов из контактов вашего телефона.</string>
+    <string name="dialog_permission_permanently_denied_contact">Разрешение на доступ к контактам отклонено. Включите его в настройках приложения</string>
+
+    <string name="dialog_share_title">Поделиться сметой</string>
+    <string name="dialog_share_title_job">Поделиться счетом</string>
+    <string name="dialog_share_desc_estimate">Выберите способ отправки сметы клиенту.</string>
+    <string name="dialog_share_desc_job">Выберите способ отправки счета клиенту.</string>
+    <string name="dialog_share_option_pdf">Поделиться PDF</string>
+    <string name="dialog_share_option_text">Обычный текст</string>
+
+    <string name="dialog_rename_category_title">Переименовать категорию</string>
+    <string name="dialog_rename_category_placeholder">например, Медные трубы, Фитинги</string>
+
+    <string name="dialog_theme_desc">Выберите оформление Karigo.</string>
+    <string name="dialog_language_desc">Выберите предпочитаемый язык.</string>
+
+    <string name="dialog_confirm_backup_title">Подтвердить резервное копирование</string>
+    <string name="dialog_confirm_backup_desc">Текущие данные и настройки устройства будут надежно загружены на Google Диск, перезаписав предыдущую копию. Продолжить?</string>
+    <string name="dialog_confirm_restore_title">Подтвердить восстановление</string>
+    <string name="dialog_confirm_restore_desc">Внимание: восстановление перезапишет ВСЕ текущие данные устройства данными из резервной копии Google Диска. Это действие нельзя отменить. Вы уверены, что хотите продолжить?</string>
+</resources>

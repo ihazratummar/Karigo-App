@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="job_list_search_field">Поиск заказов или клиентов</string>
+
+    <string name="job_detail_title">Детали заказа</string>
+    <string name="job_new_job">Новый заказ</string>
+    <string name="job_edit_job">Редактировать заказ</string>
+
+    <string name="job_detail_status_pending">В ожидании</string>
+    <string name="job_detail_status_in_progress">В процессе</string>
+    <string name="job_detail_status_complete">Завершен</string>
+    <string name="job_detail_status_invoiced">Выставлен счет</string>
+    <string name="job_detail_status_paid">Оплачен</string>
+
+    <string name="job_details_labour_and_materials">Вкл. работы и материалы</string>
+    <string name="job_details_labour_total">ИТОГО ЗА РАБОТУ</string>
+    <string name="job_details_materials_total">ИТОГО ЗА МАТЕРИАЛЫ</string>
+    <string name="job_labour_item_name_field_placeholder">Название работы, например, Проводка за точку</string>
+
+    <string name="job_list_empty_title">Пока нет заказов</string>
+    <string name="job_list_empty_desc">Создайте свой первый заказ для отслеживания работ и платежей</string>
+    <string name="job_list_btn_create_first">Создать первый заказ</string>
+
+    <string name="payments_received_title">Полученные платежи</string>
+    <string name="payments_add_payment">+ Добавить платеж</string>
+    <string name="payments_no_payments_yet">Платежи пока не записаны.</string>
+    <string name="payments_total_received">ВСЕГО ПОЛУЧЕНО</string>
+    <string name="payments_record_payment_title">Записать платеж</string>
+    <string name="payments_amount_label">СУММА (%s)</string>
+    <string name="payments_remaining_balance">Остаток: %s</string>
+    <string name="payments_payment_method">СПОСОБ ОПЛАТЫ</string>
+    <string name="payments_method_cash">Наличные</string>
+    <string name="payments_method_upi">Перевод / Эл. деньги</string>
+    <string name="payments_method_bank_transfer">Банковский перевод</string>
+    <string name="payments_date_label">ДАТА</string>
+    <string name="payments_note_label">ПРИМЕЧАНИЕ (НЕОБЯЗАТЕЛЬНО)</string>
+    <string name="payments_note_placeholder">например, Аванс, 2-й взнос...</string>
+    <string name="payments_btn_add_payment">Добавить платеж</string>
+</resources>

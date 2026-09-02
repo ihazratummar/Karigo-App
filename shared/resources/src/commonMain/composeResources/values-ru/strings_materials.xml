@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="materials_select_materials">Выбрать материалы</string>
+
+    <string name="materials_search_materials">Поиск материалов</string>
+
+    <string name="materials_add_materials">Добавить материал</string>
+
+    <string name="materials_material_name">Название материала</string>
+    <string name="materials_material_name_text_field_placeholder">например, Труба ПВХ 1/2 дюйма</string>
+
+    <string name="materials_trade">Специальность</string>
+
+    <string name="materials_category">Категория</string>
+    <string name="materials_category_text_field_placeholder">например, Трубы, Фитинги, Клапаны..</string>
+    <string name="materials_category_description">Введите новое имя для создания категории или выберите существующую выше</string>
+
+    <string name="materials_new_category_text_field_placeholder">Название новой категории...</string>
+    <string name="material_manager_category">Управление категорией</string>
+    <string name="materials_count_category">%1$d категорий</string>
+
+    <string name="materials_btn_add_to_library">Добавить в библиотеку</string>
+    <string name="materials_btn_save_changes">Сохранить изменения</string>
+    <string name="materials_btn_manage">Управлять</string>
+</resources>

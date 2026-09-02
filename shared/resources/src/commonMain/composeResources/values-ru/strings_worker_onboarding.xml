@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="worker_action_needed">ТРЕБУЕТСЯ ДЕЙСТВИЕ</string>
+    <string name="worker_action_title">Заполните профиль вашей компании</string>
+    <string name="worker_action_description">Укажите имя владельца и название компании, чтобы сметы и счета выглядели профессионально</string>
+    <string name="worker_action_missing">Не заполнено: %1$d</string>
+
+    <string name="worker_owner_question">Как вас зовут?</string>
+    <string name="worker_owner_asking_name">Начнем с вашего имени</string>
+    <string name="worker_owner_name_section">ИМЯ ВЛАДЕЛЬЦА</string>
+    <string name="worker_owner_name_textfield_placeholder">Ваше полное имя</string>
+
+    <string name="worker_business">Ваш бизнес</string>
+    <string name="worker_business_tagline">Как называется ваша компания или мастерская?</string>
+    <string name="worker_business_name">НАЗВАНИЕ КОМПАНИИ</string>
+    <string name="worker_business_textfield_placeholder">Название вашей мастерской или ИП</string>
+
+    <string name="worker_contact">Контактные данные</string>
+    <string name="worker_contact_tagline">Чтобы клиенты могли с вами связаться</string>
+    <string name="worker_phone_number">НОМЕР ТЕЛЕФОНА</string>
+    <string name="worker_phone_textfield_placeholder">+7 999 000-00-00</string>
+    <string name="worker_email_address">ЭЛЕКТРОННАЯ ПОЧТА</string>
+    <string name="worker_email_textfield_placeholder">your@email.com</string>
+
+    <string name="worker_optional_skip">Необязательно — можно пропустить</string>
+
+    <string name="worker_your_progress">Ваш прогресс</string>
+    <string name="worker_required_fields">Обязательные поля</string>
+    <string name="worker_optional_details">Дополнительные сведения</string>
+
+    <string name="worker_extra_info">Дополнительно</string>
+    <string name="worker_extra_info_tagline">Необязательно, но полезно</string>
+    <string name="worker_extra_gst">ИНН / Налоговый номер</string>
+    <string name="worker_extra_gst_textfield_placeholder">770000000000</string>
+    <string name="worker_extra_business_address">АДРЕС ОФИСА / МАСТЕРСКОЙ</string>
+    <string name="worker_extra_business_address_textfield_placeholder">Полный рабочий адрес</string>
+
+    <string name="worker_btn_finish">Завершить настройку</string>
+    <string name="worker_btn_skip_this">Пропустить этот шаг</string>
+</resources>

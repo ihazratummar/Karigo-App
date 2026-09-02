@@ -7,8 +7,14 @@
     <string name="home_recent_jobs_empty_title">ఇటీవలి పనులు లేవు</string>
     <string name="home_recent_jobs_empty_desc">మీరు సృష్టించిన పనులు ఇక్కడ కనిపిస్తాయి</string>
     <string name="home_recent_jobs_btn_create">పనిని జోడించండి</string>
+    <!-- Free Usage Banner -->
     <string name="home_free_jobs_title">ఉచిత పనులు</string>
     <string name="home_free_jobs_remaining">%1$d మిగిలి ఉన్నాయి</string>
     <string name="home_free_jobs_used_fmt">ఈ నెలలో 5 లో %1$d ఉపయోగించారు</string>
     <string name="home_btn_go_pro">ప్రో పొందండి — %1$s/నెలకు</string>
+    <string name="home_btn_go_pro_simple">Go Pro</string>
+    <string name="home_quota_used_fmt">%1$d/%2$d used</string>
+    <string name="home_quota_jobs">Jobs</string>
+    <string name="home_quota_estimates">Estimates</string>
+    <string name="home_quota_pdf">PDF Exports</string>
 </resources>

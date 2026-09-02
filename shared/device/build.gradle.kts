@@ -36,6 +36,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.shared.domain)
+                implementation(projects.shared.model)
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
             }

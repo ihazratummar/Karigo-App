@@ -7,8 +7,14 @@
     <string name="home_recent_jobs_empty_title">कोणतेही अलीकडील काम नाही</string>
     <string name="home_recent_jobs_empty_desc">तुमचे तयार केलेले काम येथे दिसेल</string>
     <string name="home_recent_jobs_btn_create">काम जोडा</string>
+    <!-- Free Usage Banner -->
     <string name="home_free_jobs_title">फ्री कामे</string>
     <string name="home_free_jobs_remaining">%1$d उर्वरित</string>
     <string name="home_free_jobs_used_fmt">या महिन्यात ५ पैकी %1$d वापरली</string>
     <string name="home_btn_go_pro">प्रो व्हा — %1$s/महिना</string>
+    <string name="home_btn_go_pro_simple">Go Pro</string>
+    <string name="home_quota_used_fmt">%1$d/%2$d used</string>
+    <string name="home_quota_jobs">Jobs</string>
+    <string name="home_quota_estimates">Estimates</string>
+    <string name="home_quota_pdf">PDF Exports</string>
 </resources>

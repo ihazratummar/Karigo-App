@@ -83,15 +83,12 @@ class UpdateManagerImpl(
                     else -> false
                 }
 
-                // ✅ Optional: only nag user after update is stale enough (3+ days)
-                val isStaleEnough = (info.clientVersionStalenessDays() ?: 0) >= 3
-
-                if (isUpdateAvailable && isUpdateAllowed && isStaleEnough) {
+                if (isUpdateAvailable && isUpdateAllowed) {
                     appUpdateManager.startUpdateFlowForResult(
                         info,
                         updateType,
                         activity,
-                        UPDATE_REQUEST_CODE  // ✅ named constant
+                        UPDATE_REQUEST_CODE
                     )
                 }
             }

@@ -291,7 +291,8 @@ fun SettingsScreen(
                     )
                 }
             }
-            
+
+
             item {
                 SettingsComponent(
                     title = stringResource(Res.string.settings_section_legal_info)

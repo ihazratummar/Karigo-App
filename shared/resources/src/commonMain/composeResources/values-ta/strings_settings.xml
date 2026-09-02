@@ -74,6 +74,7 @@
     <string name="backup_btn_restore_confirm">தரவை மீட்டமைக்கவும்</string>
     <string name="backup_info_title">முழுமையான பாதுகாப்பு</string>
     <string name="backup_info_desc">உங்கள் அனைத்து வணிகத் தரவுகளும் — வேலைகள், வாடிக்கையாளர்கள், பொருட்கள் மற்றும் பயன்பாட்டு அமைப்புகள் — உங்கள் கூகிள் டிரைவில் ஒரு தனிப்பட்ட கோப்புறையில் பாதுகாப்பாக காப்புப் பிரதி எடுக்கப்பட்டுள்ளன.</string>
+    <!-- Pro Plan & Paywall -->
     <string name="pro_section_title">ப்ரோ பிளான்</string>
     <string name="pro_banner_title">ப்ரோ ஆக மாறுக</string>
     <string name="pro_banner_desc">வரம்பற்ற வேலைகள், பிடிஎஃப் இன்வாய்ஸ், பிராண்டிங்</string>
@@ -114,10 +115,10 @@
     <string name="paywall_btn_monthly">மாதாந்திர சந்தா — %1$s</string>
     <string name="paywall_btn_yearly">ஆண்டு சந்தா — %1$s</string>
     <string name="paywall_btn_lifetime">லைஃப்டைம் வாங்குக — %1$s</string>
+    <string name="paywall_btn_restore">Restore Subscription</string>
     <string name="paywall_footer_preview">வரம்பிற்குட்பட்ட ஆஃபர் — வாழ்நாள் அணுகல்</string>
     <string name="paywall_offline_title">நீங்கள் ஆஃப்லைனில் உள்ளீர்கள்</string>
     <string name="paywall_offline_desc">இணைப்பு திரும்பும்போது விலைகள் தானாகவே ஏற்றப்படும்.</string>
-
     <!-- Earnings Feature Strings -->
     <string name="earnings_dashboard_title">வருமானம்</string>
     <string name="earnings_label_revenue">மொத்த வருவாய்</string>
@@ -139,7 +140,6 @@
     <string name="earnings_paywall_subtitle">வணிக பகுப்பாய்வை அன்லாக் செய்யுங்கள்</string>
     <string name="earnings_paywall_desc">காரிகோ புரோ மூலம் உங்கள் வருவாய் போக்குகள், சிறந்த வாடிக்கையாளர்கள், சராசரி வருமானம் மற்றும் மாதாந்திர வளர்ச்சியைத் தானாகக் கண்காணிக்கவும்.</string>
     <string name="earnings_paywall_btn_unlock">வருமான டாஷ்போர்டை அன்லாக் செய்க</string>
-
     <!-- Subscription & Active Pro Strings -->
     <string name="pro_activated_title">ப்ரோ செயல்படுத்தப்பட்டது</string>
     <string name="pro_monthly_active">மாதாந்திர பிளான் செயலில் உள்ளது</string>

@@ -275,6 +275,8 @@ class AddJobViewModel(
     }
 
 
+    fun onEvent(event: AddJobIntent) = event(event)
+
     /** Handles UI intents and updates state or triggers respective actions. */
     @OptIn(ExperimentalUuidApi::class)
     fun event(event: AddJobIntent) {

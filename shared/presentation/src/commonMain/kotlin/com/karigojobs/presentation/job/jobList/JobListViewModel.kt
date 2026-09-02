@@ -81,8 +81,14 @@ class JobListViewModel (
 
     fun onEvent(event: JobListIntent){
         when(event){
-            is JobListIntent.JobClick -> TODO()
-            is JobListIntent.JobFilterClick -> TODO()
+            is JobListIntent.JobClick -> {
+                viewModelScope.launch {
+                    _effect.emit(JobListEffect.OnJobClick(event.jobId))
+                }
+            }
+            is JobListIntent.JobFilterClick -> {
+                _state.update { it.copy(jobStatusFilter = event.filter) }
+            }
             is JobListIntent.SearchTextChanged -> {
                 _state.update {
                     it.copy(

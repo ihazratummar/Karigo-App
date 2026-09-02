@@ -16,7 +16,6 @@
     <string name="job_list_empty_title">अभी कोई काम नहीं है</string>
     <string name="job_list_empty_desc">काम और भुगतान को ट्रैक करने के लिए अपना पहला काम बनाएं</string>
     <string name="job_list_btn_create_first">पहला काम बनाएं</string>
-
     <string name="payments_received_title">प्राप्त भुगतान</string>
     <string name="payments_add_payment">+ भुगतान जोड़ें</string>
     <string name="payments_no_payments_yet">अभी तक कोई भुगतान दर्ज नहीं किया गया।</string>

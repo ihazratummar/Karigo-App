@@ -7,8 +7,14 @@
     <string name="home_recent_jobs_empty_title">कोई हालिया काम नहीं</string>
     <string name="home_recent_jobs_empty_desc">आपके द्वारा बनाए गए काम यहां दिखाई देंगे</string>
     <string name="home_recent_jobs_btn_create">काम जोड़ें</string>
+    <!-- Free Usage Banner -->
     <string name="home_free_jobs_title">फ्री काम</string>
     <string name="home_free_jobs_remaining">%1$d शेष</string>
     <string name="home_free_jobs_used_fmt">इस महीने 5 में से %1$d का उपयोग किया गया</string>
     <string name="home_btn_go_pro">प्रो बनें — %1$s/माह</string>
+    <string name="home_btn_go_pro_simple">Go Pro</string>
+    <string name="home_quota_used_fmt">%1$d/%2$d used</string>
+    <string name="home_quota_jobs">Jobs</string>
+    <string name="home_quota_estimates">Estimates</string>
+    <string name="home_quota_pdf">PDF Exports</string>
 </resources>

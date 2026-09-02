@@ -8,6 +8,7 @@
     <string name="settings_section_data_support">DATA &amp; SUPPORT</string>
     <string name="settings_section_app_settings">APP SETTINGS</string>
     <string name="settings_section_legal_info">LEGAL &amp; INFO</string>
+
     <string name="settings_option_backup">Data Backup</string>
     <string name="settings_option_backup_desc">Google Drive sync</string>
     <string name="settings_option_language">App Language</string>

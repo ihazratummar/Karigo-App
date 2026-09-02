@@ -74,6 +74,7 @@
     <string name="backup_btn_restore_confirm">ডেটা রিস্টোর করুন</string>
     <string name="backup_info_title">সম্পূর্ণ সুরক্ষা</string>
     <string name="backup_info_desc">আপনার ব্যবসা সম্পর্কিত সমস্ত ডেটা (কাজ, গ্রাহক, মালামাল ও সেটিংস) আপনার গুগল ড্রাইভের ব্যক্তিগত ফোল্ডারে এনক্রিপ্ট করে সুরক্ষিত রাখা হয়।</string>
+    <!-- Pro Plan & Paywall -->
     <string name="pro_section_title">প্রো প্ল্যান</string>
     <string name="pro_banner_title">প্রো সুবিধায় যান</string>
     <string name="pro_banner_desc">আনলিমিটেড কাজ, পিডিএফ ইনভয়েস, কাস্টম ব্র্যান্ডিং ও অ্যানালিটিক্স</string>
@@ -114,10 +115,10 @@
     <string name="paywall_btn_monthly">মাসিক সাবস্ক্রিপশন — %1$s</string>
     <string name="paywall_btn_yearly">বার্ষিক সাবস্ক্রিপশন — %1$s</string>
     <string name="paywall_btn_lifetime">লাইফটাইম কিনুন — %1$s</string>
+    <string name="paywall_btn_restore">Restore Subscription</string>
     <string name="paywall_footer_preview">সীমিত সময়ের অফার — একবার পরিশোধ, আজীবন অ্যাক্সেস</string>
     <string name="paywall_offline_title">আপনি অফলাইনে আছেন</string>
     <string name="paywall_offline_desc">সংযোগ ফিরে এলে দাম স্বয়ংক্রিয়ভাবে লোড হবে।</string>
-
     <!-- Earnings Feature Strings -->
     <string name="earnings_dashboard_title">উপার্জন</string>
     <string name="earnings_label_revenue">মোট রাজস্ব</string>
@@ -139,7 +140,6 @@
     <string name="earnings_paywall_subtitle">ব্যবসায়িক বিশ্লেষণ আনলক করুন</string>
     <string name="earnings_paywall_desc">কারিগো প্রো-এর মাধ্যমে স্বয়ংক্রিয়ভাবে আপনার রাজস্বের গতিধারা, সেরা ক্লায়েন্ট, কাজ প্রতি গড় উপার্জন এবং মাসিক বৃদ্ধি ট্র্যাক করুন।</string>
     <string name="earnings_paywall_btn_unlock">উপার্জন ড্যাশবোর্ড আনলক করুন</string>
-
     <!-- Subscription & Active Pro Strings -->
     <string name="pro_activated_title">প্রো সক্রিয় করা হয়েছে</string>
     <string name="pro_monthly_active">মাসিক প্ল্যান সক্রিয়</string>

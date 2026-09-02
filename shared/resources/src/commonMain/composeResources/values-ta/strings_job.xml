@@ -16,7 +16,7 @@
     <string name="job_list_empty_title">இதுவரை வேலைகள் எதுவும் இல்லை</string>
     <string name="job_list_empty_desc">வேலை மற்றும் கட்டணங்களைக் கண்காணிக்க உங்கள் முதல் வேலையை உருவாக்கவும்</string>
     <string name="job_list_btn_create_first">முதல் வேலையை உருவாக்கவும்</string>
-<string name="payments_received_title">பெறப்பட்ட கொடுப்பனவுகள்</string>
+    <string name="payments_received_title">பெறப்பட்ட கொடுப்பனவுகள்</string>
     <string name="payments_add_payment">+ கொடுப்பனவைச் சேர்</string>
     <string name="payments_no_payments_yet">இதுவரை எந்த கொடுப்பனவும் பதிவு செய்யப்படவில்லை.</string>
     <string name="payments_total_received">மொத்தம் பெறப்பட்டது</string>

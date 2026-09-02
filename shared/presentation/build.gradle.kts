@@ -28,10 +28,10 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.shared.domain)
-                implementation(projects.shared.model)
-                implementation(projects.shared.utils)
-                implementation(projects.shared.device)
+                api(projects.shared.domain)
+                api(projects.shared.model)
+                api(projects.shared.utils)
+                api(projects.shared.device)
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.datetime)
                 // Add KMP dependencies here

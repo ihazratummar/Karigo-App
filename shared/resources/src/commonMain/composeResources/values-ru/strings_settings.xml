@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings Screen -->
+    <string name="settings_tab_privacy">Политика конфиденциальности</string>
+    <string name="settings_tab_tos">Условия использования</string>
+    <string name="settings_tab_toc">Правила и условия</string>
+    <string name="settings_tab_disclaimer">Отказ от ответственности</string>
+    <string name="settings_section_data_support">ДАННЫЕ И ПОДДЕРЖКА</string>
+    <string name="settings_section_app_settings">НАСТРОЙКИ ПРИЛОЖЕНИЯ</string>
+    <string name="settings_section_legal_info">ПРАВОВАЯ ИНФОРМАЦИЯ</string>
+
+    <string name="settings_option_backup">Резервное копирование</string>
+    <string name="settings_option_backup_desc">Синхронизация с Google Диском</string>
+    <string name="settings_option_language">Язык приложения</string>
+    <string name="settings_option_theme">Тема приложения</string>
+    <string name="settings_theme_system">Системная</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_dark">Тёмная</string>
+    <string name="settings_my_trade">Моя специальность</string>
+
+    <!-- About Screen -->
+    <string name="about_title">О приложении Karigo</string>
+    <string name="about_version">Версия %1$s (%2$d)</string>
+    <string name="about_logo_description">Логотип Karigo</string>
+    <string name="about_tagline">Универсальный бизнес-помощник для подрядчиков, мастеров и специалистов сферы услуг.</string>
+    <string name="about_section_what_does">Возможности Karigo</string>
+    <string name="about_what_does_desc">Karigo помогает вести бизнес прямо с телефона — без бумаг и таблиц. Управляйте заказами, ведите учет клиентов, создавайте прайс-листы материалов, формируйте профессиональные сметы, отслеживайте доходы и отправляйте документы через WhatsApp.</string>
+    <string name="about_section_features">Ключевые функции</string>
+    <string name="about_feature_job_title">Управление заказами</string>
+    <string name="about_feature_job_desc">Отслеживание заказов от старта до оплаты</string>
+    <string name="about_feature_client_title">База клиентов</string>
+    <string name="about_feature_client_desc">Хранение контактов и истории заказов</string>
+    <string name="about_feature_material_title">Библиотека материалов</string>
+    <string name="about_feature_material_desc">Создайте прайс-лист один раз и используйте всегда</string>
+    <string name="about_feature_estimate_title">Сметы объектов</string>
+    <string name="about_feature_estimate_desc">Создавайте сметы на объекте и отправляйте в WhatsApp</string>
+    <string name="about_feature_earning_title">Учет доходов</string>
+    <string name="about_feature_earning_desc">Наглядный обзор вашей выручки</string>
+    <string name="about_feature_backup_desc">Резервное копирование на Google Диск в любое время</string>
+    <string name="about_section_who_for">Для кого это приложение</string>
+    <string name="about_who_for_desc">Karigo создано для трудолюбивых мастеров, которые строят, ремонтируют и обслуживают наш мир:</string>
+    <string name="about_section_made_pride">Сделано с гордостью</string>
+    <string name="about_made_pride_desc">Разработано с учетом особенностей работы подрядчиков — мультивалютность, отправка в WhatsApp, поддержка счетов-фактур и простой интерфейс.</string>
+    <string name="about_copyright">Karigo v%1$s · Создано для всего мира · Все права защищены</string>
+
+    <!-- Legal Screen -->
+    <string name="legal_default_title">Правовая информация</string>
+    <string name="legal_doc_not_found">Документ не найден</string>
+    <string name="legal_effective_date">Вступает в силу: 30 июня 2026 г.</string>
+    <string name="legal_doc_footer">%1$s • Karigo • Действует с 30 июня 2026 г.</string>
+    <string name="legal_info_app">Приложение</string>
+    <string name="legal_info_developer">Разработчик</string>
+    <string name="legal_info_email">Эл. почта</string>
+    <string name="legal_info_grievance">Ответственный за обращения</string>
+    <string name="legal_info_response_time">Время ответа</string>
+
+    <!-- Data Backup Screen -->
+    <string name="backup_title">Облачная синхронизация</string>
+    <string name="backup_toast_signin_failed_token">Ошибка входа: не удалось получить токен доступа</string>
+    <string name="backup_toast_signin_failed_info">Ошибка входа: отсутствуют данные аккаунта</string>
+    <string name="backup_toast_signin_cancelled">Вход отменен</string>
+    <string name="backup_toast_signin_error">Ошибка входа Google: %1$s (%2$d)</string>
+    <string name="backup_toast_signin_generic">Вход отменен или завершился ошибкой</string>
+    <string name="backup_toast_auth_error">Ошибка авторизации. Попробуйте подключиться снова.</string>
+    <string name="backup_status_connected">Google Диск подключен</string>
+    <string name="backup_status_disconnected">Не подключено</string>
+    <string name="backup_latest_time">Последняя копия: %1$s</string>
+    <string name="backup_no_backup">Резервных копий на Диске не найдено</string>
+    <string name="backup_btn_disconnect">Отключить</string>
+    <string name="backup_btn_connect">Подключить Google Диск</string>
+    <string name="backup_label_auto">Автоматическое копирование</string>
+    <string name="backup_desc_auto_on">Копирование каждые 24 часа</string>
+    <string name="backup_desc_auto_off">Включите для защиты данных</string>
+    <string name="backup_status_uploading">Безопасная загрузка...</string>
+    <string name="backup_btn_backup_now">Создать копию сейчас</string>
+    <string name="backup_status_restoring">Восстановление данных...</string>
+    <string name="backup_btn_restore">Восстановить с Диска</string>
+    <string name="backup_btn_restore_confirm">Восстановить данные</string>
+    <string name="backup_info_title">Полная безопасность</string>
+    <string name="backup_info_desc">Ваши коммерческие данные (заказы, клиенты, материалы и настройки) надежно шифруются и хранятся в защищенной папки вашего Google Диска. Доступа к другим вашим файлам у нас нет.</string>
+
+    <!-- Pro Plan & Paywall -->
+    <string name="pro_section_title">ПЛАН PRO</string>
+    <string name="pro_banner_title">Перейти на Pro</string>
+    <string name="pro_banner_desc">Безлимитные заказы, PDF-счета, брендинг и аналитика</string>
+    <string name="paywall_tagline">Дешевле чашки чая в день</string>
+    <string name="paywall_subtagline">Выгодное решение для вашего бизнеса</string>
+    <string name="paywall_tab_monthly">Ежемесячно</string>
+    <string name="paywall_tab_yearly">Ежегодно</string>
+    <string name="paywall_tab_lifetime">Бессрочно</string>
+    <string name="paywall_per_month">в месяц</string>
+    <string name="paywall_per_year">в год</string>
+    <string name="paywall_one_time">разово</string>
+    <string name="paywall_save_yearly">Экономия %1$s по сравнению с помесячной оплатой</string>
+    <string name="paywall_one_time_subtext">Один платеж навсегда</string>
+    <string name="paywall_badge_discount">Скидка %1$s</string>
+    <string name="paywall_badge_best_value">Выгодно</string>
+    <string name="paywall_section_free">Бесплатно — Навсегда</string>
+    <string name="paywall_section_pro">Возможности Pro</string>
+    <string name="paywall_feat_jobs_limit">5 заказов в месяц</string>
+    <string name="paywall_feat_unlimited_clients">Неограниченно клиентов</string>
+    <string name="paywall_feat_material_lib">Библиотека цен материалов</string>
+    <string name="paywall_feat_labour_logger">Учет рабочего времени</string>
+    <string name="paywall_feat_invoice_total">Просмотр итогов на экране</string>
+    <string name="paywall_feat_job_history">История заказов</string>
+    <string name="paywall_feat_pdf_export">Генерация PDF-счетов</string>
+    <string name="paywall_feat_whatsapp">Отправка в WhatsApp в 1 касание</string>
+    <string name="paywall_feat_multi_worker">Ввод работ для нескольких рабочих</string>
+    <string name="paywall_feat_earnings">Панель доходов</string>
+    <string name="paywall_feat_logo">Логотип вашей компании в счете</string>
+    <string name="paywall_feat_discount">Поле скидки в счете</string>
+    <string name="paywall_feat_csv">Экспорт данных в CSV</string>
+    <string name="paywall_feat_reminders">Напоминания об оплате</string>
+    <string name="paywall_feat_unlimited_jobs">Неограниченно заказов</string>
+    <string name="paywall_trust_secure">Безопасно</string>
+    <string name="paywall_trust_cancel">Отмена в любое время</string>
+    <string name="paywall_trust_rating">Рейтинг 4.9</string>
+    <string name="paywall_early_adopter_title">Цена для первых пользователей</string>
+    <string name="paywall_early_adopter_desc">Зафиксируйте эту цену навсегда. По мере добавления новых функций стоимость подписки будет расти.</string>
+    <string name="paywall_btn_monthly">Подписка на месяц — %1$s</string>
+    <string name="paywall_btn_yearly">Подписка на год — %1$s</string>
+    <string name="paywall_btn_lifetime">Бессрочный доступ — %1$s</string>
+    <string name="paywall_btn_restore">Восстановить подписку</string>
+    <string name="paywall_footer_preview">Ограниченное предложение запуска — пожизненный доступ</string>
+    <string name="paywall_offline_title">Вы офлайн</string>
+    <string name="paywall_offline_desc">Цены загрузятся автоматически при восстановлении соединения.</string>
+
+    <!-- Earnings Feature Strings -->
+    <string name="earnings_dashboard_title">Доходы</string>
+    <string name="earnings_label_revenue">ВЫРУЧКА</string>
+    <string name="earnings_label_avg_per_job">СРЕДНЕЕ ЗА ЗАКАЗ</string>
+    <string name="earnings_jobs_count">%1$d заказов</string>
+    <string name="earnings_this_year">в этом году</string>
+    <string name="earnings_monthly_revenue">Ежемесячная выручка</string>
+    <string name="earnings_tf_6_months">6 месяцев</string>
+    <string name="earnings_tf_1_year">1 год</string>
+    <string name="earnings_tf_lifetime">За все время</string>
+    <string name="earnings_top_clients">Лучшие клиенты</string>
+    <string name="earnings_pro_badge">PRO</string>
+    <string name="earnings_no_clients">Выручка по клиентам пока не записана.</string>
+    <string name="earnings_growth_trend">Динамика роста</string>
+    <string name="earnings_vs_last_month">к прошлому месяцу</string>
+    <string name="earnings_vs_last_year">к прошлому году</string>
+    <string name="earnings_best_month">Лучший месяц</string>
+    <string name="earnings_paywall_title">Панель доходов</string>
+    <string name="earnings_paywall_subtitle">Бизнес-аналитика для вашей работы</string>
+    <string name="earnings_paywall_desc">Отслеживайте динамику выручки, лучших клиентов и средний чек с Karigo Pro.</string>
+    <string name="earnings_paywall_btn_unlock">Открыть панель доходов</string>
+
+    <!-- Subscription & Active Pro Strings -->
+    <string name="pro_activated_title">Pro активирован</string>
+    <string name="pro_monthly_active">Месячный план активен</string>
+    <string name="pro_yearly_active">Годовой план активен</string>
+    <string name="pro_lifetime_active">Бессрочный доступ активен</string>
+    <string name="pro_plan_active_section">ПЛАН PRO АКТИВЕН</string>
+    <string name="manage_subscription">Управление подпиской</string>
+    <string name="your_subscription_title">Ваша подписка</string>
+    <string name="manage_pro_plan">Управление планом Pro</string>
+    <string name="activated_on">Активировано</string>
+    <string name="next_renewal">Следующее списание</string>
+    <string name="days_remaining">Осталось дней</string>
+    <string name="lifetime_renewal_text">Бессрочный доступ</string>
+    <string name="lifetime_days_text">Навсегда</string>
+    <string name="days_format">%1$d дней</string>
+    <string name="whats_included_in_pro">Что входит в Pro</string>
+    <string name="billed_via_google_play">Оплата через Google Play</string>
+    <string name="billed_via_google_play_desc">Ваша подписка управляется через Google Play. Вы можете просматривать историю платежей или отменить подписку в любое время.</string>
+    <string name="manage_in_google_play">Управление в Google Play</string>
+    <string name="cancel_subscription">Отменить подписку</string>
+    <string name="cancel_dialog_title">Отменить подписку?</string>
+    <string name="cancel_dialog_desc">Вы потеряете доступ к функциям Pro в конце оплаченного периода.</string>
+    <string name="cancel_dialog_loss_box">Что вы потеряете: экспорт в PDF, отправку в WhatsApp, панель доходов, логотип компании в счете, экспорт CSV и безлимитные заказы. Ваши данные останутся в безопасности.</string>
+    <string name="cancel_dialog_notice">Подписки управляются Google Play. Вы будете перенаправлены для завершения отмены.</string>
+    <string name="btn_keep_plan">Оставить план</string>
+    <string name="btn_cancel_anyway">Все равно отменить</string>
+    <string name="need_help_contact">Нужна помощь? Напишите нам: support@karigo.app</string>
+</resources>

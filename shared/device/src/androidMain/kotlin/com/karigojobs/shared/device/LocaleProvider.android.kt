@@ -12,6 +12,7 @@ actual class LocaleProvide actual constructor() {
             val curr = Currency.getInstance(locale)
             when {
                 countryCode == "IN" -> "₹"
+                countryCode == "RU" -> "₽"
                 countryCode == "AE" -> "AED"
                 countryCode == "SA" -> "SAR"
                 countryCode == "BD" -> "৳"

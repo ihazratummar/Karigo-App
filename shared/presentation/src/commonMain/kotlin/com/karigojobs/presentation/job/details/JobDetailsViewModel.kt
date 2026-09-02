@@ -82,7 +82,7 @@ class JobDetailsViewModel(
     }
 
 
-    fun onEven(event: JobDetailsIntent) {
+    fun onEvent(event: JobDetailsIntent) {
         when (event) {
             is JobDetailsIntent.ChangeJobStatus -> {
                 _state.update { it.copy(isLoading = true) }

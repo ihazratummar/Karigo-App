@@ -24,6 +24,10 @@ actual class AppPathProvider(private val context: Context) {
         return File(context.filesDir, fileName).absolutePath
     }
 
+    actual fun getCachePath(fileName: String): String {
+        return File(context.cacheDir, fileName).absolutePath
+    }
+
     actual fun restartApp() {
         val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
         if (intent != null) {

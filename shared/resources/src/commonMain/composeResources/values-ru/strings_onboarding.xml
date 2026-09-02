@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_started_description">Самый простой способ управлять заказами, клиентами и доходами — создано для подрядчиков, сантехников, электриков и других мастеров.</string>
+    <string name="onboarding_started_track_job">Учет каждого заказа</string>
+    <string name="onboarding_started_track_description">Работы, материалы и счета в одном месте</string>
+    <string name="onboarding_started_whatsapp">Отправка через WhatsApp</string>
+    <string name="onboarding_started_whatsapp_description">Отправляйте счета клиентам мгновенно</string>
+    <string name="onboarding_started_earnings">Контроль доходов</string>
+    <string name="onboarding_started_earnings_description">Еженедельные отчеты и учет платежей</string>
+
+    <string name="onboarding_progress">Шаг %1$s из %2$s</string>
+
+    <string name="onboarding_what_do_you_trade">Какая у вас специальность?</string>
+    <string name="onboarding_what_do_you_trade_description">Выберите основную профессию, чтобы мы могли персонализировать ваш интерфейс.</string>
+    <string name="onboarding_btn_trade_not_selected">Выберите хотя бы одну специальность</string>
+    <string name="onboarding_btn_continue">Продолжить (выбрано: %1$s)</string>
+
+    <string name="onboarding_last_title">Всё готово</string>
+    <string name="onboarding_last_description">Мы загрузили стартовые материалы для вашей работы.</string>
+    <string name="onboarding_starter_material">Загружено %1$s стартовых элементов</string>
+    <string name="onboarding_materials_ready">Готово материалов: %1$s</string>
+    <string name="onboarding_materials_ready_description">вы можете изменить цены в любое время в Библиотеке материалов</string>
+
+    <string name="onboarding_back_to_trade">Назад к выбору специальности</string>
+</resources>

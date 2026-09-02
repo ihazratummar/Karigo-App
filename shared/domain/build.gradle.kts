@@ -28,9 +28,9 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.shared.model)
-                implementation(projects.shared.datastore)
-                implementation(projects.shared.database)
+                api(projects.shared.model)
+                api(projects.shared.datastore)
+                api(projects.shared.database)
 
                 implementation(libs.kotlin.stdlib)
                 // Add KMP dependencies here

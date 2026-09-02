@@ -33,6 +33,9 @@ kotlin {
             export(projects.shared.presentation)
             export(projects.shared.data)
             export(projects.shared.model)
+            export(projects.shared.datastore)
+            export(projects.shared.database)
+            export(projects.shared.device)
         }
     }
 
@@ -44,6 +47,9 @@ kotlin {
             export(projects.shared.presentation)
             export(projects.shared.data)
             export(projects.shared.model)
+            export(projects.shared.datastore)
+            export(projects.shared.database)
+            export(projects.shared.device)
         }
     }
 

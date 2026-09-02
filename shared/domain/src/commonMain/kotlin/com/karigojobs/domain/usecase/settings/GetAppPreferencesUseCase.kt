@@ -6,14 +6,15 @@ import com.karigojobs.share.model.ThemePreference
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 
+data class AppPreferences(
+    val theme: ThemePreference,
+    val language: AppLanguage,
+    val currency: String
+)
+
 class GetAppPreferencesUseCase(
     private val settingsStore: SettingsStore
 ) {
-    data class AppPreferences(
-        val theme: ThemePreference,
-        val language: AppLanguage,
-        val currency: String
-    )
 
     operator fun invoke(): Flow<AppPreferences> {
         return combine(

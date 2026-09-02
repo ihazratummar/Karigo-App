@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_home">Главная</string>
+    <string name="nav_jobs">Заказы</string>
+    <string name="nav_clients">Клиенты</string>
+    <string name="nav_materials">Материалы</string>
+    <string name="nav_settings">Настройки</string>
+</resources>

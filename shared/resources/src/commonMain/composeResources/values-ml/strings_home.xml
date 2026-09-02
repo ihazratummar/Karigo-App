@@ -7,8 +7,14 @@
     <string name="home_recent_jobs_empty_title">സമീപകാല ജോലികളൊന്നുമില്ല</string>
     <string name="home_recent_jobs_empty_desc">നിങ്ങൾ നിർമ്മിച്ച ജോലികൾ ഇവിടെ കാണിക്കും</string>
     <string name="home_recent_jobs_btn_create">ജോലി ചേർക്കുക</string>
+    <!-- Free Usage Banner -->
     <string name="home_free_jobs_title">സൗജന്യ ജോലികൾ</string>
     <string name="home_free_jobs_remaining">%1$d ബാക്കി</string>
     <string name="home_free_jobs_used_fmt">ഈ മാസം 5-ൽ %1$d എണ്ണം ഉപയോഗിച്ചു</string>
     <string name="home_btn_go_pro">പ്രോ ആകുക — %1$s/മാസം</string>
+    <string name="home_btn_go_pro_simple">Go Pro</string>
+    <string name="home_quota_used_fmt">%1$d/%2$d used</string>
+    <string name="home_quota_jobs">Jobs</string>
+    <string name="home_quota_estimates">Estimates</string>
+    <string name="home_quota_pdf">PDF Exports</string>
 </resources>

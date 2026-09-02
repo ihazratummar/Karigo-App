@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_new_estimate">Новая смета</string>
+    <string name="home_site_estimate">Смета объекта</string>
+    <string name="home_estimate_desctiption">Осмотрите объект, составьте список материалов и отправьте клиенту в WhatsApp</string>
+    <string name="home_recent_job">Недавние заказы</string>
+
+    <string name="home_recent_jobs_empty_title">Нет недавних заказов</string>
+    <string name="home_recent_jobs_empty_desc">Созданные вами заказы будут отображаться здесь</string>
+    <string name="home_recent_jobs_btn_create">Добавить заказ</string>
+
+    <string name="home_free_jobs_title">Бесплатный лимит</string>
+    <string name="home_free_jobs_remaining">Осталось %1$d</string>
+    <string name="home_free_jobs_used_fmt">Использовано %1$d из %2$d в этом месяце</string>
+    <string name="home_btn_go_pro">Перейти на Pro — %1$s/мес</string>
+    <string name="home_btn_go_pro_simple">Перейти на Pro</string>
+    <string name="home_quota_used_fmt">%1$d/%2$d использ.</string>
+    <string name="home_quota_jobs">Заказы</string>
+    <string name="home_quota_estimates">Сметы</string>
+    <string name="home_quota_pdf">Экспорт PDF</string>
+</resources>

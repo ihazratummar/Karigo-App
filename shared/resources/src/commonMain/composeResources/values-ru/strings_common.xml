@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_btn_cancel">Отмена</string>
+    <string name="common_btn_save">Сохранить</string>
+    <string name="common_btn_update">Обновить</string>
+    <string name="common_btn_delete">Удалить</string>
+    <string name="common_btn_ok">ОК</string>
+    <string name="common_btn_retry">Повторить</string>
+    <string name="common_btn_continue">Продолжить</string>
+    <string name="common_btn_get_started">Начать</string>
+    <string name="common_btn_lets_go">Поехали</string>
+    <string name="common_btn_change">Изменить</string>
+    <string name="common_btn_add_item">Добавить элемент</string>
+    <string name="common_manage_library">Управление библиотекой</string>
+    <string name="common_btn_rename">Переименовать</string>
+
+    <string name="common_uncategorized">Без категории</string>
+
+    <string name="common_tab_title_client">КЛИЕНТ</string>
+    <string name="common_tab_job_title">НАЗВАНИЕ ЗАКАЗА</string>
+
+    <string name="common_tab_title_client_placeholder">Выберите клиента...</string>
+    <string name="common_tab_job_title_placeholder">например, Ремонт кухонного смесителя</string>
+
+    <string name="common_rate">Тариф</string>
+    <string name="common_unit">Ед. изм.</string>
+    <string name="common_price">Цена</string>
+
+    <string name="common_unit_text_field_placeholder">шт, м, кг</string>
+
+    <string name="common_tab_select_trade">ВЫБЕРИТЕ СПЕЦИАЛЬНОСТЬ</string>
+
+    <string name="common_add_labour_item">Добавить работу</string>
+    <string name="common_add_material_item">Добавить материалы</string>
+    <string name="common_select_client">Выбрать клиента</string>
+    <string name="common_select_client_search_field_placeolder">Поиск клиента..</string>
+
+    <string name="common_label_search">Поиск</string>
+
+    <string name="common_total">Итого</string>
+    <string name="common_all">Все</string>
+    <string name="common_optional">Необязательно</string>
+
+    <string name="common_total_count">%1$d всего</string>
+    <string name="common_item_count">%1$d элементов</string>
+    <string name="common_add_selected_count">Добавить выбранное (%1$d)</string>
+    <string name="common_clients_count">%1$d клиентов</string>
+    <string name="common_jobs_count">%1$d заказов</string>
+    <string name="common_billed_amount">%1$d выставлено</string>
+
+    <string name="common_see_all">Посмотреть все</string>
+    <string name="common_error_unknown">Произошла неизвестная ошибка</string>
+    <string name="common_required">ОБЯЗАТЕЛЬНО</string>
+    <string name="common_contractor">Подрядчик</string>
+
+    <string name="common_job_history">История заказов</string>
+
+    <string name="common_greeting_morning">Доброе утро</string>
+    <string name="common_greeting_afternoon">Добрый день</string>
+    <string name="common_greeting_evening">Добрый вечер</string>
+    <string name="common_greeting_night">Доброй ночи</string>
+
+    <string name="common_status">Статус</string>
+    <string name="common_labour">Работа</string>
+    <string name="common_workers">Рабочие</string>
+    <string name="common_materials">Материалы</string>
+    <string name="common_grand_total">Общий итого</string>
+    <string name="common_invoice_preview">Предпросмотр счета</string>
+    <string name="common_export">Экспорт PDF</string>
+    <string name="common_labour_history">История изменений работ</string>
+    <string name="common_no_history">История отсутствует</string>
+    <string name="common_added">Добавлено</string>
+    <string name="common_removed">Удалено</string>
+    <string name="common_close">Закрыть</string>
+
+    <string name="settings_currency_title">Выберите валюту</string>
+    <string name="settings_currency_search_placeholder">Поиск валюты или страны...</string>
+    <string name="settings_popular_currencies">Популярные валюты</string>
+    <string name="settings_all_currencies">Все валюты</string>
+</resources>

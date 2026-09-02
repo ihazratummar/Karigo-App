@@ -2,15 +2,27 @@ import SwiftUI
 import sharedNewKit
 
 struct ContentView: View {
+    @StateObject private var onboardingWrapper = OnboardingViewModelWrapper()
+
     var body: some View {
-        // ContentView acts as our app's main entry point.
-        // We route directly to the TabBarView for navigation.
-        TabBarView()
+        Group {
+            switch onboardingWrapper.completedState {
+            case is OnboardingCompleteStateCompleted:
+                TabBarView()
+            case is OnboardingCompleteStateNotCompleted:
+                OnboardingContainerView(
+                    onOnboardingComplete: {
+                        // Handled by KMP completedState update
+                    }
+                )
+            default:
+                ZStack {
+                    AppColors.background(for: .dark).edgesIgnoringSafeArea(.all)
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: AppColors.primary))
+                }
+            }
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}

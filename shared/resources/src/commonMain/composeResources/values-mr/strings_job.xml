@@ -16,7 +16,7 @@
     <string name="job_list_empty_title">अद्याप कोणतेही काम नाही</string>
     <string name="job_list_empty_desc">काम आणि पेमेंट ट्रॅक करण्यासाठी तुमचे पहिले काम तयार करा</string>
     <string name="job_list_btn_create_first">पहिले काम तयार करा</string>
-<string name="payments_received_title">प्राप्त झालेले पेमेंट</string>
+    <string name="payments_received_title">प्राप्त झालेले पेमेंट</string>
     <string name="payments_add_payment">+ पेमेंट जोडा</string>
     <string name="payments_no_payments_yet">अद्याप कोणतेही पेमेंट नोंदवले गेलेले नाही.</string>
     <string name="payments_total_received">एकूण प्राप्त</string>

@@ -74,6 +74,7 @@
     <string name="backup_btn_restore_confirm">ഡാറ്റ റിസ്റ്റോർ ചെയ്യുക</string>
     <string name="backup_info_title">സമ്പൂർണ്ണ സംരക്ഷണം</string>
     <string name="backup_info_desc">നിങ്ങളുടെ എല്ലാ ബിസിനസ്സ് ഡാറ്റയും — ജോലികൾ, ക്ലയൻ്റുകൾ, സാമഗ്രികൾ, ആപ്പ് സെറ്റിംഗ്സ് എന്നിവ — നിങ്ങളുടെ Google ഡ്രൈവിലെ ഒരു സ്വകാര്യ ഫോൾഡറിൽ സുരക്ഷിതമായി ബാക്കപ്പ് ചെയ്തിരിക്കുന്നു.</string>
+    <!-- Pro Plan & Paywall -->
     <string name="pro_section_title">പ്രോ പ്ലാൻ</string>
     <string name="pro_banner_title">പ്രോ ആകുക</string>
     <string name="pro_banner_desc">അപരിമിതമായ ജോലികൾ, പിഡിഎഫ് ഇൻവോയ്സുകൾ, ബ്രാൻഡിംഗ്</string>
@@ -114,10 +115,10 @@
     <string name="paywall_btn_monthly">പ്രതിമാസ വരിസംഖ്യ — %1$s</string>
     <string name="paywall_btn_yearly">പ്രതിവർഷ വരിസംഖ്യ — %1$s</string>
     <string name="paywall_btn_lifetime">ലൈഫ് ടൈം വാങ്ങുക — %1$s</string>
+    <string name="paywall_btn_restore">Restore Subscription</string>
     <string name="paywall_footer_preview">പരിമിതകാല ഓഫർ — ഒറ്റത്തവണ പേയ്‌മെന്റ്</string>
     <string name="paywall_offline_title">നിങ്ങൾ ഓഫ്‌ലൈൻ ആണ്</string>
     <string name="paywall_offline_desc">കണക്ഷൻ തിരിച്ചു വരുമ്പോൾ വിലകൾ സ്വയം ലോഡ് ആകും।</string>
-
     <!-- Earnings Feature Strings -->
     <string name="earnings_dashboard_title">വരുമാനം</string>
     <string name="earnings_label_revenue">മൊത്തം വരുമാനം</string>
@@ -139,7 +140,6 @@
     <string name="earnings_paywall_subtitle">ബിസിനസ്സ് അനലിറ്റിക്സ് അൺലോക്ക് ചെയ്യുക</string>
     <string name="earnings_paywall_desc">കാരിഗോ പ്രോ ഉപയോഗിച്ച് നിങ്ങളുടെ വരുമാന പ്രവണതകൾ, മികച്ച ക്ലയന്റുകൾ, ശരാശരി വരുമാനം, പ്രതിമാസ വളർച്ച എന്നിവ സ്വയമേവ ട്രാക്ക് ചെയ്യുക.</string>
     <string name="earnings_paywall_btn_unlock">വരുമാന ഡാഷ്‌ബോർഡ് അൺലോക്ക് ചെയ്യുക</string>
-
     <!-- Subscription & Active Pro Strings -->
     <string name="pro_activated_title">പ്രോ സജീവമാക്കി</string>
     <string name="pro_monthly_active">പ്രതിമാസ പ്ലാൻ സജീവമാണ്</string>

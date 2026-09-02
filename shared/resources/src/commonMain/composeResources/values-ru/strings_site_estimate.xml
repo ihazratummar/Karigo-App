@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="estimate_list_title">Сметы</string>
+    <string name="estimate_list_search_placeholder">Поиск смет или клиентов</string>
+    <string name="estimate_list_btn_new">Новая смета</string>
+    <string name="estimate_list_empty_title">Пока нет смет</string>
+    <string name="estimate_list_empty_desc">Осмотрите объект, выберите материалы и отправьте клиенту</string>
+    <string name="estimate_list_btn_create_first">Создать первую смету</string>
+
+    <string name="estimate_add_toast_added">Добавлено</string>
+    <string name="estimate_add_title_new">Новая смета</string>
+    <string name="estimate_add_title_edit">Редактировать смету</string>
+    <string name="estimate_add_section_title">НАЗВАНИЕ ПРОЕКТА</string>
+    <string name="estimate_add_placeholder_title">например, Ремонт ванной комнаты</string>
+    <string name="estimate_add_section_client">КЛИЕНТ</string>
+    <string name="estimate_add_section_date">ДАТА</string>
+    <string name="estimate_add_section_notes">ПРИМЕЧАНИЯ К ОБЪЕКТУ</string>
+    <string name="estimate_add_placeholder_notes">Любые особые указания...</string>
+    <string name="estimate_add_label_show_rate">Показывать цены</string>
+    <string name="estimate_add_desc_rate_visible">Клиент видит тарифы и итоговую сумму</string>
+    <string name="estimate_add_desc_rate_hidden">Только список материалов, без цен</string>
+    <string name="estimate_add_section_materials">МАТЕРИАЛЫ</string>
+    <string name="estimate_add_btn_save">Сохранить смету</string>
+    <string name="estimate_add_btn_update">Обновить смету</string>
+
+    <string name="estimate_comp_section_materials">Материалы</string>
+    <string name="estimate_comp_section_total">Итого по смете</string>
+    <string name="estimate_comp_status_no_prices">Без цен</string>
+
+    <string name="estimate_detail_title">Смета</string>
+    <string name="estimate_detail_preview_title">Предпросмотр сметы</string>
+    <string name="estimate_detail_default_provider">Исполнитель Karigo</string>
+    <string name="estimate_detail_btn_whatsapp">WhatsApp</string>
+    <string name="estimate_detail_toast_print_unavailable">Служба печати недоступна на этом устройстве</string>
+    <string name="estimate_detail_toast_print_failed">Не удалось подключиться к принтеру: %1$s</string>
+    <string name="estimate_detail_toast_generic_failed">Не удалось напечатать: %1$s</string>
+</resources>

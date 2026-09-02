@@ -17,6 +17,7 @@ actual fun getDeviceModule(): Module = module {
     single { AppPathProvider(context = get()) }
     single<PlatformBillingProvider> { PlatformBillingProviderImpl(context = get(), monetizationStore = get()) }
     single<NetworkMonitor> { NetworkMonitorImpl(context = get()) }
+    single<com.karigojobs.domain.repository.AppVersionProvider> { com.karigojobs.shared.device.AppVersionProviderImpl(context = get()) }
 }
 
 actual fun getAnalyticsLogger(): AnalyticsLogger = FirebaseAnalyticsLogger()

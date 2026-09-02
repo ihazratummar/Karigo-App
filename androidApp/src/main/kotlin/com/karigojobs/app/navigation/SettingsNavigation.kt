@@ -12,6 +12,7 @@ import com.karigojobs.feature.settings.SettingsNavigation
 import com.karigojobs.feature.settings.SettingsScreen
 import com.karigojobs.feature.settings.backup.DataBackupScreen
 import com.karigojobs.presentation.backup.DataBackupViewModel
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import com.karigojobs.feature.settings.LegalScreen
 import com.karigojobs.feature.settings.AboutScreen

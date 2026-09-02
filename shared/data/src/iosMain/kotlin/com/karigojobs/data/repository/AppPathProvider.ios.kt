@@ -25,6 +25,10 @@ actual class AppPathProvider {
         return "${documentDirectory?.path}/$fileName"
     }
 
+    actual fun getCachePath(fileName: String): String {
+        return "${documentDirectory?.path}/$fileName"
+    }
+
     actual fun restartApp() {
         exit(0)
     }

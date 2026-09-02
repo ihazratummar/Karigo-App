@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="client_details_total_jobs">Всего заказов</string>
+    <string name="client_details_unpaid">Не оплачено</string>
+
+    <string name="client_btn_new_job">Новый заказ для %1$s</string>
+
+    <string name="client_list_empty_title">Пока нет клиентов</string>
+    <string name="client_list_empty_desc">Добавьте первого клиента для управления контактами и счетами</string>
+    <string name="client_list_btn_create_first">Добавить первого клиента</string>
+</resources>

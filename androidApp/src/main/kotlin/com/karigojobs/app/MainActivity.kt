@@ -27,6 +27,7 @@ import com.karigojobs.presentation.onboarding.OnboardingCompleteState
 import com.karigojobs.presentation.onboarding.OnboardingViewModel
 import com.karigojobs.domain.usecase.settings.UpdateAppLanguageUseCase
 import com.karigojobs.share.model.AppLanguage
+import com.karigojobs.share.model.AppUpdateState
 import com.karigojobs.share.model.ProStatus
 import com.karigojobs.share.model.ThemePreference
 import com.karigojobs.shared.device.LocaleManager
@@ -84,19 +85,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            val appPreferences = appPreferencesState.value ?: GetAppPreferencesUseCase.AppPreferences(
-                theme = ThemePreference.SYSTEM,
-                language = AppLanguage.ENGLISH,
-                currency = "₹"
-            )
+            val appPreferences = appPreferencesState.value
 
             val proStatus = proStatusState.value ?: ProStatus()
             val isProActive = proStatus.isProActive
 
             var isInitialLanguageSyncDone by remember { mutableStateOf(false) }
 
-            LaunchedEffect(appPreferencesState.value?.language) {
-                appPreferencesState.value?.language?.let { language ->
+            LaunchedEffect(appPreferences.language) {
+                appPreferences.language.let { language ->
                     val systemLocaleCode = LocaleManager.getAppLocale()
                     if (!isInitialLanguageSyncDone) {
                         isInitialLanguageSyncDone = true

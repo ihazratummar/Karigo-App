@@ -12,6 +12,7 @@ import com.karigojobs.share.model.ThemePreference
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class MainViewModel(
     getAppPreferencesUseCase: GetAppPreferencesUseCase,
@@ -23,11 +24,11 @@ class MainViewModel(
         analytics.logEvent(AnalyticsEvent.Event.APP_LAUNCHED)
     }
 
-    val appPreferences: StateFlow<GetAppPreferencesUseCase.AppPreferences> = getAppPreferencesUseCase()
+    val appPreferences: StateFlow<com.karigojobs.domain.usecase.settings.AppPreferences> = getAppPreferencesUseCase()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = GetAppPreferencesUseCase.AppPreferences(
+            initialValue = com.karigojobs.domain.usecase.settings.AppPreferences(
                 theme = ThemePreference.SYSTEM,
                 language = AppLanguage.ENGLISH,
                 currency = "₹"

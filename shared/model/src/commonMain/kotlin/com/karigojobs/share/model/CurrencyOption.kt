@@ -17,6 +17,7 @@ data class CurrencyOption(
 object CurrencyOptions {
     val POPULAR_CURRENCIES = listOf(
         CurrencyOption("INR", "₹", "Indian Rupee", "🇮🇳", isPopular = true),
+        CurrencyOption("RUB", "₽", "Russian Ruble", "🇷🇺", isPopular = true),
         CurrencyOption("USD", "$", "US Dollar", "🇺🇸", isPopular = true),
         CurrencyOption("AED", "AED", "UAE Dirham", "🇦🇪", isPopular = true),
         CurrencyOption("SAR", "SAR", "Saudi Riyal", "🇸🇦", isPopular = true),
@@ -29,6 +30,7 @@ object CurrencyOptions {
     val ALL_CURRENCIES = listOf(
         // Popular First
         CurrencyOption("INR", "₹", "Indian Rupee", "🇮🇳", isPopular = true),
+        CurrencyOption("RUB", "₽", "Russian Ruble", "🇷🇺", isPopular = true),
         CurrencyOption("USD", "$", "US Dollar", "🇺🇸", isPopular = true),
         CurrencyOption("AED", "AED", "UAE Dirham", "🇦🇪", isPopular = true),
         CurrencyOption("SAR", "SAR", "Saudi Riyal", "🇸🇦", isPopular = true),

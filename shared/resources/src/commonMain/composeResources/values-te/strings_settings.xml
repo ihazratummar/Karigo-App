@@ -74,6 +74,7 @@
     <string name="backup_btn_restore_confirm">డేటాను పునరుద్ధరించండి</string>
     <string name="backup_info_title">సంపూర్ణ రక్షణ</string>
     <string name="backup_info_desc">మీ వ్యాపార డేటా అంతా — పనులు, క్లయింట్లు, వస్తువులు మరియు యాప్ సెట్టింగ్‌లు — మీ గూగుల్ డ్రైవ్‌లోని ప్రైవేట్ ఫోల్డర్‌లో సురక్షితంగా బ్యాకప్ చేయబడుతుంది.</string>
+    <!-- Pro Plan & Paywall -->
     <string name="pro_section_title">ప్రో ప్లాన్</string>
     <string name="pro_banner_title">ప్రోగా మారండి</string>
     <string name="pro_banner_desc">అపరిమిత పనులు, పిడిఎఫ్ ఇన్‌వాయిస్‌లు, బ్రాండింగ్</string>
@@ -114,10 +115,10 @@
     <string name="paywall_btn_monthly">నెలవారీ చందా — %1$s</string>
     <string name="paywall_btn_yearly">సంవత్సరపు చందా — %1$s</string>
     <string name="paywall_btn_lifetime">లైఫ్‌టైమ్ కొనండి — %1$s</string>
+    <string name="paywall_btn_restore">Restore Subscription</string>
     <string name="paywall_footer_preview">పరిమిత సమయ ఆఫర్ — ఒకే చెల్లింపు</string>
     <string name="paywall_offline_title">మీరు ఆఫ్‌లైన్‌లో ఉన్నారు</string>
     <string name="paywall_offline_desc">కనెక్షన్ వచ్చినప్పుడు ధరలు స్వయంచాలకంగా లోడ్ అవుతాయి.</string>
-
     <!-- Earnings Feature Strings -->
     <string name="earnings_dashboard_title">ఆదాయం</string>
     <string name="earnings_label_revenue">మొత్తం రాబడి</string>
@@ -139,7 +140,6 @@
     <string name="earnings_paywall_subtitle">బిజినెస్ అనలిటిక్స్‌ను అన్‌లాక్ చేయండి</string>
     <string name="earnings_paywall_desc">కారిగో ప్రో ద్వారా మీ రాబడి ట్రెండ్‌లు, టాప్ క్లయింట్లు, సగటు ఆదాయం మరియు నెలవారీ వృద్ధిని ఆటోమేటిక్‌గా ట్రాక్ చేయండి.</string>
     <string name="earnings_paywall_btn_unlock">ఆదాయం డాష్‌బోర్డ్‌ను అన్‌లాక్ చేయండి</string>
-
     <!-- Subscription & Active Pro Strings -->
     <string name="pro_activated_title">ప్రో యాక్టివేట్ చేయబడింది</string>
     <string name="pro_monthly_active">నెలవారీ ప్లాన్ యాక్టివ్‌గా ఉంది</string>

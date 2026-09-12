@@ -20,4 +20,6 @@ node_modules/
 androidApp/release/androidApp-release.aab
 **.html
 **.log
-.agentsandroidApp/release/mapping.txt
+.agents
+./androidApp/release/mapping.txt
+androidApp/release/mapping.txt

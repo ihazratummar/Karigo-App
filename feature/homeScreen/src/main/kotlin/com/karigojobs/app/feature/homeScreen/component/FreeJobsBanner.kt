@@ -75,7 +75,7 @@ fun FreeJobsBanner(
                     Icon(
                         painter = painterResource(R.drawable.store),
                         contentDescription = null,
-                        tint = Color(0xFFFFB800),
+                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(dimens.Icon.xs)
                     )
                     Text(
@@ -99,7 +99,7 @@ fun FreeJobsBanner(
                         text = stringResource(Res.string.home_btn_go_pro_simple),
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF00FFCC)
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -162,9 +162,9 @@ private fun QuotaUsageItem(
             progress = { progress },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(dimens.Space._2xs)
-                .clip(RoundedCornerShape(dimens.Radius.xs)),
-            color = MaterialTheme.colorScheme.primary,
+                .height(dimens.Space.md)
+                .clip(RoundedCornerShape(dimens.Radius.sm)),
+            color = if (progress >0 ) MaterialTheme.colorScheme.primary else Color.Transparent,
             trackColor = appColor.iconBgColor,
             strokeCap = StrokeCap.Round
         )

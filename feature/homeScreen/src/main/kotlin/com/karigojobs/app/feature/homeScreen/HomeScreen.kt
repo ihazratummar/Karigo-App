@@ -201,14 +201,14 @@ fun HomeScreen(
                             )
                             Spacer(Modifier.height(dimens.Space.base))
                             Text(
-                                text = org.jetbrains.compose.resources.stringResource(Res.string.home_recent_jobs_empty_title),
+                                text = stringResource(Res.string.home_recent_jobs_empty_title),
                                 style = MaterialTheme.typography.labelMedium.copy(
                                     color = KarigojobsText2
                                 )
                             )
                             Spacer(Modifier.height(dimens.Space.sm))
                             Text(
-                                text = org.jetbrains.compose.resources.stringResource(Res.string.home_recent_jobs_empty_desc),
+                                text = stringResource(Res.string.home_recent_jobs_empty_desc),
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     color = KarigojobsText3
                                 )

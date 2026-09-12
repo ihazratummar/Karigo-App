@@ -831,6 +831,8 @@ fun JobCard(
                 }
             }
 
+            HorizontalDivider()
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,

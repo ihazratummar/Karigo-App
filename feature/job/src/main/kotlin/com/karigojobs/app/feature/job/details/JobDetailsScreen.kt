@@ -77,6 +77,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.WindowInsets
 import com.karigojobs.ui.theme.dimens
 import kotlinx.coroutines.flow.SharedFlow
 import androidx.core.net.toUri
@@ -228,7 +229,8 @@ fun JobDetailsScreen(
                     }
                 }
             )
-        }
+        },
+        contentWindowInsets = WindowInsets()
     ) { paddingValues ->
         jobDetailsState.jobModel?.let { jobModel ->
 

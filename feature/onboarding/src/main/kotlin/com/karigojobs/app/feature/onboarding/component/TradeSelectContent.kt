@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +24,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -33,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.karigojobs.app.android.ui.R
 import com.karigojobs.presentation.onboarding.OnboardingIntent
 import com.karigojobs.presentation.onboarding.OnboardingState
 import com.karigojobs.share.model.TradeType
@@ -66,6 +69,23 @@ fun TradeSelectContent(
 ) {
 
     Scaffold(
+        modifier = modifier,
+        topBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = dimens.Space.base, vertical = dimens.Space.sm)
+            ) {
+                IconButton(onClick = { event(OnboardingIntent.BackToWelcome) }) {
+                    Icon(
+                        painter = painterResource(R.drawable.arrow_left),
+                        contentDescription = "Back",
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.size(dimens.Icon.base)
+                    )
+                }
+            }
+        },
         bottomBar = {
             Button(
                 onClick = {event(OnboardingIntent.ConfirmTrades)},
@@ -93,9 +113,10 @@ fun TradeSelectContent(
                 )
             }
         }
-    ) {
+    ) { paddingValues ->
         LazyColumn(
-            modifier = modifier.padding(it)
+            modifier = Modifier
+                .padding(paddingValues)
                 .fillMaxSize(),
             contentPadding = PaddingValues(dimens.Space.lg),
             verticalArrangement = Arrangement.spacedBy(dimens.Space.lg)

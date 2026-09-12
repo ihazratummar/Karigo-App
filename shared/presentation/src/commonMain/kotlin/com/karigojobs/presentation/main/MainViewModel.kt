@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.karigojobs.domain.analytics.AnalyticsEvent
 import com.karigojobs.domain.analytics.AnalyticsLogger
 import com.karigojobs.domain.usecase.monetization.ObserveProStatusUseCase
+import com.karigojobs.domain.usecase.settings.AppPreferences
 import com.karigojobs.domain.usecase.settings.GetAppPreferencesUseCase
 import com.karigojobs.share.model.AppLanguage
 import com.karigojobs.share.model.ProStatus
@@ -24,11 +25,11 @@ class MainViewModel(
         analytics.logEvent(AnalyticsEvent.Event.APP_LAUNCHED)
     }
 
-    val appPreferences: StateFlow<com.karigojobs.domain.usecase.settings.AppPreferences> = getAppPreferencesUseCase()
+    val appPreferences: StateFlow<AppPreferences> = getAppPreferencesUseCase()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = com.karigojobs.domain.usecase.settings.AppPreferences(
+            initialValue = AppPreferences(
                 theme = ThemePreference.SYSTEM,
                 language = AppLanguage.ENGLISH,
                 currency = "₹"

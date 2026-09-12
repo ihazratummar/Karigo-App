@@ -17,6 +17,9 @@
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_my_trade">My Trade</string>
+    <string name="settings_trades_selected_count">%1$d selected</string>
+    <string name="settings_trades_picker_subtitle">Pick the trades you work in to get relevant starter materials</string>
+    <string name="settings_trades_clear_all">Clear All</string>
 
     <!-- About Screen -->
     <string name="about_title">About Karigo</string>
@@ -129,12 +132,26 @@
     <string name="earnings_dashboard_title">Earnings</string>
     <string name="earnings_label_revenue">REVENUE</string>
     <string name="earnings_label_avg_per_job">AVG PER JOB</string>
+    <string name="earnings_label_best_month">BEST MONTH</string>
     <string name="earnings_jobs_count">%1$d jobs</string>
     <string name="earnings_this_year">this year</string>
     <string name="earnings_monthly_revenue">Monthly Revenue</string>
+    <string name="earnings_months_count">%1$d months</string>
     <string name="earnings_tf_6_months">6 Months</string>
     <string name="earnings_tf_1_year">1 Year</string>
     <string name="earnings_tf_lifetime">Lifetime</string>
+    <string name="earnings_pro_insights">PRO INSIGHTS</string>
+    <string name="earnings_est_profit">Est. Profit</string>
+    <string name="earnings_est_expenses">Est. Expenses</string>
+    <string name="earnings_profit_margin">%1$d%% margin</string>
+    <string name="earnings_profit_percent">Profit %1$d%%</string>
+    <string name="earnings_expenses_percent">Expenses %1$d%%</string>
+    <string name="earnings_materials_labour">Materials + Labour</string>
+    <string name="earnings_growth_trends">Growth Trends</string>
+    <string name="earnings_avg_monthly">Avg Monthly</string>
+    <string name="earnings_busiest_month">Busiest Month</string>
+    <string name="earnings_revenue_by_trade">Revenue by Trade</string>
+    <string name="earnings_no_trades">No trade revenue recorded yet.</string>
     <string name="earnings_top_clients">Top Clients</string>
     <string name="earnings_pro_badge">PRO</string>
     <string name="earnings_no_clients">No client revenue recorded yet.</string>

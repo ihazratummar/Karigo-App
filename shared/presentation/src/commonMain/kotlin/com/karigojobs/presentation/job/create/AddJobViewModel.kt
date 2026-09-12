@@ -6,8 +6,10 @@ import com.karigojob.share.utils.EpochUtils
 import com.karigojob.share.utils.UuidGenerator
 import com.karigojobs.domain.repository.DeviceContactProvider
 import com.karigojobs.domain.result.Result
+import com.karigojobs.domain.usecase.material.AddMaterialUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
 import com.karigojobs.domain.usecase.materialCategory.GetMaterialCategoryUseCase
+import com.karigojobs.domain.usecase.materialCategory.InsertMaterialCategoryUseCase
 import com.karigojobs.domain.usecase.client.GetClientUseCase
 import com.karigojobs.domain.usecase.client.InsertClientUseCase
 import com.karigojobs.domain.usecase.client.IsClientExistUseCase
@@ -22,6 +24,8 @@ import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.JobLabourItemModel
 import com.karigojobs.share.model.JobMaterialItemModel
 import com.karigojobs.share.model.JobModel
+import com.karigojobs.share.model.MaterialCategoryModel
+import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.domain.analytics.AnalyticsLogger
 import com.karigojobs.domain.analytics.AnalyticsEvent
@@ -64,6 +68,8 @@ class AddJobViewModel(
     private val getSelectedTradeTypeUseCase: GetSelectedTradeTypeUseCase,
     private val searchMaterialsUseCase: SearchMaterialsUseCase,
     private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase,
+    private val addMaterialUseCase: AddMaterialUseCase,
+    private val insertMaterialCategoryUseCase: InsertMaterialCategoryUseCase,
     private val getJobDetailsUseCase: GetJobDetailsUseCase,
     private val getJobLabourItemUseCase: GetJobLabourItemUseCase,
     private val getJobMaterialItemsUseCase: GetJobMaterialItemsUseCase,
@@ -534,6 +540,77 @@ class AddJobViewModel(
                         selectedMaterialTradeType = if (!event.isOpen) null else it.selectedMaterialTradeType,
                         selectedMaterialCategory = if (!event.isOpen) null else it.selectedMaterialCategory
                     )
+                }
+            }
+
+            is AddJobIntent.ToggleCreateMaterialModal -> {
+                _state.update {
+                    it.copy(isCreateMaterialModalOpen = event.isOpen)
+                }
+            }
+
+            is AddJobIntent.CreateAndAddMaterial -> {
+                viewModelScope.launch {
+                    var categoryIdToSave: String? = null
+                    val trimmedCategory = event.categoryName?.trim()
+                    if (!trimmedCategory.isNullOrBlank()) {
+                        val existingCategory = _state.value.materialCategories.find {
+                            it.name.equals(trimmedCategory, ignoreCase = true) && it.tradeType == event.tradeType
+                        }
+                        if (existingCategory != null) {
+                            categoryIdToSave = existingCategory.id
+                        } else {
+                            val newCategoryId = Uuid.random().toString()
+                            val newCategory = MaterialCategoryModel(
+                                id = newCategoryId,
+                                name = trimmedCategory,
+                                tradeType = event.tradeType
+                            )
+                            val catResult = insertMaterialCategoryUseCase(newCategory)
+                            if (catResult is Result.Error) {
+                                _effect.emit(ShowError(catResult.error.asString()))
+                                return@launch
+                            }
+                            categoryIdToSave = newCategoryId
+                        }
+                    }
+
+                    val newMaterialId = Uuid.random().toString()
+                    val newMaterial = MaterialsModel(
+                        id = newMaterialId,
+                        name = event.name,
+                        unit = event.unit,
+                        price = event.price,
+                        tradeType = event.tradeType,
+                        categoryId = categoryIdToSave,
+                        categoryName = trimmedCategory
+                    )
+
+                    val insertResult = addMaterialUseCase(newMaterial)
+                    if (insertResult is Result.Error) {
+                        _effect.emit(ShowError(insertResult.error.asString()))
+                        return@launch
+                    }
+
+                    val newJobMaterial = JobMaterialItemModel(
+                        id = Uuid.random().toString(),
+                        jobId = draftJobId,
+                        materialId = newMaterialId,
+                        name = event.name,
+                        unit = event.unit,
+                        unitPrice = event.price,
+                        quantity = 1,
+                        total = event.price
+                    )
+
+                    _state.update { curr ->
+                        val updated = curr.selectedMaterials.toMutableList().apply { add(newJobMaterial) }
+                        curr.copy(
+                            selectedMaterials = updated,
+                            isCreateMaterialModalOpen = false,
+                            isMaterialPickerOpen = false
+                        )
+                    }
                 }
             }
 

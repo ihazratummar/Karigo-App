@@ -22,4 +22,6 @@
     <string name="onboarding_materials_ready_description">вы можете изменить цены в любое время в Библиотеке материалов</string>
 
     <string name="onboarding_back_to_trade">Назад к выбору специальности</string>
+    <string name="onboarding_language_title">Выберите ваш язык</string>
+    <string name="onboarding_language_subtitle">Выберите предпочитаемый язык для начала работы. Вы можете изменить его в любое время в Настройках.</string>
 </resources>

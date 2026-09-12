@@ -131,7 +131,7 @@ fun NavGraphBuilder.contentNavigation(
                 onPaywallClick = {
                     navHostController.navigate(SettingsRootRoute.ProOverviewRoute)
                 },
-                event = viewModel::onEven
+                event = viewModel::onEvent
             )
 
         }

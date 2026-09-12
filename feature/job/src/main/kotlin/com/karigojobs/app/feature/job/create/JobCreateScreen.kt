@@ -32,8 +32,10 @@ import com.karigojobs.app.feature.job.component.TotalScreenCard
 import com.karigojobs.presentation.job.create.AddJobEffect
 import com.karigojobs.presentation.job.create.AddJobIntent
 import com.karigojobs.presentation.job.create.AddJobState
+import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.common.ClientPicker
 import com.karigojobs.ui.common.ContactPicker
+import com.karigojobs.ui.common.CreateMaterialModal
 import com.karigojobs.ui.common.KarigoMiddleTextTopAppBar
 import com.karigojobs.ui.permission.AppPermission
 import com.karigojobs.ui.permission.PermissionRationaleDialog
@@ -68,10 +70,11 @@ fun JobCreateScreen(
 
     LaunchedEffect(Unit) {
         addJobEffect?.collect { effect ->
-            when (effect){
+            when (effect) {
                 AddJobEffect.NavigateBack -> {
                     onBackClick()
                 }
+
                 is AddJobEffect.ShowError -> {
                     snackbarState.showSnackbar(
                         message = effect.message,
@@ -105,14 +108,18 @@ fun JobCreateScreen(
         topBar = {
             KarigoMiddleTextTopAppBar(
                 onNavigationClick = onBackClick,
-                title = if (addJobState.jobId == null) stringResource(Res.string.job_new_job) else stringResource(Res.string.job_edit_job),
+                title = if (addJobState.jobId == null) stringResource(Res.string.job_new_job) else stringResource(
+                    Res.string.job_edit_job
+                ),
                 action = {
                     CanSaveButton(
                         onAction = {
                             onIntent(AddJobIntent.SaveJob)
                         },
                         canSave = addJobState.canContinue,
-                        text = if (addJobState.jobId == null) stringResource(Res.string.common_btn_save) else stringResource(Res.string.common_btn_update)
+                        text = if (addJobState.jobId == null) stringResource(Res.string.common_btn_save) else stringResource(
+                            Res.string.common_btn_update
+                        )
                     )
                 }
             )
@@ -131,7 +138,7 @@ fun JobCreateScreen(
             )
         }
 
-        if (addJobState.isLabourCreateModalOpen){
+        if (addJobState.isLabourCreateModalOpen) {
             CreateLabourItemModal(
                 onDismiss = {
                     onIntent(AddJobIntent.LabourItemModalOpen(false))
@@ -156,8 +163,32 @@ fun JobCreateScreen(
                 onCategorySelected = { onIntent(AddJobIntent.SelectMaterialCategory(it)) },
                 searchQuery = addJobState.materialQuery,
                 onSearchQueryChanged = { onIntent(AddJobIntent.SearchMaterials(it)) },
-                selectedMaterialIds = addJobState.selectedMaterials.mapNotNull { it.materialId }.toSet(),
-                onConfirmClick = { onIntent(AddJobIntent.AddMaterials(it)) }
+                selectedMaterialIds = addJobState.selectedMaterials.mapNotNull { it.materialId }
+                    .toSet(),
+                onConfirmClick = { onIntent(AddJobIntent.AddMaterials(it)) },
+                onNewMaterialClick = {
+                    onIntent(AddJobIntent.ToggleCreateMaterialModal(true))
+                }
+            )
+        }
+
+        if (addJobState.isCreateMaterialModalOpen) {
+            CreateMaterialModal(
+                onDismiss = { onIntent(AddJobIntent.ToggleCreateMaterialModal(false)) },
+                initialTradeType = addJobState.selectedMaterialTradeType ?: addJobState.selectedTradeType,
+                availableTrades = addJobState.tradeTypes.ifEmpty { TradeType.entries },
+                existingCategories = addJobState.materialCategories,
+                onSaveAndAdd = { name, trade, category, price, unit ->
+                    onIntent(
+                        AddJobIntent.CreateAndAddMaterial(
+                            name = name,
+                            tradeType = trade,
+                            categoryName = category,
+                            price = price,
+                            unit = unit
+                        )
+                    )
+                }
             )
         }
 
@@ -218,7 +249,9 @@ fun JobCreateScreen(
 
             item {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = dimens.Padding.sm),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = dimens.Padding.sm),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -247,8 +280,14 @@ fun JobCreateScreen(
                     onQuantityAddClick = {
                         onIntent(AddJobIntent.IncreaseLabourItemQuantity(itemId = it))
                     },
-                    onQuantityMinusClick = {  onIntent(AddJobIntent.MinusLabourItemQuantity(itemId = it)) },
-                    onWorkersAddClick = { onIntent(AddJobIntent.IncreaseLabourItemWorkersCount(itemId = it)) },
+                    onQuantityMinusClick = { onIntent(AddJobIntent.MinusLabourItemQuantity(itemId = it)) },
+                    onWorkersAddClick = {
+                        onIntent(
+                            AddJobIntent.IncreaseLabourItemWorkersCount(
+                                itemId = it
+                            )
+                        )
+                    },
                     onWorkersMinusClick = { onIntent(AddJobIntent.MinusLabourItemWorkersCount(itemId = it)) },
                     onViewLogsClick = { onIntent(AddJobIntent.ViewLabourLogs(itemId = it)) }
                 )
@@ -280,7 +319,9 @@ fun JobCreateScreen(
     }
 
     if (addJobState.isLabourLogsModalOpen) {
-        val selectedUnit = addJobState.labourItems.find { it.id == addJobState.selectedLabourItemId }?.unit ?: "point"
+        val selectedUnit =
+            addJobState.labourItems.find { it.id == addJobState.selectedLabourItemId }?.unit
+                ?: "point"
         com.karigojobs.app.feature.job.component.LabourLogsModal(
             logs = addJobState.selectedLabourLogs,
             itemUnit = selectedUnit,

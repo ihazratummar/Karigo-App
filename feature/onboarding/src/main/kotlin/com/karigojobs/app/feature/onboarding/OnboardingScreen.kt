@@ -1,6 +1,7 @@
 package com.karigojobs.app.feature.onboarding
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -18,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.karigojobs.app.feature.onboarding.component.LanguageSelectContent
 import com.karigojobs.app.feature.onboarding.component.ReadyContent
 import com.karigojobs.app.feature.onboarding.component.TradeSelectContent
 import com.karigojobs.app.feature.onboarding.component.WelcomeContent
@@ -43,6 +45,15 @@ fun OnboardingScreen(
 ){
 
     val snackbarState = remember { SnackbarHostState() }
+
+    BackHandler(enabled = state.currentStep != OnboardingStep.LANGUAGE) {
+        when (state.currentStep) {
+            OnboardingStep.READY -> event(OnboardingIntent.BackToTrades)
+            OnboardingStep.TRADE_SELECT -> event(OnboardingIntent.BackToWelcome)
+            OnboardingStep.WELCOME -> event(OnboardingIntent.BackToLanguage)
+            OnboardingStep.LANGUAGE -> Unit
+        }
+    }
 
     LaunchedEffect(Unit) {
         effect?.collect { effect ->
@@ -79,16 +90,27 @@ fun OnboardingScreen(
             }
         ) {step ->
             when(step){
+                OnboardingStep.LANGUAGE -> {
+                    LanguageSelectContent(
+                        modifier = Modifier.padding(paddingValues),
+                        onboardingState = state,
+                        event = event
+                    )
+                }
                 OnboardingStep.WELCOME -> {
                     WelcomeContent(
                         modifier = Modifier.padding(paddingValues),
                         onGetStartedClick = {
                             event(OnboardingIntent.GetStarted)
+                        },
+                        onBackToLanguageClick = {
+                            event(OnboardingIntent.BackToLanguage)
                         }
                     )
                 }
                 OnboardingStep.TRADE_SELECT -> {
                     TradeSelectContent(
+                        modifier = Modifier.padding(paddingValues),
                         onboardingState = state,
                         event = event
                     )

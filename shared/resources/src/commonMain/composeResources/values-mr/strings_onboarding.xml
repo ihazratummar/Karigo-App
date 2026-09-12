@@ -18,4 +18,6 @@
     <string name="onboarding_materials_ready">साहित्य तयार आहे!</string>
     <string name="onboarding_materials_ready_description">तुमच्या निवडलेल्या पेशानुसार आम्ही काही सामान्य साहित्य आधीच जोडले आहे.</string>
     <string name="onboarding_back_to_trade">पेशा बदला</string>
+    <string name="onboarding_language_title">तुमची भाषा निवडा</string>
+    <string name="onboarding_language_subtitle">सुरू करण्यासाठी तुमची पसंतीची भाषा निवडा. तुम्ही हे सेटिंग्जमध्ये कधीही बदलू शकता.</string>
 </resources>

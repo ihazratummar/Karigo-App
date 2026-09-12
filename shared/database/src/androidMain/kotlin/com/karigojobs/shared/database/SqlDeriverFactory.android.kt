@@ -20,6 +20,94 @@ actual class SqlDeriverFactory actual constructor(context: Any?) {
             parameters = 0
         )
 
+        ensureViewsUpToDate(driver)
+
         return driver
+    }
+
+    private fun ensureViewsUpToDate(driver: SqlDriver) {
+        try {
+            driver.execute(null, "DROP VIEW IF EXISTS monthly_earning;", 0)
+            driver.execute(null, "DROP VIEW IF EXISTS earning_summary;", 0)
+            driver.execute(null, "DROP VIEW IF EXISTS growth_summary;", 0)
+            driver.execute(null, "DROP VIEW IF EXISTS top_clients;", 0)
+
+            driver.execute(null, """
+                CREATE VIEW IF NOT EXISTS monthly_earning AS
+                SELECT
+                    strftime('%Y-%m', datetime(created_at / 1000, 'unixepoch')) AS month,
+                    COUNT(*) AS job_count,
+                    TOTAL(CASE WHEN UPPER(status) LIKE '%PAID%' THEN total ELSE 0 END) AS revenue,
+                    TOTAL(total) AS total_billed,
+                    TOTAL(CASE WHEN UPPER(status) NOT LIKE '%PAID%' THEN total ELSE 0 END) AS outstanding,
+                    AVG(CASE WHEN UPPER(status) LIKE '%PAID%' THEN total END) AS average_paid
+                FROM job
+                WHERE created_at IS NOT NULL AND created_at > 0
+                GROUP BY strftime('%Y-%m', datetime(created_at / 1000, 'unixepoch'))
+                ORDER BY month DESC;
+            """.trimIndent(), 0)
+
+            driver.execute(null, """
+                CREATE VIEW IF NOT EXISTS earning_summary AS
+                WITH monthly AS (
+                    SELECT
+                        strftime('%Y-%m', datetime(created_at / 1000, 'unixepoch')) AS month,
+                        TOTAL(CASE WHEN UPPER(status) LIKE '%PAID%' THEN total ELSE 0 END) AS revenue
+                    FROM job
+                    WHERE created_at IS NOT NULL AND created_at > 0
+                    GROUP BY month
+                )
+                SELECT
+                    TOTAL(CASE WHEN UPPER(status) LIKE '%PAID%' THEN total ELSE 0 END) AS revenue,
+                    COUNT(CASE WHEN UPPER(status) LIKE '%PAID%' THEN 1 END) AS total_jobs,
+                    COALESCE(AVG(CASE WHEN UPPER(status) LIKE '%PAID%' THEN total END), 0.0) AS avg_per_job,
+                    COALESCE((SELECT month FROM monthly ORDER BY revenue DESC LIMIT 1), '') AS best_month,
+                    COALESCE((SELECT revenue FROM monthly ORDER BY revenue DESC LIMIT 1), 0.0) AS best_month_revenue
+                FROM job;
+            """.trimIndent(), 0)
+
+            driver.execute(null, """
+                CREATE VIEW IF NOT EXISTS growth_summary AS
+                WITH monthly AS (
+                    SELECT
+                        strftime('%Y-%m', datetime(created_at / 1000, 'unixepoch')) AS month,
+                        COUNT(*) AS jobs,
+                        TOTAL(CASE WHEN UPPER(status) LIKE '%PAID%' THEN total ELSE 0 END) AS revenue
+                    FROM job
+                    WHERE created_at IS NOT NULL AND created_at > 0
+                    GROUP BY month
+                ),
+                latest AS (
+                    SELECT * FROM monthly ORDER BY month DESC LIMIT 1
+                ),
+                previous AS (
+                    SELECT * FROM monthly ORDER BY month DESC LIMIT 1 OFFSET 1
+                )
+                SELECT
+                    COALESCE((SELECT AVG(revenue) FROM monthly), 0.0) AS avg_monthly,
+                    COALESCE((SELECT month FROM monthly ORDER BY jobs DESC LIMIT 1), '') AS busiest_month,
+                    COALESCE((SELECT jobs FROM monthly ORDER BY jobs DESC LIMIT 1), 0) AS busiest_jobs,
+                    CASE
+                        WHEN (SELECT revenue FROM previous) IS NULL OR (SELECT revenue FROM previous) = 0 THEN 0.0
+                        ELSE ROUND((((SELECT revenue FROM latest) - (SELECT revenue FROM previous)) * 100.0) / (SELECT revenue FROM previous), 1)
+                    END AS growth_percentage;
+            """.trimIndent(), 0)
+
+            driver.execute(null, """
+                CREATE VIEW IF NOT EXISTS top_clients AS
+                SELECT
+                    c.id AS client_id,
+                    c.name AS client_name,
+                    COUNT(j.id) AS job_count,
+                    TOTAL(CASE WHEN UPPER(j.status) LIKE '%PAID%' THEN j.total ELSE 0 END) AS revenue
+                FROM client c
+                JOIN job j ON j.client_id = c.id
+                GROUP BY c.id, c.name
+                HAVING revenue > 0
+                ORDER BY revenue DESC;
+            """.trimIndent(), 0)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

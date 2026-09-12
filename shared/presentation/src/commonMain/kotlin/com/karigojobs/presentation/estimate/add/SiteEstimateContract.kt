@@ -37,7 +37,8 @@ data class SiteEstimateState(
     val selectedTradeType : TradeType? = null,
     val materialCategories: List<MaterialCategoryModel> = emptyList(),
     val selectedCategory: MaterialCategoryModel? = null,
-    val isMaterialPickerOpen : Boolean = false
+    val isMaterialPickerOpen : Boolean = false,
+    val isCreateMaterialModalOpen: Boolean = false
 ){
     val materialsTotal : Double get() = selectedMaterials.sumOf { it.quantity * it.rate }
     val canSave : Boolean get() = projectTitle.isNotBlank() && selectedClient != null && selectedMaterials.isNotEmpty()
@@ -60,6 +61,14 @@ sealed interface SiteEstimateEvent {
     data class SelectCategory(val category: MaterialCategoryModel?) : SiteEstimateEvent
 
     data class ToggleMaterialPicker(val isOpen: Boolean) : SiteEstimateEvent
+    data class ToggleCreateMaterialModal(val isOpen: Boolean) : SiteEstimateEvent
+    data class CreateAndAddMaterial(
+        val name: String,
+        val tradeType: TradeType,
+        val categoryName: String?,
+        val price: Double,
+        val unit: String
+    ) : SiteEstimateEvent
     data class AddMaterials(val materials: List<String?>) : SiteEstimateEvent
 
     data object SaveEstimate : SiteEstimateEvent

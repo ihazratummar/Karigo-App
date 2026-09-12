@@ -15,4 +15,13 @@
     <string name="materials_btn_add_to_library">ലൈബ്രറിയിലേക്ക് ചേർക്കുക</string>
     <string name="materials_btn_save_changes">മാറ്റങ്ങൾ സേവ് ചെയ്യുക</string>
     <string name="materials_btn_manage">മാനേജ് ചെയ്യുക</string>
+    <string name="materials_new_material_title">പുതിയ മെറ്റീരിയൽ</string>
+    <string name="materials_new_material_subtitle">നിങ്ങളുടെ ലൈബ്രറിയിൽ സംരക്ഷിക്കുകയും ഇവിടെ ചേർക്കുകയും ചെയ്തു</string>
+    <string name="materials_btn_save_and_add">സേവ് ചെയ്ത് ചേർക്കുക</string>
+    <string name="materials_category_optional">കാറ്റഗറി (ഓപ്ഷണൽ)</string>
+    <string name="materials_label_material_name">മെറ്റീരിയലിന്റെ പേര്</string>
+    <string name="materials_label_trade">തൊഴിൽ</string>
+    <string name="materials_label_category_optional">കാറ്റഗറി (ഓപ്ഷണൽ)</string>
+    <string name="materials_label_price">വില (%1$s)</string>
+    <string name="materials_label_unit">യൂണിറ്റ്</string>
 </resources>

@@ -540,6 +540,7 @@ fun JobDetailsScreen(
             },
             isPdfUnlocked = isPdfUnlocked,
             onProRequiredClick = {
+                showShareDialog = false
                 event(JobDetailsIntent.ToggleProDialog(isOpen = true, featureName = "PDF Export"))
             }
         )

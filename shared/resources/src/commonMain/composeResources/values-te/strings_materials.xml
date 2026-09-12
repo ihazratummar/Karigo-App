@@ -15,4 +15,13 @@
     <string name="materials_btn_add_to_library">లైబ్రరీకి జోడించండి</string>
     <string name="materials_btn_save_changes">మార్పులను సేవ్ చేయండి</string>
     <string name="materials_btn_manage">నిర్వహించండి</string>
+    <string name="materials_new_material_title">కొత్త మెటీరియల్</string>
+    <string name="materials_new_material_subtitle">మీ లైబ్రరీలో సేవ్ చేయబడింది మరియు ఇక్కడ జోడించబడింది</string>
+    <string name="materials_btn_save_and_add">సేవ్ చేసి జోడించండి</string>
+    <string name="materials_category_optional">వర్గం (ఐచ్ఛికం)</string>
+    <string name="materials_label_material_name">మెటీరియల్ పేరు</string>
+    <string name="materials_label_trade">వృత్తి</string>
+    <string name="materials_label_category_optional">వర్గం (ఐచ్ఛికం)</string>
+    <string name="materials_label_price">ధర (%1$s)</string>
+    <string name="materials_label_unit">యూనిట్</string>
 </resources>

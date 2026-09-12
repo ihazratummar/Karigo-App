@@ -15,4 +15,13 @@
     <string name="materials_btn_add_to_library">লাইব্রেরিতে যোগ করুন</string>
     <string name="materials_btn_save_changes">পরিবর্তন সেভ করুন</string>
     <string name="materials_btn_manage">পরিচালনা</string>
+    <string name="materials_new_material_title">নতুন উপাদান</string>
+    <string name="materials_new_material_subtitle">আপনার লাইব্রেরিতে সংরক্ষিত এবং এখানে যুক্ত করা হয়েছে</string>
+    <string name="materials_btn_save_and_add">সংরক্ষণ ও যোগ করুন</string>
+    <string name="materials_category_optional">ক্যাটাগরি (ঐচ্ছিক)</string>
+    <string name="materials_label_material_name">উপাদানের নাম</string>
+    <string name="materials_label_trade">কাজের ধরন</string>
+    <string name="materials_label_category_optional">ক্যাটাগরি (ঐচ্ছিক)</string>
+    <string name="materials_label_price">দাম (%1$s)</string>
+    <string name="materials_label_unit">ইউনিট</string>
 </resources>

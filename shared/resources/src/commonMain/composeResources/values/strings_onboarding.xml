@@ -24,4 +24,7 @@
 
     <string name="onboarding_back_to_trade">Back to trade selection</string>
 
+    <string name="onboarding_language_title">Choose your language</string>
+    <string name="onboarding_language_subtitle">Select your preferred language to get started. You can change this anytime in Settings.</string>
+
 </resources>

@@ -28,7 +28,13 @@
     <string name="materials_btn_save_changes">Save Changes</string>
     <string name="materials_btn_manage">Manage</string>
 
-
-
-
+    <string name="materials_new_material_title">New Material</string>
+    <string name="materials_new_material_subtitle">Saved to your library &amp; added here</string>
+    <string name="materials_btn_save_and_add">Save &amp; Add</string>
+    <string name="materials_category_optional">Category (Optional)</string>
+    <string name="materials_label_material_name">MATERIAL NAME</string>
+    <string name="materials_label_trade">TRADE</string>
+    <string name="materials_label_category_optional">CATEGORY (OPTIONAL)</string>
+    <string name="materials_label_price">PRICE (%1$s)</string>
+    <string name="materials_label_unit">UNIT</string>
 </resources>

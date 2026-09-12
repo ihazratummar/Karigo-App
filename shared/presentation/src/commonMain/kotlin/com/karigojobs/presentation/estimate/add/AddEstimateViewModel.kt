@@ -12,13 +12,17 @@ import com.karigojobs.domain.usecase.estimate.AddNewSiteEstimateUseCase
 import com.karigojobs.domain.usecase.estimate.GetEstimateByIdUseCase
 import com.karigojobs.domain.usecase.estimate.GetEstimateMaterialsUseCase
 import com.karigojobs.domain.usecase.estimate.UpdateSiteEstimateUseCase
+import com.karigojobs.domain.usecase.material.AddMaterialUseCase
 import com.karigojobs.domain.usecase.material.SearchMaterialsUseCase
 import com.karigojobs.domain.usecase.materialCategory.GetMaterialCategoryUseCase
+import com.karigojobs.domain.usecase.materialCategory.InsertMaterialCategoryUseCase
 import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.presentation.estimate.add.EstimateEffect.*
 import com.karigojobs.presentation.materials.list.MaterialListFilter.All
 import com.karigojobs.presentation.materials.list.MaterialListFilter.SelectedTrade
 import com.karigojobs.share.model.ClientModel
+import com.karigojobs.share.model.MaterialCategoryModel
+import com.karigojobs.share.model.MaterialsModel
 import com.karigojobs.share.model.SiteEstimateMaterial
 import com.karigojobs.share.model.SiteEstimateModel
 import com.karigojobs.domain.analytics.AnalyticsLogger
@@ -62,6 +66,8 @@ class AddEstimateViewModel(
     private val getEstimateMaterialsUseCase: GetEstimateMaterialsUseCase,
     private val updateSiteEstimateUseCase: UpdateSiteEstimateUseCase,
     private val getMaterialCategoryUseCase: GetMaterialCategoryUseCase,
+    private val addMaterialUseCase: AddMaterialUseCase,
+    private val insertMaterialCategoryUseCase: InsertMaterialCategoryUseCase,
     private val analytics: AnalyticsLogger,
     private val incrementEstimateCountUseCase: com.karigojobs.domain.usecase.monetization.IncrementEstimateCountUseCase? = null
 ) : ViewModel() {
@@ -338,6 +344,76 @@ class AddEstimateViewModel(
                         selectedCategory = if (!event.isOpen) null else it.selectedCategory,
                         materialFilter = if (!event.isOpen) All else it.materialFilter
                     )
+                }
+            }
+
+            is SiteEstimateEvent.ToggleCreateMaterialModal -> {
+                _state.update {
+                    it.copy(isCreateMaterialModalOpen = event.isOpen)
+                }
+            }
+
+            is SiteEstimateEvent.CreateAndAddMaterial -> {
+                viewModelScope.launch {
+                    var categoryIdToSave: String? = null
+                    val trimmedCategory = event.categoryName?.trim()
+                    if (!trimmedCategory.isNullOrBlank()) {
+                        val existingCategory = _state.value.materialCategories.find {
+                            it.name.equals(trimmedCategory, ignoreCase = true) && it.tradeType == event.tradeType
+                        }
+                        if (existingCategory != null) {
+                            categoryIdToSave = existingCategory.id
+                        } else {
+                            val newCategoryId = Uuid.random().toString()
+                            val newCategory = MaterialCategoryModel(
+                                id = newCategoryId,
+                                name = trimmedCategory,
+                                tradeType = event.tradeType
+                            )
+                            val catResult = insertMaterialCategoryUseCase(newCategory)
+                            if (catResult is Result.Error) {
+                                _effect.emit(ShowError(catResult.error.asString()))
+                                return@launch
+                            }
+                            categoryIdToSave = newCategoryId
+                        }
+                    }
+
+                    val newMaterialId = Uuid.random().toString()
+                    val newMaterial = MaterialsModel(
+                        id = newMaterialId,
+                        name = event.name,
+                        unit = event.unit,
+                        price = event.price,
+                        tradeType = event.tradeType,
+                        categoryId = categoryIdToSave,
+                        categoryName = trimmedCategory
+                    )
+
+                    val insertResult = addMaterialUseCase(newMaterial)
+                    if (insertResult is Result.Error) {
+                        _effect.emit(ShowError(insertResult.error.asString()))
+                        return@launch
+                    }
+
+                    val newEstimateMaterial = SiteEstimateMaterial(
+                        id = Uuid.random().toString(),
+                        estimateId = draftEstimateId,
+                        materialId = newMaterialId,
+                        materialName = event.name,
+                        quantity = 1.0,
+                        unit = event.unit,
+                        rate = event.price
+                    )
+
+                    _state.update { curr ->
+                        val updated = curr.selectedMaterials.toMutableList().apply { add(newEstimateMaterial) }
+                        curr.copy(
+                            selectedMaterials = updated,
+                            isCreateMaterialModalOpen = false,
+                            isMaterialPickerOpen = false
+                        )
+                    }
                 }
             }
 

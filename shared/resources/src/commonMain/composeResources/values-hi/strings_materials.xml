@@ -15,4 +15,13 @@
     <string name="materials_btn_add_to_library">लाइब्रेरी में जोड़ें</string>
     <string name="materials_btn_save_changes">बदलाव सहेजें</string>
     <string name="materials_btn_manage">प्रबंधित करें</string>
+    <string name="materials_new_material_title">नई सामग्री</string>
+    <string name="materials_new_material_subtitle">आपकी लाइब्रेरी में सहेजा गया और यहाँ जोड़ा गया</string>
+    <string name="materials_btn_save_and_add">सहेजें और जोड़ें</string>
+    <string name="materials_category_optional">श्रेणी (वैकल्पिक)</string>
+    <string name="materials_label_material_name">सामग्री का नाम</string>
+    <string name="materials_label_trade">पेशा</string>
+    <string name="materials_label_category_optional">श्रेणी (वैकल्पिक)</string>
+    <string name="materials_label_price">कीमत (%1$s)</string>
+    <string name="materials_label_unit">इकाई (यूनिट)</string>
 </resources>

@@ -92,28 +92,29 @@ class MainActivity : AppCompatActivity() {
 
             var isInitialLanguageSyncDone by remember { mutableStateOf(false) }
 
-            LaunchedEffect(appPreferences.language) {
-                appPreferences.language.let { language ->
+            LaunchedEffect(appPreferences?.language) {
+                appPreferences?.language.let { language ->
                     val systemLocaleCode = LocaleManager.getAppLocale()
                     if (!isInitialLanguageSyncDone) {
                         isInitialLanguageSyncDone = true
-                        if (systemLocaleCode != language.code) {
+                        if (systemLocaleCode != language?.code) {
                             // System locale was changed outside the app, sync to Datastore
                             updateAppLanguageUseCase(AppLanguage.fromCode(systemLocaleCode))
                         }
                     } else {
                         // In-app locale change, sync to System
-                        if (systemLocaleCode != language.code) {
-                            LocaleManager.setAppLocale(language.code)
+                        if (systemLocaleCode != language?.code) {
+                            LocaleManager.setAppLocale(language?.code ?: "en" )
                         }
                     }
                 }
             }
 
-            val isDarkTheme = when (appPreferences.theme) {
+            val isDarkTheme = when (appPreferences?.theme) {
                 ThemePreference.SYSTEM -> isSystemInDarkTheme()
                 ThemePreference.DARK -> true
                 ThemePreference.LIGHT -> false
+                else -> false
             }
 
             LaunchedEffect(isDarkTheme) {
@@ -132,7 +133,7 @@ class MainActivity : AppCompatActivity() {
             KarigojobsTheme(
                 windowSizeClass = windowsSizeClass,
                 darkTheme = isDarkTheme,
-                appCurrencySymbol = appPreferences.currency,
+                appCurrencySymbol = appPreferences?.currency,
                 isPro = isProActive
             ) {
                 AppNavigation(
@@ -146,6 +147,16 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateManager.onResume(this)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: android.content.Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == com.karigojobs.app.android.services.UpdateManagerImpl.UPDATE_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) {
+                android.util.Log.w("MainActivity", "App update cancelled or failed with resultCode: $resultCode")
+            }
+        }
     }
 
     override fun onDestroy() {

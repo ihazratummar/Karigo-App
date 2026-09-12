@@ -50,6 +50,9 @@ import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.deviceInfo
 import com.karigojobs.ui.theme.dimens
+import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_btn_cancel
+import karigojobs.shared.resources.generated.resources.common_btn_rename
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -555,16 +558,18 @@ fun RenameCategoryDialog(
                     KarigoButtons(
                         modifier = Modifier.weight(1f),
                         onClick = { event(MaterialCategoryEvent.ToggleRenameCategoryDialog(null)) },
-                        label = "Cancel",
+                        label = stringResource(Res.string.common_btn_cancel),
                         buttonColor = Color.Transparent,
-                        contentColor = appColor.primaryText
+                        contentColor = appColor.primaryText,
+                        isUnlocked = true
                     )
                     KarigoButtons(
                         modifier = Modifier.weight(1f),
                         onClick = { event(MaterialCategoryEvent.ConfirmRenameCategory) },
-                        label = "Rename",
+                        label = stringResource(Res.string.common_btn_rename),
                         buttonColor = appColor.accentBg,
-                        contentColor = appColor.primaryText
+                        contentColor = appColor.primaryText,
+                        isUnlocked = true
                     )
                 }
             }

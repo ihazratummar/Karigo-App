@@ -10,6 +10,9 @@ import com.karigojobs.presentation.erroMap.asString
 import com.karigojobs.share.model.TradeType
 import com.karigojobs.domain.analytics.AnalyticsLogger
 import com.karigojobs.domain.analytics.AnalyticsEvent
+import com.karigojobs.domain.usecase.settings.GetAppPreferencesUseCase
+import com.karigojobs.domain.usecase.settings.UpdateAppLanguageUseCase
+import com.karigojobs.share.model.AppLanguage
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,7 +34,9 @@ class OnboardingViewModel(
     private val completeOnboardingUseCase: CompleteOnboardingUseCase,
     private val getOnboardingStatusUseCase: GetOnboardingStatusUseCase,
     private val seedStarterMaterialsUseCase: SeedStarterMaterialsUseCase,
-    private val analytics: AnalyticsLogger
+    private val analytics: AnalyticsLogger,
+    private val updateAppLanguageUseCase: UpdateAppLanguageUseCase,
+    private val getAppPreferencesUseCase: GetAppPreferencesUseCase,
 ) : ViewModel() {
 
     init {
@@ -39,7 +44,12 @@ class OnboardingViewModel(
     }
 
     // ── STATE ─────────────────────────────────────────────────────────────────
-    private val _state = MutableStateFlow(OnboardingState())
+    private val _state = MutableStateFlow(
+        OnboardingState(
+            currentStep = OnboardingStep.LANGUAGE,
+            selectedLanguage = getAppPreferencesUseCase.getSync().language
+        )
+    )
     val state: StateFlow<OnboardingState> = _state.asStateFlow()
 
     // ── EFFECTS ───────────────────────────────────────────────────────────────
@@ -68,10 +78,44 @@ class OnboardingViewModel(
             OnboardingIntent.BackToTrades -> handleBackToTrades()
             OnboardingIntent.LetsGo -> handleLetsGo()
             OnboardingIntent.DismissError -> clearError()
+
+            is OnboardingIntent.SelectLanguage -> {
+                selectLanguage(appLanguage = intent.appLanguage)
+            }
+
+            OnboardingIntent.ConfirmLanguage -> {
+                handleConfirmLanguage()
+            }
+            OnboardingIntent.BackToLanguage -> {
+                handleBackToLanguage()
+            }
+            OnboardingIntent.BackToWelcome -> {
+                handleBackToWelcome()
+            }
         }
     }
 
     // ── HANDLERS ──────────────────────────────────────────────────────────────
+
+
+    private fun selectLanguage(appLanguage: AppLanguage){
+        _state.update { it.copy(selectedLanguage = appLanguage) }
+        viewModelScope.launch {
+            updateAppLanguageUseCase(appLanguage)
+        }
+    }
+
+    private fun handleConfirmLanguage() {
+        _state.update { it.copy(currentStep = OnboardingStep.WELCOME) }
+    }
+
+    private fun handleBackToLanguage(){
+        _state.update { it.copy(currentStep = OnboardingStep.LANGUAGE) }
+    }
+
+    private fun handleBackToWelcome() {
+        _state.update { it.copy(currentStep = OnboardingStep.WELCOME) }
+    }
 
     private fun handleGeStarted() {
         analytics.logEvent(AnalyticsEvent.Event.ONBOARDING_STARTED)

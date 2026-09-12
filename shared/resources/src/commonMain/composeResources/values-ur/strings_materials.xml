@@ -15,4 +15,13 @@
     <string name="materials_btn_add_to_library">لائبریری میں شامل کریں</string>
     <string name="materials_btn_save_changes">تبدیلیاں محفوظ کریں</string>
     <string name="materials_btn_manage">انتظام کریں</string>
+    <string name="materials_new_material_title">نیا سامان</string>
+    <string name="materials_new_material_subtitle">آپ کی لائبریری میں محفوظ اور یہاں شامل کیا گیا</string>
+    <string name="materials_btn_save_and_add">محفوظ کریں اور شامل کریں</string>
+    <string name="materials_category_optional">زمرہ (اختیاری)</string>
+    <string name="materials_label_material_name">سامان کا نام</string>
+    <string name="materials_label_trade">کام کی قسم</string>
+    <string name="materials_label_category_optional">زمرہ (اختیاری)</string>
+    <string name="materials_label_price">قیمت (%1$s)</string>
+    <string name="materials_label_unit">یونٹ</string>
 </resources>

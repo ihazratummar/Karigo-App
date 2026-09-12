@@ -18,4 +18,6 @@
     <string name="onboarding_materials_ready">వస్తువులు సిద్ధంగా ఉన్నాయి!</string>
     <string name="onboarding_materials_ready_description">మీరు ఎంచుకున్న వృత్తి ఆధారంగా మేము కొన్ని సాధారణ వస్తువులను ముందే నింపాము.</string>
     <string name="onboarding_back_to_trade">వృత్తిని మార్చండి</string>
+    <string name="onboarding_language_title">మీ భాషను ఎంచుకోండి</string>
+    <string name="onboarding_language_subtitle">ప్రారంభించడానికి మీ ప్రాధాన్య భాషను ఎంచుకోండి. మీరు దీన్ని సెట్టింగ్స్‌లో ఎప్పుడైనా మార్చుకోవచ్చు.</string>
 </resources>

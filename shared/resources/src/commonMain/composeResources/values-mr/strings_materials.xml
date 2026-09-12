@@ -15,4 +15,13 @@
     <string name="materials_btn_add_to_library">लायब्ररीमध्ये जोडा</string>
     <string name="materials_btn_save_changes">बदल जतन करा</string>
     <string name="materials_btn_manage">व्यवस्थापित करा</string>
+    <string name="materials_new_material_title">नवीन साहित्य</string>
+    <string name="materials_new_material_subtitle">तुमच्या लायब्ररीमध्ये जतन केले आणि येथे जोडले</string>
+    <string name="materials_btn_save_and_add">जतन करा आणि जोडा</string>
+    <string name="materials_category_optional">श्रेणी (पर्यायी)</string>
+    <string name="materials_label_material_name">साहित्याचे नाव</string>
+    <string name="materials_label_trade">व्यवसाय</string>
+    <string name="materials_label_category_optional">श्रेणी (पर्यायी)</string>
+    <string name="materials_label_price">किंमत (%1$s)</string>
+    <string name="materials_label_unit">एकक</string>
 </resources>

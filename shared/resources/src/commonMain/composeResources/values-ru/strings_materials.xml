@@ -22,4 +22,14 @@
     <string name="materials_btn_add_to_library">Добавить в библиотеку</string>
     <string name="materials_btn_save_changes">Сохранить изменения</string>
     <string name="materials_btn_manage">Управлять</string>
+
+    <string name="materials_new_material_title">Новый материал</string>
+    <string name="materials_new_material_subtitle">Сохранено в библиотеку и добавлено сюда</string>
+    <string name="materials_btn_save_and_add">Сохранить и добавить</string>
+    <string name="materials_category_optional">Категория (необязательно)</string>
+    <string name="materials_label_material_name">НАЗВАНИЕ МАТЕРИАЛА</string>
+    <string name="materials_label_trade">СПЕЦИАЛЬНОСТЬ</string>
+    <string name="materials_label_category_optional">КАТЕГОРИЯ (НЕОБЯЗАТЕЛЬНО)</string>
+    <string name="materials_label_price">ЦЕНА (%1$s)</string>
+    <string name="materials_label_unit">ЕДИНИЦА</string>
 </resources>

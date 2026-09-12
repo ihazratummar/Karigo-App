@@ -233,6 +233,10 @@ fun HomeScreen(
                     )
                 }
             }
+
+            item {
+                Spacer(modifier = Modifier.height(dimens.Size.chartHeight))
+            }
         }
     }
 }

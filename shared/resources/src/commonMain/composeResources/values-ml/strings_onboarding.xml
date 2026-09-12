@@ -18,4 +18,6 @@
     <string name="onboarding_materials_ready">സാമഗ്രികൾ തയ്യാറാണ്!</string>
     <string name="onboarding_materials_ready_description">നിങ്ങൾ തിരഞ്ഞെടുത്ത തൊഴിലിൻ്റെ അടിസ്ഥാനത്തിൽ ഞങ്ങൾ ചില സാധാരണ സാമഗ്രികൾ മുൻകൂട്ടി പൂരിപ്പിച്ചിട്ടുണ്ട്.</string>
     <string name="onboarding_back_to_trade">തൊഴിൽ മാറ്റുക</string>
+    <string name="onboarding_language_title">നിങ്ങളുടെ ഭാഷ തിരഞ്ഞെടുക്കുക</string>
+    <string name="onboarding_language_subtitle">ആരംഭിക്കുന്നതിന് നിങ്ങൾക്ക് ഇഷ്ടമുള്ള ഭാഷ തിരഞ്ഞെടുക്കുക. നിങ്ങൾക്ക് ഇത് ക്രമീകരണങ്ങളിൽ എപ്പോൾ വേണമെങ്കിലും മാറ്റാം.</string>
 </resources>

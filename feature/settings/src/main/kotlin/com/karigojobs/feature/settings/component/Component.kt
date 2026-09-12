@@ -59,8 +59,13 @@ import com.karigojobs.ui.theme.ModalBackGround
 import com.karigojobs.ui.theme.appColor
 import com.karigojobs.ui.theme.dimens
 import karigojobs.shared.resources.generated.resources.Res
+import karigojobs.shared.resources.generated.resources.common_btn_cancel
 import karigojobs.shared.resources.generated.resources.common_btn_change
+import karigojobs.shared.resources.generated.resources.common_btn_save
 import karigojobs.shared.resources.generated.resources.settings_my_trade
+import karigojobs.shared.resources.generated.resources.settings_trades_clear_all
+import karigojobs.shared.resources.generated.resources.settings_trades_picker_subtitle
+import karigojobs.shared.resources.generated.resources.settings_trades_selected_count
 
 
 /**
@@ -294,14 +299,16 @@ fun SettingsTradeChangeModal(
                                 onClick = onDismiss,
                                 buttonColor = Color.Transparent,
                                 contentColor = MaterialTheme.colorScheme.onBackground,
-                                label = "Cancel"
+                                label = stringResource(Res.string.common_btn_cancel),
+                                isUnlocked = true
                             )
                             KarigoButtons(
                                 modifier = Modifier.weight(1f),
                                 onClick = { event(SettingsEvent.SaveTrades) },
-                                label = "Save ${state.selectedCount}",
+                                label = "${stringResource(Res.string.common_btn_save)} (${state.selectedCount})",
                                 icon = R.drawable.check,
                                 enabled = state.selectedCount != 0,
+                                isUnlocked = true
                             )
                         }
                     }
@@ -325,14 +332,14 @@ fun SettingsTradeChangeModal(
                         verticalArrangement = Arrangement.spacedBy(dimens.Space.sm)
                     ) {
                         Text(
-                            text = "${state.selectedCount} selected",
+                            text = stringResource(Res.string.settings_trades_selected_count, state.selectedCount),
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 color = appColor.primaryText,
                                 fontWeight = FontWeight.Bold
                             )
                         )
                         Text(
-                            text = "Pick the trades you work in to get relevant starter materials",
+                            text = stringResource(Res.string.settings_trades_picker_subtitle),
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = appColor.secondaryText
                             )
@@ -343,7 +350,7 @@ fun SettingsTradeChangeModal(
                         onClick = { event(SettingsEvent.ClearAllTrade) }
                     ) {
                         Text(
-                            text = "Clear All",
+                            text = stringResource(Res.string.settings_trades_clear_all),
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = appColor.secondaryText
                             )

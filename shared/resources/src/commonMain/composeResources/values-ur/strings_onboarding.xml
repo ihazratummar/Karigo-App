@@ -18,4 +18,6 @@
     <string name="onboarding_materials_ready">آپ کا سامان تیار ہے!</string>
     <string name="onboarding_materials_ready_description">ہم نے آپ کے منتخب کردہ پیشے کے مطابق سامان کی بنیادی فہرست تیار کر دی ہے۔</string>
     <string name="onboarding_back_to_trade">پیشہ تبدیل کریں</string>
+    <string name="onboarding_language_title">اپنی زبان منتخب کریں</string>
+    <string name="onboarding_language_subtitle">شروع کرنے کے لیے اپنی پسندیدہ زبان منتخب کریں۔ آپ اسے ترتیبات میں کسی بھی وقت تبدیل کر سکتے ہیں۔</string>
 </resources>

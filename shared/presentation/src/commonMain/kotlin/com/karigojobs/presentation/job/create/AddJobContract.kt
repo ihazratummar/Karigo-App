@@ -40,6 +40,7 @@ data class AddJobState(
     val availableMaterials: List<MaterialsModel> = emptyList(),
     val selectedMaterials: List<JobMaterialItemModel> = emptyList(),
     val isMaterialPickerOpen : Boolean = false,
+    val isCreateMaterialModalOpen: Boolean = false,
     val materialQuery: String = "",
     val selectedMaterialTradeType: TradeType? = null,
     val selectedMaterialCategory: MaterialCategoryModel? = null,
@@ -79,6 +80,14 @@ sealed interface AddJobIntent {
     data object CloseLabourLogsModal : AddJobIntent
 
     data class ToggleMaterialPicker(val isOpen: Boolean) : AddJobIntent
+    data class ToggleCreateMaterialModal(val isOpen: Boolean) : AddJobIntent
+    data class CreateAndAddMaterial(
+        val name: String,
+        val tradeType: TradeType,
+        val categoryName: String?,
+        val price: Double,
+        val unit: String
+    ) : AddJobIntent
     data class SearchMaterials(val query: String) : AddJobIntent
     data class SelectMaterialTradeType(val tradeType: TradeType?) : AddJobIntent
     data class SelectMaterialCategory(val category: MaterialCategoryModel?) : AddJobIntent

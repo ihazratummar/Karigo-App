@@ -53,6 +53,8 @@ fun getPresentationModule(): Module = module {
             getSelectedTradeTypeUseCase = get(),
             searchMaterialsUseCase = get(),
             getMaterialCategoryUseCase = get(),
+            addMaterialUseCase = get(),
+            insertMaterialCategoryUseCase = get(),
             getJobDetailsUseCase = get(),
             getJobLabourItemUseCase = get(),
             getJobMaterialItemsUseCase = get(),
@@ -76,6 +78,8 @@ fun getPresentationModule(): Module = module {
             getEstimateMaterialsUseCase = get(),
             updateSiteEstimateUseCase = get(),
             getMaterialCategoryUseCase = get(),
+            addMaterialUseCase = get(),
+            insertMaterialCategoryUseCase = get(),
             analytics = get(),
             incrementEstimateCountUseCase = get()
         )

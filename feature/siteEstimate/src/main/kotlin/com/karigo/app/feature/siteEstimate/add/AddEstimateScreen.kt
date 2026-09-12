@@ -36,8 +36,10 @@ import com.karigo.app.feature.siteEstimate.component.SelectedMaterialSection
 import com.karigojobs.presentation.estimate.add.EstimateEffect
 import com.karigojobs.presentation.estimate.add.SiteEstimateEvent
 import com.karigojobs.presentation.estimate.add.SiteEstimateState
+import com.karigojobs.share.model.TradeType
 import com.karigojobs.ui.common.ClientPicker
 import com.karigojobs.ui.common.ContactPicker
+import com.karigojobs.ui.common.CreateMaterialModal
 import com.karigojobs.ui.common.KarigoDataPicker
 import com.karigojobs.ui.common.KarigoDatePickerSheet
 import com.karigojobs.ui.common.KarigoMiddleTextTopAppBar
@@ -144,7 +146,30 @@ fun AddEstimateScreen(
                 searchQuery = state.materialQuery,
                 onSearchQueryChanged = { event(SiteEstimateEvent.SearchMaterials(it)) },
                 selectedMaterialIds = state.selectedMaterials.map { it.materialId }.toSet(),
-                onConfirmClick = { event(SiteEstimateEvent.AddMaterials(it)) }
+                onConfirmClick = { event(SiteEstimateEvent.AddMaterials(it)) },
+                onNewMaterialClick = {
+                    event(SiteEstimateEvent.ToggleCreateMaterialModal(true))
+                }
+            )
+        }
+
+        if (state.isCreateMaterialModalOpen) {
+            CreateMaterialModal(
+                onDismiss = { event(SiteEstimateEvent.ToggleCreateMaterialModal(false)) },
+                initialTradeType = state.selectedTradeType ?: state.tradeTypes?.firstOrNull(),
+                availableTrades = state.tradeTypes?.toList() ?: TradeType.entries,
+                existingCategories = state.materialCategories,
+                onSaveAndAdd = { name, trade, category, price, unit ->
+                    event(
+                        SiteEstimateEvent.CreateAndAddMaterial(
+                            name = name,
+                            tradeType = trade,
+                            categoryName = category,
+                            price = price,
+                            unit = unit
+                        )
+                    )
+                }
             )
         }
 

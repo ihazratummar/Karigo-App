@@ -355,6 +355,7 @@ fun EstimateDetailsScreen(
             description = stringResource(Res.string.dialog_share_desc_estimate),
             isPdfUnlocked = isPdfUnlocked,
             onProRequiredClick = {
+                showShareDialog = false
                 event(EstimateDetailsEvent.ToggleProDialog(isOpen = true, featureName = "PDF Export"))
             }
         )

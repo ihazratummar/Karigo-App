@@ -82,7 +82,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.karigojob.share.utils.formatToLocalizeDate
 import com.karigojobs.app.android.ui.R
@@ -1516,17 +1515,19 @@ fun KarigoButtons(
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .offset(x = (-4).dp, y = (-4).dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color(0xFF0F2626))
-                    .border(BorderStroke(0.75.dp, Color(0xFF00FFCC)), RoundedCornerShape(8.dp))
-                    .padding(horizontal = 6.dp, vertical = 2.dp)
+                    .offset(x = -dimens.Space.xs, y = -dimens.Space.xs)
+                    .clip(RoundedCornerShape(dimens.Radius.md))
+                    .background(appColor.accentBg)
+                    .border(BorderStroke(dimens.Border.thin, MaterialTheme.colorScheme.primary), RoundedCornerShape(dimens.Radius.md))
+                    .padding(horizontal = dimens.Padding.sm, vertical = dimens.Padding._2xs)
             ) {
                 Text(
                     text = "PRO",
-                    color = Color(0xFF00FFCC),
-                    fontSize = 8.sp,
-                    fontWeight = FontWeight.Bold
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = dimens.Text._2xs
+                    )
                 )
             }
         }
@@ -1857,7 +1858,10 @@ fun ShareChoiceDialog(
                         label = "PDF Document",
                         icon = R.drawable.ic_pdf,
                         isUnlocked = isPdfUnlocked,
-                        onProRequiredClick = onProRequiredClick
+                        onProRequiredClick = {
+                            onDismiss()
+                            onProRequiredClick?.invoke()
+                        }
                     )
                     KarigoButtons(
                         modifier = Modifier.weight(1f),

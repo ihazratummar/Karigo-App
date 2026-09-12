@@ -1,5 +1,6 @@
 package com.karigojobs.presentation.onboarding
 
+import com.karigojobs.share.model.AppLanguage
 import com.karigojobs.share.model.TradeType
 
 
@@ -11,12 +12,13 @@ import com.karigojobs.share.model.TradeType
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 data class OnboardingState(
-    val currentStep : OnboardingStep = OnboardingStep.WELCOME,
+    val currentStep : OnboardingStep = OnboardingStep.LANGUAGE,
     val selectedTrades : Set<TradeType> = emptySet(),
     val isLoading: Boolean = false,
     val seededMaterialCount : Int = 0,
     val error: String ? = null,
-    val totalMaterialCount: Int = 0
+    val totalMaterialCount: Int = 0,
+    val selectedLanguage: AppLanguage = AppLanguage.ENGLISH
 ){
     val canContinue: Boolean get() = selectedTrades.isNotEmpty()
 }
@@ -24,7 +26,7 @@ data class OnboardingState(
 // ── STEP ──────────────────────────────────────────────────────────────────────
 
 enum class OnboardingStep {
-    WELCOME, TRADE_SELECT, READY
+    LANGUAGE, WELCOME, TRADE_SELECT, READY
 }
 
 
@@ -37,12 +39,18 @@ sealed interface OnboardingCompleteState {
 // ── INTENT ────────────────────────────────────────────────────────────────────
 
 sealed class OnboardingIntent {
+
+    data class SelectLanguage(val appLanguage: AppLanguage): OnboardingIntent()
+    data object ConfirmLanguage : OnboardingIntent()
+
     // Welcome screen
     data object GetStarted : OnboardingIntent()
+    data object BackToLanguage : OnboardingIntent()
 
     // Trade select screen
     data class ToggleTrade(val trade : TradeType) : OnboardingIntent()
     data object ConfirmTrades : OnboardingIntent()
+    data object BackToWelcome : OnboardingIntent()
 
     // Ready Screen
     data object LetsGo : OnboardingIntent()

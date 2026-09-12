@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -54,18 +55,39 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun WelcomeContent(
     modifier: Modifier = Modifier,
-    onGetStartedClick: () -> Unit = {}
+    onGetStartedClick: () -> Unit = {},
+    onBackToLanguageClick: (() -> Unit)? = null
 ) {
-    Column(
+    Box(
         modifier = modifier
-            .padding(horizontal = dimens.Space.xl)
             .fillMaxSize()
-            .background(
-                color = MaterialTheme.colorScheme.background
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .background(color = MaterialTheme.colorScheme.background)
     ) {
+        if (onBackToLanguageClick != null) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.TopStart)
+                    .padding(horizontal = dimens.Space.base, vertical = dimens.Space.sm)
+            ) {
+                IconButton(onClick = onBackToLanguageClick) {
+                    Icon(
+                        painter = painterResource(R.drawable.arrow_left),
+                        contentDescription = "Back",
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.size(dimens.Icon.base)
+                    )
+                }
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .padding(horizontal = dimens.Space.xl)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
         Box(
             modifier = Modifier
@@ -196,6 +218,7 @@ fun WelcomeContent(
             )
         }
 
+        }
     }
 }
 

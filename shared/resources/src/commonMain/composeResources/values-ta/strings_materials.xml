@@ -15,4 +15,13 @@
     <string name="materials_btn_add_to_library">நூலகத்தில் சேர்</string>
     <string name="materials_btn_save_changes">மாற்றங்களைச் சேமிக்கவும்</string>
     <string name="materials_btn_manage">நிர்வகி</string>
+    <string name="materials_new_material_title">புதிய பொருள்</string>
+    <string name="materials_new_material_subtitle">உங்கள் நூலகத்தில் சேமிக்கப்பட்டு இங்கே சேர்க்கப்பட்டது</string>
+    <string name="materials_btn_save_and_add">சேமி &amp; சேர்</string>
+    <string name="materials_category_optional">வகை (விருப்பத்தேர்வு)</string>
+    <string name="materials_label_material_name">பொருளின் பெயர்</string>
+    <string name="materials_label_trade">தொழில்</string>
+    <string name="materials_label_category_optional">வகை (விருப்பத்தேர்வு)</string>
+    <string name="materials_label_price">விலை (%1$s)</string>
+    <string name="materials_label_unit">அலகு</string>
 </resources>

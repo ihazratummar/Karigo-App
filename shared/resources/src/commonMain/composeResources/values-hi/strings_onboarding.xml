@@ -18,4 +18,6 @@
     <string name="onboarding_materials_ready">सामग्री तैयार है!</string>
     <string name="onboarding_materials_ready_description">हमने आपके चयनित पेशे के आधार पर कुछ सामान्य सामग्रियां पहले से भर दी हैं।</string>
     <string name="onboarding_back_to_trade">पेशा बदलें</string>
+    <string name="onboarding_language_title">अपनी भाषा चुनें</string>
+    <string name="onboarding_language_subtitle">शुरू करने के लिए अपनी पसंदीदा भाषा चुनें। आप इसे कभी भी सेटिंग्स में बदल सकते हैं।</string>
 </resources>

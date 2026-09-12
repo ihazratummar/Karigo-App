@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.karigojobs.domain.model.EarningsSummaryModel
 import com.karigojobs.domain.model.MonthlyBarData
+import com.karigojobs.domain.model.TradeRevenueData
 import com.karigojobs.domain.repository.EarningsRepository
 import com.karigojobs.share.model.ClientModel
 import com.karigojobs.share.model.EarningsTimeframe
@@ -35,12 +36,17 @@ class EarningsRepositoryImpl(
             .asFlow()
             .mapToList(Dispatchers.IO)
 
+        val tradeRevenuesFlow = database.monthlyEarningQueries.getRevenueByTrade()
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+
         return combine(
             summaryFlow,
             growthFlow,
             topClientsFlow,
-            monthlyEarningsFlow
-        ) { summary, growth, topClients, monthlyEarnings ->
+            monthlyEarningsFlow,
+            tradeRevenuesFlow
+        ) { summary, growth, topClients, monthlyEarnings, tradeRevenues ->
             val monthOrder = listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
             val monthRevenueMap = monthlyEarnings.associate { row ->
@@ -91,10 +97,22 @@ class EarningsRepositoryImpl(
             }
 
             val bestMonthFormatted = summary?.best_month?.let { mStr ->
-                val parts = mStr.split("-")
-                if (parts.size == 2) {
-                    val mIdx = parts[1].toIntOrNull()?.minus(1) ?: 0
-                    monthOrder.getOrElse(mIdx) { "N/A" }
+                if (mStr.isNotBlank()) {
+                    val parts = mStr.split("-")
+                    if (parts.size == 2) {
+                        val mIdx = parts[1].toIntOrNull()?.minus(1) ?: 0
+                        monthOrder.getOrElse(mIdx) { "N/A" }
+                    } else mStr
+                } else "N/A"
+            } ?: "N/A"
+
+            val busiestMonthFormatted = growth?.busiest_month?.let { mStr ->
+                if (mStr.isNotBlank()) {
+                    val parts = mStr.split("-")
+                    if (parts.size == 2) {
+                        val mIdx = parts[1].toIntOrNull()?.minus(1) ?: 0
+                        monthOrder.getOrElse(mIdx) { "N/A" }
+                    } else mStr
                 } else "N/A"
             } ?: "N/A"
 
@@ -104,18 +122,39 @@ class EarningsRepositoryImpl(
 
             val estProfitMargin = totalRevenue * 0.35
             val profitMarginPercent = if (totalRevenue > 0) 35 else 0
+            val estExpenses = if (totalRevenue > 0) totalRevenue - estProfitMargin else 0.0
+            val expenseMarginPercent = if (totalRevenue > 0) 65 else 0
+
+            val bestMonthRevenue = summary?.best_month_revenue ?: 0.0
+            val avgMonthly = growth?.avg_monthly ?: 0.0
+
+            val maxTradeRev = tradeRevenues.maxOfOrNull { it.revenue }?.coerceAtLeast(1.0) ?: 1.0
+            val mappedTradeRevenues = tradeRevenues.map { row ->
+                TradeRevenueData(
+                    tradeType = row.trade_type,
+                    jobCount = row.job_count.toInt(),
+                    revenue = row.revenue,
+                    percentage = if (row.revenue > 0) (row.revenue / maxTradeRev).toFloat() else 0f
+                )
+            }
 
             EarningsSummaryModel(
                 totalRevenue = totalRevenue,
                 totalJobs = totalJobs,
                 avgPerJob = avgPerJob,
+                bestMonthName = bestMonthFormatted,
+                bestMonthRevenue = bestMonthRevenue,
                 estProfitMargin = estProfitMargin,
                 profitMarginPercent = profitMarginPercent,
-                monthlyEarnings = barDataList,
-                topClients = mappedTopClients,
+                estExpenses = estExpenses,
+                expenseMarginPercent = expenseMarginPercent,
+                avgMonthlyRevenue = avgMonthly,
+                busiestMonthName = busiestMonthFormatted,
                 vsLastMonthPercent = growth?.growth_percentage ?: 0.0,
                 vsLastYearPercent = 0.0,
-                bestMonthName = bestMonthFormatted
+                monthlyEarnings = barDataList,
+                topClients = mappedTopClients,
+                tradeRevenues = mappedTradeRevenues
             )
         }
     }
